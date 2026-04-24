@@ -907,6 +907,35 @@ function generateOperation(method: go.MethodType, options: go.Options, imports: 
   return text;
 }
 
+/**
+ * emits Go code to set ContentType on a MultipartContent variable if it has a fixed content type.
+ * handles both direct MultipartContent and slices of MultipartContent.
+ * returns the empty string if there's nothing to set.
+ *
+ * @param paramName the name of the multipart param
+ * @param wireType the underlying type of the multipart param
+ * @param indent the indentation helper currently in scope
+ * @returns setter code or the empty string
+ */
+function emitMultipartContentTypeSetter(paramName: string, wireType: go.WireType, indent: helpers.Indentation): string {
+  let text = '';
+  const unwrapped = helpers.recursiveUnwrapMapSlice(wireType);
+  if (unwrapped.kind !== 'multipartContent' || !unwrapped.contentType) {
+    return text;
+  }
+  switch (wireType.kind) {
+    case 'multipartContent':
+      text += `${indent.get()}${paramName}.ContentType = ${unwrapped.contentType.literal}\n`;
+      break;
+    case 'slice':
+      text += `${indent.get()}for i := range ${paramName} {\n`;
+      text += `${indent.push().get()}${paramName}[i].ContentType = ${unwrapped.contentType.literal}\n`;
+      text += `${indent.pop().get()}}\n`;
+      break;
+  }
+  return text;
+}
+
 function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.NextPageMethod, imports: ImportManager, indent: helpers.Indentation): string {
   let name = method.name;
   if (method.kind !== 'nextPageMethod') {
@@ -1406,38 +1435,13 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     // (i.e. not wrapped in a model struct with toMultipartFormData()).
     // note that tsp only allows homogeneous content types, which is why it's safe
     // to unwrap the first param's type and check its contentType field.
-    const unwrapped = helpers.recursiveUnwrapMapSlice(multipartBodyParams[0].type);
-    if (unwrapped.kind === 'multipartContent' && unwrapped.contentType) {
-      switch (multipartBodyParams[0].type.kind) {
-        case 'multipartContent':
-          text += `${indent.get()}${multipartBodyParams[0].name}.ContentType = ${unwrapped.contentType.literal}\n`;
-          break;
-        case 'slice':
-          text += `${indent.get()}for i := range ${multipartBodyParams[0].name} {\n`;
-          text += `${indent.push().get()}${multipartBodyParams[0].name}[i].ContentType = ${unwrapped.contentType.literal}\n`;
-          text += `${indent.pop().get()}}\n`;
-          break;
-        default:
-          throw new CodegenError('InternalError', `unexpected type kind ${multipartBodyParams[0].type.kind} for MultipartContent with contentType`);
-      }
-    }
+    text += emitMultipartContentTypeSetter(multipartBodyParams[0].name, multipartBodyParams[0].type, indent);
     if (multipartBodyParams.length === 1 && multipartBodyParams[0].type.kind === 'model' && multipartBodyParams[0].type.annotations.multipartFormData) {
       // emit content type setters for model fields that have a fixed content type.
       // toMultipartFormData() converts the model to map[string]any but doesn't set ContentType,
       // so we must set it on each MultipartContent field before the conversion.
       for (const field of multipartBodyParams[0].type.fields) {
-        const fieldUnwrapped = helpers.recursiveUnwrapMapSlice(field.type as go.WireType);
-        if (fieldUnwrapped.kind === 'multipartContent' && fieldUnwrapped.contentType) {
-          const fieldPath = `${multipartBodyParams[0].name}.${field.name}`;
-          const fieldType = field.type as go.WireType;
-          if (fieldType.kind === 'multipartContent') {
-            text += `${indent.get()}${fieldPath}.ContentType = ${fieldUnwrapped.contentType.literal}\n`;
-          } else if (fieldType.kind === 'slice') {
-            text += `${indent.get()}for i := range ${fieldPath} {\n`;
-            text += `${indent.push().get()}${fieldPath}[i].ContentType = ${fieldUnwrapped.contentType.literal}\n`;
-            text += `${indent.pop().get()}}\n`;
-          }
-        }
+        text += emitMultipartContentTypeSetter(`${multipartBodyParams[0].name}.${field.name}`, field.type, indent);
       }
       text += `${indent.get()}formData, err := ${multipartBodyParams[0].name}.toMultipartFormData()\n`;
       text += `${indent.get()}if err != nil {\n`;
