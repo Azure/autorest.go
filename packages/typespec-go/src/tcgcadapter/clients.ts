@@ -1579,17 +1579,7 @@ export class ClientAdapter {
         }
         adaptedType = adaptedWireType;
       }
-      if (adaptedType.kind === 'constant') {
-        // find the matching constant for the clientDefaultValue
-        for (const constValue of adaptedType.values) {
-          if (constValue.value === param.clientDefaultValue) {
-            return new go.ClientSideDefault(new go.Literal(adaptedType, constValue));
-          }
-        }
-        throw new AdapterError('InternalError', `didn't find clientDefaultValue constant with value ${<string>param.clientDefaultValue} for parameter`, param.__raw?.node);
-      }
-      // non-constant clientDefaultValue
-      return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
+      return new go.ClientSideDefault(this.ta.getLiteral(adaptedType, param.clientDefaultValue, helpers.isExtensibleEnum(param.type)));
     } else if (param.optional) {
       return 'optional';
     } else {

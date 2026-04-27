@@ -20,3 +20,22 @@ func PossibleColorValues() []Color {
 		ColorRed,
 	}
 }
+
+// NetworkVersion - extensible enum (i.e. isFixed === false) used to verify that a
+// client-side default value not present in the pre-defined values
+// is still accepted (regression test for issue with property names
+// like `networkApiVersion` whose default is the service API version).
+type NetworkVersion string
+
+const (
+	NetworkVersionV1 NetworkVersion = "2020-11-01"
+	NetworkVersionV2 NetworkVersion = "2022-11-01"
+)
+
+// PossibleNetworkVersionValues returns the possible values for the NetworkVersion const type.
+func PossibleNetworkVersionValues() []NetworkVersion {
+	return []NetworkVersion{
+		NetworkVersionV1,
+		NetworkVersionV2,
+	}
+}

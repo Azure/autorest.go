@@ -55,4 +55,7 @@ type Widget struct {
 
 	// REQUIRED
 	Name *string
+
+	// The default value is NetworkVersion("2026-04-15-preview").
+	NetworkVersion *NetworkVersion
 }

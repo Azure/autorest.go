@@ -475,14 +475,26 @@ export class TypeAdapter {
    *
    * @param type the underlying type of the literal
    * @param value the literal value
+   * @param extensibleEnum when type's kind is constant, allows values that aren't predefined
    * @returns a Go literal
    */
-  getLiteral<T extends go.LiteralType = go.LiteralType>(type: T, value: boolean | number | string): go.Literal<T> {
+  getLiteral<T extends go.LiteralType = go.LiteralType>(type: T, value: unknown, extensibleEnum: boolean = true): go.Literal<T> {
     let literalKey = `literal-${type.kind}`;
     switch (type.kind) {
-      case 'constant':
-        literalKey = `${literalKey}-${type.name}`;
+      case 'constant': {
+        // find the const value that matches the clientDefaultValue
+        const constantValue = type.values.find((v) => v.value === value);
+        if (constantValue) {
+          value = constantValue;
+          literalKey = `literal-${constantValue.type.name}${constantValue.name}`;
+        } else if (extensibleEnum === true) {
+          // for extensible enums we allow any value
+          literalKey = `${literalKey}-${type.name}`;
+        } else {
+          throw new AdapterError('UnsupportedTsp', `invalid client side default ${<string>value} for fixed enum ${type.name}`);
+        }
         break;
+      }
       case 'encodedBytes':
         literalKey = `${literalKey}-${type.encoding}`;
         break;
@@ -492,7 +504,7 @@ export class TypeAdapter {
       case 'time':
         literalKey = `${literalKey}-${type.format}-${type.utc}`;
     }
-    literalKey = `${literalKey}-${value}`;
+    literalKey = `${literalKey}-${<string>value}`;
     let literalType = this.types.get(literalKey);
     if (!literalType) {
       literalType = new go.Literal(type, value);
@@ -709,33 +721,7 @@ export class TypeAdapter {
         throw new AdapterError('InternalError', `unexpected client side default kind ${type.kind} for field ${field.name}`, prop.__raw?.node);
       }
 
-      let keyName: string;
-      let defaultValue = prop.clientDefaultValue;
-      switch (type.kind) {
-        case 'constant': {
-          // find the const value that matches the clientDefaultValue
-          const constantValue = type.values.find((value) => value.value === prop.clientDefaultValue);
-          if (!constantValue) {
-            throw new AdapterError('InternalError', `unexpected constant client side default ${<string>prop.clientDefaultValue} for field ${field.name}`, prop.__raw?.node);
-          }
-          defaultValue = constantValue;
-          keyName = `literal-${naming.ensureNameCase(constantValue.type.name)}${naming.ensureNameCase(constantValue.name)}`;
-          break;
-        }
-        case 'scalar':
-          keyName = `literal-${type.type}-${<string>defaultValue}`;
-          break;
-        default:
-          keyName = `literal-${type.kind}-${<string>defaultValue}`;
-      }
-
-      let defaultValueType = <go.Literal>this.types.get(keyName);
-      if (!defaultValueType) {
-        defaultValueType = new go.Literal(type, defaultValue);
-        this.types.set(keyName, defaultValueType);
-      }
-
-      field.defaultValue = defaultValueType;
+      field.defaultValue = this.getLiteral(type, prop.clientDefaultValue, helpers.isExtensibleEnum(prop.type));
       if (!field.docs.summary && !field.docs.description) {
         field.docs.summary = helpers.getClientDefaultValueDoc(field.defaultValue);
       }

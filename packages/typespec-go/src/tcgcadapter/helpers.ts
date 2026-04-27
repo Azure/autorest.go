@@ -206,13 +206,30 @@ export function getClientDefaultValueDoc(literal: go.Literal): string {
   let value = <string>literal.literal;
   switch (literal.type.kind) {
     case 'constant':
-      value = (<go.ConstantValue>literal.literal).name;
+      if ((<go.ConstantValue>literal.literal)?.kind === 'constantValue') {
+        value = (<go.ConstantValue>literal.literal).name;
+      } else if (literal.type.type === 'string') {
+        value = `${literal.type.name}("${<string>literal.literal}")`;
+      } else {
+        value = `${literal.type.name}(${<string>literal.literal})`;
+      }
       break;
     case 'string':
       value = `"${value}"`;
       break;
   }
   return `The default value is ${value}.`;
+}
+
+/**
+ * returns true if the type is an extensible enum (i.e. an enum or union-as-enum
+ * with isFixed === false). nullable wrappers are unwrapped before the check.
+ */
+export function isExtensibleEnum(type: tcgc.SdkType): boolean {
+  if (type.kind === 'nullable') {
+    return isExtensibleEnum(type.type);
+  }
+  return type.kind === 'enum' && !type.isFixed;
 }
 
 /** returns true if model is a TypeSpec.Http.File type */

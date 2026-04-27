@@ -152,6 +152,10 @@ func (w Widget) MarshalJSON() ([]byte, error) {
 	}
 	populate(objectMap, "color", w.Color)
 	populate(objectMap, "name", w.Name)
+	if w.NetworkVersion == nil {
+		w.NetworkVersion = to.Ptr(NetworkVersion("2026-04-15-preview"))
+	}
+	populate(objectMap, "networkVersion", w.NetworkVersion)
 	return json.Marshal(objectMap)
 }
 
@@ -169,6 +173,9 @@ func (w *Widget) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "name":
 			err = unpopulate(val, "Name", &w.Name)
+			delete(rawMsg, key)
+		case "networkVersion":
+			err = unpopulate(val, "NetworkVersion", &w.NetworkVersion)
 			delete(rawMsg, key)
 		}
 		if err != nil {
