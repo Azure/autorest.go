@@ -206,7 +206,7 @@ export function getClientDefaultValueDoc(literal: go.Literal): string {
   let value = <string>literal.literal;
   switch (literal.type.kind) {
     case 'constant':
-      if (literal.literal && (<go.ConstantValue>literal.literal).kind === 'constantValue') {
+      if ((<go.ConstantValue>literal.literal)?.kind === 'constantValue') {
         value = (<go.ConstantValue>literal.literal).name;
       } else if (literal.type.type === 'string') {
         value = `${literal.type.name}("${<string>literal.literal}")`;

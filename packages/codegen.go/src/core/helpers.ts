@@ -395,7 +395,7 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
 export function formatLiteralValue(value: go.Literal, withCast: boolean): string {
   switch (value.type.kind) {
     case 'constant':
-      if (value.literal && (<go.ConstantValue>value.literal).kind === 'constantValue') {
+      if ((<go.ConstantValue>value.literal)?.kind === 'constantValue') {
         return (<go.ConstantValue>value.literal).name;
       }
       // extensible enum with a value that's not one of the pre-defined ones.
