@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultDeletedServicesClientVersion string = "2024-03-15-preview"
+
 // DeletedServicesClient contains the methods for the DeletedServices group.
 // Don't use this type directly, use NewDeletedServicesClient() instead.
+//
+// Generated from API version 2024-03-15-preview
 type DeletedServicesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewDeletedServicesClient(subscriptionID string, credential azcore.TokenCred
 
 // Delete - Permanently deletes specified service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - deletedServiceName - The name of the deleted service.
 //   - options - DeletedServicesClientDeleteOptions contains the optional parameters for the DeletedServicesClient.Delete method.
@@ -87,15 +89,13 @@ func (client *DeletedServicesClient) deleteCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultDeletedServicesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Returns details of the soft-deleted service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - deletedServiceName - The name of the deleted service.
 //   - options - DeletedServicesClientGetOptions contains the optional parameters for the DeletedServicesClient.Get method.
@@ -141,7 +141,7 @@ func (client *DeletedServicesClient) getCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultDeletedServicesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -160,8 +160,6 @@ func (client *DeletedServicesClient) getHandleResponse(resp *http.Response) (Del
 }
 
 // NewListPager - Lists soft-deleted services.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - DeletedServicesClientListOptions contains the optional parameters for the DeletedServicesClient.NewListPager
 //     method.
@@ -207,7 +205,7 @@ func (client *DeletedServicesClient) listCreateRequest(ctx context.Context, reso
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultDeletedServicesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -223,8 +221,6 @@ func (client *DeletedServicesClient) listHandleResponse(resp *http.Response) (De
 }
 
 // NewListBySubscriptionPager - Lists services within an Azure subscription.
-//
-// Generated from API version 2024-03-15-preview
 //   - options - DeletedServicesClientListBySubscriptionOptions contains the optional parameters for the DeletedServicesClient.NewListBySubscriptionPager
 //     method.
 func (client *DeletedServicesClient) NewListBySubscriptionPager(options *DeletedServicesClientListBySubscriptionOptions) *runtime.Pager[DeletedServicesClientListBySubscriptionResponse] {
@@ -262,7 +258,7 @@ func (client *DeletedServicesClient) listBySubscriptionCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultDeletedServicesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

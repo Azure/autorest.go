@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultNotebookClientVersion string = "2020-12-01"
+
 // NotebookClient contains the methods for the Notebook group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type NotebookClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type NotebookClient struct {
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - notebookName - The notebook name.
 //   - notebook - Note book resource definition.
 //   - options - NotebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the NotebookClient.BeginCreateOrUpdateNotebook
@@ -46,8 +48,6 @@ func (client *NotebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *NotebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookClientBeginCreateOrUpdateNotebookOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
@@ -91,8 +91,6 @@ func (client *NotebookClient) createOrUpdateNotebookCreateRequest(ctx context.Co
 
 // BeginDeleteNotebook - Deletes a Note book.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - notebookName - The notebook name.
 //   - options - NotebookClientBeginDeleteNotebookOptions contains the optional parameters for the NotebookClient.BeginDeleteNotebook
 //     method.
@@ -111,8 +109,6 @@ func (client *NotebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 
 // DeleteNotebook - Deletes a Note book.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *NotebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*http.Response, error) {
 	var err error
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
@@ -150,8 +146,6 @@ func (client *NotebookClient) deleteNotebookCreateRequest(ctx context.Context, n
 
 // GetNotebook - Gets a Note Book.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - notebookName - The notebook name.
 //   - options - NotebookClientGetNotebookOptions contains the optional parameters for the NotebookClient.GetNotebook method.
 func (client *NotebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookClientGetNotebookOptions) (NotebookClientGetNotebookResponse, error) {
@@ -203,8 +197,6 @@ func (client *NotebookClient) getNotebookHandleResponse(resp *http.Response) (No
 }
 
 // NewGetNotebookSummaryByWorkSpacePager - Lists a summary of Notebooks.
-//
-// Generated from API version 2020-12-01
 //   - options - NotebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the NotebookClient.NewGetNotebookSummaryByWorkSpacePager
 //     method.
 func (client *NotebookClient) NewGetNotebookSummaryByWorkSpacePager(options *NotebookClientGetNotebookSummaryByWorkSpaceOptions) *runtime.Pager[NotebookClientGetNotebookSummaryByWorkSpaceResponse] {
@@ -252,8 +244,6 @@ func (client *NotebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *
 }
 
 // NewGetNotebooksByWorkspacePager - Lists Notebooks.
-//
-// Generated from API version 2020-12-01
 //   - options - NotebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the NotebookClient.NewGetNotebooksByWorkspacePager
 //     method.
 func (client *NotebookClient) NewGetNotebooksByWorkspacePager(options *NotebookClientGetNotebooksByWorkspaceOptions) *runtime.Pager[NotebookClientGetNotebooksByWorkspaceResponse] {
@@ -285,7 +275,7 @@ func (client *NotebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultNotebookClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -302,8 +292,6 @@ func (client *NotebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.R
 
 // BeginRenameNotebook - Renames a notebook.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - notebookName - The notebook name.
 //   - request - proposed new name.
 //   - options - NotebookClientBeginRenameNotebookOptions contains the optional parameters for the NotebookClient.BeginRenameNotebook
@@ -323,8 +311,6 @@ func (client *NotebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 
 // RenameNotebook - Renames a notebook.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *NotebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*http.Response, error) {
 	var err error
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)

@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultServiceBOperationsClientVersion string = "bv2"
+
 // ServiceBOperationsClient contains the methods for the ServiceBOperations group.
 // Don't use this type directly, use [ServiceBClient.NewServiceBOperationsClient] instead.
+//
+// Generated from API version bv2
 type ServiceBOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -21,8 +25,6 @@ type ServiceBOperationsClient struct {
 
 // OpB -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version bv2
 //   - options - ServiceBOperationsClientOpBOptions contains the optional parameters for the ServiceBOperationsClient.OpB method.
 func (client *ServiceBOperationsClient) OpB(ctx context.Context, options *ServiceBOperationsClientOpBOptions) (ServiceBOperationsClientOpBResponse, error) {
 	var err error
@@ -53,7 +55,7 @@ func (client *ServiceBOperationsClient) opBCreateRequest(ctx context.Context, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "bv2")
+	reqQP.Set("api-version", defaultServiceBOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

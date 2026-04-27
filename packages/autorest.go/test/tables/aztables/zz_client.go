@@ -28,8 +28,6 @@ type Client struct {
 
 // Create - Creates a new table under the given account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - tableProperties - The Table properties.
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
 func (client *Client) Create(ctx context.Context, tableProperties Properties, options *ClientCreateOptions) (ClientCreateResponse, error) {
@@ -107,8 +105,6 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 
 // Delete - Operation permanently deletes the specified table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 func (client *Client) Delete(ctx context.Context, table string, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
@@ -172,8 +168,6 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 
 // DeleteEntity - Deletes the specified entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - partitionKey - The partition key of the entity.
 //   - rowKey - The row key of the entity.
@@ -260,8 +254,6 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared
 // Access Signatures.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
 func (client *Client) GetAccessPolicy(ctx context.Context, table string, options *ClientGetAccessPolicyOptions) (ClientGetAccessPolicyResponse, error) {
@@ -334,8 +326,6 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 
 // InsertEntity - Insert entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
 func (client *Client) InsertEntity(ctx context.Context, table string, options *ClientInsertEntityOptions) (ClientInsertEntityResponse, error) {
@@ -429,8 +419,6 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 
 // MergeEntity - Merge entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - partitionKey - The partition key of the entity.
 //   - rowKey - The row key of the entity.
@@ -523,8 +511,6 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 
 // Query - Queries tables under the given account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - options - ClientQueryOptions contains the optional parameters for the Client.Query method.
 func (client *Client) Query(ctx context.Context, options *ClientQueryOptions) (ClientQueryResponse, error) {
 	var err error
@@ -607,8 +593,6 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 
 // QueryEntities - Queries entities in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - options - ClientQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
 func (client *Client) QueryEntities(ctx context.Context, table string, options *ClientQueryEntitiesOptions) (ClientQueryEntitiesResponse, error) {
@@ -705,8 +689,6 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - partitionKey - The partition key of the entity.
 //   - rowKey - The row key of the entity.
@@ -808,8 +790,6 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 
 // SetAccessPolicy - Sets stored access policies for the table that may be used with Shared Access Signatures.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - tableACL - The acls for the table.
 //   - options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
@@ -887,8 +867,6 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 
 // UpdateEntity - Update entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-02-02
 //   - table - The name of the table.
 //   - partitionKey - The partition key of the entity.
 //   - rowKey - The row key of the entity.

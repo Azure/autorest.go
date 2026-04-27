@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultPagingClientVersion string = "1.0.0"
+
 // PagingClient contains the methods for the Paging group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 1.0.0
 type PagingClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -26,8 +30,6 @@ type PagingClient struct {
 
 // NewAppendAPIVersionPager - A paging operation with api version. When calling the next link, you want to append your client's
 // api version to the next link
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientAppendAPIVersionOptions contains the optional parameters for the PagingClient.NewAppendAPIVersionPager
 //     method.
 func (client *PagingClient) NewAppendAPIVersionPager(options *PagingClientAppendAPIVersionOptions) *runtime.Pager[PagingClientAppendAPIVersionResponse] {
@@ -61,7 +63,7 @@ func (client *PagingClient) appendAPIVersionCreateRequest(ctx context.Context, _
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "1.0.0")
+	reqQP.Set("api-version", defaultPagingClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -78,8 +80,6 @@ func (client *PagingClient) appendAPIVersionHandleResponse(resp *http.Response) 
 
 // NewDuplicateParamsPager - Define filter as a query param for all calls. However, the returned next link will also include
 // the filter as part of it. Make sure you don't end up duplicating the filter param in the url sent.
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientDuplicateParamsOptions contains the optional parameters for the PagingClient.NewDuplicateParamsPager
 //     method.
 func (client *PagingClient) NewDuplicateParamsPager(options *PagingClientDuplicateParamsOptions) *runtime.Pager[PagingClientDuplicateParamsResponse] {
@@ -132,8 +132,6 @@ func (client *PagingClient) duplicateParamsHandleResponse(resp *http.Response) (
 
 // NewFirstResponseEmptyPager - A paging operation whose first response's items list is empty, but still returns a next link.
 // Second (and final) call, will give you an items list of 1.
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.NewFirstResponseEmptyPager
 //     method.
 func (client *PagingClient) NewFirstResponseEmptyPager(options *PagingClientFirstResponseEmptyOptions) *runtime.Pager[PagingClientFirstResponseEmptyResponse] {
@@ -180,8 +178,6 @@ func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response
 }
 
 // NewGetEmptyNextLinkNamePagesPager - A paging operation that gets an empty next link and should stop after page 1.
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetEmptyNextLinkNamePagesOptions contains the optional parameters for the PagingClient.NewGetEmptyNextLinkNamePagesPager
 //     method.
 func (client *PagingClient) NewGetEmptyNextLinkNamePagesPager(options *PagingClientGetEmptyNextLinkNamePagesOptions) *runtime.Pager[PagingClientGetEmptyNextLinkNamePagesResponse] {
@@ -228,8 +224,6 @@ func (client *PagingClient) getEmptyNextLinkNamePagesHandleResponse(resp *http.R
 }
 
 // NewGetMultiplePagesPager - A paging operation that includes a nextLink that has 10 pages
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetMultiplePagesOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesPager
 //     method.
 func (client *PagingClient) NewGetMultiplePagesPager(options *PagingClientGetMultiplePagesOptions) *runtime.Pager[PagingClientGetMultiplePagesResponse] {
@@ -285,8 +279,6 @@ func (client *PagingClient) getMultiplePagesHandleResponse(resp *http.Response) 
 }
 
 // NewGetMultiplePagesFailurePager - A paging operation that receives a 400 on the second call
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFailurePager
 //     method.
 func (client *PagingClient) NewGetMultiplePagesFailurePager(options *PagingClientGetMultiplePagesFailureOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureResponse] {
@@ -333,8 +325,6 @@ func (client *PagingClient) getMultiplePagesFailureHandleResponse(resp *http.Res
 }
 
 // NewGetMultiplePagesFailureURIPager - A paging operation that receives an invalid nextLink
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFailureURIPager
 //     method.
 func (client *PagingClient) NewGetMultiplePagesFailureURIPager(options *PagingClientGetMultiplePagesFailureURIOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureURIResponse] {
@@ -381,8 +371,6 @@ func (client *PagingClient) getMultiplePagesFailureURIHandleResponse(resp *http.
 }
 
 // NewGetMultiplePagesFragmentNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
-//
-// Generated from API version 1.0.0
 //   - apiVersion - Sets the api version to use.
 //   - tenant - Sets the tenant to use.
 //   - options - PagingClientGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFragmentNextLinkPager
@@ -443,8 +431,6 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp 
 
 // NewGetMultiplePagesFragmentWithGroupingNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
 // with parameters grouped
-//
-// Generated from API version 1.0.0
 //   - CustomParameterGroup - CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 //     method.
 //   - options - PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFragmentWithGroupingNextLinkPager
@@ -504,8 +490,6 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleRe
 }
 
 // BeginGetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 //     method.
 func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*runtime.Poller[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]], error) {
@@ -544,8 +528,6 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 }
 
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
-//
-// Generated from API version 1.0.0
 func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*http.Response, error) {
 	var err error
 	const operationName = "PagingClient.BeginGetMultiplePagesLRO"
@@ -598,8 +580,6 @@ func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *http.Respons
 
 // NewGetMultiplePagesRetryFirstPager - A paging operation that fails on the first call with 500 and then retries and then
 // get a response including a nextLink that has 10 pages
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesRetryFirstPager
 //     method.
 func (client *PagingClient) NewGetMultiplePagesRetryFirstPager(options *PagingClientGetMultiplePagesRetryFirstOptions) *runtime.Pager[PagingClientGetMultiplePagesRetryFirstResponse] {
@@ -647,8 +627,6 @@ func (client *PagingClient) getMultiplePagesRetryFirstHandleResponse(resp *http.
 
 // NewGetMultiplePagesRetrySecondPager - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call
 // fails first with 500. The client should retry and finish all 10 pages eventually.
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesRetrySecondPager
 //     method.
 func (client *PagingClient) NewGetMultiplePagesRetrySecondPager(options *PagingClientGetMultiplePagesRetrySecondOptions) *runtime.Pager[PagingClientGetMultiplePagesRetrySecondResponse] {
@@ -695,8 +673,6 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http
 }
 
 // NewGetMultiplePagesWithOffsetPager - A paging operation that includes a nextLink that has 10 pages
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesWithOffsetPager
 //     method.
 func (client *PagingClient) NewGetMultiplePagesWithOffsetPager(options PagingClientGetMultiplePagesWithOffsetOptions) *runtime.Pager[PagingClientGetMultiplePagesWithOffsetResponse] {
@@ -753,8 +729,6 @@ func (client *PagingClient) getMultiplePagesWithOffsetHandleResponse(resp *http.
 }
 
 // NewGetNoItemNamePagesPager - A paging operation that must return result of the default 'value' node.
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.NewGetNoItemNamePagesPager
 //     method.
 func (client *PagingClient) NewGetNoItemNamePagesPager(options *PagingClientGetNoItemNamePagesOptions) *runtime.Pager[PagingClientGetNoItemNamePagesResponse] {
@@ -801,8 +775,6 @@ func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response
 }
 
 // NewGetNullNextLinkNamePagesPager - A paging operation that must ignore any kind of nextLink, and stop after page 1.
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.NewGetNullNextLinkNamePagesPager
 //     method.
 func (client *PagingClient) NewGetNullNextLinkNamePagesPager(options *PagingClientGetNullNextLinkNamePagesOptions) *runtime.Pager[PagingClientGetNullNextLinkNamePagesResponse] {
@@ -850,8 +822,6 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleResponse(resp *http.Re
 }
 
 // NewGetODataMultiplePagesPager - A paging operation that includes a nextLink in odata format that has 10 pages
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.NewGetODataMultiplePagesPager
 //     method.
 func (client *PagingClient) NewGetODataMultiplePagesPager(options *PagingClientGetODataMultiplePagesOptions) *runtime.Pager[PagingClientGetODataMultiplePagesResponse] {
@@ -908,8 +878,6 @@ func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *http.Respo
 
 // NewGetPagingModelWithItemNameWithXMSClientNamePager - A paging operation that returns a paging model whose item name is
 // is overriden by x-ms-client-name 'indexes'.
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.NewGetPagingModelWithItemNameWithXMSClientNamePager
 //     method.
 func (client *PagingClient) NewGetPagingModelWithItemNameWithXMSClientNamePager(options *PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions) *runtime.Pager[PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse] {
@@ -956,8 +924,6 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleRes
 }
 
 // NewGetSinglePagesPager - A paging operation that finishes on the first call without a nextlink
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetSinglePagesOptions contains the optional parameters for the PagingClient.NewGetSinglePagesPager
 //     method.
 func (client *PagingClient) NewGetSinglePagesPager(options *PagingClientGetSinglePagesOptions) *runtime.Pager[PagingClientGetSinglePagesResponse] {
@@ -1004,8 +970,6 @@ func (client *PagingClient) getSinglePagesHandleResponse(resp *http.Response) (P
 }
 
 // NewGetSinglePagesFailurePager - A paging operation that receives a 400 on the first call
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.NewGetSinglePagesFailurePager
 //     method.
 func (client *PagingClient) NewGetSinglePagesFailurePager(options *PagingClientGetSinglePagesFailureOptions) *runtime.Pager[PagingClientGetSinglePagesFailureResponse] {
@@ -1052,8 +1016,6 @@ func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Respo
 }
 
 // NewGetSinglePagesWithBodyParamsPager - A paging operation that finishes on the first call with body params without a nextlink
-//
-// Generated from API version 1.0.0
 //   - parameters - put {'name': 'body'} to pass the test
 //   - options - PagingClientGetSinglePagesWithBodyParamsOptions contains the optional parameters for the PagingClient.NewGetSinglePagesWithBodyParamsPager
 //     method.
@@ -1105,8 +1067,6 @@ func (client *PagingClient) getSinglePagesWithBodyParamsHandleResponse(resp *htt
 
 // NewGetWithQueryParamsPager - A paging operation that includes a next operation. It has a different query parameter from
 // it's next operation nextOperationWithQueryParams. Returns a ProductResult
-//
-// Generated from API version 1.0.0
 //   - requiredQueryParameter - A required integer query parameter. Put in value '100' to pass test.
 //   - options - PagingClientGetWithQueryParamsOptions contains the optional parameters for the PagingClient.NewGetWithQueryParamsPager
 //     method.
@@ -1162,8 +1122,6 @@ func (client *PagingClient) getWithQueryParamsHandleResponse(resp *http.Response
 }
 
 // NewPageWithMaxPageSizePager - Paging with max page size. We don't want to
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientPageWithMaxPageSizeOptions contains the optional parameters for the PagingClient.NewPageWithMaxPageSizePager
 //     method.
 func (client *PagingClient) NewPageWithMaxPageSizePager(options *PagingClientPageWithMaxPageSizeOptions) *runtime.Pager[PagingClientPageWithMaxPageSizeResponse] {
@@ -1216,8 +1174,6 @@ func (client *PagingClient) pageWithMaxPageSizeHandleResponse(resp *http.Respons
 
 // NewReplaceAPIVersionPager - A paging operation with api version. When calling the next link, you want to reformat it and
 // override the returned api version with your client's api version
-//
-// Generated from API version 1.0.0
 //   - options - PagingClientReplaceAPIVersionOptions contains the optional parameters for the PagingClient.NewReplaceAPIVersionPager
 //     method.
 func (client *PagingClient) NewReplaceAPIVersionPager(options *PagingClientReplaceAPIVersionOptions) *runtime.Pager[PagingClientReplaceAPIVersionResponse] {
@@ -1251,7 +1207,7 @@ func (client *PagingClient) replaceAPIVersionCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "1.0.0")
+	reqQP.Set("api-version", defaultPagingClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

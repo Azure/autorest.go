@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultBgpServiceCommunitiesClientVersion string = "2022-09-01"
+
 // BgpServiceCommunitiesClient contains the methods for the BgpServiceCommunities group.
 // Don't use this type directly, use NewBgpServiceCommunitiesClient() instead.
+//
+// Generated from API version 2022-09-01
 type BgpServiceCommunitiesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 }
 
 // NewListPager - Gets all the available bgp service communities.
-//
-// Generated from API version 2022-09-01
 //   - options - BgpServiceCommunitiesClientListOptions contains the optional parameters for the BgpServiceCommunitiesClient.NewListPager
 //     method.
 func (client *BgpServiceCommunitiesClient) NewListPager(options *BgpServiceCommunitiesClientListOptions) *runtime.Pager[BgpServiceCommunitiesClientListResponse] {
@@ -81,7 +83,7 @@ func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultBgpServiceCommunitiesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

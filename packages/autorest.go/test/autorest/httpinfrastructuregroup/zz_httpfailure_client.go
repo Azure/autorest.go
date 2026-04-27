@@ -22,8 +22,6 @@ type HTTPFailureClient struct {
 
 // GetEmptyError - Get empty error form server
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPFailureClientGetEmptyErrorOptions contains the optional parameters for the HTTPFailureClient.GetEmptyError
 //     method.
 func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureClientGetEmptyErrorOptions) (HTTPFailureClientGetEmptyErrorResponse, error) {
@@ -70,8 +68,6 @@ func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *http.Response
 
 // GetNoModelEmpty - Get empty response from server
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPFailureClientGetNoModelEmptyOptions contains the optional parameters for the HTTPFailureClient.GetNoModelEmpty
 //     method.
 func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureClientGetNoModelEmptyOptions) (HTTPFailureClientGetNoModelEmptyResponse, error) {
@@ -118,8 +114,6 @@ func (client *HTTPFailureClient) getNoModelEmptyHandleResponse(resp *http.Respon
 
 // GetNoModelError - Get empty error form server
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPFailureClientGetNoModelErrorOptions contains the optional parameters for the HTTPFailureClient.GetNoModelError
 //     method.
 func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureClientGetNoModelErrorOptions) (HTTPFailureClientGetNoModelErrorResponse, error) {

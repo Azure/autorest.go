@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultLoadBalancerOutboundRulesClientVersion string = "2022-09-01"
+
 // LoadBalancerOutboundRulesClient contains the methods for the LoadBalancerOutboundRules group.
 // Don't use this type directly, use NewLoadBalancerOutboundRulesClient() instead.
+//
+// Generated from API version 2022-09-01
 type LoadBalancerOutboundRulesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore
 
 // Get - Gets the specified load balancer outbound rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
 //   - outboundRuleName - The name of the outbound rule.
@@ -112,8 +114,6 @@ func (client *LoadBalancerOutboundRulesClient) getHandleResponse(resp *http.Resp
 }
 
 // NewListPager - Gets all the outbound rules in a load balancer.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
 //   - options - LoadBalancerOutboundRulesClientListOptions contains the optional parameters for the LoadBalancerOutboundRulesClient.NewListPager
@@ -161,7 +161,7 @@ func (client *LoadBalancerOutboundRulesClient) listCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultLoadBalancerOutboundRulesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

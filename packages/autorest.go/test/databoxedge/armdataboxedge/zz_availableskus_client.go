@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultAvailableSKUsClientVersion string = "2021-02-01"
+
 // AvailableSKUsClient contains the methods for the AvailableSKUs group.
 // Don't use this type directly, use NewAvailableSKUsClient() instead.
+//
+// Generated from API version 2021-02-01
 type AvailableSKUsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCreden
 }
 
 // NewListPager - List all the available Skus and information related to them.
-//
-// Generated from API version 2021-02-01
 //   - options - AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.NewListPager method.
 func (client *AvailableSKUsClient) NewListPager(options *AvailableSKUsClientListOptions) *runtime.Pager[AvailableSKUsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableSKUsClientListResponse]{
@@ -78,7 +80,7 @@ func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, _ *Ava
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultAvailableSKUsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

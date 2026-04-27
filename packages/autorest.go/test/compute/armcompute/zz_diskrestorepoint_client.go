@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultDiskRestorePointClientVersion string = "2021-12-01"
+
 // DiskRestorePointClient contains the methods for the DiskRestorePoint group.
 // Don't use this type directly, use NewDiskRestorePointClient() instead.
+//
+// Generated from API version 2021-12-01
 type DiskRestorePointClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewDiskRestorePointClient(subscriptionID string, credential azcore.TokenCre
 
 // Get - Get disk restorePoint resource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - restorePointCollectionName - The name of the restore point collection that the disk restore point belongs.
 //   - vmRestorePointName - The name of the vm restore point that the disk disk restore point belongs.
@@ -100,7 +102,7 @@ func (client *DiskRestorePointClient) getCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-12-01")
+	reqQP.Set("api-version", defaultDiskRestorePointClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -117,8 +119,6 @@ func (client *DiskRestorePointClient) getHandleResponse(resp *http.Response) (Di
 
 // BeginGrantAccess - Grants access to a diskRestorePoint.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - restorePointCollectionName - The name of the restore point collection that the disk restore point belongs.
 //   - vmRestorePointName - The name of the vm restore point that the disk disk restore point belongs.
@@ -146,8 +146,6 @@ func (client *DiskRestorePointClient) BeginGrantAccess(ctx context.Context, reso
 
 // GrantAccess - Grants access to a diskRestorePoint.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-01
 func (client *DiskRestorePointClient) grantAccess(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, grantAccessData GrantAccessData, options *DiskRestorePointClientBeginGrantAccessOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DiskRestorePointClient.BeginGrantAccess"
@@ -207,8 +205,6 @@ func (client *DiskRestorePointClient) grantAccessCreateRequest(ctx context.Conte
 }
 
 // NewListByRestorePointPager - Lists diskRestorePoints under a vmRestorePoint.
-//
-// Generated from API version 2021-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - restorePointCollectionName - The name of the restore point collection that the disk restore point belongs.
 //   - vmRestorePointName - The name of the vm restore point that the disk disk restore point belongs.
@@ -278,8 +274,6 @@ func (client *DiskRestorePointClient) listByRestorePointHandleResponse(resp *htt
 
 // BeginRevokeAccess - Revokes access to a diskRestorePoint.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-01
 //   - resourceGroupName - The name of the resource group.
 //   - restorePointCollectionName - The name of the restore point collection that the disk restore point belongs.
 //   - vmRestorePointName - The name of the vm restore point that the disk disk restore point belongs.
@@ -306,8 +300,6 @@ func (client *DiskRestorePointClient) BeginRevokeAccess(ctx context.Context, res
 
 // RevokeAccess - Revokes access to a diskRestorePoint.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-01
 func (client *DiskRestorePointClient) revokeAccess(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, options *DiskRestorePointClientBeginRevokeAccessOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DiskRestorePointClient.BeginRevokeAccess"

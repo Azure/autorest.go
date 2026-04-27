@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultRaiToolLabelsClientVersion string = "2025-10-01-preview"
+
 // RaiToolLabelsClient contains the methods for the RaiToolLabels group.
 // Don't use this type directly, use NewRaiToolLabelsClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type RaiToolLabelsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewRaiToolLabelsClient(subscriptionID string, credential azcore.TokenCreden
 
 // CreateOrUpdate - Creates the RAI Tool Label associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - raiToolConnectionName - The name of the Rai Tool Label
@@ -95,7 +97,7 @@ func (client *RaiToolLabelsClient) createOrUpdateCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiToolLabelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,8 +118,6 @@ func (client *RaiToolLabelsClient) createOrUpdateHandleResponse(resp *http.Respo
 
 // BeginDelete - Deletes the specified RAI Tool Label associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - raiToolConnectionName - The name of the Rai Tool Label
@@ -142,8 +142,6 @@ func (client *RaiToolLabelsClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Deletes the specified RAI Tool Label associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *RaiToolLabelsClient) deleteOperation(ctx context.Context, resourceGroupName string, accountName string, raiToolConnectionName string, options *RaiToolLabelsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RaiToolLabelsClient.BeginDelete"
@@ -189,15 +187,13 @@ func (client *RaiToolLabelsClient) deleteCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiToolLabelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Gets the specified RAI Tool Label associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - raiToolConnectionName - The name of the Rai Tool Label
@@ -248,7 +244,7 @@ func (client *RaiToolLabelsClient) getCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiToolLabelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -264,8 +260,6 @@ func (client *RaiToolLabelsClient) getHandleResponse(resp *http.Response) (RaiTo
 }
 
 // NewListPager - Lists all RAI Tool Labels associated with the Azure OpenAI account.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - options - RaiToolLabelsClientListOptions contains the optional parameters for the RaiToolLabelsClient.NewListPager method.
@@ -312,7 +306,7 @@ func (client *RaiToolLabelsClient) listCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiToolLabelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -13,8 +13,12 @@ import (
 	"net/http"
 )
 
+const defaultDataFlowDebugSessionClientVersion string = "2020-12-01"
+
 // DataFlowDebugSessionClient contains the methods for the DataFlowDebugSession group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type DataFlowDebugSessionClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -22,8 +26,6 @@ type DataFlowDebugSessionClient struct {
 
 // AddDataFlow - Add a data flow into debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - request - Data flow debug session definition with debug content.
 //   - options - DataFlowDebugSessionClientAddDataFlowOptions contains the optional parameters for the DataFlowDebugSessionClient.AddDataFlow
 //     method.
@@ -73,8 +75,6 @@ func (client *DataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.R
 
 // BeginCreateDataFlowDebugSession - Creates a data flow debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - request - Data flow debug session definition
 //   - options - DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 //     method.
@@ -93,8 +93,6 @@ func (client *DataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *DataFlowDebugSessionClient) createDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createDataFlowDebugSessionCreateRequest(ctx, request, options)
@@ -120,7 +118,7 @@ func (client *DataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultDataFlowDebugSessionClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, request); err != nil {
@@ -131,8 +129,6 @@ func (client *DataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - request - Data flow debug session definition for deletion
 //   - options - DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.DeleteDataFlowDebugSession
 //     method.
@@ -172,8 +168,6 @@ func (client *DataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 
 // BeginExecuteCommand - Execute a data flow debug command.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - request - Data flow debug command definition.
 //   - options - DataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginExecuteCommand
 //     method.
@@ -192,8 +186,6 @@ func (client *DataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 
 // ExecuteCommand - Execute a data flow debug command.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *DataFlowDebugSessionClient) executeCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (*http.Response, error) {
 	var err error
 	req, err := client.executeCommandCreateRequest(ctx, request, options)
@@ -229,8 +221,6 @@ func (client *DataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 }
 
 // NewQueryDataFlowDebugSessionsByWorkspacePager - Query all active data flow debug sessions.
-//
-// Generated from API version 2020-12-01
 //   - options - DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the
 //     DataFlowDebugSessionClient.NewQueryDataFlowDebugSessionsByWorkspacePager method.
 func (client *DataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspacePager(options *DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *runtime.Pager[DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse] {

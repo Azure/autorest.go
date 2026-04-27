@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultNonResourceOperationsClientVersion string = "2023-12-01-preview"
+
 // NonResourceOperationsClient - Operations on non resource model should not be marked as `@armResourceOperations`.
 // Don't use this type directly, use NewNonResourceOperationsClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type NonResourceOperationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewNonResourceOperationsClient(subscriptionID string, credential azcore.Tok
 
 // Create -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The location parameter.
 //   - parameter - Another parameter.
 //   - body - The request body.
@@ -90,7 +92,7 @@ func (client *NonResourceOperationsClient) createCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultNonResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -111,8 +113,6 @@ func (client *NonResourceOperationsClient) createHandleResponse(resp *http.Respo
 
 // Get -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The location parameter.
 //   - parameter - Another parameter.
 //   - options - NonResourceOperationsClientGetOptions contains the optional parameters for the NonResourceOperationsClient.Get
@@ -159,7 +159,7 @@ func (client *NonResourceOperationsClient) getCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultNonResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

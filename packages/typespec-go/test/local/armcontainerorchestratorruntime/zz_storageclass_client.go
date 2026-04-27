@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultStorageClassClientVersion string = "2024-03-01"
+
 // StorageClassClient contains the methods for the StorageClass group.
 // Don't use this type directly, use NewStorageClassClient() instead.
+//
+// Generated from API version 2024-03-01
 type StorageClassClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewStorageClassClient(credential azcore.TokenCredential, options *arm.Clien
 
 // BeginCreateOrUpdate - Create a StorageClassResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - storageClassName - The name of the the storage class
 //   - resource - Resource create parameters.
@@ -65,8 +67,6 @@ func (client *StorageClassClient) BeginCreateOrUpdate(ctx context.Context, resou
 
 // CreateOrUpdate - Create a StorageClassResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 func (client *StorageClassClient) createOrUpdate(ctx context.Context, resourceURI string, storageClassName string, resource StorageClassResource, options *StorageClassClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StorageClassClient.BeginCreateOrUpdate"
@@ -104,7 +104,7 @@ func (client *StorageClassClient) createOrUpdateCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultStorageClassClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,8 +116,6 @@ func (client *StorageClassClient) createOrUpdateCreateRequest(ctx context.Contex
 
 // BeginDelete - Delete a StorageClassResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - storageClassName - The name of the the storage class
 //   - options - StorageClassClientBeginDeleteOptions contains the optional parameters for the StorageClassClient.BeginDelete
@@ -141,8 +139,6 @@ func (client *StorageClassClient) BeginDelete(ctx context.Context, resourceURI s
 
 // Delete - Delete a StorageClassResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 func (client *StorageClassClient) deleteOperation(ctx context.Context, resourceURI string, storageClassName string, options *StorageClassClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StorageClassClient.BeginDelete"
@@ -180,15 +176,13 @@ func (client *StorageClassClient) deleteCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultStorageClassClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a StorageClassResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - storageClassName - The name of the the storage class
 //   - options - StorageClassClientGetOptions contains the optional parameters for the StorageClassClient.Get method.
@@ -230,7 +224,7 @@ func (client *StorageClassClient) getCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultStorageClassClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -246,8 +240,6 @@ func (client *StorageClassClient) getHandleResponse(resp *http.Response) (Storag
 }
 
 // NewListPager - List StorageClassResource resources by parent
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - options - StorageClassClientListOptions contains the optional parameters for the StorageClassClient.NewListPager method.
 func (client *StorageClassClient) NewListPager(resourceURI string, options *StorageClassClientListOptions) *runtime.Pager[StorageClassClientListResponse] {
@@ -285,7 +277,7 @@ func (client *StorageClassClient) listCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultStorageClassClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -302,8 +294,6 @@ func (client *StorageClassClient) listHandleResponse(resp *http.Response) (Stora
 
 // BeginUpdate - Update a StorageClassResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - storageClassName - The name of the the storage class
 //   - properties - The resource properties to be updated.
@@ -328,8 +318,6 @@ func (client *StorageClassClient) BeginUpdate(ctx context.Context, resourceURI s
 
 // Update - Update a StorageClassResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 func (client *StorageClassClient) update(ctx context.Context, resourceURI string, storageClassName string, properties StorageClassResourceUpdate, options *StorageClassClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StorageClassClient.BeginUpdate"
@@ -367,7 +355,7 @@ func (client *StorageClassClient) updateCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultStorageClassClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

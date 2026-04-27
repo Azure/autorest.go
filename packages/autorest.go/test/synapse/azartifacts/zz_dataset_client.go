@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultDatasetClientVersion string = "2020-12-01"
+
 // DatasetClient contains the methods for the Dataset group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type DatasetClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type DatasetClient struct {
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - datasetName - The dataset name.
 //   - dataset - Dataset resource definition.
 //   - options - DatasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the DatasetClient.BeginCreateOrUpdateDataset
@@ -46,8 +48,6 @@ func (client *DatasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *DatasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetClientBeginCreateOrUpdateDatasetOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
@@ -91,8 +91,6 @@ func (client *DatasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 
 // BeginDeleteDataset - Deletes a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - datasetName - The dataset name.
 //   - options - DatasetClientBeginDeleteDatasetOptions contains the optional parameters for the DatasetClient.BeginDeleteDataset
 //     method.
@@ -111,8 +109,6 @@ func (client *DatasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 
 // DeleteDataset - Deletes a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *DatasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetClientBeginDeleteDatasetOptions) (*http.Response, error) {
 	var err error
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
@@ -150,8 +146,6 @@ func (client *DatasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 
 // GetDataset - Gets a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - datasetName - The dataset name.
 //   - options - DatasetClientGetDatasetOptions contains the optional parameters for the DatasetClient.GetDataset method.
 func (client *DatasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetClientGetDatasetOptions) (DatasetClientGetDatasetResponse, error) {
@@ -203,8 +197,6 @@ func (client *DatasetClient) getDatasetHandleResponse(resp *http.Response) (Data
 }
 
 // NewGetDatasetsByWorkspacePager - Lists datasets.
-//
-// Generated from API version 2020-12-01
 //   - options - DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the DatasetClient.NewGetDatasetsByWorkspacePager
 //     method.
 func (client *DatasetClient) NewGetDatasetsByWorkspacePager(options *DatasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[DatasetClientGetDatasetsByWorkspaceResponse] {
@@ -236,7 +228,7 @@ func (client *DatasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultDatasetClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -253,8 +245,6 @@ func (client *DatasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Res
 
 // BeginRenameDataset - Renames a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - datasetName - The dataset name.
 //   - request - proposed new name.
 //   - options - DatasetClientBeginRenameDatasetOptions contains the optional parameters for the DatasetClient.BeginRenameDataset
@@ -274,8 +264,6 @@ func (client *DatasetClient) BeginRenameDataset(ctx context.Context, datasetName
 
 // RenameDataset - Renames a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *DatasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetClientBeginRenameDatasetOptions) (*http.Response, error) {
 	var err error
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)

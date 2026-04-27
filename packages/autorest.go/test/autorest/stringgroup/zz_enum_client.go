@@ -22,8 +22,6 @@ type EnumClient struct {
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - EnumClientGetNotExpandableOptions contains the optional parameters for the EnumClient.GetNotExpandable method.
 func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumClientGetNotExpandableOptions) (EnumClientGetNotExpandableResponse, error) {
 	var err error
@@ -69,8 +67,6 @@ func (client *EnumClient) getNotExpandableHandleResponse(resp *http.Response) (E
 
 // GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - EnumClientGetReferencedOptions contains the optional parameters for the EnumClient.GetReferenced method.
 func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumClientGetReferencedOptions) (EnumClientGetReferencedResponse, error) {
 	var err error
@@ -116,8 +112,6 @@ func (client *EnumClient) getReferencedHandleResponse(resp *http.Response) (Enum
 
 // GetReferencedConstant - Get value 'green-color' from the constant.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - EnumClientGetReferencedConstantOptions contains the optional parameters for the EnumClient.GetReferencedConstant
 //     method.
 func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumClientGetReferencedConstantOptions) (EnumClientGetReferencedConstantResponse, error) {
@@ -164,8 +158,6 @@ func (client *EnumClient) getReferencedConstantHandleResponse(resp *http.Respons
 
 // PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - stringBody - string body
 //   - options - EnumClientPutNotExpandableOptions contains the optional parameters for the EnumClient.PutNotExpandable method.
 func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumClientPutNotExpandableOptions) (EnumClientPutNotExpandableResponse, error) {
@@ -205,8 +197,6 @@ func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, str
 
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - enumStringBody - enum string body
 //   - options - EnumClientPutReferencedOptions contains the optional parameters for the EnumClient.PutReferenced method.
 func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumClientPutReferencedOptions) (EnumClientPutReferencedResponse, error) {
@@ -246,8 +236,6 @@ func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumSt
 
 // PutReferencedConstant - Sends value 'green-color' from a constant
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - enumStringBody - enum string body
 //   - options - EnumClientPutReferencedConstantOptions contains the optional parameters for the EnumClient.PutReferencedConstant
 //     method.

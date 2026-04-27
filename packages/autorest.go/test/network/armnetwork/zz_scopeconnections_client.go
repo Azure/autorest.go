@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultScopeConnectionsClientVersion string = "2022-09-01"
+
 // ScopeConnectionsClient contains the methods for the ScopeConnections group.
 // Don't use this type directly, use NewScopeConnectionsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ScopeConnectionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewScopeConnectionsClient(subscriptionID string, credential azcore.TokenCre
 
 // CreateOrUpdate - Creates or updates scope connection from Network Manager
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - scopeConnectionName - Name for the cross-tenant connection.
@@ -98,7 +100,7 @@ func (client *ScopeConnectionsClient) createOrUpdateCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultScopeConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -118,8 +120,6 @@ func (client *ScopeConnectionsClient) createOrUpdateHandleResponse(resp *http.Re
 
 // Delete - Delete the pending scope connection created by this network manager.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - scopeConnectionName - Name for the cross-tenant connection.
@@ -177,8 +177,6 @@ func (client *ScopeConnectionsClient) deleteCreateRequest(ctx context.Context, r
 
 // Get - Get specified scope connection created by this Network Manager.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - scopeConnectionName - Name for the cross-tenant connection.
@@ -245,8 +243,6 @@ func (client *ScopeConnectionsClient) getHandleResponse(resp *http.Response) (Sc
 }
 
 // NewListPager - List all scope connections created by this network manager.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - options - ScopeConnectionsClientListOptions contains the optional parameters for the ScopeConnectionsClient.NewListPager

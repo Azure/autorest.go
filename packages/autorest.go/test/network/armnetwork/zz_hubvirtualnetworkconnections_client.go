@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultHubVirtualNetworkConnectionsClientVersion string = "2022-09-01"
+
 // HubVirtualNetworkConnectionsClient contains the methods for the HubVirtualNetworkConnections group.
 // Don't use this type directly, use NewHubVirtualNetworkConnectionsClient() instead.
+//
+// Generated from API version 2022-09-01
 type HubVirtualNetworkConnectionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azc
 
 // BeginCreateOrUpdate - Creates a hub virtual network connection if it doesn't exist else updates the existing one.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the HubVirtualNetworkConnection.
 //   - virtualHubName - The name of the VirtualHub.
 //   - connectionName - The name of the HubVirtualNetworkConnection.
@@ -71,8 +73,6 @@ func (client *HubVirtualNetworkConnectionsClient) BeginCreateOrUpdate(ctx contex
 
 // CreateOrUpdate - Creates a hub virtual network connection if it doesn't exist else updates the existing one.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *HubVirtualNetworkConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, hubVirtualNetworkConnectionParameters HubVirtualNetworkConnection, options *HubVirtualNetworkConnectionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "HubVirtualNetworkConnectionsClient.BeginCreateOrUpdate"
@@ -118,7 +118,7 @@ func (client *HubVirtualNetworkConnectionsClient) createOrUpdateCreateRequest(ct
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultHubVirtualNetworkConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, hubVirtualNetworkConnectionParameters); err != nil {
@@ -129,8 +129,6 @@ func (client *HubVirtualNetworkConnectionsClient) createOrUpdateCreateRequest(ct
 
 // BeginDelete - Deletes a HubVirtualNetworkConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VirtualHub.
 //   - virtualHubName - The name of the VirtualHub.
 //   - connectionName - The name of the HubVirtualNetworkConnection.
@@ -156,8 +154,6 @@ func (client *HubVirtualNetworkConnectionsClient) BeginDelete(ctx context.Contex
 
 // Delete - Deletes a HubVirtualNetworkConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *HubVirtualNetworkConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "HubVirtualNetworkConnectionsClient.BeginDelete"
@@ -211,8 +207,6 @@ func (client *HubVirtualNetworkConnectionsClient) deleteCreateRequest(ctx contex
 
 // Get - Retrieves the details of a HubVirtualNetworkConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VirtualHub.
 //   - virtualHubName - The name of the VirtualHub.
 //   - connectionName - The name of the vpn connection.
@@ -280,8 +274,6 @@ func (client *HubVirtualNetworkConnectionsClient) getHandleResponse(resp *http.R
 }
 
 // NewListPager - Retrieves the details of all HubVirtualNetworkConnections.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VirtualHub.
 //   - virtualHubName - The name of the VirtualHub.
 //   - options - HubVirtualNetworkConnectionsClientListOptions contains the optional parameters for the HubVirtualNetworkConnectionsClient.NewListPager

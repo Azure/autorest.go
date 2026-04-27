@@ -13,8 +13,12 @@ import (
 	"net/http"
 )
 
+const defaultSomeServiceClientVersion string = "2024-03-01"
+
 // SomeServiceClient contains the methods for the SomeService group.
 // Don't use this type directly, use NewSomeServiceClient() instead.
+//
+// Generated from API version 2024-03-01
 type SomeServiceClient struct {
 	internal *arm.Client
 }
@@ -86,8 +90,6 @@ func (client *SomeServiceClient) checkTrialAvailabilityHandleResponse(resp *http
 }
 
 // NewListThingsPager - Misc test APIs
-//
-// Generated from API version 2024-03-01
 //   - options - SomeServiceClientListThingsOptions contains the optional parameters for the SomeServiceClient.NewListThingsPager
 //     method.
 func (client *SomeServiceClient) NewListThingsPager(options *SomeServiceClientListThingsOptions) *runtime.Pager[SomeServiceClientListThingsResponse] {
@@ -121,7 +123,7 @@ func (client *SomeServiceClient) listThingsCreateRequest(ctx context.Context, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultSomeServiceClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

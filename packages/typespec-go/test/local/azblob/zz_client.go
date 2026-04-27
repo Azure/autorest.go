@@ -18,8 +18,12 @@ import (
 	"time"
 )
 
+const defaultClientVersion string = "2026-04-06"
+
 // Client contains the methods for the service.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2026-04-06
 type Client struct {
 	internal *azcore.Client
 	url      string
@@ -28,8 +32,6 @@ type Client struct {
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination
 // blob with zero length and full metadata.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
 //   - options - ClientAbortCopyFromURLOptions contains the optional parameters for the Client.AbortCopyFromURL method.
 func (client *Client) AbortCopyFromURL(ctx context.Context, copyID string, options *ClientAbortCopyFromURLOptions) (ClientAbortCopyFromURLResponse, error) {
@@ -70,7 +72,7 @@ func (client *Client) abortCopyFromURLCreateRequest(ctx context.Context, copyID 
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -99,8 +101,6 @@ func (client *Client) abortCopyFromURLHandleResponse(resp *http.Response) (Clien
 // AcquireLease - The Acquire Lease operation requests a new lease on a blob. The lease lock duration can be 15 to 60 seconds,
 // or can be infinite.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - duration - Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite
 //     lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change.
 //   - options - ClientAcquireLeaseOptions contains the optional parameters for the Client.AcquireLease method.
@@ -157,7 +157,7 @@ func (client *Client) acquireLeaseCreateRequest(ctx context.Context, duration in
 	if options != nil && options.ProposedLeaseID != nil {
 		req.Raw().Header["x-ms-proposed-lease-id"] = []string{*options.ProposedLeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -199,8 +199,6 @@ func (client *Client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcq
 // BreakLease - The Break Lease operation ends a lease and ensures that another client can't acquire a new lease until the
 // current lease period has expired.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientBreakLeaseOptions contains the optional parameters for the Client.BreakLease method.
 func (client *Client) BreakLease(ctx context.Context, options *ClientBreakLeaseOptions) (ClientBreakLeaseResponse, error) {
 	var err error
@@ -254,7 +252,7 @@ func (client *Client) breakLeaseCreateRequest(ctx context.Context, options *Clie
 	if options != nil && options.BreakPeriod != nil {
 		req.Raw().Header["x-ms-lease-break-period"] = []string{strconv.FormatInt(int64(*options.BreakPeriod), 10)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -300,8 +298,6 @@ func (client *Client) breakLeaseHandleResponse(resp *http.Response) (ClientBreak
 
 // ChangeLease - The Change Lease operation is used to change the ID of an existing lease.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - leaseID - Required. A lease ID for the source path. If specified, the source path must have an active lease and the lease
 //     ID must match.
 //   - proposedLeaseID - Required. The proposed lease ID for the container.
@@ -357,7 +353,7 @@ func (client *Client) changeLeaseCreateRequest(ctx context.Context, leaseID stri
 	req.Raw().Header["x-ms-lease-action"] = []string{"change"}
 	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
 	req.Raw().Header["x-ms-proposed-lease-id"] = []string{proposedLeaseID}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -399,8 +395,6 @@ func (client *Client) changeLeaseHandleResponse(resp *http.Response) (ClientChan
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response
 // until the copy is complete.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either
 //     be public or must be authenticated via a shared access signature.
@@ -507,7 +501,7 @@ func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource s
 	if options != nil && options.BlobTagsString != nil {
 		req.Raw().Header["x-ms-tags"] = []string{*options.BlobTagsString}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -571,8 +565,6 @@ func (client *Client) copyFromURLHandleResponse(resp *http.Response) (ClientCopy
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientCreateSnapshotOptions contains the optional parameters for the Client.CreateSnapshot method.
 func (client *Client) CreateSnapshot(ctx context.Context, options *ClientCreateSnapshotOptions) (ClientCreateSnapshotResponse, error) {
 	var err error
@@ -644,7 +636,7 @@ func (client *Client) createSnapshotCreateRequest(ctx context.Context, options *
 			}
 		}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -703,8 +695,6 @@ func (client *Client) createSnapshotHandleResponse(resp *http.Response) (ClientC
 // then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted blob or snapshot
 // causes the service to return an HTTP status code of 404 (ResourceNotFound).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 func (client *Client) Delete(ctx context.Context, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
 	var err error
@@ -774,7 +764,7 @@ func (client *Client) deleteCreateRequest(ctx context.Context, options *ClientDe
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -802,8 +792,6 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 
 // DeleteImmutabilityPolicy - The Delete Immutability Policy operation deletes the immutability policy on the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the Client.DeleteImmutabilityPolicy
 //     method.
 func (client *Client) DeleteImmutabilityPolicy(ctx context.Context, options *ClientDeleteImmutabilityPolicyOptions) (ClientDeleteImmutabilityPolicyResponse, error) {
@@ -845,7 +833,7 @@ func (client *Client) deleteImmutabilityPolicyCreateRequest(ctx context.Context,
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -874,8 +862,6 @@ func (client *Client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You
 // can also call Download to read a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientDownloadOptions contains the optional parameters for the Client.Download method.
 func (client *Client) Download(ctx context.Context, options *ClientDownloadOptions) (ClientDownloadResponse, error) {
 	var err error
@@ -956,7 +942,7 @@ func (client *Client) downloadCreateRequest(ctx context.Context, options *Client
 	if options != nil && options.StructuredBodyType != nil {
 		req.Raw().Header["x-ms-structured-body"] = []string{*options.StructuredBodyType}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -1189,8 +1175,6 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientGetAccountInfoOptions contains the optional parameters for the Client.GetAccountInfo method.
 func (client *Client) GetAccountInfo(ctx context.Context, options *ClientGetAccountInfoOptions) (ClientGetAccountInfoResponse, error) {
 	var err error
@@ -1225,7 +1209,7 @@ func (client *Client) getAccountInfoCreateRequest(ctx context.Context, options *
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -1266,8 +1250,6 @@ func (client *Client) getAccountInfoHandleResponse(resp *http.Response) (ClientG
 
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties
 // for the blob. It does not return the content of the blob.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientGetPropertiesOptions contains the optional parameters for the Client.GetProperties method.
 func (client *Client) GetProperties(ctx context.Context, options *ClientGetPropertiesOptions) (ClientGetPropertiesResponse, error) {
 	var err error
@@ -1334,7 +1316,7 @@ func (client *Client) getPropertiesCreateRequest(ctx context.Context, options *C
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -1580,8 +1562,6 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 
 // GetTags - The Get Blob Tags operation enables users to get tags on a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientGetTagsOptions contains the optional parameters for the Client.GetTags method.
 func (client *Client) GetTags(ctx context.Context, options *ClientGetTagsOptions) (ClientGetTagsResponse, error) {
 	var err error
@@ -1641,7 +1621,7 @@ func (client *Client) getTagsCreateRequest(ctx context.Context, options *ClientG
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -1676,8 +1656,6 @@ func (client *Client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsR
 // ReleaseLease - The Release Lease operation frees the lease if it's no longer needed, so that another client can immediately
 // acquire a lease against the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - leaseID - Required. A lease ID for the source path. If specified, the source path must have an active lease and the lease
 //     ID must match.
 //   - options - ClientReleaseLeaseOptions contains the optional parameters for the Client.ReleaseLease method.
@@ -1731,7 +1709,7 @@ func (client *Client) releaseLeaseCreateRequest(ctx context.Context, leaseID str
 	}
 	req.Raw().Header["x-ms-lease-action"] = []string{"release"}
 	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -1769,8 +1747,6 @@ func (client *Client) releaseLeaseHandleResponse(resp *http.Response) (ClientRel
 
 // RenewLease - The Renew Lease operation renews an existing lease.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - leaseID - Required. A lease ID for the source path. If specified, the source path must have an active lease and the lease
 //     ID must match.
 //   - options - ClientRenewLeaseOptions contains the optional parameters for the Client.RenewLease method.
@@ -1824,7 +1800,7 @@ func (client *Client) renewLeaseCreateRequest(ctx context.Context, leaseID strin
 	}
 	req.Raw().Header["x-ms-lease-action"] = []string{"renew"}
 	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -1865,8 +1841,6 @@ func (client *Client) renewLeaseHandleResponse(resp *http.Response) (ClientRenew
 
 // SetExpiry - Set the expiration time of a blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - expiryOptions - Required. Indicates mode of the expiry time
 //   - options - ClientSetExpiryOptions contains the optional parameters for the Client.SetExpiry method.
 func (client *Client) SetExpiry(ctx context.Context, expiryOptions ExpiryOptions, options *ClientSetExpiryOptions) (ClientSetExpiryResponse, error) {
@@ -1906,7 +1880,7 @@ func (client *Client) setExpiryCreateRequest(ctx context.Context, expiryOptions 
 	if options != nil && options.ExpiresOn != nil {
 		req.Raw().Header["x-ms-expiry-time"] = []string{datetime.RFC1123(*options.ExpiresOn).String()}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -1944,8 +1918,6 @@ func (client *Client) setExpiryHandleResponse(resp *http.Response) (ClientSetExp
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientSetHTTPHeadersOptions contains the optional parameters for the Client.SetHTTPHeaders method.
 func (client *Client) SetHTTPHeaders(ctx context.Context, options *ClientSetHTTPHeadersOptions) (ClientSetHTTPHeadersResponse, error) {
 	var err error
@@ -2016,7 +1988,7 @@ func (client *Client) setHTTPHeadersCreateRequest(ctx context.Context, options *
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -2061,8 +2033,6 @@ func (client *Client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientS
 
 // SetImmutabilityPolicy - Set the immutability policy of a blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - expiry - Specifies the date time when the blobs immutability policy is set to expire.
 //   - options - ClientSetImmutabilityPolicyOptions contains the optional parameters for the Client.SetImmutabilityPolicy method.
 func (client *Client) SetImmutabilityPolicy(ctx context.Context, expiry time.Time, options *ClientSetImmutabilityPolicyOptions) (ClientSetImmutabilityPolicyResponse, error) {
@@ -2111,7 +2081,7 @@ func (client *Client) setImmutabilityPolicyCreateRequest(ctx context.Context, ex
 		req.Raw().Header["x-ms-immutability-policy-mode"] = []string{string(*options.ImmutabilityPolicyMode)}
 	}
 	req.Raw().Header["x-ms-immutability-policy-until-date"] = []string{datetime.RFC1123(expiry).String()}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -2149,8 +2119,6 @@ func (client *Client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 
 // SetLegalHold - The Set Legal Hold operation sets a legal hold on the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - legalHold - Required. Specifies the legal hold status to set on the blob.
 //   - options - ClientSetLegalHoldOptions contains the optional parameters for the Client.SetLegalHold method.
 func (client *Client) SetLegalHold(ctx context.Context, legalHold bool, options *ClientSetLegalHoldOptions) (ClientSetLegalHoldResponse, error) {
@@ -2193,7 +2161,7 @@ func (client *Client) setLegalHoldCreateRequest(ctx context.Context, legalHold b
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
 	req.Raw().Header["x-ms-legal-hold"] = []string{strconv.FormatBool(legalHold)}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -2228,8 +2196,6 @@ func (client *Client) setLegalHoldHandleResponse(resp *http.Response) (ClientSet
 
 // SetMetadata - The Set Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientSetMetadataOptions contains the optional parameters for the Client.SetMetadata method.
 func (client *Client) SetMetadata(ctx context.Context, options *ClientSetMetadataOptions) (ClientSetMetadataResponse, error) {
 	var err error
@@ -2301,7 +2267,7 @@ func (client *Client) setMetadataCreateRequest(ctx context.Context, options *Cli
 			}
 		}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -2355,8 +2321,6 @@ func (client *Client) setMetadataHandleResponse(resp *http.Response) (ClientSetM
 
 // SetTags - The Set Tags operation enables users to set tags on a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - tags - The blob tags.
 //   - options - ClientSetTagsOptions contains the optional parameters for the Client.SetTags method.
 func (client *Client) SetTags(ctx context.Context, tags Tags, options *ClientSetTagsOptions) (ClientSetTagsResponse, error) {
@@ -2419,7 +2383,7 @@ func (client *Client) setTagsCreateRequest(ctx context.Context, tags Tags, optio
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	req.Raw().Header["Content-Type"] = []string{"application/xml"}
 	if err := runtime.MarshalAsXML(req, tags); err != nil {
 		return nil, err
@@ -2453,8 +2417,6 @@ func (client *Client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsR
 // but not on an append blob. A block blob's tier determines Hot/Cool/Archive storage type. This operation does not update
 // the blob's ETag.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - tier - Indicates the tier to be set on the blob.
 //   - options - ClientSetTierOptions contains the optional parameters for the Client.SetTier method.
 func (client *Client) SetTier(ctx context.Context, tier AccessTier, options *ClientSetTierOptions) (ClientSetTierResponse, error) {
@@ -2506,7 +2468,7 @@ func (client *Client) setTierCreateRequest(ctx context.Context, tier AccessTier,
 	if options != nil && options.RehydratePriority != nil {
 		req.Raw().Header["x-ms-rehydrate-priority"] = []string{string(*options.RehydratePriority)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -2534,8 +2496,6 @@ func (client *Client) setTierHandleResponse(resp *http.Response) (ClientSetTierR
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either
 //     be public or must be authenticated via a shared access signature.
@@ -2634,7 +2594,7 @@ func (client *Client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 	if options != nil && options.BlobTagsString != nil {
 		req.Raw().Header["x-ms-tags"] = []string{*options.BlobTagsString}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 
@@ -2681,8 +2641,6 @@ func (client *Client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 
 // Undelete - Undelete a blob that was previously soft deleted
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2026-04-06
 //   - options - ClientUndeleteOptions contains the optional parameters for the Client.Undelete method.
 func (client *Client) Undelete(ctx context.Context, options *ClientUndeleteOptions) (ClientUndeleteResponse, error) {
 	var err error
@@ -2717,7 +2675,7 @@ func (client *Client) undeleteCreateRequest(ctx context.Context, options *Client
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
 }
 

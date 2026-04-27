@@ -17,9 +17,13 @@ import (
 	"strings"
 )
 
+const defaultApplicationGatewayWafDynamicManifestsDefaultClientVersion string = "2022-09-01"
+
 // ApplicationGatewayWafDynamicManifestsDefaultClient contains the methods for the ApplicationGatewayWafDynamicManifestsDefault
 // group.
 // Don't use this type directly, use NewApplicationGatewayWafDynamicManifestsDefaultClient() instead.
+//
+// Generated from API version 2022-09-01
 type ApplicationGatewayWafDynamicManifestsDefaultClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewApplicationGatewayWafDynamicManifestsDefaultClient(subscriptionID string
 
 // Get - Gets the regional application gateway waf manifest.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - location - The region where the nrp are located at.
 //   - options - ApplicationGatewayWafDynamicManifestsDefaultClientGetOptions contains the optional parameters for the ApplicationGatewayWafDynamicManifestsDefaultClient.Get
 //     method.
@@ -87,7 +89,7 @@ func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) getCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultApplicationGatewayWafDynamicManifestsDefaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

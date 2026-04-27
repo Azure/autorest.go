@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultExpressRouteCrossConnectionsClientVersion string = "2022-09-01"
+
 // ExpressRouteCrossConnectionsClient contains the methods for the ExpressRouteCrossConnections group.
 // Don't use this type directly, use NewExpressRouteCrossConnectionsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ExpressRouteCrossConnectionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewExpressRouteCrossConnectionsClient(subscriptionID string, credential azc
 
 // BeginCreateOrUpdate - Update the specified ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - parameters - Parameters supplied to the update express route crossConnection operation.
@@ -70,8 +72,6 @@ func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx contex
 
 // CreateOrUpdate - Update the specified ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRouteCrossConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection, options *ExpressRouteCrossConnectionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate"
@@ -124,8 +124,6 @@ func (client *ExpressRouteCrossConnectionsClient) createOrUpdateCreateRequest(ct
 
 // Get - Gets details about the specified ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group (peering location of the circuit).
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection (service key of the circuit).
 //   - options - ExpressRouteCrossConnectionsClientGetOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.Get
@@ -188,8 +186,6 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *http.R
 }
 
 // NewListPager - Retrieves all the ExpressRouteCrossConnections in a subscription.
-//
-// Generated from API version 2022-09-01
 //   - options - ExpressRouteCrossConnectionsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.NewListPager
 //     method.
 func (client *ExpressRouteCrossConnectionsClient) NewListPager(options *ExpressRouteCrossConnectionsClientListOptions) *runtime.Pager[ExpressRouteCrossConnectionsClientListResponse] {
@@ -227,7 +223,7 @@ func (client *ExpressRouteCrossConnectionsClient) listCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultExpressRouteCrossConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -245,8 +241,6 @@ func (client *ExpressRouteCrossConnectionsClient) listHandleResponse(resp *http.
 // BeginListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - peeringName - The name of the peering.
@@ -274,8 +268,6 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.
 // ListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRouteCrossConnectionsClient) listArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListArpTableOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRouteCrossConnectionsClient.BeginListArpTable"
@@ -332,8 +324,6 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableCreateRequest(ctx 
 }
 
 // NewListByResourceGroupPager - Retrieves all the ExpressRouteCrossConnections in a resource group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - options - ExpressRouteCrossConnectionsClientListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.NewListByResourceGroupPager
 //     method.
@@ -394,8 +384,6 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleRespo
 // BeginListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in
 // a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - peeringName - The name of the peering.
@@ -423,8 +411,6 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx conte
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRouteCrossConnectionsClient) listRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRouteCrossConnectionsClient.BeginListRoutesTable"
@@ -483,8 +469,6 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableCreateRequest(c
 // BeginListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - peeringName - The name of the peering.
@@ -512,8 +496,6 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ct
 // ListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableSummaryOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary"
@@ -571,8 +553,6 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryCreateRe
 
 // UpdateTags - Updates an express route cross connection tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the cross connection.
 //   - crossConnectionParameters - Parameters supplied to update express route cross connection tags.

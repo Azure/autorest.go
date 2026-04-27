@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultErrorClientVersion string = "2023-12-01-preview"
+
 // ErrorClient contains the methods for the Error group.
 // Don't use this type directly, use NewErrorClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type ErrorClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewErrorClient(subscriptionID string, credential azcore.TokenCredential, op
 
 // CreateForUserDefinedError - Create a ConfidentialResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - confidentialResourceName - The name of the ConfidentialResource
 //   - resource - Resource create parameters.
@@ -90,7 +92,7 @@ func (client *ErrorClient) createForUserDefinedErrorCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultErrorClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -111,8 +113,6 @@ func (client *ErrorClient) createForUserDefinedErrorHandleResponse(resp *http.Re
 
 // GetForPredefinedError - Get a ConfidentialResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - confidentialResourceName - The name of the ConfidentialResource
 //   - options - ErrorClientGetForPredefinedErrorOptions contains the optional parameters for the ErrorClient.GetForPredefinedError
@@ -159,7 +159,7 @@ func (client *ErrorClient) getForPredefinedErrorCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultErrorClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

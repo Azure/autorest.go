@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultUsagesClientVersion string = "2025-10-01-preview"
+
 // UsagesClient contains the methods for the Usages group.
 // Don't use this type directly, use NewUsagesClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type UsagesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -40,8 +44,6 @@ func NewUsagesClient(subscriptionID string, credential azcore.TokenCredential, o
 }
 
 // NewListPager - Get usages for the requested subscription
-//
-// Generated from API version 2025-10-01-preview
 //   - location - The location name.
 //   - options - UsagesClientListOptions contains the optional parameters for the UsagesClient.NewListPager method.
 func (client *UsagesClient) NewListPager(location string, options *UsagesClientListOptions) *runtime.Pager[UsagesClientListResponse] {
@@ -86,7 +88,7 @@ func (client *UsagesClient) listCreateRequest(ctx context.Context, location stri
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultUsagesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

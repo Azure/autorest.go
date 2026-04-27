@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultBackupVaultOperationResultsClientVersion string = "2025-07-01"
+
 // BackupVaultOperationResultsClient contains the methods for the BackupVaultOperationResults group.
 // Don't use this type directly, use NewBackupVaultOperationResultsClient() instead.
+//
+// Generated from API version 2025-07-01
 type BackupVaultOperationResultsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewBackupVaultOperationResultsClient(subscriptionID string, credential azco
 
 // Get -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - vaultName - The name of the backup vault.
 //   - options - BackupVaultOperationResultsClientGetOptions contains the optional parameters for the BackupVaultOperationResultsClient.Get
@@ -92,7 +94,7 @@ func (client *BackupVaultOperationResultsClient) getCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultBackupVaultOperationResultsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

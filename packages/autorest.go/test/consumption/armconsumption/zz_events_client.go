@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultEventsClientVersion string = "2019-10-01"
+
 // EventsClient contains the methods for the Events group.
 // Don't use this type directly, use NewEventsClient() instead.
+//
+// Generated from API version 2019-10-01
 type EventsClient struct {
 	internal *arm.Client
 }
@@ -36,8 +40,6 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 }
 
 // NewListPager - Lists the events by billingAccountId and billingProfileId for given start and end date.
-//
-// Generated from API version 2019-10-01
 //   - startDate - Start date
 //   - endDate - End date
 //   - scope - The scope associated with events operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
@@ -74,7 +76,7 @@ func (client *EventsClient) listCreateRequest(ctx context.Context, startDate str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultEventsClientVersion)
 	reqQP.Set("endDate", endDate)
 	reqQP.Set("startDate", startDate)
 	req.Raw().URL.RawQuery = reqQP.Encode()

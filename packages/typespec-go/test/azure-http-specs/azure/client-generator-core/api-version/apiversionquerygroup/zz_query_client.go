@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultQueryClientVersion string = "2025-01-01"
+
 // QueryClient contains the methods for the Query group.
 // Don't use this type directly, use NewQueryClientWithNoCredential() instead.
+//
+// Generated from API version 2025-01-01
 type QueryClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -49,8 +53,6 @@ func NewQueryClientWithNoCredential(endpoint string, options *QueryClientOptions
 
 // QueryAPIVersion - Query api version parameter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - options - QueryClientQueryAPIVersionOptions contains the optional parameters for the QueryClient.QueryAPIVersion method.
 func (client *QueryClient) QueryAPIVersion(ctx context.Context, options *QueryClientQueryAPIVersionOptions) (QueryClientQueryAPIVersionResponse, error) {
 	var err error
@@ -81,7 +83,7 @@ func (client *QueryClient) queryAPIVersionCreateRequest(ctx context.Context, _ *
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("version", "2025-01-01")
+	reqQP.Set("version", defaultQueryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLroPagingClientVersion string = "2023-12-01-preview"
+
 // LroPagingClient contains the methods for the LroPaging group.
 // Don't use this type directly, use NewLroPagingClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type LroPagingClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -40,8 +44,6 @@ func NewLroPagingClient(subscriptionID string, credential azcore.TokenCredential
 }
 
 // BeginPostPagingLro - A long-running resource action.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - productName - The name of the Product
 //   - options - LroPagingClientBeginPostPagingLroOptions contains the optional parameters for the LroPagingClient.BeginPostPagingLro
@@ -82,8 +84,6 @@ func (client *LroPagingClient) BeginPostPagingLro(ctx context.Context, resourceG
 }
 
 // PostPagingLro - A long-running resource action.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LroPagingClient) postPagingLro(ctx context.Context, resourceGroupName string, productName string, options *LroPagingClientBeginPostPagingLroOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LroPagingClient.BeginPostPagingLro"
@@ -125,7 +125,7 @@ func (client *LroPagingClient) postPagingLroCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLroPagingClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

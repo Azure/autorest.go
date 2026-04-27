@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultAPIVersionsClientVersion string = "2024-03-15-preview"
+
 // APIVersionsClient contains the methods for the APIVersions group.
 // Don't use this type directly, use NewAPIVersionsClient() instead.
+//
+// Generated from API version 2024-03-15-preview
 type APIVersionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewAPIVersionsClient(subscriptionID string, credential azcore.TokenCredenti
 
 // CreateOrUpdate - Creates new or updates existing API version.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -105,7 +107,7 @@ func (client *APIVersionsClient) createOrUpdateCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultAPIVersionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -129,8 +131,6 @@ func (client *APIVersionsClient) createOrUpdateHandleResponse(resp *http.Respons
 
 // Delete - Deletes specified API version
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -190,15 +190,13 @@ func (client *APIVersionsClient) deleteCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultAPIVersionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Returns details of the API version.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -259,7 +257,7 @@ func (client *APIVersionsClient) getCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultAPIVersionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -278,8 +276,6 @@ func (client *APIVersionsClient) getHandleResponse(resp *http.Response) (APIVers
 }
 
 // Head - Checks if specified API version exists.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -339,14 +335,12 @@ func (client *APIVersionsClient) headCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultAPIVersionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // NewListPager - Returns a collection of API versions.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -406,7 +400,7 @@ func (client *APIVersionsClient) listCreateRequest(ctx context.Context, resource
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultAPIVersionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

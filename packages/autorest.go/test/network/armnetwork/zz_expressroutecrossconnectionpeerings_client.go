@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultExpressRouteCrossConnectionPeeringsClientVersion string = "2022-09-01"
+
 // ExpressRouteCrossConnectionPeeringsClient contains the methods for the ExpressRouteCrossConnectionPeerings group.
 // Don't use this type directly, use NewExpressRouteCrossConnectionPeeringsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ExpressRouteCrossConnectionPeeringsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credent
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - peeringName - The name of the peering.
@@ -71,8 +73,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx
 
 // CreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateReq
 
 // BeginDelete - Deletes the specified peering from the ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - peeringName - The name of the peering.
@@ -156,8 +154,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context
 
 // Delete - Deletes the specified peering from the ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRouteCrossConnectionPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRouteCrossConnectionPeeringsClient.BeginDelete"
@@ -211,8 +207,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) deleteCreateRequest(ctx
 
 // Get - Gets the specified peering for the ExpressRouteCrossConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - peeringName - The name of the peering.
@@ -280,8 +274,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp 
 }
 
 // NewListPager - Gets all peerings in a specified ExpressRouteCrossConnection.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - crossConnectionName - The name of the ExpressRouteCrossConnection.
 //   - options - ExpressRouteCrossConnectionPeeringsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.NewListPager
@@ -329,7 +321,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) listCreateRequest(ctx c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultExpressRouteCrossConnectionPeeringsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

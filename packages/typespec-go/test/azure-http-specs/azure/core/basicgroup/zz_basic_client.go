@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultBasicClientVersion string = "2022-12-01-preview"
+
 // BasicClient - Illustrates bodies templated with Azure Core
 // Don't use this type directly, use NewBasicClientWithNoCredential() instead.
+//
+// Generated from API version 2022-12-01-preview
 type BasicClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -54,8 +58,6 @@ func NewBasicClientWithNoCredential(endpoint string, options *BasicClientOptions
 //
 // Creates or replaces a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - resource - The resource instance.
 //   - options - BasicClientCreateOrReplaceOptions contains the optional parameters for the BasicClient.CreateOrReplace method.
@@ -90,7 +92,7 @@ func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, id 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -113,8 +115,6 @@ func (client *BasicClient) createOrReplaceHandleResponse(resp *http.Response) (B
 //
 // Creates or updates a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - resource - The resource instance.
 //   - options - BasicClientCreateOrUpdateOptions contains the optional parameters for the BasicClient.CreateOrUpdate method.
@@ -149,7 +149,7 @@ func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, id i
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
@@ -172,8 +172,6 @@ func (client *BasicClient) createOrUpdateHandleResponse(resp *http.Response) (Ba
 //
 // Deletes a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - options - BasicClientDeleteOptions contains the optional parameters for the BasicClient.Delete method.
 func (client *BasicClient) Delete(ctx context.Context, id int32, options *BasicClientDeleteOptions) (BasicClientDeleteResponse, error) {
@@ -206,7 +204,7 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
@@ -215,8 +213,6 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ 
 //
 // Exports a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - formatParam - The format of the data.
 //   - options - BasicClientExportOptions contains the optional parameters for the BasicClient.Export method.
@@ -251,7 +247,7 @@ func (client *BasicClient) exportCreateRequest(ctx context.Context, id int32, fo
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	reqQP.Set("format", formatParam)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -271,8 +267,6 @@ func (client *BasicClient) exportHandleResponse(resp *http.Response) (BasicClien
 //
 // Exports all users
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - formatParam - The format of the data.
 //   - options - BasicClientExportAllUsersOptions contains the optional parameters for the BasicClient.ExportAllUsers method.
 func (client *BasicClient) ExportAllUsers(ctx context.Context, formatParam string, options *BasicClientExportAllUsersOptions) (BasicClientExportAllUsersResponse, error) {
@@ -305,7 +299,7 @@ func (client *BasicClient) exportAllUsersCreateRequest(ctx context.Context, form
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	reqQP.Set("format", formatParam)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -325,8 +319,6 @@ func (client *BasicClient) exportAllUsersHandleResponse(resp *http.Response) (Ba
 //
 // Gets a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - options - BasicClientGetOptions contains the optional parameters for the BasicClient.Get method.
 func (client *BasicClient) Get(ctx context.Context, id int32, options *BasicClientGetOptions) (BasicClientGetResponse, error) {
@@ -360,7 +352,7 @@ func (client *BasicClient) getCreateRequest(ctx context.Context, id int32, _ *Ba
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -377,9 +369,7 @@ func (client *BasicClient) getHandleResponse(resp *http.Response) (BasicClientGe
 
 // NewListPager - Lists all users.
 //
-// # Lists all Users
-//
-// Generated from API version 2022-12-01-preview
+// Lists all Users
 //   - options - BasicClientListOptions contains the optional parameters for the BasicClient.NewListPager method.
 func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtime.Pager[BasicClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListResponse]{
@@ -412,7 +402,7 @@ func (client *BasicClient) listCreateRequest(ctx context.Context, options *Basic
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	if options != nil && options.Expand != nil {
 		for _, qv := range options.Expand {
 			reqQP.Add("expand", qv)

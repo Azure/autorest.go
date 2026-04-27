@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultVirtualHubIPConfigurationClientVersion string = "2022-09-01"
+
 // VirtualHubIPConfigurationClient contains the methods for the VirtualHubIPConfiguration group.
 // Don't use this type directly, use NewVirtualHubIPConfigurationClient() instead.
+//
+// Generated from API version 2022-09-01
 type VirtualHubIPConfigurationClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewVirtualHubIPConfigurationClient(subscriptionID string, credential azcore
 
 // BeginCreateOrUpdate - Creates a VirtualHubIpConfiguration resource if it doesn't exist else updates the existing VirtualHubIpConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VirtualHub.
 //   - virtualHubName - The name of the VirtualHub.
 //   - ipConfigName - The name of the ipconfig.
@@ -71,8 +73,6 @@ func (client *VirtualHubIPConfigurationClient) BeginCreateOrUpdate(ctx context.C
 
 // CreateOrUpdate - Creates a VirtualHubIpConfiguration resource if it doesn't exist else updates the existing VirtualHubIpConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualHubIPConfigurationClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, parameters HubIPConfiguration, options *VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualHubIPConfigurationClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *VirtualHubIPConfigurationClient) createOrUpdateCreateRequest(ctx c
 
 // BeginDelete - Deletes a VirtualHubIpConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VirtualHubBgpConnection.
 //   - virtualHubName - The name of the VirtualHub.
 //   - ipConfigName - The name of the ipconfig.
@@ -156,8 +154,6 @@ func (client *VirtualHubIPConfigurationClient) BeginDelete(ctx context.Context, 
 
 // Delete - Deletes a VirtualHubIpConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualHubIPConfigurationClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualHubIPConfigurationClient.BeginDelete"
@@ -211,8 +207,6 @@ func (client *VirtualHubIPConfigurationClient) deleteCreateRequest(ctx context.C
 
 // Get - Retrieves the details of a Virtual Hub Ip configuration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VirtualHub.
 //   - virtualHubName - The name of the VirtualHub.
 //   - ipConfigName - The name of the ipconfig.
@@ -264,7 +258,7 @@ func (client *VirtualHubIPConfigurationClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultVirtualHubIPConfigurationClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -280,8 +274,6 @@ func (client *VirtualHubIPConfigurationClient) getHandleResponse(resp *http.Resp
 }
 
 // NewListPager - Retrieves the details of all VirtualHubIpConfigurations.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VirtualHub.
 //   - virtualHubName - The name of the VirtualHub.
 //   - options - VirtualHubIPConfigurationClientListOptions contains the optional parameters for the VirtualHubIPConfigurationClient.NewListPager

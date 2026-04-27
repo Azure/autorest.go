@@ -14,8 +14,12 @@ import (
 	"strings"
 )
 
+const defaultPathClientVersion string = "2025-01-01"
+
 // PathClient contains the methods for the Path group.
 // Don't use this type directly, use NewPathClientWithNoCredential() instead.
+//
+// Generated from API version 2025-01-01
 type PathClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -50,8 +54,6 @@ func NewPathClientWithNoCredential(endpoint string, options *PathClientOptions) 
 
 // PathAPIVersion - Path api version parameter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - options - PathClientPathAPIVersionOptions contains the optional parameters for the PathClient.PathAPIVersion method.
 func (client *PathClient) PathAPIVersion(ctx context.Context, options *PathClientPathAPIVersionOptions) (PathClientPathAPIVersionResponse, error) {
 	var err error
@@ -77,7 +79,7 @@ func (client *PathClient) PathAPIVersion(ctx context.Context, options *PathClien
 // pathAPIVersionCreateRequest creates the PathAPIVersion request.
 func (client *PathClient) pathAPIVersionCreateRequest(ctx context.Context, _ *PathClientPathAPIVersionOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/api-version/path/{version}"
-	urlPath = strings.ReplaceAll(urlPath, "{version}", url.PathEscape("2025-01-01"))
+	urlPath = strings.ReplaceAll(urlPath, "{version}", url.PathEscape(defaultPathClientVersion))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

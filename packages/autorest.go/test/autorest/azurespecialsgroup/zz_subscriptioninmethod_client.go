@@ -26,8 +26,6 @@ type SubscriptionInMethodClient struct {
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side
 // validation should prevent you from making this call
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - subscriptionID - This should appear as a method parameter, use value null, client-side validation should prvenet the call
 //   - options - SubscriptionInMethodClientPostMethodLocalNullOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalNull
 //     method.
@@ -70,8 +68,6 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx c
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - subscriptionID - This should appear as a method parameter, use value '1234-5678-9012-3456'
 //   - options - SubscriptionInMethodClientPostMethodLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalValid
 //     method.
@@ -114,8 +110,6 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - subscriptionID - Should appear as a method parameter -use value '1234-5678-9012-3456'
 //   - options - SubscriptionInMethodClientPostPathLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostPathLocalValid
 //     method.
@@ -158,8 +152,6 @@ func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx co
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - subscriptionID - The subscriptionId, which appears in the path, the value is always '1234-5678-9012-3456'
 //   - options - SubscriptionInMethodClientPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostSwaggerLocalValid
 //     method.

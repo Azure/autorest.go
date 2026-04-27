@@ -22,8 +22,6 @@ type DownloadClient struct {
 
 // ErrorStream - Get binary error stream
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - DownloadClientErrorStreamOptions contains the optional parameters for the DownloadClient.ErrorStream method.
 func (client *DownloadClient) ErrorStream(ctx context.Context, options *DownloadClientErrorStreamOptions) (DownloadClientErrorStreamResponse, error) {
 	var err error

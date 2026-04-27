@@ -31,8 +31,6 @@ type PageBlobClient struct {
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -196,8 +194,6 @@ func (client *PageBlobClient) clearPagesHandleResponse(resp *http.Response) (Pag
 // be read or copied from as usual. This API is supported since REST version
 // 2016-05-31.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -312,8 +308,6 @@ func (client *PageBlobClient) copyIncrementalHandleResponse(resp *http.Response)
 
 // Create - The Create operation creates a new page blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - contentLength - The length of the request.
@@ -506,8 +500,6 @@ func (client *PageBlobClient) createHandleResponse(resp *http.Response) (PageBlo
 
 // NewGetPageRangesPager - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot
 // of a page blob
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -640,8 +632,6 @@ func (client *PageBlobClient) getPageRangesHandleResponse(resp *http.Response) (
 
 // NewGetPageRangesDiffPager - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that
 // were changed between target blob and previous snapshot.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -780,8 +770,6 @@ func (client *PageBlobClient) getPageRangesDiffHandleResponse(resp *http.Respons
 
 // Resize - Resize the Blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -913,8 +901,6 @@ func (client *PageBlobClient) resizeHandleResponse(resp *http.Response) (PageBlo
 
 // UpdateSequenceNumber - Update the sequence number of the blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -1036,8 +1022,6 @@ func (client *PageBlobClient) updateSequenceNumberHandleResponse(resp *http.Resp
 
 // UploadPages - The Upload Pages operation writes a range of pages to a page blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -1221,8 +1205,6 @@ func (client *PageBlobClient) uploadPagesHandleResponse(resp *http.Response) (Pa
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from
 // a URL
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp

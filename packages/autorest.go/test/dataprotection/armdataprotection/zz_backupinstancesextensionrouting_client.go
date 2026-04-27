@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultBackupInstancesExtensionRoutingClientVersion string = "2025-07-01"
+
 // BackupInstancesExtensionRoutingClient contains the methods for the BackupInstancesExtensionRouting group.
 // Don't use this type directly, use NewBackupInstancesExtensionRoutingClient() instead.
+//
+// Generated from API version 2025-07-01
 type BackupInstancesExtensionRoutingClient struct {
 	internal *arm.Client
 }
@@ -36,8 +40,6 @@ func NewBackupInstancesExtensionRoutingClient(credential azcore.TokenCredential,
 }
 
 // NewListPager - Gets a list of backup instances associated with a tracked resource
-//
-// Generated from API version 2025-07-01
 //   - resourceID - ARM path of the resource to be protected using Microsoft.DataProtection
 //   - options - BackupInstancesExtensionRoutingClientListOptions contains the optional parameters for the BackupInstancesExtensionRoutingClient.NewListPager
 //     method.
@@ -72,7 +74,7 @@ func (client *BackupInstancesExtensionRoutingClient) listCreateRequest(ctx conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultBackupInstancesExtensionRoutingClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

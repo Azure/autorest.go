@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultPreviewVersionClientVersion string = "2024-12-01-preview"
+
 // PreviewVersionClient contains the methods for the PreviewVersion group.
 // Don't use this type directly, use NewPreviewVersionClientWithNoCredential() instead.
+//
+// Generated from API version 2024-12-01-preview
 type PreviewVersionClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -52,8 +56,6 @@ func NewPreviewVersionClientWithNoCredential(endpoint string, options *PreviewVe
 
 // GetWidget - Get widget by id (available in all versions)
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-12-01-preview
 //   - options - PreviewVersionClientGetWidgetOptions contains the optional parameters for the PreviewVersionClient.GetWidget
 //     method.
 func (client *PreviewVersionClient) GetWidget(ctx context.Context, id string, options *PreviewVersionClientGetWidgetOptions) (PreviewVersionClientGetWidgetResponse, error) {
@@ -90,7 +92,7 @@ func (client *PreviewVersionClient) getWidgetCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-12-01-preview")
+	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -107,8 +109,6 @@ func (client *PreviewVersionClient) getWidgetHandleResponse(resp *http.Response)
 
 // ListWidgets - List widgets with optional color filtering
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-12-01-preview
 //   - options - PreviewVersionClientListWidgetsOptions contains the optional parameters for the PreviewVersionClient.ListWidgets
 //     method.
 func (client *PreviewVersionClient) ListWidgets(ctx context.Context, options *PreviewVersionClientListWidgetsOptions) (PreviewVersionClientListWidgetsResponse, error) {
@@ -141,7 +141,7 @@ func (client *PreviewVersionClient) listWidgetsCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-12-01-preview")
+	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
 	if options != nil && options.Color != nil {
 		reqQP.Set("color", *options.Color)
 	}
@@ -164,8 +164,6 @@ func (client *PreviewVersionClient) listWidgetsHandleResponse(resp *http.Respons
 
 // UpdateWidgetColor - Update widget color (preview only)
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-12-01-preview
 //   - options - PreviewVersionClientUpdateWidgetColorOptions contains the optional parameters for the PreviewVersionClient.UpdateWidgetColor
 //     method.
 func (client *PreviewVersionClient) UpdateWidgetColor(ctx context.Context, id string, colorUpdate UpdateWidgetColorRequest, options *PreviewVersionClientUpdateWidgetColorOptions) (PreviewVersionClientUpdateWidgetColorResponse, error) {
@@ -202,7 +200,7 @@ func (client *PreviewVersionClient) updateWidgetColorCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-12-01-preview")
+	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}

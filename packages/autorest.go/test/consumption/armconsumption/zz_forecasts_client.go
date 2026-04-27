@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultForecastsClientVersion string = "2019-10-01"
+
 // ForecastsClient contains the methods for the Forecasts group.
 // Don't use this type directly, use NewForecastsClient() instead.
+//
+// Generated from API version 2019-10-01
 type ForecastsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // NewListPager - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development.
 // We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
-//
-// Generated from API version 2019-10-01
 //   - options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.NewListPager method.
 func (client *ForecastsClient) NewListPager(options *ForecastsClientListOptions) *runtime.Pager[ForecastsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ForecastsClientListResponse]{
@@ -83,7 +85,7 @@ func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *F
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultForecastsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

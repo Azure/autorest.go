@@ -13,8 +13,12 @@ import (
 	"net/http"
 )
 
+const defaultWorkspaceGitRepoManagementClientVersion string = "2020-12-01"
+
 // WorkspaceGitRepoManagementClient contains the methods for the WorkspaceGitRepoManagement group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type WorkspaceGitRepoManagementClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -22,8 +26,6 @@ type WorkspaceGitRepoManagementClient struct {
 
 // GetGitHubAccessToken - Get the GitHub access token.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - options - WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagementClient.GetGitHubAccessToken
 //     method.
 func (client *WorkspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
@@ -52,7 +54,7 @@ func (client *WorkspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultWorkspaceGitRepoManagementClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.ClientRequestID != nil {

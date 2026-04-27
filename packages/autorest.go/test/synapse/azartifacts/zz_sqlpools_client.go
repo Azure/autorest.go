@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultSQLPoolsClientVersion string = "2020-12-01"
+
 // SQLPoolsClient contains the methods for the SQLPools group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type SQLPoolsClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type SQLPoolsClient struct {
 
 // Get - Get Sql Pool
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - sqlPoolName - The Sql Pool name
 //   - options - SQLPoolsClientGetOptions contains the optional parameters for the SQLPoolsClient.Get method.
 func (client *SQLPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsClientGetOptions) (SQLPoolsClientGetResponse, error) {
@@ -76,8 +78,6 @@ func (client *SQLPoolsClient) getHandleResponse(resp *http.Response) (SQLPoolsCl
 
 // List - List Sql Pools
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - options - SQLPoolsClientListOptions contains the optional parameters for the SQLPoolsClient.List method.
 func (client *SQLPoolsClient) List(ctx context.Context, options *SQLPoolsClientListOptions) (SQLPoolsClientListResponse, error) {
 	var err error
@@ -105,7 +105,7 @@ func (client *SQLPoolsClient) listCreateRequest(ctx context.Context, _ *SQLPools
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultSQLPoolsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

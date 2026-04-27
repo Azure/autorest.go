@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultPreviewVersionClientVersion string = "2024-06-01"
+
 // PreviewVersionClient contains the methods for the PreviewVersion group.
 // Don't use this type directly, use NewPreviewVersionClientWithNoCredential() instead.
+//
+// Generated from API version 2024-06-01
 type PreviewVersionClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -52,8 +56,6 @@ func NewPreviewVersionClientWithNoCredential(endpoint string, options *PreviewVe
 
 // GetWidget - Get widget by id (available in all versions)
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-01
 //   - options - PreviewVersionClientGetWidgetOptions contains the optional parameters for the PreviewVersionClient.GetWidget
 //     method.
 func (client *PreviewVersionClient) GetWidget(ctx context.Context, id string, options *PreviewVersionClientGetWidgetOptions) (PreviewVersionClientGetWidgetResponse, error) {
@@ -90,7 +92,7 @@ func (client *PreviewVersionClient) getWidgetCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-01")
+	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -107,8 +109,6 @@ func (client *PreviewVersionClient) getWidgetHandleResponse(resp *http.Response)
 
 // ListWidgets - List widgets with optional color filtering
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-01
 //   - options - PreviewVersionClientListWidgetsOptions contains the optional parameters for the PreviewVersionClient.ListWidgets
 //     method.
 func (client *PreviewVersionClient) ListWidgets(ctx context.Context, options *PreviewVersionClientListWidgetsOptions) (PreviewVersionClientListWidgetsResponse, error) {
@@ -141,7 +141,7 @@ func (client *PreviewVersionClient) listWidgetsCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-01")
+	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
 	if options != nil && options.Name != nil {
 		reqQP.Set("name", *options.Name)
 	}

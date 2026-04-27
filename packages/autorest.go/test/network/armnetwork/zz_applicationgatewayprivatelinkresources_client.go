@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultApplicationGatewayPrivateLinkResourcesClientVersion string = "2022-09-01"
+
 // ApplicationGatewayPrivateLinkResourcesClient contains the methods for the ApplicationGatewayPrivateLinkResources group.
 // Don't use this type directly, use NewApplicationGatewayPrivateLinkResourcesClient() instead.
+//
+// Generated from API version 2022-09-01
 type ApplicationGatewayPrivateLinkResourcesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewApplicationGatewayPrivateLinkResourcesClient(subscriptionID string, cred
 }
 
 // NewListPager - Lists all private link resources on an application gateway.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - applicationGatewayName - The name of the application gateway.
 //   - options - ApplicationGatewayPrivateLinkResourcesClientListOptions contains the optional parameters for the ApplicationGatewayPrivateLinkResourcesClient.NewListPager
@@ -91,7 +93,7 @@ func (client *ApplicationGatewayPrivateLinkResourcesClient) listCreateRequest(ct
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultApplicationGatewayPrivateLinkResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -17,9 +17,13 @@ import (
 	"strings"
 )
 
+const defaultVPNServerConfigurationsAssociatedWithVirtualWanClientVersion string = "2022-09-01"
+
 // VPNServerConfigurationsAssociatedWithVirtualWanClient contains the methods for the VPNServerConfigurationsAssociatedWithVirtualWan
 // group.
 // Don't use this type directly, use NewVPNServerConfigurationsAssociatedWithVirtualWanClient() instead.
+//
+// Generated from API version 2022-09-01
 type VPNServerConfigurationsAssociatedWithVirtualWanClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name.
 //   - virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
 //   - options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
@@ -70,8 +72,6 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList"
@@ -113,7 +113,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listCreateR
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultVPNServerConfigurationsAssociatedWithVirtualWanClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

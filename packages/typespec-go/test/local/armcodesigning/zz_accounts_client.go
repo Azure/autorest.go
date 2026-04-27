@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultAccountsClientVersion string = "2024-09-30-preview"
+
 // AccountsClient contains the methods for the Accounts group.
 // Don't use this type directly, use NewAccountsClient() instead.
+//
+// Generated from API version 2024-09-30-preview
 type AccountsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewAccountsClient(subscriptionID string, credential azcore.TokenCredential,
 
 // CheckNameAvailability - Checks that the trusted signing account name is valid and is not already in use.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 //   - body - The CheckAvailability request
 //   - options - AccountsClientCheckNameAvailabilityOptions contains the optional parameters for the AccountsClient.CheckNameAvailability
 //     method.
@@ -80,7 +82,7 @@ func (client *AccountsClient) checkNameAvailabilityCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-09-30-preview")
+	reqQP.Set("api-version", defaultAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -101,8 +103,6 @@ func (client *AccountsClient) checkNameAvailabilityHandleResponse(resp *http.Res
 
 // BeginCreate - Create a trusted Signing Account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - resource - Parameters to create the trusted signing account
@@ -127,8 +127,6 @@ func (client *AccountsClient) BeginCreate(ctx context.Context, resourceGroupName
 
 // Create - Create a trusted Signing Account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 func (client *AccountsClient) create(ctx context.Context, resourceGroupName string, accountName string, resource Account, options *AccountsClientBeginCreateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AccountsClient.BeginCreate"
@@ -170,7 +168,7 @@ func (client *AccountsClient) createCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-09-30-preview")
+	reqQP.Set("api-version", defaultAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -182,8 +180,6 @@ func (client *AccountsClient) createCreateRequest(ctx context.Context, resourceG
 
 // BeginDelete - Delete a trusted signing account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - options - AccountsClientBeginDeleteOptions contains the optional parameters for the AccountsClient.BeginDelete method.
@@ -206,8 +202,6 @@ func (client *AccountsClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Delete a trusted signing account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 func (client *AccountsClient) deleteOperation(ctx context.Context, resourceGroupName string, accountName string, options *AccountsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AccountsClient.BeginDelete"
@@ -249,15 +243,13 @@ func (client *AccountsClient) deleteCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-09-30-preview")
+	reqQP.Set("api-version", defaultAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a trusted Signing Account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - options - AccountsClientGetOptions contains the optional parameters for the AccountsClient.Get method.
@@ -303,7 +295,7 @@ func (client *AccountsClient) getCreateRequest(ctx context.Context, resourceGrou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-09-30-preview")
+	reqQP.Set("api-version", defaultAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -319,8 +311,6 @@ func (client *AccountsClient) getHandleResponse(resp *http.Response) (AccountsCl
 }
 
 // NewListByResourceGroupPager - Lists trusted signing accounts within a resource group.
-//
-// Generated from API version 2024-09-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - AccountsClientListByResourceGroupOptions contains the optional parameters for the AccountsClient.NewListByResourceGroupPager
 //     method.
@@ -363,7 +353,7 @@ func (client *AccountsClient) listByResourceGroupCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-09-30-preview")
+	reqQP.Set("api-version", defaultAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -379,8 +369,6 @@ func (client *AccountsClient) listByResourceGroupHandleResponse(resp *http.Respo
 }
 
 // NewListBySubscriptionPager - Lists trusted signing accounts within a subscription.
-//
-// Generated from API version 2024-09-30-preview
 //   - options - AccountsClientListBySubscriptionOptions contains the optional parameters for the AccountsClient.NewListBySubscriptionPager
 //     method.
 func (client *AccountsClient) NewListBySubscriptionPager(options *AccountsClientListBySubscriptionOptions) *runtime.Pager[AccountsClientListBySubscriptionResponse] {
@@ -418,7 +406,7 @@ func (client *AccountsClient) listBySubscriptionCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-09-30-preview")
+	reqQP.Set("api-version", defaultAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -435,8 +423,6 @@ func (client *AccountsClient) listBySubscriptionHandleResponse(resp *http.Respon
 
 // BeginUpdate - Update a trusted signing account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - properties - Parameters supplied to update the trusted signing account
@@ -460,8 +446,6 @@ func (client *AccountsClient) BeginUpdate(ctx context.Context, resourceGroupName
 
 // Update - Update a trusted signing account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-09-30-preview
 func (client *AccountsClient) update(ctx context.Context, resourceGroupName string, accountName string, properties AccountPatch, options *AccountsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AccountsClient.BeginUpdate"
@@ -503,7 +487,7 @@ func (client *AccountsClient) updateCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-09-30-preview")
+	reqQP.Set("api-version", defaultAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

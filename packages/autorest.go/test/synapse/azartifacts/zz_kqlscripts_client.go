@@ -13,16 +13,18 @@ import (
 	"net/http"
 )
 
+const defaultKqlScriptsClientVersion string = "2021-11-01-preview"
+
 // KqlScriptsClient contains the methods for the KqlScripts group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2021-11-01-preview
 type KqlScriptsClient struct {
 	internal *azcore.Client
 	endpoint string
 }
 
 // NewGetAllPager - Get all KQL scripts
-//
-// Generated from API version 2021-11-01-preview
 //   - options - KqlScriptsClientGetAllOptions contains the optional parameters for the KqlScriptsClient.NewGetAllPager method.
 func (client *KqlScriptsClient) NewGetAllPager(options *KqlScriptsClientGetAllOptions) *runtime.Pager[KqlScriptsClientGetAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[KqlScriptsClientGetAllResponse]{
@@ -53,7 +55,7 @@ func (client *KqlScriptsClient) getAllCreateRequest(ctx context.Context, _ *KqlS
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-11-01-preview")
+	reqQP.Set("api-version", defaultKqlScriptsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

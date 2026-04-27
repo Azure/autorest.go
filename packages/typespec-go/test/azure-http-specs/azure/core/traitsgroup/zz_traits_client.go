@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultTraitsClientVersion string = "2022-12-01-preview"
+
 // TraitsClient - Illustrates Azure Core operation customizations by traits
 // Don't use this type directly, use NewTraitsClientWithNoCredential() instead.
+//
+// Generated from API version 2022-12-01-preview
 type TraitsClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -53,8 +57,6 @@ func NewTraitsClientWithNoCredential(endpoint string, options *TraitsClientOptio
 
 // RepeatableAction - Test for repeatable requests
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - body - The body parameter.
 //   - options - TraitsClientRepeatableActionOptions contains the optional parameters for the TraitsClient.RepeatableAction method.
@@ -89,7 +91,7 @@ func (client *TraitsClient) repeatableActionCreateRequest(ctx context.Context, i
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultTraitsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.RepeatabilityFirstSent != nil {
@@ -119,8 +121,6 @@ func (client *TraitsClient) repeatableActionHandleResponse(resp *http.Response) 
 
 // SmokeTest - Get a resource, sending and receiving headers.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - foo - header in request
 //   - options - TraitsClientSmokeTestOptions contains the optional parameters for the TraitsClient.SmokeTest method.
@@ -155,7 +155,7 @@ func (client *TraitsClient) smokeTestCreateRequest(ctx context.Context, id int32
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultTraitsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.IfMatch != nil {

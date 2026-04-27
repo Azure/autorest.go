@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultDisksClientVersion string = "2025-01-02"
+
 // DisksClient contains the methods for the Disks group.
 // Don't use this type directly, use NewDisksClient() instead.
+//
+// Generated from API version 2025-01-02
 type DisksClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 
 // BeginCreateOrUpdate - Creates or updates a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-02
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - diskName - The name of the Disk
 //   - resource - Resource create parameters.
@@ -67,8 +69,6 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 
 // CreateOrUpdate - Creates or updates a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-02
 func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskName string, resource Disk, options *DisksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DisksClient.BeginCreateOrUpdate"
@@ -110,7 +110,7 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-02")
+	reqQP.Set("api-version", defaultDisksClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -122,8 +122,6 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 
 // Get - Gets information about a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-02
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - diskName - The name of the Disk
 //   - options - DisksClientGetOptions contains the optional parameters for the DisksClient.Get method.
@@ -169,7 +167,7 @@ func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupNa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-02")
+	reqQP.Set("api-version", defaultDisksClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultDiscountsOperationGroupClientVersion string = "2024-11-01-preview"
+
 // DiscountsOperationGroupClient contains the methods for the DiscountsOperationGroup group.
 // Don't use this type directly, use NewDiscountsOperationGroupClient() instead.
+//
+// Generated from API version 2024-11-01-preview
 type DiscountsOperationGroupClient struct {
 	internal *arm.Client
 }
@@ -37,8 +41,6 @@ func NewDiscountsOperationGroupClient(credential azcore.TokenCredential, options
 }
 
 // NewScopeListPager - List discounts that are applicable for a given scope. Currently supported scopes: billing accounts
-//
-// Generated from API version 2024-11-01-preview
 //   - scope - The scope at which the benefits are listed.
 //   - options - DiscountsOperationGroupClientScopeListOptions contains the optional parameters for the DiscountsOperationGroupClient.NewScopeListPager
 //     method.
@@ -77,7 +79,7 @@ func (client *DiscountsOperationGroupClient) scopeListCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultDiscountsOperationGroupClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

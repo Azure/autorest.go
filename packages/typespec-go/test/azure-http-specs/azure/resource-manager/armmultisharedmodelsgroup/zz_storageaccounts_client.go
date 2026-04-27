@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultStorageAccountsClientVersion string = "2025-02-01"
+
 // StorageAccountsClient contains the methods for the StorageAccounts group.
 // Don't use this type directly, use NewStorageAccountsClient() instead.
+//
+// Generated from API version 2025-02-01
 type StorageAccountsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewStorageAccountsClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginCreateOrUpdate - Creates or updates a storage account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of the StorageAccount
 //   - resource - Resource create parameters.
@@ -67,8 +69,6 @@ func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, re
 
 // CreateOrUpdate - Creates or updates a storage account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-02-01
 func (client *StorageAccountsClient) createOrUpdate(ctx context.Context, resourceGroupName string, accountName string, resource StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StorageAccountsClient.BeginCreateOrUpdate"
@@ -110,7 +110,7 @@ func (client *StorageAccountsClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-02-01")
+	reqQP.Set("api-version", defaultStorageAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -122,8 +122,6 @@ func (client *StorageAccountsClient) createOrUpdateCreateRequest(ctx context.Con
 
 // Get - Gets information about a storage account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of the StorageAccount
 //   - options - StorageAccountsClientGetOptions contains the optional parameters for the StorageAccountsClient.Get method.
@@ -169,7 +167,7 @@ func (client *StorageAccountsClient) getCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-02-01")
+	reqQP.Set("api-version", defaultStorageAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

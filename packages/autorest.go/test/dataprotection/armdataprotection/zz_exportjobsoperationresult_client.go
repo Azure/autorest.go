@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultExportJobsOperationResultClientVersion string = "2025-07-01"
+
 // ExportJobsOperationResultClient contains the methods for the ExportJobsOperationResult group.
 // Don't use this type directly, use NewExportJobsOperationResultClient() instead.
+//
+// Generated from API version 2025-07-01
 type ExportJobsOperationResultClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewExportJobsOperationResultClient(subscriptionID string, credential azcore
 // contains URL of a Blob and a SAS key to access the same. The blob contains exported
 // jobs in JSON serialized format.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - vaultName - The name of the backup vault.
 //   - operationID - OperationID which represents the export job.
@@ -94,7 +96,7 @@ func (client *ExportJobsOperationResultClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultExportJobsOperationResultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

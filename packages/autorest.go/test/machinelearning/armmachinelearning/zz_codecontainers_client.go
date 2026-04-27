@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultCodeContainersClientVersion string = "2022-02-01-preview"
+
 // CodeContainersClient contains the methods for the CodeContainers group.
 // Don't use this type directly, use NewCodeContainersClient() instead.
+//
+// Generated from API version 2022-02-01-preview
 type CodeContainersClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewCodeContainersClient(subscriptionID string, credential azcore.TokenCrede
 
 // CreateOrUpdate - Create or update container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - name - Container name. This is case-sensitive.
@@ -92,7 +94,7 @@ func (client *CodeContainersClient) createOrUpdateCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultCodeContainersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -112,8 +114,6 @@ func (client *CodeContainersClient) createOrUpdateHandleResponse(resp *http.Resp
 
 // Delete - Delete container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - name - Container name. This is case-sensitive.
@@ -159,7 +159,7 @@ func (client *CodeContainersClient) deleteCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultCodeContainersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -167,8 +167,6 @@ func (client *CodeContainersClient) deleteCreateRequest(ctx context.Context, res
 
 // Get - Get container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - name - Container name. This is case-sensitive.
@@ -215,7 +213,7 @@ func (client *CodeContainersClient) getCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultCodeContainersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -231,8 +229,6 @@ func (client *CodeContainersClient) getHandleResponse(resp *http.Response) (Code
 }
 
 // NewListPager - List containers.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - options - CodeContainersClientListOptions contains the optional parameters for the CodeContainersClient.NewListPager method.
@@ -280,7 +276,7 @@ func (client *CodeContainersClient) listCreateRequest(ctx context.Context, resou
 	if options != nil && options.Skip != nil {
 		reqQP.Set("$skip", *options.Skip)
 	}
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultCodeContainersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

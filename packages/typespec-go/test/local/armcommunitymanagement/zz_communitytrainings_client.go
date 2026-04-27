@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultCommunityTrainingsClientVersion string = "2023-11-01"
+
 // CommunityTrainingsClient contains the methods for the CommunityTrainings group.
 // Don't use this type directly, use NewCommunityTrainingsClient() instead.
+//
+// Generated from API version 2023-11-01
 type CommunityTrainingsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewCommunityTrainingsClient(subscriptionID string, credential azcore.TokenC
 
 // BeginCreate - Create a CommunityTraining
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-11-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - communityTrainingName - The name of the Community Training Resource
 //   - resource - Resource create parameters.
@@ -68,8 +70,6 @@ func (client *CommunityTrainingsClient) BeginCreate(ctx context.Context, resourc
 
 // Create - Create a CommunityTraining
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-11-01
 func (client *CommunityTrainingsClient) create(ctx context.Context, resourceGroupName string, communityTrainingName string, resource CommunityTraining, options *CommunityTrainingsClientBeginCreateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "CommunityTrainingsClient.BeginCreate"
@@ -111,7 +111,7 @@ func (client *CommunityTrainingsClient) createCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-11-01")
+	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -123,8 +123,6 @@ func (client *CommunityTrainingsClient) createCreateRequest(ctx context.Context,
 
 // BeginDelete - Delete a CommunityTraining
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-11-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - communityTrainingName - The name of the Community Training Resource
 //   - options - CommunityTrainingsClientBeginDeleteOptions contains the optional parameters for the CommunityTrainingsClient.BeginDelete
@@ -148,8 +146,6 @@ func (client *CommunityTrainingsClient) BeginDelete(ctx context.Context, resourc
 
 // Delete - Delete a CommunityTraining
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-11-01
 func (client *CommunityTrainingsClient) deleteOperation(ctx context.Context, resourceGroupName string, communityTrainingName string, options *CommunityTrainingsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "CommunityTrainingsClient.BeginDelete"
@@ -191,15 +187,13 @@ func (client *CommunityTrainingsClient) deleteCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-11-01")
+	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a CommunityTraining
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-11-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - communityTrainingName - The name of the Community Training Resource
 //   - options - CommunityTrainingsClientGetOptions contains the optional parameters for the CommunityTrainingsClient.Get method.
@@ -245,7 +239,7 @@ func (client *CommunityTrainingsClient) getCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-11-01")
+	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -261,8 +255,6 @@ func (client *CommunityTrainingsClient) getHandleResponse(resp *http.Response) (
 }
 
 // NewListByResourceGroupPager - List CommunityTraining resources by resource group
-//
-// Generated from API version 2023-11-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - CommunityTrainingsClientListByResourceGroupOptions contains the optional parameters for the CommunityTrainingsClient.NewListByResourceGroupPager
 //     method.
@@ -305,7 +297,7 @@ func (client *CommunityTrainingsClient) listByResourceGroupCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-11-01")
+	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -321,8 +313,6 @@ func (client *CommunityTrainingsClient) listByResourceGroupHandleResponse(resp *
 }
 
 // NewListBySubscriptionPager - List CommunityTraining resources by subscription ID
-//
-// Generated from API version 2023-11-01
 //   - options - CommunityTrainingsClientListBySubscriptionOptions contains the optional parameters for the CommunityTrainingsClient.NewListBySubscriptionPager
 //     method.
 func (client *CommunityTrainingsClient) NewListBySubscriptionPager(options *CommunityTrainingsClientListBySubscriptionOptions) *runtime.Pager[CommunityTrainingsClientListBySubscriptionResponse] {
@@ -360,7 +350,7 @@ func (client *CommunityTrainingsClient) listBySubscriptionCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-11-01")
+	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -377,8 +367,6 @@ func (client *CommunityTrainingsClient) listBySubscriptionHandleResponse(resp *h
 
 // BeginUpdate - Update a CommunityTraining
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-11-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - communityTrainingName - The name of the Community Training Resource
 //   - properties - The resource properties to be updated.
@@ -403,8 +391,6 @@ func (client *CommunityTrainingsClient) BeginUpdate(ctx context.Context, resourc
 
 // Update - Update a CommunityTraining
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-11-01
 func (client *CommunityTrainingsClient) update(ctx context.Context, resourceGroupName string, communityTrainingName string, properties CommunityTrainingUpdate, options *CommunityTrainingsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "CommunityTrainingsClient.BeginUpdate"
@@ -446,7 +432,7 @@ func (client *CommunityTrainingsClient) updateCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-11-01")
+	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultVPNSitesConfigurationClientVersion string = "2022-09-01"
+
 // VPNSitesConfigurationClient contains the methods for the VPNSitesConfiguration group.
 // Don't use this type directly, use NewVPNSitesConfigurationClient() instead.
+//
+// Generated from API version 2022-09-01
 type VPNSitesConfigurationClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name.
 //   - virtualWANName - The name of the VirtualWAN for which configuration of all vpn-sites is needed.
 //   - request - Parameters supplied to download vpn-sites configuration.
@@ -70,8 +72,6 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VPNSitesConfigurationClient.BeginDownload"
@@ -113,7 +113,7 @@ func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultVPNSitesConfigurationClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, request); err != nil {

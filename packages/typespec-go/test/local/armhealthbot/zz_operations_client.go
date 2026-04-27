@@ -13,11 +13,15 @@ import (
 	"net/http"
 )
 
+const defaultOperationsClientVersion string = "2024-02-01"
+
 // OperationsClient - This is the interface that implements the standard Azure Resource Manager operation that returns
 // all supported RP operations. You should have exactly one declaration for each
 // Azure Resource Manager service. It implements
 // GET "/providers/Microsoft.ContosoProviderHub/operations"
 // Don't use this type directly, use NewOperationsClient() instead.
+//
+// Generated from API version 2024-02-01
 type OperationsClient struct {
 	internal *arm.Client
 }
@@ -37,8 +41,6 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 }
 
 // NewListPager - Lists all the available Azure Health Bot operations.
-//
-// Generated from API version 2024-02-01
 //   - options - OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[OperationsClientListResponse]{
@@ -71,7 +73,7 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *Operat
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

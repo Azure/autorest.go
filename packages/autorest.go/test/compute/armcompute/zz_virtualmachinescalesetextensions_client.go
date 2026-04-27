@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultVirtualMachineScaleSetExtensionsClientVersion string = "2021-11-01"
+
 // VirtualMachineScaleSetExtensionsClient contains the methods for the VirtualMachineScaleSetExtensions group.
 // Don't use this type directly, use NewVirtualMachineScaleSetExtensionsClient() instead.
+//
+// Generated from API version 2021-11-01
 type VirtualMachineScaleSetExtensionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewVirtualMachineScaleSetExtensionsClient(subscriptionID string, credential
 
 // BeginCreateOrUpdate - The operation to create or update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01
 //   - resourceGroupName - The name of the resource group.
 //   - vmScaleSetName - The name of the VM scale set where the extension should be create or updated.
 //   - vmssExtensionName - The name of the VM scale set extension.
@@ -70,8 +72,6 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx co
 
 // CreateOrUpdate - The operation to create or update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01
 func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtension, options *VirtualMachineScaleSetExtensionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualMachineScaleSetExtensionsClient.BeginCreateOrUpdate"
@@ -117,7 +117,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateCreateReques
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-11-01")
+	reqQP.Set("api-version", defaultVirtualMachineScaleSetExtensionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, extensionParameters); err != nil {
@@ -128,8 +128,6 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateCreateReques
 
 // BeginDelete - The operation to delete the extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01
 //   - resourceGroupName - The name of the resource group.
 //   - vmScaleSetName - The name of the VM scale set where the extension should be deleted.
 //   - vmssExtensionName - The name of the VM scale set extension.
@@ -154,8 +152,6 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Co
 
 // Delete - The operation to delete the extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01
 func (client *VirtualMachineScaleSetExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualMachineScaleSetExtensionsClient.BeginDelete"
@@ -209,8 +205,6 @@ func (client *VirtualMachineScaleSetExtensionsClient) deleteCreateRequest(ctx co
 
 // Get - The operation to get the extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01
 //   - resourceGroupName - The name of the resource group.
 //   - vmScaleSetName - The name of the VM scale set containing the extension.
 //   - vmssExtensionName - The name of the VM scale set extension.
@@ -281,8 +275,6 @@ func (client *VirtualMachineScaleSetExtensionsClient) getHandleResponse(resp *ht
 }
 
 // NewListPager - Gets a list of all extensions in a VM scale set.
-//
-// Generated from API version 2021-11-01
 //   - resourceGroupName - The name of the resource group.
 //   - vmScaleSetName - The name of the VM scale set containing the extension.
 //   - options - VirtualMachineScaleSetExtensionsClientListOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.NewListPager
@@ -347,8 +339,6 @@ func (client *VirtualMachineScaleSetExtensionsClient) listHandleResponse(resp *h
 
 // BeginUpdate - The operation to update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01
 //   - resourceGroupName - The name of the resource group.
 //   - vmScaleSetName - The name of the VM scale set where the extension should be updated.
 //   - vmssExtensionName - The name of the VM scale set extension.
@@ -374,8 +364,6 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginUpdate(ctx context.Co
 
 // Update - The operation to update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01
 func (client *VirtualMachineScaleSetExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtensionUpdate, options *VirtualMachineScaleSetExtensionsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualMachineScaleSetExtensionsClient.BeginUpdate"

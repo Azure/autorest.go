@@ -29,8 +29,6 @@ type ImplicitClient struct {
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientGetOptionalGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetOptionalGlobalQuery
 //     method.
 func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitClientGetOptionalGlobalQueryOptions) (ImplicitClientGetOptionalGlobalQueryResponse, error) {
@@ -72,8 +70,6 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 
 // GetRequiredGlobalPath - Test implicitly required path parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientGetRequiredGlobalPathOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalPath
 //     method.
 func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options *ImplicitClientGetRequiredGlobalPathOptions) (ImplicitClientGetRequiredGlobalPathResponse, error) {
@@ -114,8 +110,6 @@ func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Con
 
 // GetRequiredGlobalQuery - Test implicitly required query parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientGetRequiredGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalQuery
 //     method.
 func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, options *ImplicitClientGetRequiredGlobalQueryOptions) (ImplicitClientGetRequiredGlobalQueryResponse, error) {
@@ -155,8 +149,6 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 
 // GetRequiredPath - Test implicitly required path parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientGetRequiredPathOptions contains the optional parameters for the ImplicitClient.GetRequiredPath
 //     method.
 func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string, options *ImplicitClientGetRequiredPathOptions) (ImplicitClientGetRequiredPathResponse, error) {
@@ -197,8 +189,6 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 
 // PutOptionalBinaryBody - Test implicitly optional body parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
 //     method.
 func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ImplicitClientPutOptionalBinaryBodyOptions) (ImplicitClientPutOptionalBinaryBodyResponse, error) {
@@ -241,8 +231,6 @@ func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 
 // PutOptionalBody - Test implicitly optional body parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody
 //     method.
 func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *ImplicitClientPutOptionalBodyOptions) (ImplicitClientPutOptionalBodyResponse, error) {
@@ -285,8 +273,6 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 
 // PutOptionalHeader - Test implicitly optional header parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader
 //     method.
 func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *ImplicitClientPutOptionalHeaderOptions) (ImplicitClientPutOptionalHeaderResponse, error) {
@@ -326,8 +312,6 @@ func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context
 
 // PutOptionalQuery - Test implicitly optional query parameter
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - ImplicitClientPutOptionalQueryOptions contains the optional parameters for the ImplicitClient.PutOptionalQuery
 //     method.
 func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *ImplicitClientPutOptionalQueryOptions) (ImplicitClientPutOptionalQueryResponse, error) {

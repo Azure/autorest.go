@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultInterfaceIPConfigurationsClientVersion string = "2022-09-01"
+
 // InterfaceIPConfigurationsClient contains the methods for the NetworkInterfaceIPConfigurations group.
 // Don't use this type directly, use NewInterfaceIPConfigurationsClient() instead.
+//
+// Generated from API version 2022-09-01
 type InterfaceIPConfigurationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewInterfaceIPConfigurationsClient(subscriptionID string, credential azcore
 
 // Get - Gets the specified network interface ip configuration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - ipConfigurationName - The name of the ip configuration name.
@@ -112,8 +114,6 @@ func (client *InterfaceIPConfigurationsClient) getHandleResponse(resp *http.Resp
 }
 
 // NewListPager - Get all ip configurations in a network interface.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfaceIPConfigurationsClientListOptions contains the optional parameters for the InterfaceIPConfigurationsClient.NewListPager
@@ -161,7 +161,7 @@ func (client *InterfaceIPConfigurationsClient) listCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultInterfaceIPConfigurationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

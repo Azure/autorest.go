@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultWorkspaceConnectionsClientVersion string = "2022-02-01-preview"
+
 // WorkspaceConnectionsClient contains the methods for the WorkspaceConnections group.
 // Don't use this type directly, use NewWorkspaceConnectionsClient() instead.
+//
+// Generated from API version 2022-02-01-preview
 type WorkspaceConnectionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewWorkspaceConnectionsClient(subscriptionID string, credential azcore.Toke
 
 // Create - Add a new workspace connection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - connectionName - Friendly name of the workspace connection
@@ -92,7 +94,7 @@ func (client *WorkspaceConnectionsClient) createCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultWorkspaceConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -112,8 +114,6 @@ func (client *WorkspaceConnectionsClient) createHandleResponse(resp *http.Respon
 
 // Delete - Delete a workspace connection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - connectionName - Friendly name of the workspace connection
@@ -160,7 +160,7 @@ func (client *WorkspaceConnectionsClient) deleteCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultWorkspaceConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -168,8 +168,6 @@ func (client *WorkspaceConnectionsClient) deleteCreateRequest(ctx context.Contex
 
 // Get - Get the detail of a workspace connection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - connectionName - Friendly name of the workspace connection
@@ -217,7 +215,7 @@ func (client *WorkspaceConnectionsClient) getCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultWorkspaceConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -233,8 +231,6 @@ func (client *WorkspaceConnectionsClient) getHandleResponse(resp *http.Response)
 }
 
 // NewListPager - List all connections under a AML workspace.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - options - WorkspaceConnectionsClientListOptions contains the optional parameters for the WorkspaceConnectionsClient.NewListPager
@@ -281,7 +277,7 @@ func (client *WorkspaceConnectionsClient) listCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultWorkspaceConnectionsClientVersion)
 	if options != nil && options.Category != nil {
 		reqQP.Set("category", *options.Category)
 	}

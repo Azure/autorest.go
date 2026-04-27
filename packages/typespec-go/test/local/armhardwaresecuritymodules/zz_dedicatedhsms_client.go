@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultDedicatedHsmsClientVersion string = "2024-06-30-preview"
+
 // DedicatedHsmsClient contains the methods for the DedicatedHsms group.
 // Don't use this type directly, use NewDedicatedHsmsClient() instead.
+//
+// Generated from API version 2024-06-30-preview
 type DedicatedHsmsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewDedicatedHsmsClient(subscriptionID string, credential azcore.TokenCreden
 
 // BeginCreateOrUpdate - Create or Update a dedicated HSM in the specified subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - name - Name of the dedicated Hsm
 //   - parameters - Parameters to create or update the dedicated hsm
@@ -68,8 +70,6 @@ func (client *DedicatedHsmsClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdate - Create or Update a dedicated HSM in the specified subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 func (client *DedicatedHsmsClient) createOrUpdate(ctx context.Context, resourceGroupName string, name string, parameters DedicatedHsm, options *DedicatedHsmsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DedicatedHsmsClient.BeginCreateOrUpdate"
@@ -111,7 +111,7 @@ func (client *DedicatedHsmsClient) createOrUpdateCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -123,8 +123,6 @@ func (client *DedicatedHsmsClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // BeginDelete - Deletes the specified Azure Dedicated HSM.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - name - Name of the dedicated Hsm
 //   - options - DedicatedHsmsClientBeginDeleteOptions contains the optional parameters for the DedicatedHsmsClient.BeginDelete
@@ -148,8 +146,6 @@ func (client *DedicatedHsmsClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Deletes the specified Azure Dedicated HSM.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 func (client *DedicatedHsmsClient) deleteOperation(ctx context.Context, resourceGroupName string, name string, options *DedicatedHsmsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DedicatedHsmsClient.BeginDelete"
@@ -191,15 +187,13 @@ func (client *DedicatedHsmsClient) deleteCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Gets the specified Azure dedicated HSM.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - name - Name of the dedicated Hsm
 //   - options - DedicatedHsmsClientGetOptions contains the optional parameters for the DedicatedHsmsClient.Get method.
@@ -245,7 +239,7 @@ func (client *DedicatedHsmsClient) getCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -262,8 +256,6 @@ func (client *DedicatedHsmsClient) getHandleResponse(resp *http.Response) (Dedic
 
 // NewListByResourceGroupPager - The List operation gets information about the dedicated hsms associated with the subscription
 // and within the specified resource group.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - DedicatedHsmsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHsmsClient.NewListByResourceGroupPager
 //     method.
@@ -309,7 +301,7 @@ func (client *DedicatedHsmsClient) listByResourceGroupCreateRequest(ctx context.
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -325,8 +317,6 @@ func (client *DedicatedHsmsClient) listByResourceGroupHandleResponse(resp *http.
 }
 
 // NewListBySubscriptionPager - The List operation gets information about the dedicated HSMs associated with the subscription.
-//
-// Generated from API version 2024-06-30-preview
 //   - options - DedicatedHsmsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHsmsClient.NewListBySubscriptionPager
 //     method.
 func (client *DedicatedHsmsClient) NewListBySubscriptionPager(options *DedicatedHsmsClientListBySubscriptionOptions) *runtime.Pager[DedicatedHsmsClientListBySubscriptionResponse] {
@@ -367,7 +357,7 @@ func (client *DedicatedHsmsClient) listBySubscriptionCreateRequest(ctx context.C
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -384,8 +374,6 @@ func (client *DedicatedHsmsClient) listBySubscriptionHandleResponse(resp *http.R
 
 // NewListOutboundNetworkDependenciesEndpointsPager - Gets a list of egress endpoints (network endpoints of all outbound dependencies)
 // in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - name - Name of the dedicated Hsm
 //   - options - DedicatedHsmsClientListOutboundNetworkDependenciesEndpointsOptions contains the optional parameters for the DedicatedHsmsClient.NewListOutboundNetworkDependenciesEndpointsPager
@@ -433,7 +421,7 @@ func (client *DedicatedHsmsClient) listOutboundNetworkDependenciesEndpointsCreat
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -450,8 +438,6 @@ func (client *DedicatedHsmsClient) listOutboundNetworkDependenciesEndpointsHandl
 
 // BeginUpdate - Update a dedicated HSM in the specified subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - name - Name of the dedicated Hsm
 //   - parameters - Parameters to patch the dedicated HSM
@@ -476,8 +462,6 @@ func (client *DedicatedHsmsClient) BeginUpdate(ctx context.Context, resourceGrou
 
 // Update - Update a dedicated HSM in the specified subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 func (client *DedicatedHsmsClient) update(ctx context.Context, resourceGroupName string, name string, parameters DedicatedHsmPatchParameters, options *DedicatedHsmsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DedicatedHsmsClient.BeginUpdate"
@@ -519,7 +503,7 @@ func (client *DedicatedHsmsClient) updateCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

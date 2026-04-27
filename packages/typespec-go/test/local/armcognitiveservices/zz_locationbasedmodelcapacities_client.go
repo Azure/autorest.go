@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLocationBasedModelCapacitiesClientVersion string = "2025-10-01-preview"
+
 // LocationBasedModelCapacitiesClient contains the methods for the LocationBasedModelCapacities group.
 // Don't use this type directly, use NewLocationBasedModelCapacitiesClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type LocationBasedModelCapacitiesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -40,8 +44,6 @@ func NewLocationBasedModelCapacitiesClient(subscriptionID string, credential azc
 }
 
 // NewListPager - List Location Based ModelCapacities.
-//
-// Generated from API version 2025-10-01-preview
 //   - location - The location name.
 //   - modelFormat - The format of the Model
 //   - modelName - The name of the Model
@@ -87,7 +89,7 @@ func (client *LocationBasedModelCapacitiesClient) listCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultLocationBasedModelCapacitiesClientVersion)
 	reqQP.Set("modelFormat", modelFormat)
 	reqQP.Set("modelName", modelName)
 	reqQP.Set("modelVersion", modelVersion)

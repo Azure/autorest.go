@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultTriggerRunClientVersion string = "2020-12-01"
+
 // TriggerRunClient contains the methods for the TriggerRun group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type TriggerRunClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type TriggerRunClient struct {
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - triggerName - The trigger name.
 //   - runID - The pipeline run identifier.
 //   - options - TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
@@ -72,8 +74,6 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - filterParameters - Parameters to filter the pipeline run.
 //   - options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
 //     method.
@@ -123,8 +123,6 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - triggerName - The trigger name.
 //   - runID - The pipeline run identifier.
 //   - options - TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
@@ -162,7 +160,7 @@ func (client *TriggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultTriggerRunClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

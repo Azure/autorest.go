@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultServiceEndpointPolicyDefinitionsClientVersion string = "2022-09-01"
+
 // ServiceEndpointPolicyDefinitionsClient contains the methods for the ServiceEndpointPolicyDefinitions group.
 // Don't use this type directly, use NewServiceEndpointPolicyDefinitionsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ServiceEndpointPolicyDefinitionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential
 
 // BeginCreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - serviceEndpointPolicyName - The name of the service endpoint policy.
 //   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
@@ -71,8 +73,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 
 // CreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateReques
 
 // BeginDelete - Deletes the specified ServiceEndpoint policy definitions.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - serviceEndpointPolicyName - The name of the Service Endpoint Policy.
 //   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
@@ -156,8 +154,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 
 // Delete - Deletes the specified ServiceEndpoint policy definitions.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ServiceEndpointPolicyDefinitionsClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ServiceEndpointPolicyDefinitionsClient.BeginDelete"
@@ -203,7 +199,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultServiceEndpointPolicyDefinitionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -211,8 +207,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteCreateRequest(ctx co
 
 // Get - Get the specified service endpoint policy definitions from service endpoint policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - serviceEndpointPolicyName - The name of the service endpoint policy name.
 //   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
@@ -280,8 +274,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getHandleResponse(resp *ht
 }
 
 // NewListByResourceGroupPager - Gets all service endpoint policy definitions in a service end point policy.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - serviceEndpointPolicyName - The name of the service endpoint policy name.
 //   - options - ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.NewListByResourceGroupPager

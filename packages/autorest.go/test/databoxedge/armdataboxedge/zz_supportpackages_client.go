@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultSupportPackagesClientVersion string = "2021-02-01"
+
 // SupportPackagesClient contains the methods for the SupportPackages group.
 // Don't use this type directly, use NewSupportPackagesClient() instead.
+//
+// Generated from API version 2021-02-01
 type SupportPackagesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginTriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
 //   - triggerSupportPackageRequest - The trigger support package request object
@@ -64,8 +66,6 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 
 // TriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	var err error
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SupportPackagesClient.BeginTriggerSupportPackage")
@@ -101,7 +101,7 @@ func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultSupportPackagesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, triggerSupportPackageRequest); err != nil {

@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultP2SVPNGatewaysClientVersion string = "2022-09-01"
+
 // P2SVPNGatewaysClient contains the methods for the P2SVPNGateways group.
 // Don't use this type directly, use NewP2SVPNGatewaysClient() instead.
+//
+// Generated from API version 2022-09-01
 type P2SVPNGatewaysClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewP2SVPNGatewaysClient(subscriptionID string, credential azcore.TokenCrede
 
 // BeginCreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the P2SVpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - p2SVPNGatewayParameters - Parameters supplied to create or Update a virtual wan p2s vpn gateway.
@@ -70,8 +72,6 @@ func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 
 // CreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginCreateOrUpdate"
@@ -124,8 +124,6 @@ func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Cont
 
 // BeginDelete - Deletes a virtual wan p2s vpn gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the P2SVpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - options - P2SVPNGatewaysClientBeginDeleteOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginDelete
@@ -150,8 +148,6 @@ func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 
 // Delete - Deletes a virtual wan p2s vpn gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginDelete"
@@ -202,8 +198,6 @@ func (client *P2SVPNGatewaysClient) deleteCreateRequest(ctx context.Context, res
 // BeginDisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - p2SVPNGatewayName - The name of the P2S Vpn Gateway.
 //   - request - The parameters are supplied to disconnect p2s vpn connections.
@@ -230,8 +224,6 @@ func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context
 // DisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysClientBeginDisconnectP2SVPNConnectionsOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections"
@@ -284,8 +276,6 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsCreateRequest(ctx
 
 // BeginGenerateVPNProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - gatewayName - The name of the P2SVpnGateway.
 //   - parameters - Parameters supplied to the generate P2SVpnGateway VPN client package operation.
@@ -311,8 +301,6 @@ func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context,
 
 // GenerateVPNProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) generateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysClientBeginGenerateVPNProfileOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginGenerateVPNProfile"
@@ -365,8 +353,6 @@ func (client *P2SVPNGatewaysClient) generateVPNProfileCreateRequest(ctx context.
 
 // Get - Retrieves the details of a virtual wan p2s vpn gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the P2SVpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - options - P2SVPNGatewaysClientGetOptions contains the optional parameters for the P2SVPNGatewaysClient.Get method.
@@ -412,7 +398,7 @@ func (client *P2SVPNGatewaysClient) getCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultP2SVPNGatewaysClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -430,8 +416,6 @@ func (client *P2SVPNGatewaysClient) getHandleResponse(resp *http.Response) (P2SV
 // BeginGetP2SVPNConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified
 // resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - gatewayName - The name of the P2SVpnGateway.
 //   - options - P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth
@@ -457,8 +441,6 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.C
 // GetP2SVPNConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified
 // resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth"
@@ -509,8 +491,6 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthCreateRequest(ctx c
 // BeginGetP2SVPNConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual
 // wan P2SVpnGateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - gatewayName - The name of the P2SVpnGateway.
 //   - request - Request parameters supplied to get p2s vpn connections detailed health.
@@ -537,8 +517,6 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx c
 // GetP2SVPNConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual
 // wan P2SVpnGateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthDetailedOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed"
@@ -590,8 +568,6 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedCreateReque
 }
 
 // NewListPager - Lists all the P2SVpnGateways in a subscription.
-//
-// Generated from API version 2022-09-01
 //   - options - P2SVPNGatewaysClientListOptions contains the optional parameters for the P2SVPNGatewaysClient.NewListPager method.
 func (client *P2SVPNGatewaysClient) NewListPager(options *P2SVPNGatewaysClientListOptions) *runtime.Pager[P2SVPNGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[P2SVPNGatewaysClientListResponse]{
@@ -644,8 +620,6 @@ func (client *P2SVPNGatewaysClient) listHandleResponse(resp *http.Response) (P2S
 }
 
 // NewListByResourceGroupPager - Lists all the P2SVpnGateways in a resource group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the P2SVpnGateway.
 //   - options - P2SVPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the P2SVPNGatewaysClient.NewListByResourceGroupPager
 //     method.
@@ -705,8 +679,6 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *http
 
 // BeginReset - Resets the primary of the p2s vpn gateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the P2SVpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - options - P2SVPNGatewaysClientBeginResetOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginReset
@@ -731,8 +703,6 @@ func (client *P2SVPNGatewaysClient) BeginReset(ctx context.Context, resourceGrou
 
 // Reset - Resets the primary of the p2s vpn gateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) reset(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginResetOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginReset"
@@ -782,8 +752,6 @@ func (client *P2SVPNGatewaysClient) resetCreateRequest(ctx context.Context, reso
 
 // BeginUpdateTags - Updates virtual wan p2s vpn gateway tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the P2SVpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - p2SVPNGatewayParameters - Parameters supplied to update a virtual wan p2s vpn gateway tags.
@@ -809,8 +777,6 @@ func (client *P2SVPNGatewaysClient) BeginUpdateTags(ctx context.Context, resourc
 
 // UpdateTags - Updates virtual wan p2s vpn gateway tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *P2SVPNGatewaysClient) updateTags(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters TagsObject, options *P2SVPNGatewaysClientBeginUpdateTagsOptions) (*http.Response, error) {
 	var err error
 	const operationName = "P2SVPNGatewaysClient.BeginUpdateTags"

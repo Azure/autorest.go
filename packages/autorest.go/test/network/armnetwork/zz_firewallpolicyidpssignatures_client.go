@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultFirewallPolicyIdpsSignaturesClientVersion string = "2022-09-01"
+
 // FirewallPolicyIdpsSignaturesClient contains the methods for the FirewallPolicyIdpsSignatures group.
 // Don't use this type directly, use NewFirewallPolicyIdpsSignaturesClient() instead.
+//
+// Generated from API version 2022-09-01
 type FirewallPolicyIdpsSignaturesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewFirewallPolicyIdpsSignaturesClient(subscriptionID string, credential azc
 
 // List - Retrieves the current status of IDPS signatures for the relevant policy
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPolicyIdpsSignaturesClientListOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesClient.List
@@ -91,7 +93,7 @@ func (client *FirewallPolicyIdpsSignaturesClient) listCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultFirewallPolicyIdpsSignaturesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

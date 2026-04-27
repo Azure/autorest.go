@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultSavingsPlanOrderAliasModelsClientVersion string = "2024-11-01-preview"
+
 // SavingsPlanOrderAliasModelsClient contains the methods for the SavingsPlanOrderAliasModels group.
 // Don't use this type directly, use NewSavingsPlanOrderAliasModelsClient() instead.
+//
+// Generated from API version 2024-11-01-preview
 type SavingsPlanOrderAliasModelsClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewSavingsPlanOrderAliasModelsClient(credential azcore.TokenCredential, opt
 
 // BeginCreate - Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 //   - savingsPlanOrderAliasName - Name of the savings plan order alias
 //   - body - Request body for creating a savings plan order alias
 //   - options - SavingsPlanOrderAliasModelsClientBeginCreateOptions contains the optional parameters for the SavingsPlanOrderAliasModelsClient.BeginCreate
@@ -63,8 +65,6 @@ func (client *SavingsPlanOrderAliasModelsClient) BeginCreate(ctx context.Context
 
 // Create - Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 func (client *SavingsPlanOrderAliasModelsClient) create(ctx context.Context, savingsPlanOrderAliasName string, body SavingsPlanOrderAliasModel, options *SavingsPlanOrderAliasModelsClientBeginCreateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SavingsPlanOrderAliasModelsClient.BeginCreate"
@@ -98,7 +98,7 @@ func (client *SavingsPlanOrderAliasModelsClient) createCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanOrderAliasModelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -110,8 +110,6 @@ func (client *SavingsPlanOrderAliasModelsClient) createCreateRequest(ctx context
 
 // Get - Get a savings plan.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 //   - savingsPlanOrderAliasName - Name of the savings plan order alias
 //   - options - SavingsPlanOrderAliasModelsClientGetOptions contains the optional parameters for the SavingsPlanOrderAliasModelsClient.Get
 //     method.
@@ -149,7 +147,7 @@ func (client *SavingsPlanOrderAliasModelsClient) getCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanOrderAliasModelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

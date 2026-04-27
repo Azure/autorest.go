@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLargeHeadersClientVersion string = "2023-12-01-preview"
+
 // LargeHeadersClient contains the methods for the LargeHeaders group.
 // Don't use this type directly, use NewLargeHeadersClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type LargeHeadersClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewLargeHeadersClient(subscriptionID string, credential azcore.TokenCredent
 
 // BeginTwo6K - A long-running resource action.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - largeHeaderName - The name of the LargeHeader
 //   - options - LargeHeadersClientBeginTwo6KOptions contains the optional parameters for the LargeHeadersClient.BeginTwo6K method.
@@ -65,8 +67,6 @@ func (client *LargeHeadersClient) BeginTwo6K(ctx context.Context, resourceGroupN
 
 // Two6K - A long-running resource action.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LargeHeadersClient) two6K(ctx context.Context, resourceGroupName string, largeHeaderName string, options *LargeHeadersClientBeginTwo6KOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LargeHeadersClient.BeginTwo6K"
@@ -108,7 +108,7 @@ func (client *LargeHeadersClient) two6KCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLargeHeadersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

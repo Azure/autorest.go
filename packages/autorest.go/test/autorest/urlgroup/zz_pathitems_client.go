@@ -29,8 +29,6 @@ type PathItemsClient struct {
 // globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetAllWithValuesOptions contains the optional parameters for the PathItemsClient.GetAllWithValues
@@ -94,8 +92,6 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 // globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery=null
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalAndLocalQueryNull
@@ -159,8 +155,6 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 // globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetGlobalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalQueryNull
@@ -224,8 +218,6 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 // globalStringQuery='globalStringQuery', pathItemStringQuery=null,
 // localStringQuery=null
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 //   - localStringPath - should contain value 'localStringPath'
 //   - options - PathItemsClientGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItemsClient.GetLocalPathItemQueryNull

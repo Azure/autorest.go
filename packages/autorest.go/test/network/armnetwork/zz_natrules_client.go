@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultNatRulesClientVersion string = "2022-09-01"
+
 // NatRulesClient contains the methods for the NatRules group.
 // Don't use this type directly, use NewNatRulesClient() instead.
+//
+// Generated from API version 2022-09-01
 type NatRulesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewNatRulesClient(subscriptionID string, credential azcore.TokenCredential,
 
 // BeginCreateOrUpdate - Creates a nat rule to a scalable vpn gateway if it doesn't exist else updates the existing nat rules.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - natRuleName - The name of the nat rule.
@@ -71,8 +73,6 @@ func (client *NatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 
 // CreateOrUpdate - Creates a nat rule to a scalable vpn gateway if it doesn't exist else updates the existing nat rules.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *NatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, natRuleParameters VPNGatewayNatRule, options *NatRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "NatRulesClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *NatRulesClient) createOrUpdateCreateRequest(ctx context.Context, r
 
 // BeginDelete - Deletes a nat rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - natRuleName - The name of the nat rule.
@@ -155,8 +153,6 @@ func (client *NatRulesClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Deletes a nat rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *NatRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, natRuleName string, options *NatRulesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "NatRulesClient.BeginDelete"
@@ -210,8 +206,6 @@ func (client *NatRulesClient) deleteCreateRequest(ctx context.Context, resourceG
 
 // Get - Retrieves the details of a nat ruleGet.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - natRuleName - The name of the nat rule.
@@ -262,7 +256,7 @@ func (client *NatRulesClient) getCreateRequest(ctx context.Context, resourceGrou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultNatRulesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -278,8 +272,6 @@ func (client *NatRulesClient) getHandleResponse(resp *http.Response) (NatRulesCl
 }
 
 // NewListByVPNGatewayPager - Retrieves all nat rules for a particular virtual wan vpn gateway.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The resource group name of the VpnGateway.
 //   - gatewayName - The name of the gateway.
 //   - options - NatRulesClientListByVPNGatewayOptions contains the optional parameters for the NatRulesClient.NewListByVPNGatewayPager

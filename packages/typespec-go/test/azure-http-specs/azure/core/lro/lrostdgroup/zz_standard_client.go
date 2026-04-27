@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultStandardClientVersion string = "2022-12-01-preview"
+
 // StandardClient - Illustrates bodies templated with Azure Core with long-running operation
 // Don't use this type directly, use NewStandardClientWithNoCredential() instead.
+//
+// Generated from API version 2022-12-01-preview
 type StandardClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -54,8 +58,6 @@ func NewStandardClientWithNoCredential(endpoint string, options *StandardClientO
 //
 // Creates or replaces a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - name - The name of user.
 //   - resource - The resource instance.
 //   - options - StandardClientBeginCreateOrReplaceOptions contains the optional parameters for the StandardClient.BeginCreateOrReplace
@@ -81,8 +83,6 @@ func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name str
 //
 // Creates or replaces a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 func (client *StandardClient) createOrReplace(ctx context.Context, name string, resource User, options *StandardClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginCreateOrReplace"
@@ -116,7 +116,7 @@ func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultStandardClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -130,8 +130,6 @@ func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, 
 //
 // Deletes a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - name - The name of user.
 //   - options - StandardClientBeginDeleteOptions contains the optional parameters for the StandardClient.BeginDelete method.
 func (client *StandardClient) BeginDelete(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*runtime.Poller[StandardClientDeleteResponse], error) {
@@ -155,8 +153,6 @@ func (client *StandardClient) BeginDelete(ctx context.Context, name string, opti
 //
 // Deletes a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 func (client *StandardClient) deleteOperation(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginDelete"
@@ -190,7 +186,7 @@ func (client *StandardClient) deleteCreateRequest(ctx context.Context, name stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultStandardClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -200,8 +196,6 @@ func (client *StandardClient) deleteCreateRequest(ctx context.Context, name stri
 //
 // Exports a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - name - The name of user.
 //   - formatParam - The format of the data.
 //   - options - StandardClientBeginExportOptions contains the optional parameters for the StandardClient.BeginExport method.
@@ -227,8 +221,6 @@ func (client *StandardClient) BeginExport(ctx context.Context, name string, form
 //
 // Exports a User
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 func (client *StandardClient) export(ctx context.Context, name string, formatParam string, options *StandardClientBeginExportOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginExport"
@@ -262,7 +254,7 @@ func (client *StandardClient) exportCreateRequest(ctx context.Context, name stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultStandardClientVersion)
 	reqQP.Set("format", formatParam)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

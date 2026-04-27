@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultAuthenticationClientVersion string = "2021-07-01"
+
 // AuthenticationClient contains the methods for the Authentication group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2021-07-01
 type AuthenticationClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type AuthenticationClient struct {
 
 // ExchangeAADAccessTokenForAcrRefreshToken - Exchange AAD tokens for an ACR refresh Token
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - grantType - Can take a value of accesstokenrefreshtoken, or accesstoken, or refresh_token
 //   - service - Indicates the name of your Azure container registry.
 //   - options - AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions contains the optional parameters for the
@@ -61,7 +63,7 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCrea
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultAuthenticationClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}
@@ -94,8 +96,6 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenHand
 
 // ExchangeAcrRefreshTokenForAcrAccessToken - Exchange ACR Refresh token for an ACR Access Token
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - service - Indicates the name of your Azure container registry.
 //   - scope - Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained
 //     this from the Www-Authenticate response header from the challenge.
@@ -132,7 +132,7 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCrea
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultAuthenticationClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}
@@ -160,8 +160,6 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenHand
 
 // GetAcrAccessTokenFromLogin - Exchange Username, Password and Scope for an ACR Access Token
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - service - Indicates the name of your Azure container registry.
 //   - scope - Expected to be a valid scope, and can be specified more than once for multiple scope requests. You can obtain this
 //     from the Www-Authenticate response header from the challenge.

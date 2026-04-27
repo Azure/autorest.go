@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultSecurityGroupsClientVersion string = "2022-09-01"
+
 // SecurityGroupsClient contains the methods for the NetworkSecurityGroups group.
 // Don't use this type directly, use NewSecurityGroupsClient() instead.
+//
+// Generated from API version 2022-09-01
 type SecurityGroupsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewSecurityGroupsClient(subscriptionID string, credential azcore.TokenCrede
 
 // BeginCreateOrUpdate - Creates or updates a network security group in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - parameters - Parameters supplied to the create or update network security group operation.
@@ -70,8 +72,6 @@ func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, res
 
 // CreateOrUpdate - Creates or updates a network security group in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *SecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *SecurityGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SecurityGroupsClient.BeginCreateOrUpdate"
@@ -124,8 +124,6 @@ func (client *SecurityGroupsClient) createOrUpdateCreateRequest(ctx context.Cont
 
 // BeginDelete - Deletes the specified network security group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - options - SecurityGroupsClientBeginDeleteOptions contains the optional parameters for the SecurityGroupsClient.BeginDelete
@@ -150,8 +148,6 @@ func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGro
 
 // Delete - Deletes the specified network security group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *SecurityGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SecurityGroupsClient.BeginDelete"
@@ -193,7 +189,7 @@ func (client *SecurityGroupsClient) deleteCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultSecurityGroupsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -201,8 +197,6 @@ func (client *SecurityGroupsClient) deleteCreateRequest(ctx context.Context, res
 
 // Get - Gets the specified network security group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - options - SecurityGroupsClientGetOptions contains the optional parameters for the SecurityGroupsClient.Get method.
@@ -267,8 +261,6 @@ func (client *SecurityGroupsClient) getHandleResponse(resp *http.Response) (Secu
 }
 
 // NewListPager - Gets all network security groups in a resource group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - options - SecurityGroupsClientListOptions contains the optional parameters for the SecurityGroupsClient.NewListPager method.
 func (client *SecurityGroupsClient) NewListPager(resourceGroupName string, options *SecurityGroupsClientListOptions) *runtime.Pager[SecurityGroupsClientListResponse] {
@@ -326,8 +318,6 @@ func (client *SecurityGroupsClient) listHandleResponse(resp *http.Response) (Sec
 }
 
 // NewListAllPager - Gets all network security groups in a subscription.
-//
-// Generated from API version 2022-09-01
 //   - options - SecurityGroupsClientListAllOptions contains the optional parameters for the SecurityGroupsClient.NewListAllPager
 //     method.
 func (client *SecurityGroupsClient) NewListAllPager(options *SecurityGroupsClientListAllOptions) *runtime.Pager[SecurityGroupsClientListAllResponse] {
@@ -382,8 +372,6 @@ func (client *SecurityGroupsClient) listAllHandleResponse(resp *http.Response) (
 
 // UpdateTags - Updates a network security group tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - parameters - Parameters supplied to update network security group tags.

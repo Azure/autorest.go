@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultExpressRoutePortsLocationsClientVersion string = "2022-09-01"
+
 // ExpressRoutePortsLocationsClient contains the methods for the ExpressRoutePortsLocations group.
 // Don't use this type directly, use NewExpressRoutePortsLocationsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ExpressRoutePortsLocationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewExpressRoutePortsLocationsClient(subscriptionID string, credential azcor
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said
 // peering location.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - locationName - Name of the requested ExpressRoutePort peering location.
 //   - options - ExpressRoutePortsLocationsClientGetOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.Get
 //     method.
@@ -104,8 +106,6 @@ func (client *ExpressRoutePortsLocationsClient) getHandleResponse(resp *http.Res
 
 // NewListPager - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location.
 // Available bandwidths can only be obtained when retrieving a specific peering location.
-//
-// Generated from API version 2022-09-01
 //   - options - ExpressRoutePortsLocationsClientListOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.NewListPager
 //     method.
 func (client *ExpressRoutePortsLocationsClient) NewListPager(options *ExpressRoutePortsLocationsClientListOptions) *runtime.Pager[ExpressRoutePortsLocationsClientListResponse] {
@@ -143,7 +143,7 @@ func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultExpressRoutePortsLocationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

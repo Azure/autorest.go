@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultMarketplacesClientVersion string = "2019-10-01"
+
 // MarketplacesClient contains the methods for the Marketplaces group.
 // Don't use this type directly, use NewMarketplacesClient() instead.
+//
+// Generated from API version 2019-10-01
 type MarketplacesClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 
 // NewListPager - Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for
 // May 1, 2014 or later.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 //     scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing
 //     Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}'
@@ -89,7 +91,7 @@ func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope s
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultMarketplacesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

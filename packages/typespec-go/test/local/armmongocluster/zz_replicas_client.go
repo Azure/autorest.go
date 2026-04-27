@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultReplicasClientVersion string = "2024-07-01"
+
 // ReplicasClient contains the methods for the Replicas group.
 // Don't use this type directly, use NewReplicasClient() instead.
+//
+// Generated from API version 2024-07-01
 type ReplicasClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -40,8 +44,6 @@ func NewReplicasClient(subscriptionID string, credential azcore.TokenCredential,
 }
 
 // NewListByParentPager - List all the replicas for the mongo cluster.
-//
-// Generated from API version 2024-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - mongoClusterName - The name of the mongo cluster.
 //   - options - ReplicasClientListByParentOptions contains the optional parameters for the ReplicasClient.NewListByParentPager
@@ -89,7 +91,7 @@ func (client *ReplicasClient) listByParentCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-07-01")
+	reqQP.Set("api-version", defaultReplicasClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

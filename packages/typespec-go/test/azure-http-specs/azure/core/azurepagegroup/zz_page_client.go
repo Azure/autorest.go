@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultPageClientVersion string = "2022-12-01-preview"
+
 // PageClient - Illustrates bodies templated with Azure Core with paging support
 // Don't use this type directly, use NewPageClientWithNoCredential() instead.
+//
+// Generated from API version 2022-12-01-preview
 type PageClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -56,8 +60,6 @@ func (client *PageClient) NewPageTwoModelsAsPageItemClient() *PageTwoModelsAsPag
 }
 
 // NewListWithCustomPageModelPager - List with custom page model.
-//
-// Generated from API version 2022-12-01-preview
 //   - options - PageClientListWithCustomPageModelOptions contains the optional parameters for the PageClient.NewListWithCustomPageModelPager
 //     method.
 func (client *PageClient) NewListWithCustomPageModelPager(options *PageClientListWithCustomPageModelOptions) *runtime.Pager[PageClientListWithCustomPageModelResponse] {
@@ -91,7 +93,7 @@ func (client *PageClient) listWithCustomPageModelCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultPageClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -107,8 +109,6 @@ func (client *PageClient) listWithCustomPageModelHandleResponse(resp *http.Respo
 }
 
 // NewListWithPagePager - List with Azure.Core.Page<>.
-//
-// Generated from API version 2022-12-01-preview
 //   - options - PageClientListWithPageOptions contains the optional parameters for the PageClient.NewListWithPagePager method.
 func (client *PageClient) NewListWithPagePager(options *PageClientListWithPageOptions) *runtime.Pager[PageClientListWithPageResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageClientListWithPageResponse]{
@@ -141,7 +141,7 @@ func (client *PageClient) listWithPageCreateRequest(ctx context.Context, _ *Page
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultPageClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -157,8 +157,6 @@ func (client *PageClient) listWithPageHandleResponse(resp *http.Response) (PageC
 }
 
 // NewListWithParametersPager - List with extensible enum parameter Azure.Core.Page<>.
-//
-// Generated from API version 2022-12-01-preview
 //   - bodyInput - The body of the input.
 //   - options - PageClientListWithParametersOptions contains the optional parameters for the PageClient.NewListWithParametersPager
 //     method.
@@ -196,7 +194,7 @@ func (client *PageClient) listWithParametersCreateRequest(ctx context.Context, b
 	if options != nil && options.Another != nil {
 		reqQP.Set("another", string(*options.Another))
 	}
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultPageClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

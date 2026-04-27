@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultNestedClientVersion string = "2023-12-01-preview"
+
 // NestedClient contains the methods for the Nested group.
 // Don't use this type directly, use NewNestedClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type NestedClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewNestedClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // BeginCreateOrReplace - Create a NestedProxyResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
@@ -68,8 +70,6 @@ func (client *NestedClient) BeginCreateOrReplace(ctx context.Context, resourceGr
 
 // CreateOrReplace - Create a NestedProxyResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *NestedClient) createOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource NestedProxyResource, options *NestedClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
 	const operationName = "NestedClient.BeginCreateOrReplace"
@@ -115,7 +115,7 @@ func (client *NestedClient) createOrReplaceCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultNestedClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -127,8 +127,6 @@ func (client *NestedClient) createOrReplaceCreateRequest(ctx context.Context, re
 
 // BeginDelete - Delete a NestedProxyResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
@@ -152,8 +150,6 @@ func (client *NestedClient) BeginDelete(ctx context.Context, resourceGroupName s
 
 // Delete - Delete a NestedProxyResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *NestedClient) deleteOperation(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *NestedClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "NestedClient.BeginDelete"
@@ -199,15 +195,13 @@ func (client *NestedClient) deleteCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultNestedClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a NestedProxyResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
@@ -258,7 +252,7 @@ func (client *NestedClient) getCreateRequest(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultNestedClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -274,8 +268,6 @@ func (client *NestedClient) getHandleResponse(resp *http.Response) (NestedClient
 }
 
 // NewListByTopLevelTrackedResourcePager - List NestedProxyResource resources by TopLevelTrackedResource
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - options - NestedClientListByTopLevelTrackedResourceOptions contains the optional parameters for the NestedClient.NewListByTopLevelTrackedResourcePager
@@ -323,7 +315,7 @@ func (client *NestedClient) listByTopLevelTrackedResourceCreateRequest(ctx conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultNestedClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -340,8 +332,6 @@ func (client *NestedClient) listByTopLevelTrackedResourceHandleResponse(resp *ht
 
 // BeginUpdate - Update a NestedProxyResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
@@ -366,8 +356,6 @@ func (client *NestedClient) BeginUpdate(ctx context.Context, resourceGroupName s
 
 // Update - Update a NestedProxyResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *NestedClient) update(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties NestedProxyResource, options *NestedClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "NestedClient.BeginUpdate"
@@ -413,7 +401,7 @@ func (client *NestedClient) updateCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultNestedClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

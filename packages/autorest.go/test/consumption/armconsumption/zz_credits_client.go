@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultCreditsClientVersion string = "2019-10-01"
+
 // CreditsClient contains the methods for the Credits group.
 // Don't use this type directly, use NewCreditsClient() instead.
+//
+// Generated from API version 2019-10-01
 type CreditsClient struct {
 	internal *arm.Client
 }
@@ -37,8 +41,6 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 
 // Get - The credit summary by billingAccountId and billingProfileId.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with credits operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 //     for Billing Profile scope, and
 //     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
@@ -70,7 +72,7 @@ func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultCreditsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

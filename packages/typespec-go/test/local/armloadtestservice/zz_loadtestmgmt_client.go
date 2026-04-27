@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLoadTestMgmtClientVersion string = "2023-12-01-preview"
+
 // LoadTestMgmtClient contains the methods for the LoadTestMgmt group.
 // Don't use this type directly, use NewLoadTestMgmtClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type LoadTestMgmtClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewLoadTestMgmtClient(subscriptionID string, credential azcore.TokenCredent
 
 // CheckAvailabilityQuota - Check Quota Availability on quota bucket per region per subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - quotaBucketName - The quota name.
 //   - quotaBucketRequest - The content of the action request
@@ -90,7 +92,7 @@ func (client *LoadTestMgmtClient) checkAvailabilityQuotaCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -111,8 +113,6 @@ func (client *LoadTestMgmtClient) checkAvailabilityQuotaHandleResponse(resp *htt
 
 // BeginCreateOrUpdateLoadtest - Create a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - loadTestResource - Resource create parameters.
@@ -137,8 +137,6 @@ func (client *LoadTestMgmtClient) BeginCreateOrUpdateLoadtest(ctx context.Contex
 
 // CreateOrUpdateLoadtest - Create a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LoadTestMgmtClient) createOrUpdateLoadtest(ctx context.Context, resourceGroupName string, loadTestName string, loadTestResource LoadTestResource, options *LoadTestMgmtClientBeginCreateOrUpdateLoadtestOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadTestMgmtClient.BeginCreateOrUpdateLoadtest"
@@ -180,7 +178,7 @@ func (client *LoadTestMgmtClient) createOrUpdateLoadtestCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -192,8 +190,6 @@ func (client *LoadTestMgmtClient) createOrUpdateLoadtestCreateRequest(ctx contex
 
 // BeginDeleteLoadtest - Delete a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - options - LoadTestMgmtClientBeginDeleteLoadtestOptions contains the optional parameters for the LoadTestMgmtClient.BeginDeleteLoadtest
@@ -217,8 +213,6 @@ func (client *LoadTestMgmtClient) BeginDeleteLoadtest(ctx context.Context, resou
 
 // DeleteLoadtest - Delete a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LoadTestMgmtClient) deleteLoadtest(ctx context.Context, resourceGroupName string, loadTestName string, options *LoadTestMgmtClientBeginDeleteLoadtestOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadTestMgmtClient.BeginDeleteLoadtest"
@@ -260,15 +254,13 @@ func (client *LoadTestMgmtClient) deleteLoadtestCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // GetLoadtest - Get a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - options - LoadTestMgmtClientGetLoadtestOptions contains the optional parameters for the LoadTestMgmtClient.GetLoadtest
@@ -315,7 +307,7 @@ func (client *LoadTestMgmtClient) getLoadtestCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -332,8 +324,6 @@ func (client *LoadTestMgmtClient) getLoadtestHandleResponse(resp *http.Response)
 
 // GetQuota - Get the available quota for a quota bucket per region per subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - quotaBucketName - The quota name.
 //   - options - LoadTestMgmtClientGetQuotaOptions contains the optional parameters for the LoadTestMgmtClient.GetQuota method.
@@ -379,7 +369,7 @@ func (client *LoadTestMgmtClient) getQuotaCreateRequest(ctx context.Context, loc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -395,8 +385,6 @@ func (client *LoadTestMgmtClient) getQuotaHandleResponse(resp *http.Response) (L
 }
 
 // NewListByResourceGroupPager - List LoadTestResource resources by resource group
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - LoadTestMgmtClientListByResourceGroupOptions contains the optional parameters for the LoadTestMgmtClient.NewListByResourceGroupPager
 //     method.
@@ -439,7 +427,7 @@ func (client *LoadTestMgmtClient) listByResourceGroupCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -455,8 +443,6 @@ func (client *LoadTestMgmtClient) listByResourceGroupHandleResponse(resp *http.R
 }
 
 // NewListBySubscriptionPager - List LoadTestResource resources by subscription ID
-//
-// Generated from API version 2023-12-01-preview
 //   - options - LoadTestMgmtClientListBySubscriptionOptions contains the optional parameters for the LoadTestMgmtClient.NewListBySubscriptionPager
 //     method.
 func (client *LoadTestMgmtClient) NewListBySubscriptionPager(options *LoadTestMgmtClientListBySubscriptionOptions) *runtime.Pager[LoadTestMgmtClientListBySubscriptionResponse] {
@@ -494,7 +480,7 @@ func (client *LoadTestMgmtClient) listBySubscriptionCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -510,8 +496,6 @@ func (client *LoadTestMgmtClient) listBySubscriptionHandleResponse(resp *http.Re
 }
 
 // NewListQuotaPager - List quotas for a given subscription Id.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - options - LoadTestMgmtClientListQuotaOptions contains the optional parameters for the LoadTestMgmtClient.NewListQuotaPager
 //     method.
@@ -554,7 +538,7 @@ func (client *LoadTestMgmtClient) listQuotaCreateRequest(ctx context.Context, lo
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -570,8 +554,6 @@ func (client *LoadTestMgmtClient) listQuotaHandleResponse(resp *http.Response) (
 }
 
 // NewOutboundNetworkDependenciesEndpointsPager - Lists the endpoints that agents may call as part of load testing.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - options - LoadTestMgmtClientOutboundNetworkDependenciesEndpointsOptions contains the optional parameters for the LoadTestMgmtClient.NewOutboundNetworkDependenciesEndpointsPager
@@ -619,7 +601,7 @@ func (client *LoadTestMgmtClient) outboundNetworkDependenciesEndpointsCreateRequ
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -636,8 +618,6 @@ func (client *LoadTestMgmtClient) outboundNetworkDependenciesEndpointsHandleResp
 
 // BeginUpdateLoadtest - Update a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - loadTestResourcePatchRequestBody - The resource properties to be updated.
@@ -662,8 +642,6 @@ func (client *LoadTestMgmtClient) BeginUpdateLoadtest(ctx context.Context, resou
 
 // UpdateLoadtest - Update a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LoadTestMgmtClient) updateLoadtest(ctx context.Context, resourceGroupName string, loadTestName string, loadTestResourcePatchRequestBody LoadTestResourceUpdate, options *LoadTestMgmtClientBeginUpdateLoadtestOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadTestMgmtClient.BeginUpdateLoadtest"
@@ -705,7 +683,7 @@ func (client *LoadTestMgmtClient) updateLoadtestCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLoadTestMgmtClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

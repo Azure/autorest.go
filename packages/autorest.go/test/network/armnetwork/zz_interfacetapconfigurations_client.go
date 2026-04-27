@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultInterfaceTapConfigurationsClientVersion string = "2022-09-01"
+
 // InterfaceTapConfigurationsClient contains the methods for the NetworkInterfaceTapConfigurations group.
 // Don't use this type directly, use NewInterfaceTapConfigurationsClient() instead.
+//
+// Generated from API version 2022-09-01
 type InterfaceTapConfigurationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewInterfaceTapConfigurationsClient(subscriptionID string, credential azcor
 
 // BeginCreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - tapConfigurationName - The name of the tap configuration.
@@ -71,8 +73,6 @@ func (client *InterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.
 
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *InterfaceTapConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters InterfaceTapConfiguration, options *InterfaceTapConfigurationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "InterfaceTapConfigurationsClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *InterfaceTapConfigurationsClient) createOrUpdateCreateRequest(ctx 
 
 // BeginDelete - Deletes the specified tap configuration from the NetworkInterface.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - tapConfigurationName - The name of the tap configuration.
@@ -156,8 +154,6 @@ func (client *InterfaceTapConfigurationsClient) BeginDelete(ctx context.Context,
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *InterfaceTapConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *InterfaceTapConfigurationsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "InterfaceTapConfigurationsClient.BeginDelete"
@@ -203,7 +199,7 @@ func (client *InterfaceTapConfigurationsClient) deleteCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultInterfaceTapConfigurationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -211,8 +207,6 @@ func (client *InterfaceTapConfigurationsClient) deleteCreateRequest(ctx context.
 
 // Get - Get the specified tap configuration on a network interface.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - tapConfigurationName - The name of the tap configuration.
@@ -280,8 +274,6 @@ func (client *InterfaceTapConfigurationsClient) getHandleResponse(resp *http.Res
 }
 
 // NewListPager - Get all Tap configurations in a network interface.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkInterfaceName - The name of the network interface.
 //   - options - InterfaceTapConfigurationsClientListOptions contains the optional parameters for the InterfaceTapConfigurationsClient.NewListPager

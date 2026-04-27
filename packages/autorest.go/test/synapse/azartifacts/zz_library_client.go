@@ -19,8 +19,12 @@ import (
 	"strings"
 )
 
+const defaultLibraryClientVersion string = "2020-12-01"
+
 // LibraryClient contains the methods for the Library group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type LibraryClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -29,8 +33,6 @@ type LibraryClient struct {
 // Append - Append the content to the library resource created using the create operation. The maximum content size is 4MiB.
 // Content larger than 4MiB must be appended in 4MiB chunks
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - content - Library file chunk.
 //   - options - LibraryClientAppendOptions contains the optional parameters for the LibraryClient.Append method.
@@ -78,8 +80,6 @@ func (client *LibraryClient) appendCreateRequest(ctx context.Context, comp Enum9
 
 // BeginCreate - Creates a library with the library name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientBeginCreateOptions contains the optional parameters for the LibraryClient.BeginCreate method.
 func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*runtime.Poller[LibraryClientCreateResponse], error) {
@@ -97,8 +97,6 @@ func (client *LibraryClient) BeginCreate(ctx context.Context, libraryName string
 
 // Create - Creates a library with the library name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *LibraryClient) create(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createCreateRequest(ctx, libraryName, options)
@@ -136,8 +134,6 @@ func (client *LibraryClient) createCreateRequest(ctx context.Context, libraryNam
 
 // BeginDelete - Delete Library
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientBeginDeleteOptions contains the optional parameters for the LibraryClient.BeginDelete method.
 func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*runtime.Poller[LibraryClientDeleteResponse], error) {
@@ -155,8 +151,6 @@ func (client *LibraryClient) BeginDelete(ctx context.Context, libraryName string
 
 // Delete - Delete Library
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *LibraryClient) deleteOperation(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	req, err := client.deleteCreateRequest(ctx, libraryName, options)
@@ -194,8 +188,6 @@ func (client *LibraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 
 // BeginFlush - Flush Library
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientBeginFlushOptions contains the optional parameters for the LibraryClient.BeginFlush method.
 func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*runtime.Poller[LibraryClientFlushResponse], error) {
@@ -213,8 +205,6 @@ func (client *LibraryClient) BeginFlush(ctx context.Context, libraryName string,
 
 // Flush - Flush Library
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *LibraryClient) flush(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*http.Response, error) {
 	var err error
 	req, err := client.flushCreateRequest(ctx, libraryName, options)
@@ -252,8 +242,6 @@ func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName
 
 // Get - Get Library
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 //   - options - LibraryClientGetOptions contains the optional parameters for the LibraryClient.Get method.
 func (client *LibraryClient) Get(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (LibraryClientGetResponse, error) {
@@ -303,8 +291,6 @@ func (client *LibraryClient) getHandleResponse(resp *http.Response) (LibraryClie
 
 // GetOperationResult - Get Operation result for Library
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - operationID - operation id for which status is requested
 //   - options - LibraryClientGetOperationResultOptions contains the optional parameters for the LibraryClient.GetOperationResult
 //     method.
@@ -367,8 +353,6 @@ func (client *LibraryClient) getOperationResultHandleResponse(resp *http.Respons
 }
 
 // NewListPager - Lists Library.
-//
-// Generated from API version 2020-12-01
 //   - options - LibraryClientListOptions contains the optional parameters for the LibraryClient.NewListPager method.
 func (client *LibraryClient) NewListPager(options *LibraryClientListOptions) *runtime.Pager[LibraryClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LibraryClientListResponse]{
@@ -399,7 +383,7 @@ func (client *LibraryClient) listCreateRequest(ctx context.Context, _ *LibraryCl
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultLibraryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

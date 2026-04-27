@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultUsersClientVersion string = "2021-02-01"
+
 // UsersClient contains the methods for the Users group.
 // Don't use this type directly, use NewUsersClient() instead.
+//
+// Generated from API version 2021-02-01
 type UsersClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewUsersClient(subscriptionID string, credential azcore.TokenCredential, op
 // BeginCreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway
 // device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The user name.
 //   - resourceGroupName - The resource group name.
@@ -66,8 +68,6 @@ func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 
 // CreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsersClient.BeginCreateOrUpdate")
@@ -107,7 +107,7 @@ func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, devi
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultUsersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, userParam); err != nil {
@@ -118,8 +118,6 @@ func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, devi
 
 // BeginDelete - Deletes the user on a databox edge/gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The user name.
 //   - resourceGroupName - The resource group name.
@@ -139,8 +137,6 @@ func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, n
 
 // Delete - Deletes the user on a databox edge/gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 func (client *UsersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsersClient.BeginDelete")
@@ -180,7 +176,7 @@ func (client *UsersClient) deleteCreateRequest(ctx context.Context, deviceName s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultUsersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -188,8 +184,6 @@ func (client *UsersClient) deleteCreateRequest(ctx context.Context, deviceName s
 
 // Get - Gets the properties of the specified user.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The user name.
 //   - resourceGroupName - The resource group name.
@@ -234,7 +228,7 @@ func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultUsersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -250,8 +244,6 @@ func (client *UsersClient) getHandleResponse(resp *http.Response) (UsersClientGe
 }
 
 // NewListByDataBoxEdgeDevicePager - Gets all the users registered on a Data Box Edge/Data Box Gateway device.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
 //   - options - UsersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.NewListByDataBoxEdgeDevicePager
@@ -298,7 +290,7 @@ func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultUsersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

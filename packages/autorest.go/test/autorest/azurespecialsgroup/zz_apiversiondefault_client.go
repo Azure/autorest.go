@@ -13,8 +13,12 @@ import (
 	"net/http"
 )
 
+const defaultAPIVersionDefaultClientVersion string = "2015-07-01-preview"
+
 // APIVersionDefaultClient contains the methods for the APIVersionDefault group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2015-07-01-preview
 type APIVersionDefaultClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -22,8 +26,6 @@ type APIVersionDefaultClient struct {
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - options - APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalNotProvidedValid
 //     method.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions) (APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse, error) {
@@ -55,7 +57,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2015-07-01-preview")
+	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -63,8 +65,6 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - options - APIVersionDefaultClientGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalValid
 //     method.
 func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalValidOptions) (APIVersionDefaultClientGetMethodGlobalValidResponse, error) {
@@ -96,7 +96,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2015-07-01-preview")
+	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -104,8 +104,6 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - options - APIVersionDefaultClientGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetPathGlobalValid
 //     method.
 func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetPathGlobalValidOptions) (APIVersionDefaultClientGetPathGlobalValidResponse, error) {
@@ -137,7 +135,7 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2015-07-01-preview")
+	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -145,8 +143,6 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2015-07-01-preview
 //   - options - APIVersionDefaultClientGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetSwaggerGlobalValid
 //     method.
 func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetSwaggerGlobalValidOptions) (APIVersionDefaultClientGetSwaggerGlobalValidResponse, error) {
@@ -178,7 +174,7 @@ func (client *APIVersionDefaultClient) getSwaggerGlobalValidCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2015-07-01-preview")
+	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultResourceGuardsClientVersion string = "2025-07-01"
+
 // ResourceGuardsClient contains the methods for the ResourceGuards group.
 // Don't use this type directly, use NewResourceGuardsClient() instead.
+//
+// Generated from API version 2025-07-01
 type ResourceGuardsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewResourceGuardsClient(subscriptionID string, credential azcore.TokenCrede
 
 // Delete - Deletes a ResourceGuard resource from the resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resourceGuardsName - The name of ResourceGuard
 //   - options - ResourceGuardsClientDeleteOptions contains the optional parameters for the ResourceGuardsClient.Delete method.
@@ -85,7 +87,7 @@ func (client *ResourceGuardsClient) deleteCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -93,8 +95,6 @@ func (client *ResourceGuardsClient) deleteCreateRequest(ctx context.Context, res
 
 // Get - Returns a ResourceGuard belonging to a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resourceGuardsName - The name of ResourceGuard
 //   - options - ResourceGuardsClientGetOptions contains the optional parameters for the ResourceGuardsClient.Get method.
@@ -137,7 +137,7 @@ func (client *ResourceGuardsClient) getCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -154,8 +154,6 @@ func (client *ResourceGuardsClient) getHandleResponse(resp *http.Response) (Reso
 
 // NewGetBackupSecurityPINRequestsObjectsPager - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetBackupSecurityPINRequestsObjectsOptions contains the optional parameters for the ResourceGuardsClient.NewGetBackupSecurityPINRequestsObjectsPager
 //     method.
@@ -201,7 +199,7 @@ func (client *ResourceGuardsClient) getBackupSecurityPINRequestsObjectsCreateReq
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -219,8 +217,6 @@ func (client *ResourceGuardsClient) getBackupSecurityPINRequestsObjectsHandleRes
 // GetDefaultBackupSecurityPINRequestsObject - Returns collection of operation request objects for a critical operation protected
 // by the given ResourceGuard resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDefaultBackupSecurityPINRequestsObjectOptions contains the optional parameters for the
 //     ResourceGuardsClient.GetDefaultBackupSecurityPINRequestsObject method.
@@ -267,7 +263,7 @@ func (client *ResourceGuardsClient) getDefaultBackupSecurityPINRequestsObjectCre
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -285,8 +281,6 @@ func (client *ResourceGuardsClient) getDefaultBackupSecurityPINRequestsObjectHan
 // GetDefaultDeleteProtectedItemRequestsObject - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDefaultDeleteProtectedItemRequestsObjectOptions contains the optional parameters for the
 //     ResourceGuardsClient.GetDefaultDeleteProtectedItemRequestsObject method.
@@ -333,7 +327,7 @@ func (client *ResourceGuardsClient) getDefaultDeleteProtectedItemRequestsObjectC
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -351,8 +345,6 @@ func (client *ResourceGuardsClient) getDefaultDeleteProtectedItemRequestsObjectH
 // GetDefaultDeleteResourceGuardProxyRequestsObject - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDefaultDeleteResourceGuardProxyRequestsObjectOptions contains the optional parameters
 //     for the ResourceGuardsClient.GetDefaultDeleteResourceGuardProxyRequestsObject method.
@@ -399,7 +391,7 @@ func (client *ResourceGuardsClient) getDefaultDeleteResourceGuardProxyRequestsOb
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -417,8 +409,6 @@ func (client *ResourceGuardsClient) getDefaultDeleteResourceGuardProxyRequestsOb
 // GetDefaultDisableSoftDeleteRequestsObject - Returns collection of operation request objects for a critical operation protected
 // by the given ResourceGuard resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDefaultDisableSoftDeleteRequestsObjectOptions contains the optional parameters for the
 //     ResourceGuardsClient.GetDefaultDisableSoftDeleteRequestsObject method.
@@ -465,7 +455,7 @@ func (client *ResourceGuardsClient) getDefaultDisableSoftDeleteRequestsObjectCre
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -483,8 +473,6 @@ func (client *ResourceGuardsClient) getDefaultDisableSoftDeleteRequestsObjectHan
 // GetDefaultUpdateProtectedItemRequestsObject - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDefaultUpdateProtectedItemRequestsObjectOptions contains the optional parameters for the
 //     ResourceGuardsClient.GetDefaultUpdateProtectedItemRequestsObject method.
@@ -531,7 +519,7 @@ func (client *ResourceGuardsClient) getDefaultUpdateProtectedItemRequestsObjectC
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -549,8 +537,6 @@ func (client *ResourceGuardsClient) getDefaultUpdateProtectedItemRequestsObjectH
 // GetDefaultUpdateProtectionPolicyRequestsObject - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDefaultUpdateProtectionPolicyRequestsObjectOptions contains the optional parameters for
 //     the ResourceGuardsClient.GetDefaultUpdateProtectionPolicyRequestsObject method.
@@ -597,7 +583,7 @@ func (client *ResourceGuardsClient) getDefaultUpdateProtectionPolicyRequestsObje
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -614,8 +600,6 @@ func (client *ResourceGuardsClient) getDefaultUpdateProtectionPolicyRequestsObje
 
 // NewGetDeleteProtectedItemRequestsObjectsPager - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDeleteProtectedItemRequestsObjectsOptions contains the optional parameters for the ResourceGuardsClient.NewGetDeleteProtectedItemRequestsObjectsPager
 //     method.
@@ -661,7 +645,7 @@ func (client *ResourceGuardsClient) getDeleteProtectedItemRequestsObjectsCreateR
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -678,8 +662,6 @@ func (client *ResourceGuardsClient) getDeleteProtectedItemRequestsObjectsHandleR
 
 // NewGetDeleteResourceGuardProxyRequestsObjectsPager - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDeleteResourceGuardProxyRequestsObjectsOptions contains the optional parameters for the
 //     ResourceGuardsClient.NewGetDeleteResourceGuardProxyRequestsObjectsPager method.
@@ -725,7 +707,7 @@ func (client *ResourceGuardsClient) getDeleteResourceGuardProxyRequestsObjectsCr
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -742,8 +724,6 @@ func (client *ResourceGuardsClient) getDeleteResourceGuardProxyRequestsObjectsHa
 
 // NewGetDisableSoftDeleteRequestsObjectsPager - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetDisableSoftDeleteRequestsObjectsOptions contains the optional parameters for the ResourceGuardsClient.NewGetDisableSoftDeleteRequestsObjectsPager
 //     method.
@@ -789,7 +769,7 @@ func (client *ResourceGuardsClient) getDisableSoftDeleteRequestsObjectsCreateReq
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -805,8 +785,6 @@ func (client *ResourceGuardsClient) getDisableSoftDeleteRequestsObjectsHandleRes
 }
 
 // NewGetResourcesInResourceGroupPager - Returns ResourceGuards collection belonging to a ResourceGroup.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetResourcesInResourceGroupOptions contains the optional parameters for the ResourceGuardsClient.NewGetResourcesInResourceGroupPager
 //     method.
@@ -848,7 +826,7 @@ func (client *ResourceGuardsClient) getResourcesInResourceGroupCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -864,8 +842,6 @@ func (client *ResourceGuardsClient) getResourcesInResourceGroupHandleResponse(re
 }
 
 // NewGetResourcesInSubscriptionPager - Returns ResourceGuards collection belonging to a subscription.
-//
-// Generated from API version 2025-07-01
 //   - options - ResourceGuardsClientGetResourcesInSubscriptionOptions contains the optional parameters for the ResourceGuardsClient.NewGetResourcesInSubscriptionPager
 //     method.
 func (client *ResourceGuardsClient) NewGetResourcesInSubscriptionPager(options *ResourceGuardsClientGetResourcesInSubscriptionOptions) *runtime.Pager[ResourceGuardsClientGetResourcesInSubscriptionResponse] {
@@ -902,7 +878,7 @@ func (client *ResourceGuardsClient) getResourcesInSubscriptionCreateRequest(ctx 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -919,8 +895,6 @@ func (client *ResourceGuardsClient) getResourcesInSubscriptionHandleResponse(res
 
 // NewGetUpdateProtectedItemRequestsObjectsPager - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetUpdateProtectedItemRequestsObjectsOptions contains the optional parameters for the ResourceGuardsClient.NewGetUpdateProtectedItemRequestsObjectsPager
 //     method.
@@ -966,7 +940,7 @@ func (client *ResourceGuardsClient) getUpdateProtectedItemRequestsObjectsCreateR
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -983,8 +957,6 @@ func (client *ResourceGuardsClient) getUpdateProtectedItemRequestsObjectsHandleR
 
 // NewGetUpdateProtectionPolicyRequestsObjectsPager - Returns collection of operation request objects for a critical operation
 // protected by the given ResourceGuard resource.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ResourceGuardsClientGetUpdateProtectionPolicyRequestsObjectsOptions contains the optional parameters for the
 //     ResourceGuardsClient.NewGetUpdateProtectionPolicyRequestsObjectsPager method.
@@ -1030,7 +1002,7 @@ func (client *ResourceGuardsClient) getUpdateProtectionPolicyRequestsObjectsCrea
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1047,8 +1019,6 @@ func (client *ResourceGuardsClient) getUpdateProtectionPolicyRequestsObjectsHand
 
 // Patch - Updates a ResourceGuard resource belonging to a resource group. For example, updating tags for a resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resourceGuardsName - The name of ResourceGuard
 //   - parameters - Request body for operation
@@ -1092,7 +1062,7 @@ func (client *ResourceGuardsClient) patchCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -1112,8 +1082,6 @@ func (client *ResourceGuardsClient) patchHandleResponse(resp *http.Response) (Re
 
 // Put - Creates or updates a ResourceGuard resource belonging to a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resourceGuardsName - The name of ResourceGuard
 //   - parameters - Request body for operation
@@ -1157,7 +1125,7 @@ func (client *ResourceGuardsClient) putCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultResourceGuardsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

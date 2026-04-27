@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultResourceGroupResourceOperationsClientVersion string = "2023-12-01-preview"
+
 // ResourceGroupResourceOperationsClient contains the methods for the ResourceGroupResourceOperations group.
 // Don't use this type directly, use NewResourceGroupResourceOperationsClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type ResourceGroupResourceOperationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewResourceGroupResourceOperationsClient(subscriptionID string, credential 
 
 // Delete - Delete a ResourceGroupResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resourceGroupResourceName - The name of the ResourceGroupResource
 //   - options - ResourceGroupResourceOperationsClientDeleteOptions contains the optional parameters for the ResourceGroupResourceOperationsClient.Delete
@@ -88,15 +90,13 @@ func (client *ResourceGroupResourceOperationsClient) deleteCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultResourceGroupResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a ResourceGroupResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resourceGroupResourceName - The name of the ResourceGroupResource
 //   - options - ResourceGroupResourceOperationsClientGetOptions contains the optional parameters for the ResourceGroupResourceOperationsClient.Get
@@ -143,7 +143,7 @@ func (client *ResourceGroupResourceOperationsClient) getCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultResourceGroupResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -160,8 +160,6 @@ func (client *ResourceGroupResourceOperationsClient) getHandleResponse(resp *htt
 
 // Put - Create a ResourceGroupResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resourceGroupResourceName - The name of the ResourceGroupResource
 //   - resource - Resource create parameters.
@@ -209,7 +207,7 @@ func (client *ResourceGroupResourceOperationsClient) putCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultResourceGroupResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

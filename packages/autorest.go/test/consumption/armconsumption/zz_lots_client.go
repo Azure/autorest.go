@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultLotsClientVersion string = "2019-10-01"
+
 // LotsClient contains the methods for the Lots group.
 // Don't use this type directly, use NewLotsClient() instead.
+//
+// Generated from API version 2019-10-01
 type LotsClient struct {
 	internal *arm.Client
 }
@@ -36,8 +40,6 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 }
 
 // NewListPager - Lists the lots by billingAccountId and billingProfileId.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with Lots operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 //     for Billing Profile scope, and
 //     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
@@ -72,7 +74,7 @@ func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, _
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultLotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

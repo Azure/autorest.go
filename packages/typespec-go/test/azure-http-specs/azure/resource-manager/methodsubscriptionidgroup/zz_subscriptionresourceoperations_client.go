@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultSubscriptionResourceOperationsClientVersion string = "2023-12-01-preview"
+
 // SubscriptionResourceOperationsClient contains the methods for the SubscriptionResourceOperations group.
 // Don't use this type directly, use NewSubscriptionResourceOperationsClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type SubscriptionResourceOperationsClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewSubscriptionResourceOperationsClient(credential azcore.TokenCredential, 
 
 // Delete - Delete a SubscriptionResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - subscriptionResourceName - The name of the SubscriptionResource
 //   - options - SubscriptionResourceOperationsClientDeleteOptions contains the optional parameters for the SubscriptionResourceOperationsClient.Delete
@@ -81,15 +83,13 @@ func (client *SubscriptionResourceOperationsClient) deleteCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultSubscriptionResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a SubscriptionResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - subscriptionResourceName - The name of the SubscriptionResource
 //   - options - SubscriptionResourceOperationsClientGetOptions contains the optional parameters for the SubscriptionResourceOperationsClient.Get
@@ -132,7 +132,7 @@ func (client *SubscriptionResourceOperationsClient) getCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultSubscriptionResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -149,8 +149,6 @@ func (client *SubscriptionResourceOperationsClient) getHandleResponse(resp *http
 
 // Put - Create a SubscriptionResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - subscriptionResourceName - The name of the SubscriptionResource
 //   - resource - Resource create parameters.
@@ -194,7 +192,7 @@ func (client *SubscriptionResourceOperationsClient) putCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultSubscriptionResourceOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

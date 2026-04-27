@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultRaiBlocklistsClientVersion string = "2025-10-01-preview"
+
 // RaiBlocklistsClient contains the methods for the RaiBlocklists group.
 // Don't use this type directly, use NewRaiBlocklistsClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type RaiBlocklistsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewRaiBlocklistsClient(subscriptionID string, credential azcore.TokenCreden
 
 // CreateOrUpdate - Update the state of specified blocklist associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - raiBlocklistName - The name of the RaiBlocklist associated with the Cognitive Services Account
@@ -95,7 +97,7 @@ func (client *RaiBlocklistsClient) createOrUpdateCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiBlocklistsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,8 +118,6 @@ func (client *RaiBlocklistsClient) createOrUpdateHandleResponse(resp *http.Respo
 
 // BeginDelete - Deletes the specified custom blocklist associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - raiBlocklistName - The name of the RaiBlocklist associated with the Cognitive Services Account
@@ -142,8 +142,6 @@ func (client *RaiBlocklistsClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Deletes the specified custom blocklist associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *RaiBlocklistsClient) deleteOperation(ctx context.Context, resourceGroupName string, accountName string, raiBlocklistName string, options *RaiBlocklistsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RaiBlocklistsClient.BeginDelete"
@@ -189,15 +187,13 @@ func (client *RaiBlocklistsClient) deleteCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiBlocklistsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Gets the specified custom blocklist associated with the Azure OpenAI account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - raiBlocklistName - The name of the RaiBlocklist associated with the Cognitive Services Account
@@ -248,7 +244,7 @@ func (client *RaiBlocklistsClient) getCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiBlocklistsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -264,8 +260,6 @@ func (client *RaiBlocklistsClient) getHandleResponse(resp *http.Response) (RaiBl
 }
 
 // NewListPager - Gets the custom blocklists associated with the Azure OpenAI account.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - options - RaiBlocklistsClientListOptions contains the optional parameters for the RaiBlocklistsClient.NewListPager method.
@@ -312,7 +306,7 @@ func (client *RaiBlocklistsClient) listCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultRaiBlocklistsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

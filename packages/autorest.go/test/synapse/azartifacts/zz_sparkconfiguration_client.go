@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultSparkConfigurationClientVersion string = "2021-06-01-preview"
+
 // SparkConfigurationClient contains the methods for the SparkConfiguration group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2021-06-01-preview
 type SparkConfigurationClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type SparkConfigurationClient struct {
 
 // BeginCreateOrUpdateSparkConfiguration - Creates or updates a sparkconfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-06-01-preview
 //   - sparkConfigurationName - The spark Configuration name.
 //   - sparkConfiguration - SparkConfiguration resource definition.
 //   - options - SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions contains the optional parameters for the
@@ -46,8 +48,6 @@ func (client *SparkConfigurationClient) BeginCreateOrUpdateSparkConfiguration(ct
 
 // CreateOrUpdateSparkConfiguration - Creates or updates a sparkconfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) createOrUpdateSparkConfiguration(ctx context.Context, sparkConfigurationName string, sparkConfiguration SparkConfigurationResource, options *SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createOrUpdateSparkConfigurationCreateRequest(ctx, sparkConfigurationName, sparkConfiguration, options)
@@ -91,8 +91,6 @@ func (client *SparkConfigurationClient) createOrUpdateSparkConfigurationCreateRe
 
 // BeginDeleteSparkConfiguration - Deletes a sparkConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-06-01-preview
 //   - sparkConfigurationName - The spark Configuration name.
 //   - options - SparkConfigurationClientBeginDeleteSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginDeleteSparkConfiguration
 //     method.
@@ -111,8 +109,6 @@ func (client *SparkConfigurationClient) BeginDeleteSparkConfiguration(ctx contex
 
 // DeleteSparkConfiguration - Deletes a sparkConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) deleteSparkConfiguration(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*http.Response, error) {
 	var err error
 	req, err := client.deleteSparkConfigurationCreateRequest(ctx, sparkConfigurationName, options)
@@ -150,8 +146,6 @@ func (client *SparkConfigurationClient) deleteSparkConfigurationCreateRequest(ct
 
 // GetSparkConfiguration - Gets a sparkConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-06-01-preview
 //   - sparkConfigurationName - The spark Configuration name.
 //   - options - SparkConfigurationClientGetSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.GetSparkConfiguration
 //     method.
@@ -204,8 +198,6 @@ func (client *SparkConfigurationClient) getSparkConfigurationHandleResponse(resp
 }
 
 // NewGetSparkConfigurationsByWorkspacePager - Lists sparkconfigurations.
-//
-// Generated from API version 2021-06-01-preview
 //   - options - SparkConfigurationClientGetSparkConfigurationsByWorkspaceOptions contains the optional parameters for the SparkConfigurationClient.NewGetSparkConfigurationsByWorkspacePager
 //     method.
 func (client *SparkConfigurationClient) NewGetSparkConfigurationsByWorkspacePager(options *SparkConfigurationClientGetSparkConfigurationsByWorkspaceOptions) *runtime.Pager[SparkConfigurationClientGetSparkConfigurationsByWorkspaceResponse] {
@@ -237,7 +229,7 @@ func (client *SparkConfigurationClient) getSparkConfigurationsByWorkspaceCreateR
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-06-01-preview")
+	reqQP.Set("api-version", defaultSparkConfigurationClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -254,8 +246,6 @@ func (client *SparkConfigurationClient) getSparkConfigurationsByWorkspaceHandleR
 
 // BeginRenameSparkConfiguration - Renames a sparkConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-06-01-preview
 //   - sparkConfigurationName - The spark Configuration name.
 //   - request - proposed new name.
 //   - options - SparkConfigurationClientBeginRenameSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginRenameSparkConfiguration
@@ -275,8 +265,6 @@ func (client *SparkConfigurationClient) BeginRenameSparkConfiguration(ctx contex
 
 // RenameSparkConfiguration - Renames a sparkConfiguration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-06-01-preview
 func (client *SparkConfigurationClient) renameSparkConfiguration(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*http.Response, error) {
 	var err error
 	req, err := client.renameSparkConfigurationCreateRequest(ctx, sparkConfigurationName, request, options)

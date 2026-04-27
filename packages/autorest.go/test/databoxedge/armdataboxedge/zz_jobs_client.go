@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultJobsClientVersion string = "2021-02-01"
+
 // JobsClient contains the methods for the Jobs group.
 // Don't use this type directly, use NewJobsClient() instead.
+//
+// Generated from API version 2021-02-01
 type JobsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewJobsClient(subscriptionID string, credential azcore.TokenCredential, opt
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The job name.
 //   - resourceGroupName - The resource group name.
@@ -88,7 +90,7 @@ func (client *JobsClient) getCreateRequest(ctx context.Context, deviceName strin
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultJobsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

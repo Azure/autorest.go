@@ -25,6 +25,7 @@ export type SdkType = ArmClientOptions | ClientOptions | ParameterGroup | Respon
 export type WireType =
   | Any
   | Constant
+  | ConstantDef
   | ConstantValue
   | EncodedBytes
   | ETag
@@ -55,7 +56,7 @@ export interface ArmClientOptions extends QualifiedType {
   kind: 'armClientOptions';
 }
 
-/** a const type definition */
+/** a const type definition used for enums */
 export interface Constant {
   kind: 'constant';
 
@@ -81,7 +82,7 @@ export interface Constant {
 /** the underlying type of a const */
 export type ConstantType = 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string';
 
-/** a const value definition */
+/** a const enum value definition */
 export interface ConstantValue {
   kind: 'constantValue';
 
@@ -96,6 +97,17 @@ export interface ConstantValue {
 
   /** the value for this const */
   value: ConstantValueType;
+}
+
+/** a non-enum constant (e.g. const foo string = "bar") */
+export interface ConstantDef {
+  kind: 'constantDef';
+
+  /** the name of the constant */
+  name: string;
+
+  /** the type and value of the constant */
+  literal: Literal<String>;
 }
 
 /** the underlying type of a const value */
@@ -163,7 +175,7 @@ export interface Literal<T extends LiteralType = LiteralType> {
 }
 
 /** the possible types of literals */
-export type LiteralType = Constant | EncodedBytes | Scalar | String | Time;
+export type LiteralType = Constant | ConstantDef | EncodedBytes | Scalar | String | Time;
 
 /** a Go map type. note that the key is always a string */
 export interface Map {
@@ -390,6 +402,8 @@ export function getLiteralTypeDeclaration(literal: LiteralType): string {
   switch (literal.kind) {
     case 'constant':
       return literal.name;
+    case 'constantDef':
+      return literal.literal.type.kind;
     case 'encodedBytes':
       return '[]byte';
     case 'scalar':
@@ -444,6 +458,8 @@ export function getTypeDeclaration(type: Client | Type, scope: PackageType): str
       }
       return typeName;
     }
+    case 'constantDef':
+      return type.literal.type.kind;
     case 'encodedBytes':
     case 'rawJSON':
       return '[]byte';
@@ -586,6 +602,14 @@ export class Constant implements Constant {
     this.values = new Array<ConstantValue>();
     this.valuesFuncName = valuesFuncName;
     this.docs = {};
+  }
+}
+
+export class ConstantDef implements ConstantDef {
+  constructor(name: string, literal: Literal<String>) {
+    this.kind = 'constantDef';
+    this.name = name;
+    this.literal = literal;
   }
 }
 

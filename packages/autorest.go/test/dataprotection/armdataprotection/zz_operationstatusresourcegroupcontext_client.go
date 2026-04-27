@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultOperationStatusResourceGroupContextClientVersion string = "2025-07-01"
+
 // OperationStatusResourceGroupContextClient contains the methods for the OperationStatusResourceGroupContext group.
 // Don't use this type directly, use NewOperationStatusResourceGroupContextClient() instead.
+//
+// Generated from API version 2025-07-01
 type OperationStatusResourceGroupContextClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewOperationStatusResourceGroupContextClient(subscriptionID string, credent
 
 // Get - Gets the operation status for an operation over a ResourceGroup's context.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - OperationStatusResourceGroupContextClientGetOptions contains the optional parameters for the OperationStatusResourceGroupContextClient.Get
 //     method.
@@ -86,7 +88,7 @@ func (client *OperationStatusResourceGroupContextClient) getCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultOperationStatusResourceGroupContextClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

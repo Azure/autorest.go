@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultFirewallPolicyIdpsSignaturesOverridesClientVersion string = "2022-09-01"
+
 // FirewallPolicyIdpsSignaturesOverridesClient contains the methods for the FirewallPolicyIdpsSignaturesOverrides group.
 // Don't use this type directly, use NewFirewallPolicyIdpsSignaturesOverridesClient() instead.
+//
+// Generated from API version 2022-09-01
 type FirewallPolicyIdpsSignaturesOverridesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewFirewallPolicyIdpsSignaturesOverridesClient(subscriptionID string, crede
 
 // Get - Returns all signatures overrides for a specific policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPolicyIdpsSignaturesOverridesClientGetOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesOverridesClient.Get
@@ -108,8 +110,6 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) getHandleResponse(res
 
 // List - Returns all signatures overrides objects for a specific policy as a list containing a single value.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - options - FirewallPolicyIdpsSignaturesOverridesClientListOptions contains the optional parameters for the FirewallPolicyIdpsSignaturesOverridesClient.List
@@ -173,8 +173,6 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) listHandleResponse(re
 
 // Patch - Will update the status of policy's signature overrides for IDPS
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - parameters - Will contain all properties of the object to put
@@ -222,7 +220,7 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) patchCreateRequest(ct
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultFirewallPolicyIdpsSignaturesOverridesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -242,8 +240,6 @@ func (client *FirewallPolicyIdpsSignaturesOverridesClient) patchHandleResponse(r
 
 // Put - Will override/create a new signature overrides for the policy's IDPS
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - firewallPolicyName - The name of the Firewall Policy.
 //   - parameters - Will contain all properties of the object to put

@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultWebApplicationFirewallPoliciesClientVersion string = "2022-09-01"
+
 // WebApplicationFirewallPoliciesClient contains the methods for the WebApplicationFirewallPolicies group.
 // Don't use this type directly, use NewWebApplicationFirewallPoliciesClient() instead.
+//
+// Generated from API version 2022-09-01
 type WebApplicationFirewallPoliciesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewWebApplicationFirewallPoliciesClient(subscriptionID string, credential a
 
 // CreateOrUpdate - Creates or update policy with specified rule set name within a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - policyName - The name of the policy.
 //   - parameters - Policy to be created.
@@ -112,8 +114,6 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleResponse
 
 // BeginDelete - Deletes Policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - policyName - The name of the policy.
 //   - options - WebApplicationFirewallPoliciesClientBeginDeleteOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.BeginDelete
@@ -138,8 +138,6 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 
 // Delete - Deletes Policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *WebApplicationFirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WebApplicationFirewallPoliciesClient.BeginDelete"
@@ -189,8 +187,6 @@ func (client *WebApplicationFirewallPoliciesClient) deleteCreateRequest(ctx cont
 
 // Get - Retrieve protection policy with specified name within a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - policyName - The name of the policy.
 //   - options - WebApplicationFirewallPoliciesClientGetOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.Get
@@ -253,8 +249,6 @@ func (client *WebApplicationFirewallPoliciesClient) getHandleResponse(resp *http
 }
 
 // NewListPager - Lists all of the protection policies within a resource group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - options - WebApplicationFirewallPoliciesClientListOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.NewListPager
 //     method.
@@ -297,7 +291,7 @@ func (client *WebApplicationFirewallPoliciesClient) listCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultWebApplicationFirewallPoliciesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -313,8 +307,6 @@ func (client *WebApplicationFirewallPoliciesClient) listHandleResponse(resp *htt
 }
 
 // NewListAllPager - Gets all the WAF policies in a subscription.
-//
-// Generated from API version 2022-09-01
 //   - options - WebApplicationFirewallPoliciesClientListAllOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.NewListAllPager
 //     method.
 func (client *WebApplicationFirewallPoliciesClient) NewListAllPager(options *WebApplicationFirewallPoliciesClientListAllOptions) *runtime.Pager[WebApplicationFirewallPoliciesClientListAllResponse] {

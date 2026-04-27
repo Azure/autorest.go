@@ -22,8 +22,6 @@ type FilesClient struct {
 
 // GetEmptyFile - Get empty file
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClientGetEmptyFileOptions) (FilesClientGetEmptyFileResponse, error) {
 	var err error
@@ -60,8 +58,6 @@ func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, _ *Fil
 
 // GetFile - Get file
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - FilesClientGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
 func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetFileOptions) (FilesClientGetFileResponse, error) {
 	var err error
@@ -98,8 +94,6 @@ func (client *FilesClient) getFileCreateRequest(ctx context.Context, _ *FilesCli
 
 // GetFileLarge - Get a large file
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - FilesClientGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
 func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClientGetFileLargeOptions) (FilesClientGetFileLargeResponse, error) {
 	var err error

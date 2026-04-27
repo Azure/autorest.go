@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultWorkspaceFeaturesClientVersion string = "2022-02-01-preview"
+
 // WorkspaceFeaturesClient contains the methods for the WorkspaceFeatures group.
 // Don't use this type directly, use NewWorkspaceFeaturesClient() instead.
+//
+// Generated from API version 2022-02-01-preview
 type WorkspaceFeaturesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewWorkspaceFeaturesClient(subscriptionID string, credential azcore.TokenCr
 }
 
 // NewListPager - Lists all enabled features for a workspace
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - options - WorkspaceFeaturesClientListOptions contains the optional parameters for the WorkspaceFeaturesClient.NewListPager
@@ -88,7 +90,7 @@ func (client *WorkspaceFeaturesClient) listCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultWorkspaceFeaturesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

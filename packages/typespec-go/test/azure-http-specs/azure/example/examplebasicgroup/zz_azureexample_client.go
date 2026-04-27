@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultAzureExampleClientVersion string = "2022-12-01-preview"
+
 // AzureExampleClient contains the methods for the AzureExample group.
 // Don't use this type directly, use NewAzureExampleClientWithNoCredential() instead.
+//
+// Generated from API version 2022-12-01-preview
 type AzureExampleClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -49,8 +53,6 @@ func NewAzureExampleClientWithNoCredential(endpoint string, options *AzureExampl
 
 // BasicAction -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - options - AzureExampleClientBasicActionOptions contains the optional parameters for the AzureExampleClient.BasicAction
 //     method.
 func (client *AzureExampleClient) BasicAction(ctx context.Context, queryParam string, headerParam string, body ActionRequest, options *AzureExampleClientBasicActionOptions) (AzureExampleClientBasicActionResponse, error) {
@@ -83,7 +85,7 @@ func (client *AzureExampleClient) basicActionCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultAzureExampleClientVersion)
 	reqQP.Set("query-param", queryParam)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

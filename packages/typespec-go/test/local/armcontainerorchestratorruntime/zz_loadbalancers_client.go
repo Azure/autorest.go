@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLoadBalancersClientVersion string = "2024-03-01"
+
 // LoadBalancersClient contains the methods for the LoadBalancers group.
 // Don't use this type directly, use NewLoadBalancersClient() instead.
+//
+// Generated from API version 2024-03-01
 type LoadBalancersClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewLoadBalancersClient(credential azcore.TokenCredential, options *arm.Clie
 
 // BeginCreateOrUpdate - Create a LoadBalancer
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - loadBalancerName - The name of the LoadBalancer
 //   - resource - Resource create parameters.
@@ -65,8 +67,6 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdate - Create a LoadBalancer
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 func (client *LoadBalancersClient) createOrUpdate(ctx context.Context, resourceURI string, loadBalancerName string, resource LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadBalancersClient.BeginCreateOrUpdate"
@@ -104,7 +104,7 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultLoadBalancersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,8 +116,6 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // Delete - Delete a LoadBalancer
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - loadBalancerName - The name of the LoadBalancer
 //   - options - LoadBalancersClientDeleteOptions contains the optional parameters for the LoadBalancersClient.Delete method.
@@ -158,15 +156,13 @@ func (client *LoadBalancersClient) deleteCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultLoadBalancersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a LoadBalancer
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - loadBalancerName - The name of the LoadBalancer
 //   - options - LoadBalancersClientGetOptions contains the optional parameters for the LoadBalancersClient.Get method.
@@ -208,7 +204,7 @@ func (client *LoadBalancersClient) getCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultLoadBalancersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -224,8 +220,6 @@ func (client *LoadBalancersClient) getHandleResponse(resp *http.Response) (LoadB
 }
 
 // NewListPager - List LoadBalancer resources by parent
-//
-// Generated from API version 2024-03-01
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - options - LoadBalancersClientListOptions contains the optional parameters for the LoadBalancersClient.NewListPager method.
 func (client *LoadBalancersClient) NewListPager(resourceURI string, options *LoadBalancersClientListOptions) *runtime.Pager[LoadBalancersClientListResponse] {
@@ -263,7 +257,7 @@ func (client *LoadBalancersClient) listCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-01")
+	reqQP.Set("api-version", defaultLoadBalancersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

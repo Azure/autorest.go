@@ -16,9 +16,13 @@ import (
 	"strings"
 )
 
+const defaultExtensionsResourcesClientVersion string = "2023-12-01-preview"
+
 // ExtensionsResourcesClient - The interface of extensions resources,
 // it contains 4 kinds of scopes (resource, resource group, subscription and tenant)
 // Don't use this type directly, use NewExtensionsResourcesClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type ExtensionsResourcesClient struct {
 	internal *arm.Client
 }
@@ -39,8 +43,6 @@ func NewExtensionsResourcesClient(credential azcore.TokenCredential, options *ar
 
 // BeginCreateOrUpdate - Create a ExtensionsResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - extensionsResourceName - The name of the ExtensionsResource
 //   - resource - Resource create parameters.
@@ -65,8 +67,6 @@ func (client *ExtensionsResourcesClient) BeginCreateOrUpdate(ctx context.Context
 
 // CreateOrUpdate - Create a ExtensionsResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *ExtensionsResourcesClient) createOrUpdate(ctx context.Context, resourceURI string, extensionsResourceName string, resource ExtensionsResource, options *ExtensionsResourcesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExtensionsResourcesClient.BeginCreateOrUpdate"
@@ -104,7 +104,7 @@ func (client *ExtensionsResourcesClient) createOrUpdateCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultExtensionsResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,8 +116,6 @@ func (client *ExtensionsResourcesClient) createOrUpdateCreateRequest(ctx context
 
 // Delete - Delete a ExtensionsResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - extensionsResourceName - The name of the ExtensionsResource
 //   - options - ExtensionsResourcesClientDeleteOptions contains the optional parameters for the ExtensionsResourcesClient.Delete
@@ -159,15 +157,13 @@ func (client *ExtensionsResourcesClient) deleteCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultExtensionsResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a ExtensionsResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - extensionsResourceName - The name of the ExtensionsResource
 //   - options - ExtensionsResourcesClientGetOptions contains the optional parameters for the ExtensionsResourcesClient.Get method.
@@ -209,7 +205,7 @@ func (client *ExtensionsResourcesClient) getCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultExtensionsResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -225,8 +221,6 @@ func (client *ExtensionsResourcesClient) getHandleResponse(resp *http.Response) 
 }
 
 // NewListByScopePager - List ExtensionsResource resources by parent
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - options - ExtensionsResourcesClientListByScopeOptions contains the optional parameters for the ExtensionsResourcesClient.NewListByScopePager
 //     method.
@@ -265,7 +259,7 @@ func (client *ExtensionsResourcesClient) listByScopeCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultExtensionsResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -282,8 +276,6 @@ func (client *ExtensionsResourcesClient) listByScopeHandleResponse(resp *http.Re
 
 // Update - Update a ExtensionsResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceURI - The fully qualified Azure Resource manager identifier of the resource.
 //   - extensionsResourceName - The name of the ExtensionsResource
 //   - properties - The resource properties to be updated.
@@ -327,7 +319,7 @@ func (client *ExtensionsResourcesClient) updateCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultExtensionsResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

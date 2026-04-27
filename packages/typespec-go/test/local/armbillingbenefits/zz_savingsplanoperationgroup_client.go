@@ -14,8 +14,12 @@ import (
 	"strconv"
 )
 
+const defaultSavingsPlanOperationGroupClientVersion string = "2024-11-01-preview"
+
 // SavingsPlanOperationGroupClient contains the methods for the SavingsPlanOperationGroup group.
 // Don't use this type directly, use NewSavingsPlanOperationGroupClient() instead.
+//
+// Generated from API version 2024-11-01-preview
 type SavingsPlanOperationGroupClient struct {
 	internal *arm.Client
 }
@@ -35,8 +39,6 @@ func NewSavingsPlanOperationGroupClient(credential azcore.TokenCredential, optio
 }
 
 // NewListAllPager - List savings plans.
-//
-// Generated from API version 2024-11-01-preview
 //   - options - SavingsPlanOperationGroupClientListAllOptions contains the optional parameters for the SavingsPlanOperationGroupClient.NewListAllPager
 //     method.
 func (client *SavingsPlanOperationGroupClient) NewListAllPager(options *SavingsPlanOperationGroupClientListAllOptions) *runtime.Pager[SavingsPlanOperationGroupClientListAllResponse] {
@@ -79,7 +81,7 @@ func (client *SavingsPlanOperationGroupClient) listAllCreateRequest(ctx context.
 	if options != nil && options.Skiptoken != nil {
 		reqQP.Set("$skiptoken", strconv.FormatFloat(float64(*options.Skiptoken), 'f', -1, 32))
 	}
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanOperationGroupClientVersion)
 	if options != nil && options.RefreshSummary != nil {
 		reqQP.Set("refreshSummary", *options.RefreshSummary)
 	}
@@ -105,8 +107,6 @@ func (client *SavingsPlanOperationGroupClient) listAllHandleResponse(resp *http.
 
 // ValidatePurchase - Validate savings plan purchase.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 //   - body - The request body
 //   - options - SavingsPlanOperationGroupClientValidatePurchaseOptions contains the optional parameters for the SavingsPlanOperationGroupClient.ValidatePurchase
 //     method.
@@ -140,7 +140,7 @@ func (client *SavingsPlanOperationGroupClient) validatePurchaseCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanOperationGroupClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

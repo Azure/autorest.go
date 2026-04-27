@@ -27,8 +27,6 @@ type BatchClient struct {
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - batchID - Identifier for the batch job.
 //   - options - BatchClientCancelSparkBatchJobOptions contains the optional parameters for the BatchClient.CancelSparkBatchJob
 //     method.
@@ -64,8 +62,6 @@ func (client *BatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context,
 
 // CreateSparkBatchJob - Create new spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - sparkBatchJobOptions - Livy compatible batch job request payload.
 //   - options - BatchClientCreateSparkBatchJobOptions contains the optional parameters for the BatchClient.CreateSparkBatchJob
 //     method.
@@ -119,8 +115,6 @@ func (client *BatchClient) createSparkBatchJobHandleResponse(resp *http.Response
 
 // GetSparkBatchJob - Gets a single spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - batchID - Identifier for the batch job.
 //   - options - BatchClientGetSparkBatchJobOptions contains the optional parameters for the BatchClient.GetSparkBatchJob method.
 func (client *BatchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *BatchClientGetSparkBatchJobOptions) (BatchClientGetSparkBatchJobResponse, error) {
@@ -171,8 +165,6 @@ func (client *BatchClient) getSparkBatchJobHandleResponse(resp *http.Response) (
 
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - options - BatchClientGetSparkBatchJobsOptions contains the optional parameters for the BatchClient.GetSparkBatchJobs method.
 func (client *BatchClient) GetSparkBatchJobs(ctx context.Context, options *BatchClientGetSparkBatchJobsOptions) (BatchClientGetSparkBatchJobsResponse, error) {
 	var err error

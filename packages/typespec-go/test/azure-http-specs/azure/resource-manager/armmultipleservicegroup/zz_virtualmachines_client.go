@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultVirtualMachinesClientVersion string = "2025-04-01"
+
 // VirtualMachinesClient contains the methods for the VirtualMachines group.
 // Don't use this type directly, use NewVirtualMachinesClient() instead.
+//
+// Generated from API version 2025-04-01
 type VirtualMachinesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCred
 // BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only
 // during virtual machine creation.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-04-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - vmName - The name of the VirtualMachine
 //   - resource - Resource create parameters.
@@ -69,8 +71,6 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 // CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during
 // virtual machine creation.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-04-01
 func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, resource VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualMachinesClient.BeginCreateOrUpdate"
@@ -112,7 +112,7 @@ func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-04-01")
+	reqQP.Set("api-version", defaultVirtualMachinesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -124,8 +124,6 @@ func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Con
 
 // Get - Retrieves information about the model view or the instance view of a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-04-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - vmName - The name of the VirtualMachine
 //   - options - VirtualMachinesClientGetOptions contains the optional parameters for the VirtualMachinesClient.Get method.
@@ -171,7 +169,7 @@ func (client *VirtualMachinesClient) getCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-04-01")
+	reqQP.Set("api-version", defaultVirtualMachinesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

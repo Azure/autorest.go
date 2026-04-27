@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultSingletonClientVersion string = "2023-12-01-preview"
+
 // SingletonClient contains the methods for the Singleton group.
 // Don't use this type directly, use NewSingletonClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type SingletonClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewSingletonClient(subscriptionID string, credential azcore.TokenCredential
 
 // BeginCreateOrUpdate - Create a SingletonTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - resource - Resource create parameters.
 //   - options - SingletonClientBeginCreateOrUpdateOptions contains the optional parameters for the SingletonClient.BeginCreateOrUpdate
@@ -66,8 +68,6 @@ func (client *SingletonClient) BeginCreateOrUpdate(ctx context.Context, resource
 
 // CreateOrUpdate - Create a SingletonTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *SingletonClient) createOrUpdate(ctx context.Context, resourceGroupName string, resource SingletonTrackedResource, options *SingletonClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SingletonClient.BeginCreateOrUpdate"
@@ -105,7 +105,7 @@ func (client *SingletonClient) createOrUpdateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultSingletonClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -117,8 +117,6 @@ func (client *SingletonClient) createOrUpdateCreateRequest(ctx context.Context, 
 
 // GetByResourceGroup - Get a SingletonTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - SingletonClientGetByResourceGroupOptions contains the optional parameters for the SingletonClient.GetByResourceGroup
 //     method.
@@ -160,7 +158,7 @@ func (client *SingletonClient) getByResourceGroupCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultSingletonClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -176,8 +174,6 @@ func (client *SingletonClient) getByResourceGroupHandleResponse(resp *http.Respo
 }
 
 // NewListByResourceGroupPager - List SingletonTrackedResource resources by resource group
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - SingletonClientListByResourceGroupOptions contains the optional parameters for the SingletonClient.NewListByResourceGroupPager
 //     method.
@@ -220,7 +216,7 @@ func (client *SingletonClient) listByResourceGroupCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultSingletonClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -237,8 +233,6 @@ func (client *SingletonClient) listByResourceGroupHandleResponse(resp *http.Resp
 
 // Update - Update a SingletonTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - properties - The resource properties to be updated.
 //   - options - SingletonClientUpdateOptions contains the optional parameters for the SingletonClient.Update method.
@@ -280,7 +274,7 @@ func (client *SingletonClient) updateCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultSingletonClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

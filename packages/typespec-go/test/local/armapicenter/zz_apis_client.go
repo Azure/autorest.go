@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultApisClientVersion string = "2024-03-15-preview"
+
 // ApisClient contains the methods for the Apis group.
 // Don't use this type directly, use NewApisClient() instead.
+//
+// Generated from API version 2024-03-15-preview
 type ApisClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewApisClient(subscriptionID string, credential azcore.TokenCredential, opt
 
 // CreateOrUpdate - Creates new or updates existing API.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -99,7 +101,7 @@ func (client *ApisClient) createOrUpdateCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultApisClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -123,8 +125,6 @@ func (client *ApisClient) createOrUpdateHandleResponse(resp *http.Response) (Api
 
 // Delete - Deletes specified API.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -179,15 +179,13 @@ func (client *ApisClient) deleteCreateRequest(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultApisClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Returns details of the API.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -243,7 +241,7 @@ func (client *ApisClient) getCreateRequest(ctx context.Context, resourceGroupNam
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultApisClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -262,8 +260,6 @@ func (client *ApisClient) getHandleResponse(resp *http.Response) (ApisClientGetR
 }
 
 // Head - Checks if specified API exists.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -318,14 +314,12 @@ func (client *ApisClient) headCreateRequest(ctx context.Context, resourceGroupNa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultApisClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // NewListPager - Returns a collection of APIs.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -380,7 +374,7 @@ func (client *ApisClient) listCreateRequest(ctx context.Context, resourceGroupNa
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultApisClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

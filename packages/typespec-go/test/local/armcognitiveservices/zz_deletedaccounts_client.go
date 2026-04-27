@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultDeletedAccountsClientVersion string = "2025-10-01-preview"
+
 // DeletedAccountsClient contains the methods for the DeletedAccounts group.
 // Don't use this type directly, use NewDeletedAccountsClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type DeletedAccountsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewDeletedAccountsClient(subscriptionID string, credential azcore.TokenCred
 
 // Get - Returns a Cognitive Services account specified by the parameters.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - location - The location name.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
@@ -93,7 +95,7 @@ func (client *DeletedAccountsClient) getCreateRequest(ctx context.Context, locat
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeletedAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -109,8 +111,6 @@ func (client *DeletedAccountsClient) getHandleResponse(resp *http.Response) (Del
 }
 
 // NewListPager - Returns all the resources of a particular type belonging to a subscription.
-//
-// Generated from API version 2025-10-01-preview
 //   - options - DeletedAccountsClientListOptions contains the optional parameters for the DeletedAccountsClient.NewListPager
 //     method.
 func (client *DeletedAccountsClient) NewListPager(options *DeletedAccountsClientListOptions) *runtime.Pager[DeletedAccountsClientListResponse] {
@@ -148,7 +148,7 @@ func (client *DeletedAccountsClient) listCreateRequest(ctx context.Context, _ *D
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeletedAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -165,8 +165,6 @@ func (client *DeletedAccountsClient) listHandleResponse(resp *http.Response) (De
 
 // BeginPurge - Deletes a Cognitive Services account from the resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - location - The location name.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
@@ -191,8 +189,6 @@ func (client *DeletedAccountsClient) BeginPurge(ctx context.Context, location st
 
 // Purge - Deletes a Cognitive Services account from the resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *DeletedAccountsClient) purge(ctx context.Context, location string, resourceGroupName string, accountName string, options *DeletedAccountsClientBeginPurgeOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DeletedAccountsClient.BeginPurge"
@@ -238,7 +234,7 @@ func (client *DeletedAccountsClient) purgeCreateRequest(ctx context.Context, loc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeletedAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

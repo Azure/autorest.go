@@ -664,16 +664,6 @@ export class ClientAdapter {
     const respInfo = this.adaptResponseEnvelope(sdkMethod, method);
     method.returns = respInfo.respEnv;
 
-    // find the api version param to use for the doc comment.
-    // we can't use sdkMethod.apiVersions as that includes all
-    // of the api versions supported by the service.
-    for (const opParam of sdkMethod.operation.parameters) {
-      if (opParam.isApiVersionParam && opParam.clientDefaultValue) {
-        method.apiVersions.push(<string>opParam.clientDefaultValue);
-        break;
-      }
-    }
-
     const paramMapping = this.adaptMethodParameters(sdkMethod, method);
 
     // we must do this after adapting method params as it can add optional params
@@ -831,7 +821,7 @@ export class ClientAdapter {
         }
         if (correspondingOpParams.length === 0) {
           // No properties mapped to HTTP params, treat as regular parameter
-          adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
+          adaptedParam = this.adaptMethodParameter(method, opParam);
         } else {
           // Parameter group handling:
           // - Required params stay in the named parameter group
@@ -854,7 +844,7 @@ export class ClientAdapter {
           for (let i = 0; i < modelProperties.length; i++) {
             const property = modelProperties[i];
             const propertyOpParam = correspondingOpParams[i];
-            const adaptedPropertyParam = this.adaptMethodParameter(propertyOpParam, method.httpMethod);
+            const adaptedPropertyParam = this.adaptMethodParameter(method, propertyOpParam);
             adaptedPropertyParam.docs.summary = property.summary;
             adaptedPropertyParam.docs.description = property.doc;
 
@@ -902,7 +892,7 @@ export class ClientAdapter {
           continue; // Skip regular parameter handling
         }
       } else {
-        adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
+        adaptedParam = this.adaptMethodParameter(method, opParam);
         if (method.kind !== 'nextPageMethod' && go.isPageableMethod(method)) {
           switch (adaptedParam.kind) {
             case 'headerScalarParam':
@@ -934,7 +924,7 @@ export class ClientAdapter {
     // look for them in the operation parameters.
     for (const opParam of allOpParams) {
       if (opParam.onClient) {
-        const adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
+        const adaptedParam = this.adaptMethodParameter(method, opParam);
         adaptedParam.docs.summary = opParam.summary;
         adaptedParam.docs.description = opParam.doc;
         method.parameters.unshift(adaptedParam);
@@ -997,19 +987,33 @@ export class ClientAdapter {
   /**
    * adapts the provided operation parameter to a Go method parameter
    *
+   * @param method the method to which the parameter belongs
    * @param opParam the operation parameter to adapt
-   * @param verb the HTTP verb used for the operation to which the parameter belongs
    * @returns the adapted Go method parameter
    */
   private adaptMethodParameter(
+    method: go.MethodType | go.NextPageMethod,
     opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter,
-    verb: go.HTTPMethod,
   ): go.MethodParameter {
     if (opParam.isApiVersionParam) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
-      const paramType = opParam.clientDefaultValue ? new go.Literal(this.ta.getStringType(), opParam.clientDefaultValue) : this.ta.getStringType();
-      const paramStyle = opParam.clientDefaultValue ? 'literal' : opParam.optional ? 'optional' : 'required';
+      let paramType: go.Literal | go.String;
+      let paramStyle: go.ParameterStyle;
+      if (opParam.clientDefaultValue) {
+        const client = method.receiver.type;
+        if (!client.apiVersion) {
+          // first method for this client, so apiVersion hasn't been set yet
+          const literalValue = new go.Literal(this.ta.getStringType(), <string>opParam.clientDefaultValue);
+          client.apiVersion = new go.ConstantDef(`default${client.name}Version`, literalValue);
+        }
+        paramType = new go.Literal(client.apiVersion, client.apiVersion.name);
+        paramStyle = 'literal';
+      } else {
+        paramType = this.ta.getStringType();
+        paramStyle = opParam.optional ? 'optional' : 'required';
+      }
+
       const paramLoc = opParam.onClient ? 'client' : 'method';
       let apiVersionParam: go.HeaderScalarParameter | go.PathScalarParameter | go.QueryScalarParameter;
       switch (opParam.kind) {
@@ -1066,7 +1070,7 @@ export class ClientAdapter {
     if (opParam.kind === 'body') {
       const contentType = this.adaptContentType(opParam.defaultContentType);
       // only force modeled body params to be required (binary payloads can be optional)
-      if (contentType !== 'binary' && (verb === 'patch' || verb === 'put')) {
+      if (contentType !== 'binary' && (method.httpMethod === 'patch' || method.httpMethod === 'put')) {
         paramStyle = 'required';
       }
     }

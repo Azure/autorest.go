@@ -28,8 +28,6 @@ type ContainerRegistryBlobClient struct {
 // CancelUpload - Cancel outstanding upload processes, releasing associated resources. If this is not called, the unfinished
 // uploads will eventually timeout.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
 //   - options - ContainerRegistryBlobClientCancelUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CancelUpload
 //     method.
@@ -68,8 +66,6 @@ func (client *ContainerRegistryBlobClient) cancelUploadCreateRequest(ctx context
 
 // CheckBlobExists - Same as GET, except only the headers are returned.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - options - ContainerRegistryBlobClientCheckBlobExistsOptions contains the optional parameters for the ContainerRegistryBlobClient.CheckBlobExists
@@ -133,8 +129,6 @@ func (client *ContainerRegistryBlobClient) checkBlobExistsHandleResponse(resp *h
 
 // CheckChunkExists - Same as GET, except only the headers are returned.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - rangeParam - Format : bytes=-, HTTP Range header specifying blob chunk.
@@ -201,8 +195,6 @@ func (client *ContainerRegistryBlobClient) checkChunkExistsHandleResponse(resp *
 // CompleteUpload - Complete the upload, providing all the data in the body, if necessary. A request without a body will just
 // complete the upload with previously uploaded content.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - digest - Digest of a BLOB
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
 //   - options - ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CompleteUpload
@@ -267,8 +259,6 @@ func (client *ContainerRegistryBlobClient) completeUploadHandleResponse(resp *ht
 
 // DeleteBlob - Removes an already uploaded blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - options - ContainerRegistryBlobClientDeleteBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.DeleteBlob
@@ -326,8 +316,6 @@ func (client *ContainerRegistryBlobClient) deleteBlobHandleResponse(resp *http.R
 
 // GetBlob - Retrieve the blob from the registry identified by digest.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - options - ContainerRegistryBlobClientGetBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.GetBlob
@@ -394,8 +382,6 @@ func (client *ContainerRegistryBlobClient) getBlobHandleResponse(resp *http.Resp
 // requests. Support can be detected by issuing a HEAD request. If the header
 // Accept-Range: bytes is returned, range requests can be used to fetch partial content.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - rangeParam - Format : bytes=-, HTTP Range header specifying blob chunk.
@@ -463,8 +449,6 @@ func (client *ContainerRegistryBlobClient) getChunkHandleResponse(resp *http.Res
 // GetUploadStatus - Retrieve status of upload identified by uuid. The primary purpose of this endpoint is to resolve the
 // current status of a resumable upload.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
 //   - options - ContainerRegistryBlobClientGetUploadStatusOptions contains the optional parameters for the ContainerRegistryBlobClient.GetUploadStatus
 //     method.
@@ -516,8 +500,6 @@ func (client *ContainerRegistryBlobClient) getUploadStatusHandleResponse(resp *h
 
 // MountBlob - Mount a blob identified by the mount parameter from another repository.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - from - Name of the source repository.
 //   - mount - Digest of blob to mount from the source repository.
@@ -581,8 +563,6 @@ func (client *ContainerRegistryBlobClient) mountBlobHandleResponse(resp *http.Re
 
 // StartUpload - Initiate a resumable blob upload with an empty request body.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - options - ContainerRegistryBlobClientStartUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.StartUpload
 //     method.
@@ -640,8 +620,6 @@ func (client *ContainerRegistryBlobClient) startUploadHandleResponse(resp *http.
 
 // UploadChunk - Upload a stream of data without completing the upload.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
 //   - value - Raw data of blob
 //   - options - ContainerRegistryBlobClientUploadChunkOptions contains the optional parameters for the ContainerRegistryBlobClient.UploadChunk

@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultMetastoreClientVersion string = "2021-07-01-preview"
+
 // MetastoreClient contains the methods for the Metastore group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2021-07-01-preview
 type MetastoreClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type MetastoreClient struct {
 
 // Delete - Remove files in Syms
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01-preview
 //   - options - MetastoreClientDeleteOptions contains the optional parameters for the MetastoreClient.Delete method.
 func (client *MetastoreClient) Delete(ctx context.Context, id string, options *MetastoreClientDeleteOptions) (MetastoreClientDeleteResponse, error) {
 	var err error
@@ -65,8 +67,6 @@ func (client *MetastoreClient) deleteCreateRequest(ctx context.Context, id strin
 
 // GetDatabaseOperations - Gets status of the database
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01-preview
 //   - options - MetastoreClientGetDatabaseOperationsOptions contains the optional parameters for the MetastoreClient.GetDatabaseOperations
 //     method.
 func (client *MetastoreClient) GetDatabaseOperations(ctx context.Context, id string, options *MetastoreClientGetDatabaseOperationsOptions) (MetastoreClientGetDatabaseOperationsResponse, error) {
@@ -116,8 +116,6 @@ func (client *MetastoreClient) getDatabaseOperationsHandleResponse(resp *http.Re
 
 // Register - Register files in Syms
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01-preview
 //   - id - The name of the database to be created. The name can contain only alphanumeric characters and should not exceed 24
 //     characters
 //   - registerBody - The body for the register request
@@ -152,7 +150,7 @@ func (client *MetastoreClient) registerCreateRequest(ctx context.Context, id str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01-preview")
+	reqQP.Set("api-version", defaultMetastoreClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, registerBody); err != nil {
@@ -172,8 +170,6 @@ func (client *MetastoreClient) registerHandleResponse(resp *http.Response) (Meta
 
 // Update - Update files in Syms
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01-preview
 //   - id - The name of the database to be updated
 //   - updateBody - The body for the update request
 //   - options - MetastoreClientUpdateOptions contains the optional parameters for the MetastoreClient.Update method.

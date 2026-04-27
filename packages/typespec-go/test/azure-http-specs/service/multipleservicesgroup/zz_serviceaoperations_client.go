@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultServiceAOperationsClientVersion string = "av2"
+
 // ServiceAOperationsClient contains the methods for the ServiceAOperations group.
 // Don't use this type directly, use [ServiceAClient.NewServiceAOperationsClient] instead.
+//
+// Generated from API version av2
 type ServiceAOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -21,8 +25,6 @@ type ServiceAOperationsClient struct {
 
 // OpA -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version av2
 //   - options - ServiceAOperationsClientOpAOptions contains the optional parameters for the ServiceAOperationsClient.OpA method.
 func (client *ServiceAOperationsClient) OpA(ctx context.Context, options *ServiceAOperationsClientOpAOptions) (ServiceAOperationsClientOpAResponse, error) {
 	var err error
@@ -53,7 +55,7 @@ func (client *ServiceAOperationsClient) opACreateRequest(ctx context.Context, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "av2")
+	reqQP.Set("api-version", defaultServiceAOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultBudgetsClientVersion string = "2019-10-01"
+
 // BudgetsClient contains the methods for the Budgets group.
 // Don't use this type directly, use NewBudgetsClient() instead.
+//
+// Generated from API version 2019-10-01
 type BudgetsClient struct {
 	internal *arm.Client
 }
@@ -41,8 +45,6 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // concurrency control. To obtain the latest eTag for a given budget, perform a get operation prior
 // to your put operation.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 //     scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 //     resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -86,7 +88,7 @@ func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, sc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultBudgetsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -106,8 +108,6 @@ func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (
 
 // Delete - The operation to delete a budget.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 //     scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 //     resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -149,7 +149,7 @@ func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultBudgetsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -157,8 +157,6 @@ func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope stri
 
 // Get - Gets the budget for the scope by budget name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 //     scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 //     resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -201,7 +199,7 @@ func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultBudgetsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -217,8 +215,6 @@ func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClie
 }
 
 // NewListPager - Lists all budgets for the defined scope.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 //     scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 //     resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -259,7 +255,7 @@ func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultBudgetsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

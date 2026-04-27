@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultServiceASubNamespaceClientVersion string = "av2"
+
 // ServiceASubNamespaceClient contains the methods for the ServiceASubNamespace group.
 // Don't use this type directly, use [ServiceAClient.NewServiceASubNamespaceClient] instead.
+//
+// Generated from API version av2
 type ServiceASubNamespaceClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -21,8 +25,6 @@ type ServiceASubNamespaceClient struct {
 
 // SubOpA -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version av2
 //   - options - ServiceASubNamespaceClientSubOpAOptions contains the optional parameters for the ServiceASubNamespaceClient.SubOpA
 //     method.
 func (client *ServiceASubNamespaceClient) SubOpA(ctx context.Context, options *ServiceASubNamespaceClientSubOpAOptions) (ServiceASubNamespaceClientSubOpAResponse, error) {
@@ -54,7 +56,7 @@ func (client *ServiceASubNamespaceClient) subOpACreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "av2")
+	reqQP.Set("api-version", defaultServiceASubNamespaceClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

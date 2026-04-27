@@ -37,6 +37,12 @@ export interface Client {
   /** the package to which this client belongs */
   pkg: module.PackageContent;
 
+  /**
+   * for versioned clients, the API version used to generate the
+   * content as well as the default API version used in requests
+   */
+  apiVersion?: type.ConstantDef;
+
   /** the parent client in a hierarchical client */
   parent?: Client;
 }
@@ -230,8 +236,6 @@ export interface NextPageMethod {
 
   /** the method's receiver parameter */
   receiver: method.Receiver<Client>;
-
-  apiVersions: Array<string>;
 }
 
 /** a synchronous method that returns pages of responses */
@@ -325,9 +329,6 @@ interface HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> 
   /** naming info for the internal hepler methods for which this method depends */
   naming: MethodNaming;
 
-  /** the API version(s) used during ingestion. can be empty */
-  apiVersions: Array<string>;
-
   /** any examples for this method */
   examples: Array<MethodExample>;
 }
@@ -353,7 +354,6 @@ class HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> impl
       throw new CodeModelError('statusCodes cannot be empty');
     }
     super(name, new method.Receiver('client', client, false));
-    this.apiVersions = new Array<string>();
     this.httpMethod = httpMethod;
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
@@ -464,7 +464,6 @@ export class NextPageMethod implements NextPageMethod {
       throw new CodeModelError('statusCodes cannot be empty');
     }
     this.kind = 'nextPageMethod';
-    this.apiVersions = new Array<string>();
     this.receiver = new method.Receiver('client', client, false);
     this.httpMethod = httpMethod;
     this.httpPath = httpPath;
