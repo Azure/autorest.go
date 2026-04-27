@@ -397,7 +397,7 @@ export function formatLiteralValue(value: go.Literal, withCast: boolean): string
     case 'constant':
       return (<go.ConstantValue>value.literal).name;
     case 'encodedBytes':
-      return value.literal;
+      return <string>value.literal;
     case 'scalar':
       if (!withCast) {
         return `${value.literal}`;
@@ -412,12 +412,12 @@ export function formatLiteralValue(value: go.Literal, withCast: boolean): string
         case 'int64':
           return `int64(${value.literal})`;
         default:
-          return value.literal;
+          return <string>value.literal;
       }
     case 'string':
-      if (value.literal[0] === '"') {
+      if ((<string>value.literal)[0] === '"') {
         // string is already quoted
-        return value.literal;
+        return <string>value.literal;
       }
       return `"${value.literal}"`;
     case 'time':

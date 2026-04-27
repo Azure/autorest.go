@@ -381,13 +381,14 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.Pac
       if (!op.requests![0].protocol.http!.mediaTypes) {
         throw new Error(`no media types defined for operation ${op.operationId}`);
       }
-      let contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
+      const contentTypeLiteral = <string>op.requests![0].protocol.http!.mediaTypes[0];
+      let contentType: go.BodyParameterContentTypeKind = new go.Literal(new go.String(), contentTypeLiteral);
       if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
         for (const param of values(op.requests![0].parameters)) {
           // If a request defined more than one possible media type, then the param is expected to be synthesized from modelerfour
           // and should be a SealedChoice schema type that account for the acceptable media types defined in the swagger.
           if (param.origin === 'modelerfour:synthesized/content-type' && param.schema.type === m4.SchemaType.SealedChoice) {
-            contentType = `string(${param.language.go!.name})`;
+            contentType = new go.ParameterRef(param.language.go!.name);
           }
         }
       }

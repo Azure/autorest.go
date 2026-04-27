@@ -16,10 +16,10 @@ func unmarshalAgentDeploymentPropertiesClassification(rawMsg json.RawMessage) (A
 	}
 	var b AgentDeploymentPropertiesClassification
 	switch m["deploymentType"] {
-	case string(AgentDeploymentTypeManaged):
-		b = &ManagedAgentDeployment{}
 	case string(AgentDeploymentTypeHosted):
 		b = &HostedAgentDeployment{}
+	case string(AgentDeploymentTypeManaged):
+		b = &ManagedAgentDeployment{}
 	default:
 		b = &AgentDeploymentProperties{}
 	}
@@ -39,12 +39,12 @@ func unmarshalApplicationAuthorizationPolicyClassification(rawMsg json.RawMessag
 	}
 	var b ApplicationAuthorizationPolicyClassification
 	switch m["type"] {
+	case string(BuiltInAuthorizationSchemeChannels):
+		b = &ChannelsBuiltInAuthorizationPolicy{}
 	case string(BuiltInAuthorizationSchemeDefault):
 		b = &RoleBasedBuiltInAuthorizationPolicy{}
 	case string(BuiltInAuthorizationSchemeOrganizationScope):
 		b = &OrganizationSharedBuiltInAuthorizationPolicy{}
-	case string(BuiltInAuthorizationSchemeChannels):
-		b = &ChannelsBuiltInAuthorizationPolicy{}
 	default:
 		b = &ApplicationAuthorizationPolicy{}
 	}
@@ -64,30 +64,30 @@ func unmarshalConnectionPropertiesV2Classification(rawMsg json.RawMessage) (Conn
 	}
 	var b ConnectionPropertiesV2Classification
 	switch m["authType"] {
-	case string(ConnectionAuthTypePAT):
-		b = &PATAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeManagedIdentity):
-		b = &ManagedIdentityAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeUsernamePassword):
-		b = &UsernamePasswordAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeNone):
-		b = &NoneAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeSAS):
-		b = &SASAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeAccountKey):
-		b = &AccountKeyAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeServicePrincipal):
-		b = &ServicePrincipalAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeAccessKey):
-		b = &AccessKeyAuthTypeConnectionProperties{}
-	case string(ConnectionAuthTypeAPIKey):
-		b = &APIKeyAuthConnectionProperties{}
-	case string(ConnectionAuthTypeCustomKeys):
-		b = &CustomKeysConnectionProperties{}
-	case string(ConnectionAuthTypeOAuth2):
-		b = &OAuth2AuthTypeConnectionProperties{}
 	case string(ConnectionAuthTypeAAD):
 		b = &AADAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeAPIKey):
+		b = &APIKeyAuthConnectionProperties{}
+	case string(ConnectionAuthTypeAccessKey):
+		b = &AccessKeyAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeAccountKey):
+		b = &AccountKeyAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeCustomKeys):
+		b = &CustomKeysConnectionProperties{}
+	case string(ConnectionAuthTypeManagedIdentity):
+		b = &ManagedIdentityAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeNone):
+		b = &NoneAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeOAuth2):
+		b = &OAuth2AuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypePAT):
+		b = &PATAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeSAS):
+		b = &SASAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeServicePrincipal):
+		b = &ServicePrincipalAuthTypeConnectionProperties{}
+	case string(ConnectionAuthTypeUsernamePassword):
+		b = &UsernamePasswordAuthTypeConnectionProperties{}
 	default:
 		b = &ConnectionPropertiesV2{}
 	}

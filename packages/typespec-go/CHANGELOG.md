@@ -7,6 +7,10 @@
 * Fixed handling of `multipart/form` operations.
 * Fake servers will correctly dispatch calls to all child servers, not just immediate ones.
 
+### Other Changes
+
+* Fixed sorting of case statements in polymorphic helpers.
+
 ## 0.11.0 (2026-04-24)
 
 ### Breaking Changes
