@@ -470,6 +470,32 @@ function generateServerTransportMethods(
             content += `${indent.get()}Body: io.NopCloser(bytes.NewReader(server.GetResponse(respr).RawJSON)),\n`;
             content += `${indent.get()}ContentType: "application/json",\n`;
             content += `${indent.pop().get()}})\n`;
+          } else if (method.returns.result.format === 'Text') {
+            let contentToMarshal: string;
+            const respField = getResultFieldName(method.returns.result);
+            const getResponseField = `server.GetResponse(respr).${respField}`;
+            switch (method.returns.result.monomorphicType.kind) {
+              case 'scalar': {
+                imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+                // create a local var that will hold the string-formatted scalar
+                contentToMarshal = `formatted${respField}`;
+                content += `${indent.get()}var ${contentToMarshal} *string\n`;
+                const localVar = naming.uncapitalize(respField);
+                const resultType = method.returns.result.monomorphicType;
+                // if value := server.GetResponse(respr).Value; value != nil {...format as string...}
+                content += `${indent.get()}${helpers.buildIfBlock(indent, {
+                  condition: `${localVar} := ${getResponseField}; ${localVar} != nil`,
+                  body: (indent) => `${indent.get()}${contentToMarshal} = to.Ptr(${helpers.formatValue(localVar, resultType, imports, true)})\n`,
+                })}\n`;
+                break;
+              }
+              case 'string':
+                contentToMarshal = getResponseField;
+                break;
+              default:
+                throw new CodegenError('UnsupportedTsp', `unsupported text return kind ${method.returns.result.monomorphicType.kind} for method ${method.receiver.type.name}.${method.name}`)
+            }
+            content += `${indent.get()}resp, err := server.MarshalResponseAsText(respContent, ${contentToMarshal}, req)\n`;
           } else {
             let respField = `.${getResultFieldName(method.returns.result)}`;
             if (method.returns.result.format === 'XML' && method.returns.result.monomorphicType.kind === 'slice') {

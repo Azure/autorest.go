@@ -497,28 +497,7 @@ function formatHeaderResponseValue(
       text += `${indent.get()}}\n`;
       return text;
     case 'scalar':
-      imports.add('strconv');
-      switch (headerResp.type.type) {
-        case 'bool':
-          text += `${indent.get()}${name}, err := strconv.ParseBool(val)\n`;
-          break;
-        case 'float32':
-          text += `${indent.get()}${name}32, err := strconv.ParseFloat(val, 32)\n`;
-          text += `${indent.get()}${name} := float32(${name}32)\n`;
-          break;
-        case 'float64':
-          text += `${indent.get()}${name}, err := strconv.ParseFloat(val, 64)\n`;
-          break;
-        case 'int32':
-          text += `${indent.get()}${name}32, err := strconv.ParseInt(val, 10, 32)\n`;
-          text += `${indent.get()}${name} := int32(${name}32)\n`;
-          break;
-        case 'int64':
-          text += `${indent.get()}${name}, err := strconv.ParseInt(val, 10, 64)\n`;
-          break;
-        default:
-          throw new CodegenError('InternalError', `unhandled scalar type ${headerResp.type.type}`);
-      }
+      text += emitScalarParsing(headerResp.type, 'val', name, imports, indent);
       break;
     case 'string':
       text += `${indent.get()}${respObj}.${headerResp.fieldName} = &val\n`;
@@ -554,6 +533,38 @@ function formatHeaderResponseValue(
   text += `${indent.get()}${respObj}.${headerResp.fieldName} = ${byRef}${name}\n`;
   text += `${indent.pop().get()}}\n`;
   return text;
+}
+
+/**
+ * emits the code for parsing scalar types from a string.
+ * note that the parsing error result is placed into a
+ * local var named "err".
+ *
+ * @param scalar the type of scalar to parse
+ * @param src the source var that contains the scalar in string format
+ * @param dst the destination var that contains the result
+ * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
+ * @returns the scalar parsing code
+ */
+function emitScalarParsing(scalar: go.Scalar, src: string, dst: string, imports: ImportManager, indent: helpers.Indentation): string {
+  imports.add('strconv');
+  switch (scalar.type) {
+    case 'bool':
+      return `${indent.get()}${dst}, err := strconv.ParseBool(${src})\n`;
+    case 'float32':
+      return `${indent.get()}${dst}32, err := strconv.ParseFloat(${src}, 32)\n`
+        + `${indent.get()}${dst} := float32(${dst}32)\n`;
+    case 'float64':
+      return `${indent.get()}${dst}, err := strconv.ParseFloat(${src}, 64)\n`;
+    case 'int32':
+      return `${indent.get()}${dst}32, err := strconv.ParseInt(${src}, 10, 32)\n`
+        + `${indent.get()}${dst} := int32(${dst}32)\n`;
+    case 'int64':
+      return `${indent.get()}${dst}, err := strconv.ParseInt(${src}, 10, 64)\n`;
+    default:
+      throw new CodegenError('InternalError', `unhandled scalar type ${scalar.type}`);
+  }
 }
 
 /**
@@ -1651,8 +1662,21 @@ function generateResponseUnmarshaller(
     unmarshallerText += `${indent.get()}if err != nil {\n`;
     unmarshallerText += `${indent.push().get()}return ${zeroValue}, err\n`;
     unmarshallerText += `${indent.pop().get()}}\n`;
-    unmarshallerText += `${indent.get()}txt := string(body)\n`;
-    unmarshallerText += `${indent.get()}${unmarshalTarget} = &txt\n`;
+    let resultVar: string;
+    switch (type.kind) {
+      case 'scalar':
+        resultVar = 'parsedBody';
+        unmarshallerText += emitScalarParsing(type, 'string(body)', resultVar, imports, indent);
+        unmarshallerText += `${indent.get()}${helpers.buildErrCheck(indent, 'err', zeroValue)}\n`;
+        break;
+      case 'string':
+        resultVar = 'txt';
+        unmarshallerText += `${indent.get()}${resultVar} := string(body)\n`;
+        break;
+      default:
+        throw new CodegenError('UnsupportedTsp', `unsupported text return kind ${type.kind} for method ${method.receiver.type.name}.${method.name}`);
+    }
+    unmarshallerText += `${indent.get()}${unmarshalTarget} = &${resultVar}\n`;
   } else {
     // the remaining formats should have been handled elsewhere
     throw new CodegenError('InternalError', `unhandled format ${format} for operation ${method.receiver.type.name}.${method.name}`);

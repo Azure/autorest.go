@@ -12,6 +12,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"io"
 	"net/http"
 	"net/url"
@@ -39,9 +40,21 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	ForceRequiredBodyPut func(ctx context.Context, body azregressions.SomeModel, options *azregressions.ClientForceRequiredBodyPutOptions) (resp azfake.Responder[azregressions.ClientForceRequiredBodyPutResponse], errResp azfake.ErrorResponder)
 
+	// GetBool is the fake for method Client.GetBool
+	// HTTP status codes to indicate success: http.StatusOK
+	GetBool func(ctx context.Context, options *azregressions.ClientGetBoolOptions) (resp azfake.Responder[azregressions.ClientGetBoolResponse], errResp azfake.ErrorResponder)
+
 	// GetDiscriminatedNoSubTypes is the fake for method Client.GetDiscriminatedNoSubTypes
 	// HTTP status codes to indicate success: http.StatusOK
 	GetDiscriminatedNoSubTypes func(ctx context.Context, options *azregressions.ClientGetDiscriminatedNoSubTypesOptions) (resp azfake.Responder[azregressions.ClientGetDiscriminatedNoSubTypesResponse], errResp azfake.ErrorResponder)
+
+	// GetFloat is the fake for method Client.GetFloat
+	// HTTP status codes to indicate success: http.StatusOK
+	GetFloat func(ctx context.Context, options *azregressions.ClientGetFloatOptions) (resp azfake.Responder[azregressions.ClientGetFloatResponse], errResp azfake.ErrorResponder)
+
+	// GetInteger is the fake for method Client.GetInteger
+	// HTTP status codes to indicate success: http.StatusOK
+	GetInteger func(ctx context.Context, options *azregressions.ClientGetIntegerOptions) (resp azfake.Responder[azregressions.ClientGetIntegerResponse], errResp azfake.ErrorResponder)
 
 	// GetQueue is the fake for method Client.GetQueue
 	// HTTP status codes to indicate success: http.StatusOK
@@ -122,8 +135,14 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 				res.resp, res.err = s.dispatchForceRequiredBodyPatch(req)
 			case "Client.ForceRequiredBodyPut":
 				res.resp, res.err = s.dispatchForceRequiredBodyPut(req)
+			case "Client.GetBool":
+				res.resp, res.err = s.dispatchGetBool(req)
 			case "Client.GetDiscriminatedNoSubTypes":
 				res.resp, res.err = s.dispatchGetDiscriminatedNoSubTypes(req)
+			case "Client.GetFloat":
+				res.resp, res.err = s.dispatchGetFloat(req)
+			case "Client.GetInteger":
+				res.resp, res.err = s.dispatchGetInteger(req)
 			case "Client.GetQueue":
 				res.resp, res.err = s.dispatchGetQueue(req)
 			case "Client.GetXMLOne":
@@ -259,6 +278,32 @@ func (s *ServerTransport) dispatchForceRequiredBodyPut(req *http.Request) (*http
 	return resp, nil
 }
 
+func (s *ServerTransport) dispatchGetBool(req *http.Request) (*http.Response, error) {
+	if s.srv.GetBool == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GetBool not implemented")}
+	}
+	respr, errRespr := s.srv.GetBool(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	var formattedValue *string
+	if value := server.GetResponse(respr).Value; value != nil {
+		formattedValue = to.Ptr(strconv.FormatBool(*value))
+	}
+	resp, err := server.MarshalResponseAsText(respContent, formattedValue, req)
+	if err != nil {
+		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "text/plain; charset=utf-8")
+	}
+	return resp, nil
+}
+
 func (s *ServerTransport) dispatchGetDiscriminatedNoSubTypes(req *http.Request) (*http.Response, error) {
 	if s.srv.GetDiscriminatedNoSubTypes == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetDiscriminatedNoSubTypes not implemented")}
@@ -274,6 +319,58 @@ func (s *ServerTransport) dispatchGetDiscriminatedNoSubTypes(req *http.Request) 
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DiscriminatedBaseNoSubTypesClassification, req)
 	if err != nil {
 		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchGetFloat(req *http.Request) (*http.Response, error) {
+	if s.srv.GetFloat == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GetFloat not implemented")}
+	}
+	respr, errRespr := s.srv.GetFloat(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	var formattedValue *string
+	if value := server.GetResponse(respr).Value; value != nil {
+		formattedValue = to.Ptr(strconv.FormatFloat(*value, 'f', -1, 64))
+	}
+	resp, err := server.MarshalResponseAsText(respContent, formattedValue, req)
+	if err != nil {
+		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "text/plain; charset=utf-8")
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchGetInteger(req *http.Request) (*http.Response, error) {
+	if s.srv.GetInteger == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GetInteger not implemented")}
+	}
+	respr, errRespr := s.srv.GetInteger(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	var formattedValue *string
+	if value := server.GetResponse(respr).Value; value != nil {
+		formattedValue = to.Ptr(strconv.FormatInt(*value, 10))
+	}
+	resp, err := server.MarshalResponseAsText(respContent, formattedValue, req)
+	if err != nil {
+		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "text/plain; charset=utf-8")
 	}
 	return resp, nil
 }

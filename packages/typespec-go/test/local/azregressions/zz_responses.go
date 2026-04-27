@@ -28,10 +28,28 @@ type ClientForceRequiredBodyPutResponse struct {
 	// placeholder for future response values
 }
 
+// ClientGetBoolResponse contains the response from method Client.GetBool.
+type ClientGetBoolResponse struct {
+	ContentType *string
+	Value       *bool
+}
+
 // ClientGetDiscriminatedNoSubTypesResponse contains the response from method Client.GetDiscriminatedNoSubTypes.
 type ClientGetDiscriminatedNoSubTypesResponse struct {
 	// A discriminated base type with no subtypes.
 	DiscriminatedBaseNoSubTypesClassification
+}
+
+// ClientGetFloatResponse contains the response from method Client.GetFloat.
+type ClientGetFloatResponse struct {
+	ContentType *string
+	Value       *float64
+}
+
+// ClientGetIntegerResponse contains the response from method Client.GetInteger.
+type ClientGetIntegerResponse struct {
+	ContentType *string
+	Value       *int64
 }
 
 // ClientGetQueueResponse contains the response from method Client.GetQueue.
