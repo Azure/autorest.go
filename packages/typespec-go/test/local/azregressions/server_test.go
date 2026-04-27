@@ -14,6 +14,7 @@ import (
 
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
@@ -62,6 +63,33 @@ func TestContextCancelDuringDispatchRace(t *testing.T) {
 		_, _ = client.GetQueue(ctx, nil)
 		cancel()
 	}
+}
+
+// TestGetIntegerFake verifies that the GetInteger fake server round-trips an integer
+// value correctly through the text/plain response body.
+func TestGetIntegerFake(t *testing.T) {
+	const expected int64 = 42
+	client, err := azregressions.NewClientWithNoCredential("https://fake.endpoint", &azregressions.ClientOptions{
+		ClientOptions: policy.ClientOptions{
+			Transport: fake.NewServerTransport(&fake.Server{
+				GetInteger: func(_ context.Context, _ *azregressions.ClientGetIntegerOptions) (resp azfake.Responder[azregressions.ClientGetIntegerResponse], errResp azfake.ErrorResponder) {
+					resp.SetResponse(http.StatusOK, azregressions.ClientGetIntegerResponse{
+						ContentType: to.Ptr("text/plain; charset=utf-8"),
+						Value:       to.Ptr(expected),
+					}, nil)
+					return
+				},
+			}),
+		},
+	})
+	require.NoError(t, err)
+
+	result, err := client.GetInteger(context.Background(), nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Equal(t, expected, *result.Value)
+	require.NotNil(t, result.ContentType)
+	require.Equal(t, "text/plain; charset=utf-8", *result.ContentType)
 }
 
 // TestDoubleDecodeQueryParam verifies that query parameter values containing
