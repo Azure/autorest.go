@@ -1586,6 +1586,11 @@ export class ClientAdapter {
             return new go.ClientSideDefault(new go.Literal(adaptedType, constValue));
           }
         }
+        // for extensible enums, the default value isn't required to be one of
+        // the pre-defined values. emit it as a cast to the enum type.
+        if (helpers.isExtensibleEnum(param.type)) {
+          return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
+        }
         throw new AdapterError('InternalError', `didn't find clientDefaultValue constant with value ${<string>param.clientDefaultValue} for parameter`, param.__raw?.node);
       }
       // non-constant clientDefaultValue

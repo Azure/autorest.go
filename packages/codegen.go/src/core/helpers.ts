@@ -395,7 +395,15 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
 export function formatLiteralValue(value: go.Literal, withCast: boolean): string {
   switch (value.type.kind) {
     case 'constant':
-      return (<go.ConstantValue>value.literal).name;
+      if (value.literal && (<go.ConstantValue>value.literal).kind === 'constantValue') {
+        return (<go.ConstantValue>value.literal).name;
+      }
+      // extensible enum with a value that's not one of the pre-defined ones.
+      // emit it as a cast to the enum type, e.g. NetworkAPIVersion("2026-04-15-preview").
+      if (value.type.type === 'string') {
+        return `${value.type.name}("${value.literal}")`;
+      }
+      return `${value.type.name}(${value.literal})`;
     case 'encodedBytes':
       return <string>value.literal;
     case 'scalar':

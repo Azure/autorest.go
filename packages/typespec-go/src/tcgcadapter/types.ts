@@ -715,11 +715,16 @@ export class TypeAdapter {
         case 'constant': {
           // find the const value that matches the clientDefaultValue
           const constantValue = type.values.find((value) => value.value === prop.clientDefaultValue);
-          if (!constantValue) {
+          if (constantValue) {
+            defaultValue = constantValue;
+            keyName = `literal-${naming.ensureNameCase(constantValue.type.name)}${naming.ensureNameCase(constantValue.name)}`;
+          } else if (helpers.isExtensibleEnum(prop.type)) {
+            // for extensible enums, the default value isn't required to be one of
+            // the pre-defined values. emit it as a cast to the enum type.
+            keyName = `literal-${type.name}-${<string>prop.clientDefaultValue}`;
+          } else {
             throw new AdapterError('InternalError', `unexpected constant client side default ${<string>prop.clientDefaultValue} for field ${field.name}`, prop.__raw?.node);
           }
-          defaultValue = constantValue;
-          keyName = `literal-${naming.ensureNameCase(constantValue.type.name)}${naming.ensureNameCase(constantValue.name)}`;
           break;
         }
         case 'scalar':

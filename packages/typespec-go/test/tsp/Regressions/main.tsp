@@ -146,6 +146,18 @@ union Color {
 }
 
 /**
+ * extensible enum (i.e. isFixed === false) used to verify that a
+ * client-side default value not present in the pre-defined values
+ * is still accepted (regression test for issue with property names
+ * like `networkApiVersion` whose default is the service API version).
+ */
+union NetworkVersion {
+  string,
+  v1: "2020-11-01",
+  v2: "2022-11-01",
+}
+
+/**
  * path params that aren't string types with client-side defaults
  */
 @post
@@ -164,6 +176,13 @@ model Widget {
   name: string;
   @Legacy.clientDefaultValue(Color.green)
   color: Color;
+
+  /**
+   * default value is not one of the pre-defined NetworkVersion values,
+   * which is allowed for extensible enums.
+   */
+  @Legacy.clientDefaultValue("2026-04-15-preview")
+  networkVersion?: NetworkVersion;
 }
 
 /**
