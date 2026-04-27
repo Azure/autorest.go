@@ -553,13 +553,11 @@ function emitScalarParsing(scalar: go.Scalar, src: string, dst: string, imports:
     case 'bool':
       return `${indent.get()}${dst}, err := strconv.ParseBool(${src})\n`;
     case 'float32':
-      return `${indent.get()}${dst}32, err := strconv.ParseFloat(${src}, 32)\n`
-        + `${indent.get()}${dst} := float32(${dst}32)\n`;
+      return `${indent.get()}${dst}32, err := strconv.ParseFloat(${src}, 32)\n` + `${indent.get()}${dst} := float32(${dst}32)\n`;
     case 'float64':
       return `${indent.get()}${dst}, err := strconv.ParseFloat(${src}, 64)\n`;
     case 'int32':
-      return `${indent.get()}${dst}32, err := strconv.ParseInt(${src}, 10, 32)\n`
-        + `${indent.get()}${dst} := int32(${dst}32)\n`;
+      return `${indent.get()}${dst}32, err := strconv.ParseInt(${src}, 10, 32)\n` + `${indent.get()}${dst} := int32(${dst}32)\n`;
     case 'int64':
       return `${indent.get()}${dst}, err := strconv.ParseInt(${src}, 10, 64)\n`;
     default:

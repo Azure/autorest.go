@@ -493,7 +493,10 @@ function generateServerTransportMethods(
                 contentToMarshal = getResponseField;
                 break;
               default:
-                throw new CodegenError('UnsupportedTsp', `unsupported text return kind ${method.returns.result.monomorphicType.kind} for method ${method.receiver.type.name}.${method.name}`)
+                throw new CodegenError(
+                  'UnsupportedTsp',
+                  `unsupported text return kind ${method.returns.result.monomorphicType.kind} for method ${method.receiver.type.name}.${method.name}`,
+                );
             }
             content += `${indent.get()}resp, err := server.MarshalResponseAsText(respContent, ${contentToMarshal}, req)\n`;
           } else {
