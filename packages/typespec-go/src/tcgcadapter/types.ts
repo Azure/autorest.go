@@ -488,8 +488,7 @@ export class TypeAdapter {
           value = constantValue;
           literalKey = `literal-${constantValue.type.name}${constantValue.name}`;
         } else if (extensibleEnum === true) {
-          // since all Go enums are extensible, we assume the default
-          // value is outside the predefined set of values
+          // for extensible enums we allow any value
           literalKey = `${literalKey}-${type.name}`;
         } else {
           throw new AdapterError('UnsupportedTsp', `invalid client side default ${<string>value} for fixed enum ${type.name}`);
