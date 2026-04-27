@@ -6,7 +6,7 @@
 
 * Fixed handling of `multipart/form` operations.
 * Fake servers will correctly dispatch calls to all child servers, not just immediate ones.
-* Client-side default values for extensible enums that aren't in the predefined set no longer causes a crash.
+* Client-side default values for extensible enums that aren't in the predefined set no longer cause a crash.
 * Fixed incorrect codegen for operations that return scalar types as `text/plain`.
 
 ### Other Changes
