@@ -56,7 +56,6 @@ type Widget struct {
 	// REQUIRED
 	Name *string
 
-	// default value is not one of the pre-defined NetworkVersion values,
-	// which is allowed for extensible enums.
+	// The default value is NetworkVersion("2026-04-15-preview").
 	NetworkVersion *NetworkVersion
 }

@@ -177,10 +177,6 @@ model Widget {
   @Legacy.clientDefaultValue(Color.green)
   color: Color;
 
-  /**
-   * default value is not one of the pre-defined NetworkVersion values,
-   * which is allowed for extensible enums.
-   */
   @Legacy.clientDefaultValue("2026-04-15-preview")
   networkVersion?: NetworkVersion;
 }
