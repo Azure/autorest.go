@@ -19,12 +19,12 @@ import (
 	"time"
 )
 
-const defaultContainerClientVersion string = "2026-04-06"
+const defaultContainerClientVersion string = "2026-06-06"
 
 // ContainerClient contains the methods for the Container group.
 // Don't use this type directly, use a constructor function instead.
 //
-// Generated from API version 2026-04-06
+// Generated from API version 2026-06-06
 type ContainerClient struct {
 	internal *azcore.Client
 	url      string
@@ -589,7 +589,7 @@ func (client *ContainerClient) getAccessPolicyCreateRequest(ctx context.Context,
 func (client *ContainerClient) getAccessPolicyHandleResponse(resp *http.Response) (ContainerClientGetAccessPolicyResponse, error) {
 	result := ContainerClientGetAccessPolicyResponse{}
 	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
-		result.Access = (*PublicAccessType)(&val)
+		result.BlobPublicAccess = (*PublicAccessType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -750,7 +750,7 @@ func (client *ContainerClient) getPropertiesCreateRequest(ctx context.Context, o
 func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) (ContainerClientGetPropertiesResponse, error) {
 	result := ContainerClientGetPropertiesResponse{}
 	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
-		result.Access = (*PublicAccessType)(&val)
+		result.BlobPublicAccess = (*PublicAccessType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -765,8 +765,12 @@ func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) 
 	if val := resp.Header.Get("x-ms-default-encryption-scope"); val != "" {
 		result.DefaultEncryptionScope = &val
 	}
-	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
-		result.Duration = (*LeaseDuration)(&val)
+	if val := resp.Header.Get("x-ms-deny-encryption-scope-override"); val != "" {
+		denyEncryptionScopeOverride, err := strconv.ParseBool(val)
+		if err != nil {
+			return ContainerClientGetPropertiesResponse{}, err
+		}
+		result.DenyEncryptionScopeOverride = &denyEncryptionScopeOverride
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = (*azcore.ETag)(&val)
@@ -799,11 +803,14 @@ func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) 
 		}
 		result.LastModified = &lastModified
 	}
+	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
+		result.LeaseDuration = (*LeaseDurationType)(&val)
+	}
 	if val := resp.Header.Get("x-ms-lease-state"); val != "" {
-		result.LeaseState = (*LeaseState)(&val)
+		result.LeaseState = (*LeaseStateType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-lease-status"); val != "" {
-		result.LeaseStatus = (*LeaseStatus)(&val)
+		result.LeaseStatus = (*LeaseStatusType)(&val)
 	}
 	for hh := range resp.Header {
 		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
@@ -812,13 +819,6 @@ func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) 
 			}
 			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
-	}
-	if val := resp.Header.Get("x-ms-deny-encryption-scope-override"); val != "" {
-		preventEncryptionScopeOverride, err := strconv.ParseBool(val)
-		if err != nil {
-			return ContainerClientGetPropertiesResponse{}, err
-		}
-		result.PreventEncryptionScopeOverride = &preventEncryptionScopeOverride
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
 		result.RequestID = &val
@@ -1561,7 +1561,7 @@ func (client *ContainerClient) submitBatchCreateRequest(ctx context.Context, con
 func (client *ContainerClient) submitBatchHandleResponse(resp *http.Response) (ContainerClientSubmitBatchResponse, error) {
 	result := ContainerClientSubmitBatchResponse{Body: resp.Body}
 	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.MultipartContentType = &val
+		result.ContentType = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
 		result.RequestID = &val

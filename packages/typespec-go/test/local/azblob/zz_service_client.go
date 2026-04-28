@@ -16,12 +16,12 @@ import (
 	"time"
 )
 
-const defaultServiceClientVersion string = "2026-04-06"
+const defaultServiceClientVersion string = "2026-06-06"
 
 // ServiceClient contains the methods for the Service group.
 // Don't use this type directly, use a constructor function instead.
 //
-// Generated from API version 2026-04-06
+// Generated from API version 2026-06-06
 type ServiceClient struct {
 	internal *azcore.Client
 	url      string
@@ -575,7 +575,7 @@ func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int6
 	if err != nil {
 		return ServiceClientSubmitBatchResponse{}, err
 	}
-	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
 		err = runtime.NewResponseError(httpResp)
 		return ServiceClientSubmitBatchResponse{}, err
 	}

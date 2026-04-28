@@ -75,42 +75,6 @@ func (a ArrowField) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	return enc.EncodeElement(aux, start)
 }
 
-// MarshalXML implements the xml.Marshaller interface for type Block.
-func (b Block) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	type alias Block
-	aux := &struct {
-		*alias
-		Name *string `xml:"Name"`
-	}{
-		alias: (*alias)(&b),
-	}
-	if b.Name != nil {
-		encodedName := runtime.EncodeByteArray(b.Name, runtime.Base64StdFormat)
-		aux.Name = &encodedName
-	}
-	return enc.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type Block.
-func (b *Block) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
-	type alias Block
-	aux := &struct {
-		*alias
-		Name *string `xml:"Name"`
-	}{
-		alias: (*alias)(b),
-	}
-	if err := dec.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	if aux.Name != nil {
-		if err := runtime.DecodeByteArray(*aux.Name, &b.Name, runtime.Base64StdFormat); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 // MarshalXML implements the xml.Marshaller interface for type BlockList.
 func (b BlockList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias BlockList
@@ -136,9 +100,9 @@ func (b BlockLookupList) MarshalXML(enc *xml.Encoder, start xml.StartElement) er
 	type alias BlockLookupList
 	aux := &struct {
 		*alias
-		Committed   *[][]byte  `xml:"Committed"`
+		Committed   *[]*string `xml:"Committed"`
 		Latest      *[]*string `xml:"Latest"`
-		Uncommitted *[][]byte  `xml:"Uncommitted"`
+		Uncommitted *[]*string `xml:"Uncommitted"`
 	}{
 		alias: (*alias)(&b),
 	}
@@ -328,40 +292,6 @@ func (h HierarchyListSegment) MarshalXML(enc *xml.Encoder, start xml.StartElemen
 	return enc.EncodeElement(aux, start)
 }
 
-// MarshalXML implements the xml.Marshaller interface for type Item.
-func (i Item) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "Blob"
-	type alias Item
-	aux := &struct {
-		*alias
-		Metadata   additionalProperties `xml:"Metadata"`
-		OrMetadata additionalProperties `xml:"OrMetadata"`
-	}{
-		alias: (*alias)(&i),
-	}
-	aux.Metadata = (additionalProperties)(i.Metadata)
-	aux.OrMetadata = (additionalProperties)(i.OrMetadata)
-	return enc.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type Item.
-func (i *Item) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
-	type alias Item
-	aux := &struct {
-		*alias
-		Metadata   additionalProperties `xml:"Metadata"`
-		OrMetadata additionalProperties `xml:"OrMetadata"`
-	}{
-		alias: (*alias)(i),
-	}
-	if err := dec.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	i.Metadata = (map[string]*string)(aux.Metadata)
-	i.OrMetadata = (map[string]*string)(aux.OrMetadata)
-	return nil
-}
-
 // MarshalXML implements the xml.Marshaller interface for type JSONTextConfiguration.
 func (j JSONTextConfiguration) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "JsonTextConfiguration"
@@ -526,35 +456,6 @@ func (p *Properties) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) erro
 	if aux.LastModified != nil && !(*time.Time)(aux.LastModified).IsZero() {
 		p.LastModified = (*time.Time)(aux.LastModified)
 	}
-	return nil
-}
-
-// MarshalXML implements the xml.Marshaller interface for type QueryFormat.
-func (q QueryFormat) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	type alias QueryFormat
-	aux := &struct {
-		*alias
-		ParquetTextConfiguration additionalProperties `xml:"ParquetConfiguration"`
-	}{
-		alias: (*alias)(&q),
-	}
-	aux.ParquetTextConfiguration = (additionalProperties)(q.ParquetTextConfiguration)
-	return enc.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type QueryFormat.
-func (q *QueryFormat) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
-	type alias QueryFormat
-	aux := &struct {
-		*alias
-		ParquetTextConfiguration additionalProperties `xml:"ParquetConfiguration"`
-	}{
-		alias: (*alias)(q),
-	}
-	if err := dec.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	q.ParquetTextConfiguration = (map[string]*string)(aux.ParquetTextConfiguration)
 	return nil
 }
 

@@ -40,6 +40,8 @@ const (
 	AccessTierP80 AccessTier = "P80"
 	// AccessTierPremium - The Premium access tier.
 	AccessTierPremium AccessTier = "Premium"
+	// AccessTierSmart - The Smart access tier.
+	AccessTierSmart AccessTier = "Smart"
 )
 
 // PossibleAccessTierValues returns the possible values for the AccessTier const type.
@@ -61,6 +63,7 @@ func PossibleAccessTierValues() []AccessTier {
 		AccessTierP70,
 		AccessTierP80,
 		AccessTierPremium,
+		AccessTierSmart,
 	}
 }
 
@@ -95,12 +98,14 @@ func PossibleAccountKindValues() []AccountKind {
 type ArchiveStatus string
 
 const (
-	// ArchiveStatusRehydratePendingToCold - The archive status is rehydrating pending to archive.
+	// ArchiveStatusRehydratePendingToCold - The archive status is rehydrating pending to cold.
 	ArchiveStatusRehydratePendingToCold ArchiveStatus = "rehydrate-pending-to-cold"
 	// ArchiveStatusRehydratePendingToCool - The archive status is rehydrating pending to cool.
 	ArchiveStatusRehydratePendingToCool ArchiveStatus = "rehydrate-pending-to-cool"
 	// ArchiveStatusRehydratePendingToHot - The archive status is rehydrating pending to hot.
 	ArchiveStatusRehydratePendingToHot ArchiveStatus = "rehydrate-pending-to-hot"
+	// ArchiveStatusRehydratePendingToSmart - The archive status is rehydrating pending to smart.
+	ArchiveStatusRehydratePendingToSmart ArchiveStatus = "rehydrate-pending-to-smart"
 )
 
 // PossibleArchiveStatusValues returns the possible values for the ArchiveStatus const type.
@@ -109,6 +114,7 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 		ArchiveStatusRehydratePendingToCold,
 		ArchiveStatusRehydratePendingToCool,
 		ArchiveStatusRehydratePendingToHot,
+		ArchiveStatusRehydratePendingToSmart,
 	}
 }
 
@@ -137,41 +143,41 @@ func PossibleBlockListTypeValues() []BlockListType {
 type CopySourceTags string
 
 const (
-	// CopySourceTagsCopy - The copy blob source tags option.
-	CopySourceTagsCopy CopySourceTags = "COPY"
-	// CopySourceTagsReplace - The replace blob source tags option.
-	CopySourceTagsReplace CopySourceTags = "REPLACE"
+	// CopySourceTagsCOPY - The copy blob source tags option.
+	CopySourceTagsCOPY CopySourceTags = "COPY"
+	// CopySourceTagsREPLACE - The replace blob source tags option.
+	CopySourceTagsREPLACE CopySourceTags = "REPLACE"
 )
 
 // PossibleCopySourceTagsValues returns the possible values for the CopySourceTags const type.
 func PossibleCopySourceTagsValues() []CopySourceTags {
 	return []CopySourceTags{
-		CopySourceTagsCopy,
-		CopySourceTagsReplace,
+		CopySourceTagsCOPY,
+		CopySourceTagsREPLACE,
 	}
 }
 
-// CopyStatus - The copy status.
-type CopyStatus string
+// CopyStatusType - The copy status.
+type CopyStatusType string
 
 const (
-	// CopyStatusAborted - The copy operation is aborted.
-	CopyStatusAborted CopyStatus = "aborted"
-	// CopyStatusFailed - The copy operation failed.
-	CopyStatusFailed CopyStatus = "failed"
-	// CopyStatusPending - The copy operation is pending.
-	CopyStatusPending CopyStatus = "pending"
-	// CopyStatusSuccess - The copy operation succeeded.
-	CopyStatusSuccess CopyStatus = "success"
+	// CopyStatusTypeAborted - The copy operation is aborted.
+	CopyStatusTypeAborted CopyStatusType = "aborted"
+	// CopyStatusTypeFailed - The copy operation failed.
+	CopyStatusTypeFailed CopyStatusType = "failed"
+	// CopyStatusTypePending - The copy operation is pending.
+	CopyStatusTypePending CopyStatusType = "pending"
+	// CopyStatusTypeSuccess - The copy operation succeeded.
+	CopyStatusTypeSuccess CopyStatusType = "success"
 )
 
-// PossibleCopyStatusValues returns the possible values for the CopyStatus const type.
-func PossibleCopyStatusValues() []CopyStatus {
-	return []CopyStatus{
-		CopyStatusAborted,
-		CopyStatusFailed,
-		CopyStatusPending,
-		CopyStatusSuccess,
+// PossibleCopyStatusTypeValues returns the possible values for the CopyStatusType const type.
+func PossibleCopyStatusTypeValues() []CopyStatusType {
+	return []CopyStatusType{
+		CopyStatusTypeAborted,
+		CopyStatusTypeFailed,
+		CopyStatusTypePending,
+		CopyStatusTypeSuccess,
 	}
 }
 
@@ -197,7 +203,7 @@ func PossibleDeleteSnapshotsOptionTypeValues() []DeleteSnapshotsOptionType {
 type DeleteType string
 
 const (
-	// DeleteTypeNone - Deprecated
+	// DeleteTypeNone - None.
 	DeleteTypeNone DeleteType = "None"
 	// DeleteTypePermanent - Permanently delete the blob.
 	DeleteTypePermanent DeleteType = "Permanent"
@@ -216,7 +222,7 @@ func PossibleDeleteTypeValues() []DeleteType {
 type EncryptionAlgorithmType string
 
 const (
-	// EncryptionAlgorithmTypeAES256 - The AES256 encryption algorithm.
+	// EncryptionAlgorithmTypeAES256 - AES256
 	EncryptionAlgorithmTypeAES256 EncryptionAlgorithmType = "AES256"
 	// EncryptionAlgorithmTypeNone - Deprecated
 	EncryptionAlgorithmTypeNone EncryptionAlgorithmType = "None"
@@ -334,9 +340,9 @@ type ImmutabilityPolicySetting string
 
 const (
 	// ImmutabilityPolicySettingLocked - The immutability policy is locked.
-	ImmutabilityPolicySettingLocked ImmutabilityPolicySetting = "locked"
+	ImmutabilityPolicySettingLocked ImmutabilityPolicySetting = "Locked"
 	// ImmutabilityPolicySettingUnlocked - The immutability policy is unlocked.
-	ImmutabilityPolicySettingUnlocked ImmutabilityPolicySetting = "unlocked"
+	ImmutabilityPolicySettingUnlocked ImmutabilityPolicySetting = "Unlocked"
 )
 
 // PossibleImmutabilityPolicySettingValues returns the possible values for the ImmutabilityPolicySetting const type.
@@ -347,66 +353,66 @@ func PossibleImmutabilityPolicySettingValues() []ImmutabilityPolicySetting {
 	}
 }
 
-// LeaseDuration - The lease duration.
-type LeaseDuration string
+// LeaseDurationType - The lease duration.
+type LeaseDurationType string
 
 const (
-	// LeaseDurationFixed - The lease is of fixed duration.
-	LeaseDurationFixed LeaseDuration = "fixed"
-	// LeaseDurationInfinite - The lease is of infinite duration.
-	LeaseDurationInfinite LeaseDuration = "infinite"
+	// LeaseDurationTypeFixed - The lease is of fixed duration.
+	LeaseDurationTypeFixed LeaseDurationType = "fixed"
+	// LeaseDurationTypeInfinite - The lease is of infinite duration.
+	LeaseDurationTypeInfinite LeaseDurationType = "infinite"
 )
 
-// PossibleLeaseDurationValues returns the possible values for the LeaseDuration const type.
-func PossibleLeaseDurationValues() []LeaseDuration {
-	return []LeaseDuration{
-		LeaseDurationFixed,
-		LeaseDurationInfinite,
+// PossibleLeaseDurationTypeValues returns the possible values for the LeaseDurationType const type.
+func PossibleLeaseDurationTypeValues() []LeaseDurationType {
+	return []LeaseDurationType{
+		LeaseDurationTypeFixed,
+		LeaseDurationTypeInfinite,
 	}
 }
 
-// LeaseState - The lease state.
-type LeaseState string
+// LeaseStateType - The lease state.
+type LeaseStateType string
 
 const (
-	// LeaseStateAvailable - The lease is available.
-	LeaseStateAvailable LeaseState = "available"
-	// LeaseStateBreaking - The lease is breaking.
-	LeaseStateBreaking LeaseState = "breaking"
-	// LeaseStateBroken - The lease is broken.
-	LeaseStateBroken LeaseState = "broken"
-	// LeaseStateExpired - The lease is expired.
-	LeaseStateExpired LeaseState = "expired"
-	// LeaseStateLeased - The lease is currently leased.
-	LeaseStateLeased LeaseState = "leased"
+	// LeaseStateTypeAvailable - The lease is available.
+	LeaseStateTypeAvailable LeaseStateType = "available"
+	// LeaseStateTypeBreaking - The lease is breaking.
+	LeaseStateTypeBreaking LeaseStateType = "breaking"
+	// LeaseStateTypeBroken - The lease is broken.
+	LeaseStateTypeBroken LeaseStateType = "broken"
+	// LeaseStateTypeExpired - The lease is expired.
+	LeaseStateTypeExpired LeaseStateType = "expired"
+	// LeaseStateTypeLeased - The lease is currently leased.
+	LeaseStateTypeLeased LeaseStateType = "leased"
 )
 
-// PossibleLeaseStateValues returns the possible values for the LeaseState const type.
-func PossibleLeaseStateValues() []LeaseState {
-	return []LeaseState{
-		LeaseStateAvailable,
-		LeaseStateBreaking,
-		LeaseStateBroken,
-		LeaseStateExpired,
-		LeaseStateLeased,
+// PossibleLeaseStateTypeValues returns the possible values for the LeaseStateType const type.
+func PossibleLeaseStateTypeValues() []LeaseStateType {
+	return []LeaseStateType{
+		LeaseStateTypeAvailable,
+		LeaseStateTypeBreaking,
+		LeaseStateTypeBroken,
+		LeaseStateTypeExpired,
+		LeaseStateTypeLeased,
 	}
 }
 
-// LeaseStatus - The lease status.
-type LeaseStatus string
+// LeaseStatusType - The lease status.
+type LeaseStatusType string
 
 const (
-	// LeaseStatusLocked - The lease is locked.
-	LeaseStatusLocked LeaseStatus = "locked"
-	// LeaseStatusUnlocked - The lease is unlocked.
-	LeaseStatusUnlocked LeaseStatus = "unlocked"
+	// LeaseStatusTypeLocked - The lease is locked.
+	LeaseStatusTypeLocked LeaseStatusType = "locked"
+	// LeaseStatusTypeUnlocked - The lease is unlocked.
+	LeaseStatusTypeUnlocked LeaseStatusType = "unlocked"
 )
 
-// PossibleLeaseStatusValues returns the possible values for the LeaseStatus const type.
-func PossibleLeaseStatusValues() []LeaseStatus {
-	return []LeaseStatus{
-		LeaseStatusLocked,
-		LeaseStatusUnlocked,
+// PossibleLeaseStatusTypeValues returns the possible values for the LeaseStatusType const type.
+func PossibleLeaseStatusTypeValues() []LeaseStatusType {
+	return []LeaseStatusType{
+		LeaseStatusTypeLocked,
+		LeaseStatusTypeUnlocked,
 	}
 }
 

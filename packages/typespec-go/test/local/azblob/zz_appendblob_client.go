@@ -17,12 +17,12 @@ import (
 	"time"
 )
 
-const defaultAppendBlobClientVersion string = "2026-04-06"
+const defaultAppendBlobClientVersion string = "2026-06-06"
 
 // AppendBlobClient contains the methods for the AppendBlob group.
 // Don't use this type directly, use a constructor function instead.
 //
-// Generated from API version 2026-04-06
+// Generated from API version 2026-06-06
 type AppendBlobClient struct {
 	internal *azcore.Client
 	url      string
