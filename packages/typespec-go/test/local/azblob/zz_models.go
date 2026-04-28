@@ -11,13 +11,13 @@ import (
 
 // AccessPolicy - Represents an access policy.
 type AccessPolicy struct {
-	// REQUIRED; The date-time the policy expires.
+	// The date-time the policy expires.
 	Expiry *time.Time `xml:"Expiry"`
 
-	// REQUIRED; The permissions for acl the policy.
+	// The permissions for acl the policy.
 	Permission *string `xml:"Permission"`
 
-	// REQUIRED; The date-time the policy is active.
+	// The date-time the policy is active.
 	Start *time.Time `xml:"Start"`
 }
 
@@ -45,7 +45,7 @@ type ArrowField struct {
 // Block - Represents a single block in a block blob. It describes the block's ID and size.
 type Block struct {
 	// REQUIRED; The base64 encoded block ID.
-	Name []byte `xml:"Name"`
+	Name *string `xml:"Name"`
 
 	// REQUIRED; The block size in bytes.
 	Size *int64 `xml:"Size"`
@@ -63,13 +63,13 @@ type BlockList struct {
 // BlockLookupList - The Block lookup list.
 type BlockLookupList struct {
 	// The committed blocks
-	Committed [][]byte `xml:"Committed"`
+	Committed []*string `xml:"Committed"`
 
 	// The latest blocks
 	Latest []*string `xml:"Latest"`
 
 	// The uncommitted blocks
-	Uncommitted [][]byte `xml:"Uncommitted"`
+	Uncommitted []*string `xml:"Uncommitted"`
 }
 
 // CORSRule - CORS is an HTTP feature that enables a web application running under one domain to access resources in another
@@ -111,7 +111,7 @@ type ContainerItem struct {
 	Properties *ContainerProperties `xml:"Properties"`
 
 	// Whether the container is deleted.
-	Delete *bool `xml:"Deleted"`
+	Deleted *bool `xml:"Deleted"`
 
 	// The metadata of the container.
 	Metadata map[string]*string `xml:"Metadata"`
@@ -144,13 +144,13 @@ type ContainerProperties struct {
 	IsImmutableStorageWithVersioningEnabled *bool `xml:"ImmutableStorageWithVersioningEnabled"`
 
 	// The lease duration of the container.
-	LeaseDuration *LeaseDuration `xml:"LeaseDuration"`
+	LeaseDuration *LeaseDurationType `xml:"LeaseDuration"`
 
 	// The lease state of the container.
-	LeaseState *LeaseState `xml:"LeaseState"`
+	LeaseState *LeaseStateType `xml:"LeaseState"`
 
 	// The lease status of the container.
-	LeaseStatus *LeaseStatus `xml:"LeaseStatus"`
+	LeaseStatus *LeaseStatusType `xml:"LeaseStatus"`
 
 	// Whether to prevent encryption scope override.
 	PreventEncryptionScopeOverride *bool `xml:"DenyEncryptionScopeOverride"`
@@ -286,7 +286,7 @@ type KeyInfo struct {
 	Start *string `xml:"Start"`
 
 	// The delegated user tenant id in Azure AD.
-	DelegatedUserTid *string `xml:"DelegatedUserTid"`
+	DelegatedUserTenantID *string `xml:"DelegatedUserTid"`
 }
 
 // ListBlobsFlatSegmentResponse - An enumeration of blobs.
@@ -385,7 +385,7 @@ type Metrics struct {
 	Enabled *bool `xml:"Enabled"`
 
 	// Whether to include API in the metrics.
-	IncludeApis *bool `xml:"IncludeAPIs"`
+	IncludeAPIs *bool `xml:"IncludeAPIs"`
 
 	// The retention policy of the metrics.
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
@@ -415,10 +415,18 @@ type PageRange struct {
 	Start *int64 `xml:"Start"`
 }
 
+// ParquetConfiguration - Represents the Parquet configuration.
+type ParquetConfiguration struct {
+	AdditionalProperties map[string]any
+}
+
 // Prefix - Represents a blob prefix.
 type Prefix struct {
 	// REQUIRED; The blob name.
 	Name *string `xml:"Name"`
+
+	// REQUIRED
+	Properties *Properties `xml:"Properties"`
 }
 
 // Properties - The properties of a blob.
@@ -428,6 +436,7 @@ type Properties struct {
 
 	// REQUIRED; The date-time the blob was last modified in RFC1123 format.
 	LastModified *time.Time `xml:"Last-Modified"`
+	ACL          *string    `xml:"Acl"`
 
 	// The access tier of the blob.
 	AccessTier *AccessTier `xml:"AccessTier"`
@@ -481,7 +490,7 @@ type Properties struct {
 	CopySource *string `xml:"CopySource"`
 
 	// The copy status of the blob.
-	CopyStatus *CopyStatus `xml:"CopyStatus"`
+	CopyStatus *CopyStatusType `xml:"CopyStatus"`
 
 	// The copy status description of the blob.
 	CopyStatusDescription *string `xml:"CopyStatusDescription"`
@@ -503,6 +512,7 @@ type Properties struct {
 
 	// The expire time of the blob.
 	ExpiresOn *time.Time `xml:"Expiry-Time"`
+	Group     *string    `xml:"Group"`
 
 	// The immutability policy until time of the blob.
 	ImmutabilityPolicyExpiresOn *time.Time `xml:"ImmutabilityPolicyUntilDate"`
@@ -520,25 +530,31 @@ type Properties struct {
 	LastAccessedOn *time.Time `xml:"LastAccessTime"`
 
 	// The lease duration of the blob.
-	LeaseDuration *LeaseDuration `xml:"LeaseDuration"`
+	LeaseDuration *LeaseDurationType `xml:"LeaseDuration"`
 
 	// The lease state of the blob.
-	LeaseState *LeaseState `xml:"LeaseState"`
+	LeaseState *LeaseStateType `xml:"LeaseState"`
 
 	// The lease status of the blob.
-	LeaseStatus *LeaseStatus `xml:"LeaseStatus"`
+	LeaseStatus *LeaseStatusType `xml:"LeaseStatus"`
 
 	// Whether the blob is under legal hold.
-	LegalHold *bool `xml:"LegalHold"`
+	LegalHold   *bool   `xml:"LegalHold"`
+	Owner       *string `xml:"Owner"`
+	Permissions *string `xml:"Permissions"`
 
 	// The rehydrate priority of the blob.
 	RehydratePriority *RehydratePriority `xml:"RehydratePriority"`
 
 	// The remaining retention days of the blob.
-	RemainingRetentionDays *int32 `xml:"RemainingRetentionDays"`
+	RemainingRetentionDays *int32  `xml:"RemainingRetentionDays"`
+	ResourceType           *string `xml:"ResourceType"`
 
 	// Whether the blob is encrypted on the server.
 	ServerEncrypted *bool `xml:"ServerEncrypted"`
+
+	// The smart access tier of the blob.
+	SmartAccessTier *AccessTier `xml:"SmartAccessTier"`
 
 	// The number of tags for the blob.
 	TagCount *int32 `xml:"TagCount"`
@@ -559,7 +575,7 @@ type QueryFormat struct {
 	JSONTextConfiguration *JSONTextConfiguration `xml:"JsonTextConfiguration"`
 
 	// The Parquet configuration.
-	ParquetTextConfiguration map[string]*string `xml:"ParquetConfiguration"`
+	ParquetTextConfiguration *ParquetConfiguration `xml:"ParquetTextConfiguration"`
 }
 
 // QueryRequest - Groups the set of query request settings.
@@ -597,11 +613,11 @@ type RetentionPolicy struct {
 
 // SignedIdentifier - The signed identifier.
 type SignedIdentifier struct {
-	// REQUIRED; The access policy for the signed identifier.
-	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
-
 	// REQUIRED; The unique ID for the signed identifier.
 	ID *string `xml:"Id"`
+
+	// The access policy for the signed identifier.
+	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
 }
 
 // StaticWebsite - The properties that enable an account to host a static website
@@ -688,5 +704,5 @@ type UserDelegationKey struct {
 	Value *string `xml:"Value"`
 
 	// The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified.
-	SignedDelegatedUserTID *string `xml:"SignedDelegatedUserTid"`
+	SignedDelegatedUserTenantID *string `xml:"SignedDelegatedUserTid"`
 }

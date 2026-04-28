@@ -17,12 +17,12 @@ import (
 	"time"
 )
 
-const defaultPageBlobClientVersion string = "2026-04-06"
+const defaultPageBlobClientVersion string = "2026-06-06"
 
 // PageBlobClient contains the methods for the PageBlob group.
 // Don't use this type directly, use a constructor function instead.
 //
-// Generated from API version 2026-04-06
+// Generated from API version 2026-06-06
 type PageBlobClient struct {
 	internal *azcore.Client
 	url      string
@@ -237,7 +237,7 @@ func (client *PageBlobClient) copyIncrementalHandleResponse(resp *http.Response)
 		result.CopyID = &val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatus)(&val)
+		result.CopyStatus = (*CopyStatusType)(&val)
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
@@ -1069,11 +1069,9 @@ func (client *PageBlobClient) uploadPagesHandleResponse(resp *http.Response) (Pa
 // a URL.
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - sourceURL - Specify a URL to the copy source.
-//   - sourceRange - Bytes of source data in the specified range. The length of this range should match the ContentLength header
-//     and x-ms-range/Range destination range header.
+//   - sourceRange - Bytes of source data in the specified range.
 //   - contentLength - The length of the request.
-//   - rangeParam - Bytes of source data in the specified range. The length of this range should match the ContentLength header
-//     and x-ms-range/Range destination range header.
+//   - rangeParam - Bytes of data in the specified range.
 //   - options - PageBlobClientUploadPagesFromURLOptions contains the optional parameters for the PageBlobClient.UploadPagesFromURL
 //     method.
 func (client *PageBlobClient) UploadPagesFromURL(ctx context.Context, sourceURL string, sourceRange string, contentLength int64, rangeParam string, options *PageBlobClientUploadPagesFromURLOptions) (PageBlobClientUploadPagesFromURLResponse, error) {
@@ -1119,6 +1117,7 @@ func (client *PageBlobClient) uploadPagesFromURLCreateRequest(ctx context.Contex
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
+	req.Raw().Header["Range"] = []string{rangeParam}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
@@ -1157,7 +1156,6 @@ func (client *PageBlobClient) uploadPagesFromURLCreateRequest(ctx context.Contex
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
 	req.Raw().Header["x-ms-page-write"] = []string{"update"}
-	req.Raw().Header["x-ms-range"] = []string{rangeParam}
 	if options != nil && options.SourceContentCRC64 != nil {
 		req.Raw().Header["x-ms-source-content-crc64"] = []string{base64.StdEncoding.EncodeToString(options.SourceContentCRC64)}
 	}

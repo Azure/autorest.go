@@ -18,12 +18,12 @@ import (
 	"time"
 )
 
-const defaultClientVersion string = "2026-04-06"
+const defaultClientVersion string = "2026-06-06"
 
 // Client contains the methods for the service.
 // Don't use this type directly, use a constructor function instead.
 //
-// Generated from API version 2026-04-06
+// Generated from API version 2026-06-06
 type Client struct {
 	internal *azcore.Client
 	url      string
@@ -419,8 +419,7 @@ func (client *Client) CopyFromURL(ctx context.Context, copySource string, option
 
 // copyFromURLCreateRequest creates the CopyFromURL request.
 func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource string, options *ClientCopyFromURLOptions) (*policy.Request, error) {
-	urlPath := "?comp=copy"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.url)
 	if err != nil {
 		return nil, err
 	}
@@ -863,19 +862,19 @@ func (client *Client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 // can also call Download to read a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientDownloadOptions contains the optional parameters for the Client.Download method.
-func (client *Client) Download(ctx context.Context, options *ClientDownloadOptions) (ClientDownloadResponse, error) {
+func (client *Client) Download(ctx context.Context, options *ClientDownloadOptions) (BlobClientDownloadResponseInternal, error) {
 	var err error
 	req, err := client.downloadCreateRequest(ctx, options)
 	if err != nil {
-		return ClientDownloadResponse{}, err
+		return BlobClientDownloadResponseInternal{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientDownloadResponse{}, err
+		return BlobClientDownloadResponseInternal{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusPartialContent) {
 		err = runtime.NewResponseError(httpResp)
-		return ClientDownloadResponse{}, err
+		return BlobClientDownloadResponseInternal{}, err
 	}
 	resp, err := client.downloadHandleResponse(httpResp)
 	return resp, err
@@ -901,13 +900,13 @@ func (client *Client) downloadCreateRequest(ctx context.Context, options *Client
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
@@ -947,8 +946,8 @@ func (client *Client) downloadCreateRequest(ctx context.Context, options *Client
 }
 
 // downloadHandleResponse handles the Download response.
-func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloadResponse, error) {
-	result := ClientDownloadResponse{Body: resp.Body}
+func (client *Client) downloadHandleResponse(resp *http.Response) (BlobClientDownloadResponseInternal, error) {
+	result := BlobClientDownloadResponseInternal{Body: resp.Body}
 	if val := resp.Header.Get("Accept-Ranges"); val != "" {
 		result.AcceptRanges = &val
 	}
@@ -956,21 +955,21 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-blob-content-md5"); val != "" {
 		blobContentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.BlobContentMD5 = blobContentMD5
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -986,7 +985,7 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.ContentCRC64 = contentCRC64
 	}
@@ -1002,14 +1001,14 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.ContentLength = &contentLength
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -1022,7 +1021,7 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	if val := resp.Header.Get("x-ms-copy-completion-time"); val != "" {
 		copyCompletionTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.CopyCompletionTime = &copyCompletionTime
 	}
@@ -1036,7 +1035,7 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 		result.CopySource = &val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatus)(&val)
+		result.CopyStatus = (*CopyStatusType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-copy-status-description"); val != "" {
 		result.CopyStatusDescription = &val
@@ -1044,19 +1043,16 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	if val := resp.Header.Get("x-ms-creation-time"); val != "" {
 		creationTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.CreationTime = &creationTime
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.Date = &date
-	}
-	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
-		result.Duration = (*LeaseDuration)(&val)
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = (*azcore.ETag)(&val)
@@ -1070,7 +1066,7 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	if val := resp.Header.Get("x-ms-immutability-policy-until-date"); val != "" {
 		immutabilityPolicyExpiresOn, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.ImmutabilityPolicyExpiresOn = &immutabilityPolicyExpiresOn
 	}
@@ -1080,48 +1076,51 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	if val := resp.Header.Get("x-ms-is-current-version"); val != "" {
 		isCurrentVersion, err := strconv.ParseBool(val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.IsCurrentVersion = &isCurrentVersion
 	}
 	if val := resp.Header.Get("x-ms-blob-sealed"); val != "" {
 		isSealed, err := strconv.ParseBool(val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.IsSealed = &isSealed
 	}
 	if val := resp.Header.Get("x-ms-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
 	if val := resp.Header.Get("x-ms-last-access-time"); val != "" {
 		lastAccessed, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.LastAccessed = &lastAccessed
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.LastModified = &lastModified
 	}
+	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
+		result.LeaseDuration = (*LeaseDurationType)(&val)
+	}
 	if val := resp.Header.Get("x-ms-lease-state"); val != "" {
-		result.LeaseState = (*LeaseState)(&val)
+		result.LeaseState = (*LeaseStateType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-lease-status"); val != "" {
-		result.LeaseStatus = (*LeaseStatus)(&val)
+		result.LeaseStatus = (*LeaseStatusType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-legal-hold"); val != "" {
 		legalHold, err := strconv.ParseBool(val)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.LegalHold = &legalHold
 	}
@@ -1153,14 +1152,14 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	if val := resp.Header.Get("x-ms-structured-content-length"); val != "" {
 		structuredContentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.StructuredContentLength = &structuredContentLength
 	}
 	if val := resp.Header.Get("x-ms-tag-count"); val != "" {
 		tagCount, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return ClientDownloadResponse{}, err
+			return BlobClientDownloadResponseInternal{}, err
 		}
 		result.TagCount = &tagCount
 	}
@@ -1344,7 +1343,7 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		result.AccessTierInferred = &accessTierInferred
 	}
 	if val := resp.Header.Get("x-ms-archive-status"); val != "" {
-		result.ArchiveStatus = (*ArchiveStatus)(&val)
+		result.ArchiveStatus = &val
 	}
 	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
@@ -1413,7 +1412,7 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		result.CopySource = &val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatus)(&val)
+		result.CopyStatus = (*CopyStatusType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-copy-status-description"); val != "" {
 		result.CopyStatusDescription = &val
@@ -1434,9 +1433,6 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 	}
 	if val := resp.Header.Get("x-ms-copy-destination-snapshot"); val != "" {
 		result.DestinationSnapshot = &val
-	}
-	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
-		result.Duration = (*LeaseDuration)(&val)
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = (*azcore.ETag)(&val)
@@ -1506,11 +1502,14 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		}
 		result.LastModified = &lastModified
 	}
+	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
+		result.LeaseDuration = (*LeaseDurationType)(&val)
+	}
 	if val := resp.Header.Get("x-ms-lease-state"); val != "" {
-		result.LeaseState = (*LeaseState)(&val)
+		result.LeaseState = (*LeaseStateType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-lease-status"); val != "" {
-		result.LeaseStatus = (*LeaseStatus)(&val)
+		result.LeaseStatus = (*LeaseStatusType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-legal-hold"); val != "" {
 		legalHold, err := strconv.ParseBool(val)
@@ -1539,10 +1538,13 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		}
 	}
 	if val := resp.Header.Get("x-ms-rehydrate-priority"); val != "" {
-		result.RehydratePriority = (*RehydratePriority)(&val)
+		result.RehydratePriority = &val
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
 		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-smart-access-tier"); val != "" {
+		result.SmartAccessTier = &val
 	}
 	if val := resp.Header.Get("x-ms-tag-count"); val != "" {
 		tagCount, err := strconv.ParseInt(val, 10, 64)
@@ -1878,7 +1880,7 @@ func (client *Client) setExpiryCreateRequest(ctx context.Context, expiryOptions 
 	}
 	req.Raw().Header["x-ms-expiry-option"] = []string{string(expiryOptions)}
 	if options != nil && options.ExpiresOn != nil {
-		req.Raw().Header["x-ms-expiry-time"] = []string{datetime.RFC1123(*options.ExpiresOn).String()}
+		req.Raw().Header["x-ms-expiry-time"] = []string{*options.ExpiresOn}
 	}
 	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
 	return req, nil
@@ -2099,11 +2101,11 @@ func (client *Client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-immutability-policy-until-date"); val != "" {
-		immutabilityPolicyExpiresOn, err := time.Parse(time.RFC1123, val)
+		immutabilityPolicyExpiry, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientSetImmutabilityPolicyResponse{}, err
 		}
-		result.ImmutabilityPolicyExpiresOn = &immutabilityPolicyExpiresOn
+		result.ImmutabilityPolicyExpiry = &immutabilityPolicyExpiry
 	}
 	if val := resp.Header.Get("x-ms-immutability-policy-mode"); val != "" {
 		result.ImmutabilityPolicyMode = (*ImmutabilityPolicyMode)(&val)
@@ -2608,7 +2610,7 @@ func (client *Client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 		result.CopyID = &val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatus)(&val)
+		result.CopyStatus = (*CopyStatusType)(&val)
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)

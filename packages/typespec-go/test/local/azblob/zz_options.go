@@ -1083,19 +1083,19 @@ type ClientDownloadOptions struct {
 	// a client token, this header should be specified using the SHA256 hash of the encryption key.
 	EncryptionKeySHA256 *string
 
-	// The request should only proceed if an entity matches this string.
-	IfMatch *string
+	// A condition that must be met in order for the request to be processed.
+	IfMatch *azcore.ETag
 
-	// The request should only proceed if the entity was modified after this time.
+	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
-	// The request should only proceed if no entity matches this string.
-	IfNoneMatch *string
+	// A condition that must be met in order for the request to be processed.
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
 
-	// The request should only proceed if the entity was not modified after this time.
+	// A date-time value. A request is made under the condition that the resource has not been modified since the specified date-time.
 	IfUnmodifiedSince *time.Time
 
 	// If specified, the operation only succeeds if the resource's lease is active and matches this ID.
@@ -1283,7 +1283,7 @@ type ClientSetExpiryOptions struct {
 	ClientRequestID *string
 
 	// The time this blob will expire.
-	ExpiresOn *time.Time
+	ExpiresOn *string
 
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>

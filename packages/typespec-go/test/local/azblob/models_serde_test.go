@@ -100,13 +100,13 @@ func TestStorageServicePropertiesRoundTrip(t *testing.T) {
 	if props.HourMetrics == nil {
 		t.Fatal("HourMetrics is nil")
 	}
-	assertEqual(t, "HourMetrics.IncludeAPIs", *props.HourMetrics.IncludeApis, false)
+	assertEqual(t, "HourMetrics.IncludeAPIs", *props.HourMetrics.IncludeAPIs, false)
 
 	// Verify MinuteMetrics
 	if props.MinuteMetrics == nil {
 		t.Fatal("MinuteMetrics is nil")
 	}
-	assertEqual(t, "MinuteMetrics.IncludeAPIs", *props.MinuteMetrics.IncludeApis, true)
+	assertEqual(t, "MinuteMetrics.IncludeAPIs", *props.MinuteMetrics.IncludeAPIs, true)
 
 	// Verify CORS
 	if len(props.CORS) != 1 {
@@ -305,11 +305,11 @@ func TestBlockListRoundTrip(t *testing.T) {
 	if len(blockList.UncommittedBlocks) != 2 {
 		t.Fatalf("expected 2 uncommitted blocks, got %d", len(blockList.UncommittedBlocks))
 	}
-	assertEqual(t, "CommittedBlocks[0].Name", string(blockList.CommittedBlocks[0].Name), "BlockId001")
+	assertEqual(t, "CommittedBlocks[0].Name", *blockList.CommittedBlocks[0].Name, "QmxvY2tJZDAwMQ==")
 	assertEqual(t, "CommittedBlocks[0].Size", *blockList.CommittedBlocks[0].Size, int64(4194304))
-	assertEqual(t, "CommittedBlocks[1].Name", string(blockList.CommittedBlocks[1].Name), "BlockId002")
-	assertEqual(t, "UncommittedBlocks[0].Name", string(blockList.UncommittedBlocks[0].Name), "BlockId003")
-	assertEqual(t, "UncommittedBlocks[1].Name", string(blockList.UncommittedBlocks[1].Name), "BlockId004")
+	assertEqual(t, "CommittedBlocks[1].Name", *blockList.CommittedBlocks[1].Name, "QmxvY2tJZDAwMg==")
+	assertEqual(t, "UncommittedBlocks[0].Name", *blockList.UncommittedBlocks[0].Name, "QmxvY2tJZDAwMw==")
+	assertEqual(t, "UncommittedBlocks[1].Name", *blockList.UncommittedBlocks[1].Name, "QmxvY2tJZDAwNA==")
 	assertEqual(t, "UncommittedBlocks[1].Size", *blockList.UncommittedBlocks[1].Size, int64(1024000))
 
 	// Round-trip
@@ -385,8 +385,8 @@ func TestBlockLookupListMixedRoundTrip(t *testing.T) {
 	if len(bll.Committed) != 1 {
 		t.Fatalf("expected 1 committed block, got %d", len(bll.Committed))
 	}
-	assertEqual(t, "Uncommitted[0]", string(bll.Uncommitted[0]), "ANAAAA==")
-	assertEqual(t, "Committed[0]", string(bll.Committed[0]), "AQAAAA==")
+	assertEqual(t, "Uncommitted[0]", *bll.Uncommitted[0], "ANAAAA==")
+	assertEqual(t, "Committed[0]", *bll.Committed[0], "AQAAAA==")
 
 	// Round-trip
 	out, err := xml.Marshal(bll)
@@ -838,7 +838,7 @@ func TestStorageServicePropertiesMarshal(t *testing.T) {
 		HourMetrics: &Metrics{
 			Version:     to.Ptr("1.0"),
 			Enabled:     to.Ptr(true),
-			IncludeApis: to.Ptr(false),
+			IncludeAPIs: to.Ptr(false),
 			RetentionPolicy: &RetentionPolicy{
 				Enabled: to.Ptr(true),
 				Days:    to.Ptr(int32(7)),

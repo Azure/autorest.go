@@ -19,12 +19,12 @@ import (
 	"time"
 )
 
-const defaultBlockBlobClientVersion string = "2026-04-06"
+const defaultBlockBlobClientVersion string = "2026-06-06"
 
 // BlockBlobClient contains the methods for the BlockBlob group.
 // Don't use this type directly, use a constructor function instead.
 //
-// Generated from API version 2026-04-06
+// Generated from API version 2026-06-06
 type BlockBlobClient struct {
 	internal *azcore.Client
 	url      string
@@ -483,7 +483,7 @@ func (client *BlockBlobClient) queryHandleResponse(resp *http.Response) (BlockBl
 		result.CopySource = &val
 	}
 	if val := resp.Header.Get("x-ms-copy-status"); val != "" {
-		result.CopyStatus = (*CopyStatus)(&val)
+		result.CopyStatus = (*CopyStatusType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-copy-status-description"); val != "" {
 		result.CopyStatusDescription = &val
@@ -494,9 +494,6 @@ func (client *BlockBlobClient) queryHandleResponse(resp *http.Response) (BlockBl
 			return BlockBlobClientQueryResponse{}, err
 		}
 		result.Date = &date
-	}
-	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
-		result.Duration = (*LeaseDuration)(&val)
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = (*azcore.ETag)(&val)
@@ -521,11 +518,14 @@ func (client *BlockBlobClient) queryHandleResponse(resp *http.Response) (BlockBl
 		}
 		result.LastModified = &lastModified
 	}
+	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
+		result.LeaseDuration = (*LeaseDurationType)(&val)
+	}
 	if val := resp.Header.Get("x-ms-lease-state"); val != "" {
-		result.LeaseState = (*LeaseState)(&val)
+		result.LeaseState = (*LeaseStateType)(&val)
 	}
 	if val := resp.Header.Get("x-ms-lease-status"); val != "" {
-		result.LeaseStatus = (*LeaseStatus)(&val)
+		result.LeaseStatus = (*LeaseStatusType)(&val)
 	}
 	for hh := range resp.Header {
 		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
@@ -961,6 +961,13 @@ func (client *BlockBlobClient) uploadHandleResponse(resp *http.Response) (BlockB
 	result := BlockBlobClientUploadResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
+		contentCRC64, err := base64.StdEncoding.DecodeString(val)
+		if err != nil {
+			return BlockBlobClientUploadResponse{}, err
+		}
+		result.ContentCRC64 = contentCRC64
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
