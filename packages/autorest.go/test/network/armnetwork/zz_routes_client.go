@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultRoutesClientVersion string = "2022-09-01"
+
 // RoutesClient contains the methods for the Routes group.
 // Don't use this type directly, use NewRoutesClient() instead.
+//
+// Generated from API version 2022-09-01
 type RoutesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewRoutesClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // BeginCreateOrUpdate - Creates or updates a route in the specified route table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeTableName - The name of the route table.
 //   - routeName - The name of the route.
@@ -71,8 +73,6 @@ func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 
 // CreateOrUpdate - Creates or updates a route in the specified route table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *RoutesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RoutesClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, res
 
 // BeginDelete - Deletes the specified route from a route table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeTableName - The name of the route table.
 //   - routeName - The name of the route.
@@ -155,8 +153,6 @@ func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName s
 
 // Delete - Deletes the specified route from a route table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *RoutesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RoutesClient.BeginDelete"
@@ -202,7 +198,7 @@ func (client *RoutesClient) deleteCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultRoutesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -210,8 +206,6 @@ func (client *RoutesClient) deleteCreateRequest(ctx context.Context, resourceGro
 
 // Get - Gets the specified route from a route table.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeTableName - The name of the route table.
 //   - routeName - The name of the route.
@@ -278,8 +272,6 @@ func (client *RoutesClient) getHandleResponse(resp *http.Response) (RoutesClient
 }
 
 // NewListPager - Gets all routes in a route table.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeTableName - The name of the route table.
 //   - options - RoutesClientListOptions contains the optional parameters for the RoutesClient.NewListPager method.

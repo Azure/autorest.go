@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultRouteFilterRulesClientVersion string = "2022-09-01"
+
 // RouteFilterRulesClient contains the methods for the RouteFilterRules group.
 // Don't use this type directly, use NewRouteFilterRulesClient() instead.
+//
+// Generated from API version 2022-09-01
 type RouteFilterRulesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewRouteFilterRulesClient(subscriptionID string, credential azcore.TokenCre
 
 // BeginCreateOrUpdate - Creates or updates a route in the specified route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - ruleName - The name of the route filter rule.
@@ -71,8 +73,6 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 
 // CreateOrUpdate - Creates or updates a route in the specified route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *RouteFilterRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RouteFilterRulesClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *RouteFilterRulesClient) createOrUpdateCreateRequest(ctx context.Co
 
 // BeginDelete - Deletes the specified rule from a route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - ruleName - The name of the rule.
@@ -156,8 +154,6 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 
 // Delete - Deletes the specified rule from a route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *RouteFilterRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RouteFilterRulesClient.BeginDelete"
@@ -203,7 +199,7 @@ func (client *RouteFilterRulesClient) deleteCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultRouteFilterRulesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -211,8 +207,6 @@ func (client *RouteFilterRulesClient) deleteCreateRequest(ctx context.Context, r
 
 // Get - Gets the specified rule from a route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - ruleName - The name of the rule.
@@ -279,8 +273,6 @@ func (client *RouteFilterRulesClient) getHandleResponse(resp *http.Response) (Ro
 }
 
 // NewListByRouteFilterPager - Gets all RouteFilterRules in a route filter.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - options - RouteFilterRulesClientListByRouteFilterOptions contains the optional parameters for the RouteFilterRulesClient.NewListByRouteFilterPager

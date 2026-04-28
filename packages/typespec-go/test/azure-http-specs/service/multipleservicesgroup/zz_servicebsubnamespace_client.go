@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultServiceBSubNamespaceClientVersion string = "bv2"
+
 // ServiceBSubNamespaceClient contains the methods for the ServiceBSubNamespace group.
 // Don't use this type directly, use [ServiceBClient.NewServiceBSubNamespaceClient] instead.
+//
+// Generated from API version bv2
 type ServiceBSubNamespaceClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -21,8 +25,6 @@ type ServiceBSubNamespaceClient struct {
 
 // SubOpB -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version bv2
 //   - options - ServiceBSubNamespaceClientSubOpBOptions contains the optional parameters for the ServiceBSubNamespaceClient.SubOpB
 //     method.
 func (client *ServiceBSubNamespaceClient) SubOpB(ctx context.Context, options *ServiceBSubNamespaceClientSubOpBOptions) (ServiceBSubNamespaceClientSubOpBResponse, error) {
@@ -54,7 +56,7 @@ func (client *ServiceBSubNamespaceClient) subOpBCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "bv2")
+	reqQP.Set("api-version", defaultServiceBSubNamespaceClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultStorageAccountCredentialsClientVersion string = "2021-02-01"
+
 // StorageAccountCredentialsClient contains the methods for the StorageAccountCredentials group.
 // Don't use this type directly, use NewStorageAccountCredentialsClient() instead.
+//
+// Generated from API version 2021-02-01
 type StorageAccountCredentialsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewStorageAccountCredentialsClient(subscriptionID string, credential azcore
 
 // BeginCreateOrUpdate - Creates or updates the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The storage account credential name.
 //   - resourceGroupName - The resource group name.
@@ -65,8 +67,6 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 
 // CreateOrUpdate - Creates or updates the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountCredentialsClient.BeginCreateOrUpdate")
@@ -106,7 +106,7 @@ func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountCredentialsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, storageAccountCredential); err != nil {
@@ -117,8 +117,6 @@ func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx c
 
 // BeginDelete - Deletes the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The storage account credential name.
 //   - resourceGroupName - The resource group name.
@@ -139,8 +137,6 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 
 // Delete - Deletes the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountCredentialsClient.BeginDelete")
@@ -180,7 +176,7 @@ func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountCredentialsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -188,8 +184,6 @@ func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.C
 
 // Get - Gets the properties of the specified storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The storage account credential name.
 //   - resourceGroupName - The resource group name.
@@ -235,7 +229,7 @@ func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountCredentialsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -251,8 +245,6 @@ func (client *StorageAccountCredentialsClient) getHandleResponse(resp *http.Resp
 }
 
 // NewListByDataBoxEdgeDevicePager - Gets all the storage account credentials in a Data Box Edge/Data Box Gateway device.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
 //   - options - StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager
@@ -296,7 +288,7 @@ func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequ
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountCredentialsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

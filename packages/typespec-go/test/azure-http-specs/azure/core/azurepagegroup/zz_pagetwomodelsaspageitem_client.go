@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultPageTwoModelsAsPageItemClientVersion string = "2022-12-01-preview"
+
 // PageTwoModelsAsPageItemClient contains the methods for the PageTwoModelsAsPageItem group.
 // Don't use this type directly, use [PageClient.NewPageTwoModelsAsPageItemClient] instead.
+//
+// Generated from API version 2022-12-01-preview
 type PageTwoModelsAsPageItemClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -21,8 +25,6 @@ type PageTwoModelsAsPageItemClient struct {
 
 // NewListFirstItemPager - Two operations with two different page item types should be successfully generated. Should generate
 // model for FirstItem.
-//
-// Generated from API version 2022-12-01-preview
 //   - options - PageTwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the PageTwoModelsAsPageItemClient.NewListFirstItemPager
 //     method.
 func (client *PageTwoModelsAsPageItemClient) NewListFirstItemPager(options *PageTwoModelsAsPageItemClientListFirstItemOptions) *runtime.Pager[PageTwoModelsAsPageItemClientListFirstItemResponse] {
@@ -56,7 +58,7 @@ func (client *PageTwoModelsAsPageItemClient) listFirstItemCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultPageTwoModelsAsPageItemClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -73,8 +75,6 @@ func (client *PageTwoModelsAsPageItemClient) listFirstItemHandleResponse(resp *h
 
 // NewListSecondItemPager - Two operations with two different page item types should be successfully generated. Should generate
 // model for SecondItem.
-//
-// Generated from API version 2022-12-01-preview
 //   - options - PageTwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the PageTwoModelsAsPageItemClient.NewListSecondItemPager
 //     method.
 func (client *PageTwoModelsAsPageItemClient) NewListSecondItemPager(options *PageTwoModelsAsPageItemClientListSecondItemOptions) *runtime.Pager[PageTwoModelsAsPageItemClientListSecondItemResponse] {
@@ -108,7 +108,7 @@ func (client *PageTwoModelsAsPageItemClient) listSecondItemCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultPageTwoModelsAsPageItemClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

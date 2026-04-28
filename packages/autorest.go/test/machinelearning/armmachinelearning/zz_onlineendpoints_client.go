@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultOnlineEndpointsClientVersion string = "2022-02-01-preview"
+
 // OnlineEndpointsClient contains the methods for the OnlineEndpoints group.
 // Don't use this type directly, use NewOnlineEndpointsClient() instead.
+//
+// Generated from API version 2022-02-01-preview
 type OnlineEndpointsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewOnlineEndpointsClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginCreateOrUpdate - Create or update Online Endpoint (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - endpointName - Online Endpoint name.
@@ -66,8 +68,6 @@ func (client *OnlineEndpointsClient) BeginCreateOrUpdate(ctx context.Context, re
 
 // CreateOrUpdate - Create or update Online Endpoint (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 func (client *OnlineEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body OnlineEndpointData, options *OnlineEndpointsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, workspaceName, endpointName, body, options)
@@ -109,7 +109,7 @@ func (client *OnlineEndpointsClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -120,8 +120,6 @@ func (client *OnlineEndpointsClient) createOrUpdateCreateRequest(ctx context.Con
 
 // BeginDelete - Delete Online Endpoint (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - endpointName - Online Endpoint name.
@@ -142,8 +140,6 @@ func (client *OnlineEndpointsClient) BeginDelete(ctx context.Context, resourceGr
 
 // Delete - Delete Online Endpoint (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 func (client *OnlineEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *OnlineEndpointsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, workspaceName, endpointName, options)
@@ -185,7 +181,7 @@ func (client *OnlineEndpointsClient) deleteCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -193,8 +189,6 @@ func (client *OnlineEndpointsClient) deleteCreateRequest(ctx context.Context, re
 
 // Get - Get Online Endpoint.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - endpointName - Online Endpoint name.
@@ -241,7 +235,7 @@ func (client *OnlineEndpointsClient) getCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -258,8 +252,6 @@ func (client *OnlineEndpointsClient) getHandleResponse(resp *http.Response) (Onl
 
 // GetToken - Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - endpointName - Online Endpoint name.
@@ -307,7 +299,7 @@ func (client *OnlineEndpointsClient) getTokenCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -323,8 +315,6 @@ func (client *OnlineEndpointsClient) getTokenHandleResponse(resp *http.Response)
 }
 
 // NewListPager - List Online Endpoints.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - options - OnlineEndpointsClientListOptions contains the optional parameters for the OnlineEndpointsClient.NewListPager
@@ -373,7 +363,7 @@ func (client *OnlineEndpointsClient) listCreateRequest(ctx context.Context, reso
 	if options != nil && options.Skip != nil {
 		reqQP.Set("$skip", *options.Skip)
 	}
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	if options != nil && options.ComputeType != nil {
 		reqQP.Set("computeType", string(*options.ComputeType))
 	}
@@ -408,8 +398,6 @@ func (client *OnlineEndpointsClient) listHandleResponse(resp *http.Response) (On
 
 // ListKeys - List EndpointAuthKeys for an Endpoint using Key-based authentication.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - endpointName - Online Endpoint name.
@@ -457,7 +445,7 @@ func (client *OnlineEndpointsClient) listKeysCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -474,8 +462,6 @@ func (client *OnlineEndpointsClient) listKeysHandleResponse(resp *http.Response)
 
 // BeginRegenerateKeys - Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - endpointName - Online Endpoint name.
@@ -499,8 +485,6 @@ func (client *OnlineEndpointsClient) BeginRegenerateKeys(ctx context.Context, re
 
 // RegenerateKeys - Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 func (client *OnlineEndpointsClient) regenerateKeys(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body RegenerateEndpointKeysRequest, options *OnlineEndpointsClientBeginRegenerateKeysOptions) (*http.Response, error) {
 	var err error
 	req, err := client.regenerateKeysCreateRequest(ctx, resourceGroupName, workspaceName, endpointName, body, options)
@@ -542,7 +526,7 @@ func (client *OnlineEndpointsClient) regenerateKeysCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -553,8 +537,6 @@ func (client *OnlineEndpointsClient) regenerateKeysCreateRequest(ctx context.Con
 
 // BeginUpdate - Update Online Endpoint (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - endpointName - Online Endpoint name.
@@ -576,8 +558,6 @@ func (client *OnlineEndpointsClient) BeginUpdate(ctx context.Context, resourceGr
 
 // Update - Update Online Endpoint (asynchronous).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-02-01-preview
 func (client *OnlineEndpointsClient) update(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body PartialOnlineEndpointPartialTrackedResource, options *OnlineEndpointsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, workspaceName, endpointName, body, options)
@@ -619,7 +599,7 @@ func (client *OnlineEndpointsClient) updateCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
+	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {

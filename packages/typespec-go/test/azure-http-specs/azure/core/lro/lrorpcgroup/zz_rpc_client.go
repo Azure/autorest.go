@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultRPCClientVersion string = "2022-12-01-preview"
+
 // RPCClient - Illustrates bodies templated with Azure Core with long-running RPC operation
 // Don't use this type directly, use NewRPCClientWithNoCredential() instead.
+//
+// Generated from API version 2022-12-01-preview
 type RPCClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -51,8 +55,6 @@ func NewRPCClientWithNoCredential(endpoint string, options *RPCClientOptions) (*
 //
 // Generate data.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - body - The body parameter.
 //   - options - RPCClientBeginLongRunningRPCOptions contains the optional parameters for the RPCClient.BeginLongRunningRPC method.
 func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, body GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*runtime.Poller[RPCClientLongRunningRPCResponse], error) {
@@ -77,8 +79,6 @@ func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, body Generatio
 //
 // Generate data.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 func (client *RPCClient) longRunningRPC(ctx context.Context, body GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RPCClient.BeginLongRunningRPC"
@@ -108,7 +108,7 @@ func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, body G
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultRPCClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

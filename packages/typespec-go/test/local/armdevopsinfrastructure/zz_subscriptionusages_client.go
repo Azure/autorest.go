@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultSubscriptionUsagesClientVersion string = "2024-04-04-preview"
+
 // SubscriptionUsagesClient contains the methods for the SubscriptionUsages group.
 // Don't use this type directly, use NewSubscriptionUsagesClient() instead.
+//
+// Generated from API version 2024-04-04-preview
 type SubscriptionUsagesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -40,8 +44,6 @@ func NewSubscriptionUsagesClient(subscriptionID string, credential azcore.TokenC
 }
 
 // NewUsagesPager - List Quota resources by subscription ID
-//
-// Generated from API version 2024-04-04-preview
 //   - location - The name of the Azure region.
 //   - options - SubscriptionUsagesClientUsagesOptions contains the optional parameters for the SubscriptionUsagesClient.NewUsagesPager
 //     method.
@@ -84,7 +86,7 @@ func (client *SubscriptionUsagesClient) usagesCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-04-04-preview")
+	reqQP.Set("api-version", defaultSubscriptionUsagesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultKqlScriptClientVersion string = "2021-11-01-preview"
+
 // KqlScriptClient contains the methods for the KqlScript group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2021-11-01-preview
 type KqlScriptClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type KqlScriptClient struct {
 
 // BeginCreateOrUpdate - Creates or updates a KQL Script
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01-preview
 //   - kqlScriptName - KQL script name
 //   - kqlScript - KQL script
 //   - options - KqlScriptClientBeginCreateOrUpdateOptions contains the optional parameters for the KqlScriptClient.BeginCreateOrUpdate
@@ -46,8 +48,6 @@ func (client *KqlScriptClient) BeginCreateOrUpdate(ctx context.Context, kqlScrip
 
 // CreateOrUpdate - Creates or updates a KQL Script
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01-preview
 func (client *KqlScriptClient) createOrUpdate(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createOrUpdateCreateRequest(ctx, kqlScriptName, kqlScript, options)
@@ -77,7 +77,7 @@ func (client *KqlScriptClient) createOrUpdateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-11-01-preview")
+	reqQP.Set("api-version", defaultKqlScriptClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, kqlScript); err != nil {
@@ -88,8 +88,6 @@ func (client *KqlScriptClient) createOrUpdateCreateRequest(ctx context.Context, 
 
 // BeginDeleteByName - Delete KQL script by name
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01-preview
 //   - kqlScriptName - KQL script name
 //   - options - KqlScriptClientBeginDeleteByNameOptions contains the optional parameters for the KqlScriptClient.BeginDeleteByName
 //     method.
@@ -108,8 +106,6 @@ func (client *KqlScriptClient) BeginDeleteByName(ctx context.Context, kqlScriptN
 
 // DeleteByName - Delete KQL script by name
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01-preview
 func (client *KqlScriptClient) deleteByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (*http.Response, error) {
 	var err error
 	req, err := client.deleteByNameCreateRequest(ctx, kqlScriptName, options)
@@ -147,8 +143,6 @@ func (client *KqlScriptClient) deleteByNameCreateRequest(ctx context.Context, kq
 
 // GetByName - Get KQL script by name
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01-preview
 //   - kqlScriptName - KQL script name
 //   - options - KqlScriptClientGetByNameOptions contains the optional parameters for the KqlScriptClient.GetByName method.
 func (client *KqlScriptClient) GetByName(ctx context.Context, kqlScriptName string, options *KqlScriptClientGetByNameOptions) (KqlScriptClientGetByNameResponse, error) {
@@ -198,8 +192,6 @@ func (client *KqlScriptClient) getByNameHandleResponse(resp *http.Response) (Kql
 
 // BeginRename - Rename KQL script
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01-preview
 //   - kqlScriptName - KQL script name
 //   - renameRequest - Rename request
 //   - options - KqlScriptClientBeginRenameOptions contains the optional parameters for the KqlScriptClient.BeginRename method.
@@ -218,8 +210,6 @@ func (client *KqlScriptClient) BeginRename(ctx context.Context, kqlScriptName st
 
 // Rename - Rename KQL script
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-11-01-preview
 func (client *KqlScriptClient) rename(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (*http.Response, error) {
 	var err error
 	req, err := client.renameCreateRequest(ctx, kqlScriptName, renameRequest, options)

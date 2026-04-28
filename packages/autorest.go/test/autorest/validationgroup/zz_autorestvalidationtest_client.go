@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultAutoRestValidationTestClientVersion string = "1.0.0"
+
 // AutoRestValidationTestClient contains the methods for the AutoRestValidationTest group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 1.0.0
 type AutoRestValidationTestClient struct {
 	internal       *azcore.Client
 	endpoint       string
@@ -27,8 +31,6 @@ type AutoRestValidationTestClient struct {
 
 // GetWithConstantInPath -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
 //     method.
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestClientGetWithConstantInPathOptions) (AutoRestValidationTestClientGetWithConstantInPathResponse, error) {
@@ -65,8 +67,6 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(c
 
 // PostWithConstantInBody -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - AutoRestValidationTestClientPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
 //     method.
 func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestClientPostWithConstantInBodyOptions) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
@@ -120,8 +120,6 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 //   - id - Required int multiple of 10 from 100 to 1000.
 //   - options - AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
@@ -165,7 +163,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("apiVersion", "1.0.0")
+	reqQP.Set("apiVersion", defaultAutoRestValidationTestClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -185,8 +183,6 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp 
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 //   - id - Required int multiple of 10 from 100 to 1000.
 //   - options - AutoRestValidationTestClientValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters
@@ -230,7 +226,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("apiVersion", "1.0.0")
+	reqQP.Set("apiVersion", defaultAutoRestValidationTestClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

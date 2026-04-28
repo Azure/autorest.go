@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultClientVersion string = "2025-10-01-preview"
+
 // Client - Cognitive Services Management Client
 // Don't use this type directly, use NewClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type Client struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -344,8 +348,6 @@ func (client *Client) NewUsagesClient() *UsagesClient {
 
 // CalculateModelCapacity - Model capacity calculator.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - parameters - The request body
 //   - options - ClientCalculateModelCapacityOptions contains the optional parameters for the Client.CalculateModelCapacity method.
 func (client *Client) CalculateModelCapacity(ctx context.Context, parameters CalculateModelCapacityParameter, options *ClientCalculateModelCapacityOptions) (ClientCalculateModelCapacityResponse, error) {
@@ -382,7 +384,7 @@ func (client *Client) calculateModelCapacityCreateRequest(ctx context.Context, p
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -403,8 +405,6 @@ func (client *Client) calculateModelCapacityHandleResponse(resp *http.Response) 
 
 // CheckDomainAvailability - Check whether a domain is available.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - parameters - The request body
 //   - options - ClientCheckDomainAvailabilityOptions contains the optional parameters for the Client.CheckDomainAvailability
 //     method.
@@ -442,7 +442,7 @@ func (client *Client) checkDomainAvailabilityCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -463,8 +463,6 @@ func (client *Client) checkDomainAvailabilityHandleResponse(resp *http.Response)
 
 // CheckSKUAvailability - Check available SKUs.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - location - The location name.
 //   - parameters - The request body
 //   - options - ClientCheckSKUAvailabilityOptions contains the optional parameters for the Client.CheckSKUAvailability method.
@@ -506,7 +504,7 @@ func (client *Client) checkSKUAvailabilityCreateRequest(ctx context.Context, loc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

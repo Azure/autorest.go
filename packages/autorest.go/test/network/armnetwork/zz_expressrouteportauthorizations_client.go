@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultExpressRoutePortAuthorizationsClientVersion string = "2022-09-01"
+
 // ExpressRoutePortAuthorizationsClient contains the methods for the ExpressRoutePortAuthorizations group.
 // Don't use this type directly, use NewExpressRoutePortAuthorizationsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ExpressRoutePortAuthorizationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewExpressRoutePortAuthorizationsClient(subscriptionID string, credential a
 
 // BeginCreateOrUpdate - Creates or updates an authorization in the specified express route port.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - expressRoutePortName - The name of the express route port.
 //   - authorizationName - The name of the authorization.
@@ -71,8 +73,6 @@ func (client *ExpressRoutePortAuthorizationsClient) BeginCreateOrUpdate(ctx cont
 
 // CreateOrUpdate - Creates or updates an authorization in the specified express route port.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRoutePortAuthorizationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, authorizationParameters ExpressRoutePortAuthorization, options *ExpressRoutePortAuthorizationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRoutePortAuthorizationsClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *ExpressRoutePortAuthorizationsClient) createOrUpdateCreateRequest(
 
 // BeginDelete - Deletes the specified authorization from the specified express route port.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - expressRoutePortName - The name of the express route port.
 //   - authorizationName - The name of the authorization.
@@ -156,8 +154,6 @@ func (client *ExpressRoutePortAuthorizationsClient) BeginDelete(ctx context.Cont
 
 // Delete - Deletes the specified authorization from the specified express route port.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ExpressRoutePortAuthorizationsClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, options *ExpressRoutePortAuthorizationsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ExpressRoutePortAuthorizationsClient.BeginDelete"
@@ -203,7 +199,7 @@ func (client *ExpressRoutePortAuthorizationsClient) deleteCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultExpressRoutePortAuthorizationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -211,8 +207,6 @@ func (client *ExpressRoutePortAuthorizationsClient) deleteCreateRequest(ctx cont
 
 // Get - Gets the specified authorization from the specified express route port.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - expressRoutePortName - The name of the express route port.
 //   - authorizationName - The name of the authorization.
@@ -280,8 +274,6 @@ func (client *ExpressRoutePortAuthorizationsClient) getHandleResponse(resp *http
 }
 
 // NewListPager - Gets all authorizations in an express route port.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - expressRoutePortName - The name of the express route port.
 //   - options - ExpressRoutePortAuthorizationsClientListOptions contains the optional parameters for the ExpressRoutePortAuthorizationsClient.NewListPager

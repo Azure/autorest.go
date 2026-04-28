@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultParameterGroupOperationsClientVersion string = "2025-01-01"
+
 // ParameterGroupOperationsClient contains the methods for the ParameterGroupOperations group.
 // Don't use this type directly, use NewParameterGroupOperationsClient() instead.
+//
+// Generated from API version 2025-01-01
 type ParameterGroupOperationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewParameterGroupOperationsClient(subscriptionID string, credential azcore.
 
 // NoParameterGroup - This operation should not emit parameter group since all parameters are optional
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the widget
 //   - options - ParameterGroupOperationsClientNoParameterGroupOptions contains the optional parameters for the ParameterGroupOperationsClient.NoParameterGroup
@@ -89,7 +91,7 @@ func (client *ParameterGroupOperationsClient) noParameterGroupCreateRequest(ctx 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultParameterGroupOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.CorrelationID != nil {
@@ -109,8 +111,6 @@ func (client *ParameterGroupOperationsClient) noParameterGroupHandleResponse(res
 
 // SharedParameterGroup1 - This operation using parameter group
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the widget
 //   - params - Request options for test operations
@@ -158,7 +158,7 @@ func (client *ParameterGroupOperationsClient) sharedParameterGroup1CreateRequest
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultParameterGroupOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["x-ms-client-request-id"] = []string{params.ClientRequestID}
@@ -179,8 +179,6 @@ func (client *ParameterGroupOperationsClient) sharedParameterGroup1HandleRespons
 
 // SharedParameterGroup2 - This operation using the same parameter group - should reuse, not duplicate
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the widget
 //   - params - Request options for test operations
@@ -228,7 +226,7 @@ func (client *ParameterGroupOperationsClient) sharedParameterGroup2CreateRequest
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultParameterGroupOperationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["x-ms-client-request-id"] = []string{params.ClientRequestID}

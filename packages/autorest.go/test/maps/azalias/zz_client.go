@@ -43,8 +43,6 @@ type Client struct {
 // "e89aebb9-70a3-8fe1-32bb-1fbd0c725f14", "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2.0
 //   - stringQuery - The unique id that references the assigned data item to be aliased.
 //   - boolHeaderEnum - Some enums that are boolean values.
 //   - unixTimeQuery - Required unix time passed via query param.
@@ -129,8 +127,6 @@ func (client *Client) createHandleResponse(resp *http.Response) (CreateResponse,
 
 // GetScript - Retrieve the configuration script identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2.0
 //   - SomeGroup - SomeGroup contains a group of parameters for the Client.GetScript method.
 //   - ExplodedGroup - ExplodedGroup contains a group of parameters for the Client.GetScript method.
 //   - options - GetScriptOptions contains the optional parameters for the Client.GetScript method.
@@ -220,8 +216,6 @@ func (client *Client) getScriptHandleResponse(resp *http.Response) (GetScriptRes
 // "2020-02-13T21:19:22.123Z" }, { "createdTimestamp": "2020-02-18T19:53:33.123Z", "aliasId": "1856dbfc-7a66-ee5a-bf8d-51dbfe1906f6",
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
-//
-// Generated from API version 2.0
 //   - options - ListOptions contains the optional parameters for the Client.NewListPager method.
 func (client *Client) NewListPager(headerEnums []IntEnum, queryEnum IntEnum, options *ListOptions) *runtime.Pager[ListResponseEnvelope] {
 	return runtime.NewPager(runtime.PagingHandler[ListResponseEnvelope]{
@@ -287,8 +281,6 @@ func (client *Client) listHandleResponse(resp *http.Response) (ListResponseEnvel
 }
 
 // BeginListLRO - A long-running paged operation that uses a next link operation
-//
-// Generated from API version 2.0
 //   - options - BeginListLROOptions contains the optional parameters for the Client.BeginListLRO method.
 func (client *Client) BeginListLRO(ctx context.Context, options *BeginListLROOptions) (*runtime.Poller[*runtime.Pager[ListLROResponse]], error) {
 	pager := runtime.NewPager(runtime.PagingHandler[ListLROResponse]{
@@ -330,8 +322,6 @@ func (client *Client) BeginListLRO(ctx context.Context, options *BeginListLROOpt
 }
 
 // ListLRO - A long-running paged operation that uses a next link operation
-//
-// Generated from API version 2.0
 func (client *Client) listLRO(ctx context.Context, options *BeginListLROOptions) (*http.Response, error) {
 	var err error
 	const operationName = "Client.BeginListLRO"
@@ -375,10 +365,7 @@ func (client *Client) listLROHandleResponse(resp *http.Response) (ListLRORespons
 	return result, nil
 }
 
-// NewListWithSharedNextOnePager -
-//
-// Generated from API version 2.0
-//   - options - ListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
+// - options - ListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
 func (client *Client) NewListWithSharedNextOnePager(options *ListWithSharedNextOneOptions) *runtime.Pager[ListWithSharedNextOneResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ListWithSharedNextOneResponse]{
 		More: func(page ListWithSharedNextOneResponse) bool {
@@ -428,10 +415,7 @@ func (client *Client) listWithSharedNextOneHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// NewListWithSharedNextTwoPager -
-//
-// Generated from API version 2.0
-//   - options - ListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
+// - options - ListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
 func (client *Client) NewListWithSharedNextTwoPager(options *ListWithSharedNextTwoOptions) *runtime.Pager[ListWithSharedNextTwoResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ListWithSharedNextTwoResponse]{
 		More: func(page ListWithSharedNextTwoResponse) bool {
@@ -483,8 +467,6 @@ func (client *Client) listWithSharedNextTwoHandleResponse(resp *http.Response) (
 
 // PolicyAssignment -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2.0
 //   - options - PolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
 func (client *Client) PolicyAssignment(ctx context.Context, things []Things, polymorphicParam GeoJSONObjectClassification, options *PolicyAssignmentOptions) (PolicyAssignmentResponse, error) {
 	var err error
@@ -553,8 +535,6 @@ func (client *Client) policyAssignmentHandleResponse(resp *http.Response) (Polic
 
 // UploadForm -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2.0
 //   - options - UploadFormOptions contains the optional parameters for the Client.UploadForm method.
 func (client *Client) UploadForm(ctx context.Context, requiredString string, requiredEnum DataSetting, requiredInt int32, options *UploadFormOptions) (UploadFormResponse, error) {
 	var err error

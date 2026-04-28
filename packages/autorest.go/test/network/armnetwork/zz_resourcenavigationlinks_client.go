@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultResourceNavigationLinksClientVersion string = "2022-09-01"
+
 // ResourceNavigationLinksClient contains the methods for the ResourceNavigationLinks group.
 // Don't use this type directly, use NewResourceNavigationLinksClient() instead.
+//
+// Generated from API version 2022-09-01
 type ResourceNavigationLinksClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 
 // List - Gets a list of resource navigation links for a subnet.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkName - The name of the virtual network.
 //   - subnetName - The name of the subnet.
@@ -96,7 +98,7 @@ func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultResourceNavigationLinksClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

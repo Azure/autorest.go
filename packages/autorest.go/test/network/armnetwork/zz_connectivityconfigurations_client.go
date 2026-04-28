@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultConnectivityConfigurationsClientVersion string = "2022-09-01"
+
 // ConnectivityConfigurationsClient contains the methods for the ConnectivityConfigurations group.
 // Don't use this type directly, use NewConnectivityConfigurationsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ConnectivityConfigurationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewConnectivityConfigurationsClient(subscriptionID string, credential azcor
 
 // CreateOrUpdate - Creates/Updates a new network manager connectivity configuration
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - configurationName - The name of the network manager connectivity configuration.
@@ -119,8 +121,6 @@ func (client *ConnectivityConfigurationsClient) createOrUpdateHandleResponse(res
 // BeginDelete - Deletes a network manager connectivity configuration, specified by the resource group, network manager name,
 // and connectivity configuration name
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - configurationName - The name of the network manager connectivity configuration.
@@ -147,8 +147,6 @@ func (client *ConnectivityConfigurationsClient) BeginDelete(ctx context.Context,
 // Delete - Deletes a network manager connectivity configuration, specified by the resource group, network manager name, and
 // connectivity configuration name
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ConnectivityConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, options *ConnectivityConfigurationsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ConnectivityConfigurationsClient.BeginDelete"
@@ -206,8 +204,6 @@ func (client *ConnectivityConfigurationsClient) deleteCreateRequest(ctx context.
 // Get - Gets a Network Connectivity Configuration, specified by the resource group, network manager name, and connectivity
 // Configuration name
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - configurationName - The name of the network manager connectivity configuration.
@@ -259,7 +255,7 @@ func (client *ConnectivityConfigurationsClient) getCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultConnectivityConfigurationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -275,8 +271,6 @@ func (client *ConnectivityConfigurationsClient) getHandleResponse(resp *http.Res
 }
 
 // NewListPager - Lists all the network manager connectivity configuration in a specified network manager.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - options - ConnectivityConfigurationsClientListOptions contains the optional parameters for the ConnectivityConfigurationsClient.NewListPager

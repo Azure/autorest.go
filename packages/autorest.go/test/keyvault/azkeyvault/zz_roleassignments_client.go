@@ -16,16 +16,18 @@ import (
 	"strings"
 )
 
+const defaultRoleAssignmentsClientVersion string = "7.2"
+
 // RoleAssignmentsClient contains the methods for the RoleAssignments group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 7.2
 type RoleAssignmentsClient struct {
 	internal *azcore.Client
 }
 
 // Create - Creates a role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role assignment to create.
 //   - roleAssignmentName - The name of the role assignment to create. It can be any valid GUID.
@@ -64,7 +66,7 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -84,8 +86,6 @@ func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (
 
 // Delete - Deletes a role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role assignment to delete.
 //   - roleAssignmentName - The name of the role assignment to delete.
@@ -123,7 +123,7 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -140,8 +140,6 @@ func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (
 
 // Get - Get the specified role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role assignment.
 //   - roleAssignmentName - The name of the role assignment to get.
@@ -179,7 +177,7 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -195,8 +193,6 @@ func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (Rol
 }
 
 // NewListForScopePager - Gets role assignments for a scope.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role assignments.
 //   - options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.NewListForScopePager
@@ -236,7 +232,7 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

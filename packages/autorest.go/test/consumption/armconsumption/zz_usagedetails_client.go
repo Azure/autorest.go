@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultUsageDetailsClientVersion string = "2019-10-01"
+
 // UsageDetailsClient contains the methods for the UsageDetails group.
 // Don't use this type directly, use NewUsageDetailsClient() instead.
+//
+// Generated from API version 2019-10-01
 type UsageDetailsClient struct {
 	internal *arm.Client
 }
@@ -39,8 +43,6 @@ func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.Clien
 // NewListPager - Lists the usage details for the defined scope. Usage details are available via this API only for May 1,
 // 2014 or later. For more information on using this API, including how to specify a date range,
 // please see: https://docs.microsoft.com/en-us/azure/cost-management-billing/costs/manage-automation
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with usage details operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 //     scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
 //     Billing Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}'
@@ -99,7 +101,7 @@ func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope s
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultUsageDetailsClientVersion)
 	if options != nil && options.Metric != nil {
 		reqQP.Set("metric", string(*options.Metric))
 	}

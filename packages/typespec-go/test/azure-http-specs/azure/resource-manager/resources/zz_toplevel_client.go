@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultTopLevelClientVersion string = "2023-12-01-preview"
+
 // TopLevelClient contains the methods for the TopLevel group.
 // Don't use this type directly, use NewTopLevelClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type TopLevelClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewTopLevelClient(subscriptionID string, credential azcore.TokenCredential,
 
 // ActionSync - A synchronous resource action that returns no content.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - body - The content of the action request
@@ -88,7 +90,7 @@ func (client *TopLevelClient) actionSyncCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultTopLevelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -99,8 +101,6 @@ func (client *TopLevelClient) actionSyncCreateRequest(ctx context.Context, resou
 
 // BeginCreateOrReplace - Create a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - resource - Resource create parameters.
@@ -125,8 +125,6 @@ func (client *TopLevelClient) BeginCreateOrReplace(ctx context.Context, resource
 
 // CreateOrReplace - Create a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *TopLevelClient) createOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource TopLevelTrackedResource, options *TopLevelClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
 	const operationName = "TopLevelClient.BeginCreateOrReplace"
@@ -168,7 +166,7 @@ func (client *TopLevelClient) createOrReplaceCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultTopLevelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -180,8 +178,6 @@ func (client *TopLevelClient) createOrReplaceCreateRequest(ctx context.Context, 
 
 // BeginDelete - Delete a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - options - TopLevelClientBeginDeleteOptions contains the optional parameters for the TopLevelClient.BeginDelete method.
@@ -204,8 +200,6 @@ func (client *TopLevelClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Delete a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *TopLevelClient) deleteOperation(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *TopLevelClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "TopLevelClient.BeginDelete"
@@ -247,15 +241,13 @@ func (client *TopLevelClient) deleteCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultTopLevelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - options - TopLevelClientGetOptions contains the optional parameters for the TopLevelClient.Get method.
@@ -301,7 +293,7 @@ func (client *TopLevelClient) getCreateRequest(ctx context.Context, resourceGrou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultTopLevelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -317,8 +309,6 @@ func (client *TopLevelClient) getHandleResponse(resp *http.Response) (TopLevelCl
 }
 
 // NewListByResourceGroupPager - List TopLevelTrackedResource resources by resource group
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - TopLevelClientListByResourceGroupOptions contains the optional parameters for the TopLevelClient.NewListByResourceGroupPager
 //     method.
@@ -361,7 +351,7 @@ func (client *TopLevelClient) listByResourceGroupCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultTopLevelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -377,8 +367,6 @@ func (client *TopLevelClient) listByResourceGroupHandleResponse(resp *http.Respo
 }
 
 // NewListBySubscriptionPager - List TopLevelTrackedResource resources by subscription ID
-//
-// Generated from API version 2023-12-01-preview
 //   - options - TopLevelClientListBySubscriptionOptions contains the optional parameters for the TopLevelClient.NewListBySubscriptionPager
 //     method.
 func (client *TopLevelClient) NewListBySubscriptionPager(options *TopLevelClientListBySubscriptionOptions) *runtime.Pager[TopLevelClientListBySubscriptionResponse] {
@@ -416,7 +404,7 @@ func (client *TopLevelClient) listBySubscriptionCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultTopLevelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -433,8 +421,6 @@ func (client *TopLevelClient) listBySubscriptionHandleResponse(resp *http.Respon
 
 // BeginUpdate - Update a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - properties - The resource properties to be updated.
@@ -458,8 +444,6 @@ func (client *TopLevelClient) BeginUpdate(ctx context.Context, resourceGroupName
 
 // Update - Update a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *TopLevelClient) update(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties TopLevelTrackedResource, options *TopLevelClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "TopLevelClient.BeginUpdate"
@@ -501,7 +485,7 @@ func (client *TopLevelClient) updateCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultTopLevelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultAvailableEndpointServicesClientVersion string = "2022-09-01"
+
 // AvailableEndpointServicesClient contains the methods for the AvailableEndpointServices group.
 // Don't use this type directly, use NewAvailableEndpointServicesClient() instead.
+//
+// Generated from API version 2022-09-01
 type AvailableEndpointServicesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 }
 
 // NewListPager - List what values of endpoint services are available for use.
-//
-// Generated from API version 2022-09-01
 //   - location - The location to check available endpoint services.
 //   - options - AvailableEndpointServicesClientListOptions contains the optional parameters for the AvailableEndpointServicesClient.NewListPager
 //     method.
@@ -86,7 +88,7 @@ func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultAvailableEndpointServicesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

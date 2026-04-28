@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultQuotaTiersClientVersion string = "2025-10-01-preview"
+
 // QuotaTiersClient contains the methods for the QuotaTiers group.
 // Don't use this type directly, use NewQuotaTiersClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type QuotaTiersClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewQuotaTiersClient(subscriptionID string, credential azcore.TokenCredentia
 // Update the Quota Tier information for the given subscription. QuotaTiers is a subscription wide resource type. It holds
 // current tier information.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - defaultParam - Default parameter. Leave the value as default.
 //   - tier - The parameters to provide for the quota tier resource.
 //   - options - QuotaTiersClientCreateOrUpdateOptions contains the optional parameters for the QuotaTiersClient.CreateOrUpdate
@@ -88,7 +90,7 @@ func (client *QuotaTiersClient) createOrUpdateCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultQuotaTiersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -112,8 +114,6 @@ func (client *QuotaTiersClient) createOrUpdateHandleResponse(resp *http.Response
 // Gets the Quota Tier information for the given subscription. QuotaTiers is a subscription wide resource type. It holds current
 // tier information.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - defaultParam - Default parameter. Leave the value as default.
 //   - options - QuotaTiersClientGetOptions contains the optional parameters for the QuotaTiersClient.Get method.
 func (client *QuotaTiersClient) Get(ctx context.Context, defaultParam string, options *QuotaTiersClientGetOptions) (QuotaTiersClientGetResponse, error) {
@@ -154,7 +154,7 @@ func (client *QuotaTiersClient) getCreateRequest(ctx context.Context, defaultPar
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultQuotaTiersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -170,8 +170,6 @@ func (client *QuotaTiersClient) getHandleResponse(resp *http.Response) (QuotaTie
 }
 
 // NewListBySubscriptionPager - Returns all the resources of a particular type belonging to a subscription.
-//
-// Generated from API version 2025-10-01-preview
 //   - options - QuotaTiersClientListBySubscriptionOptions contains the optional parameters for the QuotaTiersClient.NewListBySubscriptionPager
 //     method.
 func (client *QuotaTiersClient) NewListBySubscriptionPager(options *QuotaTiersClientListBySubscriptionOptions) *runtime.Pager[QuotaTiersClientListBySubscriptionResponse] {
@@ -209,7 +207,7 @@ func (client *QuotaTiersClient) listBySubscriptionCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultQuotaTiersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -229,8 +227,6 @@ func (client *QuotaTiersClient) listBySubscriptionHandleResponse(resp *http.Resp
 // Update the Quota Tier information for the given subscription. QuotaTiers is a subscription wide resource type. It holds
 // current tier information.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - defaultParam - Default parameter. Leave the value as default.
 //   - tier - The parameters to provide for the quota tier resource.
 //   - options - QuotaTiersClientUpdateOptions contains the optional parameters for the QuotaTiersClient.Update method.
@@ -272,7 +268,7 @@ func (client *QuotaTiersClient) updateCreateRequest(ctx context.Context, default
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultQuotaTiersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

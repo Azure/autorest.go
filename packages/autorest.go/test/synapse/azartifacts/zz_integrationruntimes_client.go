@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultIntegrationRuntimesClientVersion string = "2020-12-01"
+
 // IntegrationRuntimesClient contains the methods for the IntegrationRuntimes group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type IntegrationRuntimesClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type IntegrationRuntimesClient struct {
 
 // Get - Get Integration Runtime
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - integrationRuntimeName - The Integration Runtime name
 //   - options - IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
 func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesClientGetOptions) (IntegrationRuntimesClientGetResponse, error) {
@@ -76,8 +78,6 @@ func (client *IntegrationRuntimesClient) getHandleResponse(resp *http.Response) 
 
 // List - List Integration Runtimes
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - options - IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List
 //     method.
 func (client *IntegrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesClientListOptions) (IntegrationRuntimesClientListResponse, error) {
@@ -106,7 +106,7 @@ func (client *IntegrationRuntimesClient) listCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultIntegrationRuntimesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

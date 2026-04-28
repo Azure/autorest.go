@@ -33,8 +33,6 @@ type AppendBlobClient struct {
 // Block operation is permitted only if the blob was created with x-ms-blob-type set to
 // AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -216,8 +214,6 @@ func (client *AppendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 // the contents are read from a source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -416,8 +412,6 @@ func (client *AppendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 
 // Create - The Create Append Blob operation creates a new append blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - contentLength - The length of the request.
@@ -602,8 +596,6 @@ func (client *AppendBlobClient) createHandleResponse(resp *http.Response) (Appen
 // Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version
 // or later.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp

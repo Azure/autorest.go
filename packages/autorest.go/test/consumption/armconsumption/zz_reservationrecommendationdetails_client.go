@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultReservationRecommendationDetailsClientVersion string = "2019-10-01"
+
 // ReservationRecommendationDetailsClient contains the methods for the ReservationRecommendationDetails group.
 // Don't use this type directly, use NewReservationRecommendationDetailsClient() instead.
+//
+// Generated from API version 2019-10-01
 type ReservationRecommendationDetailsClient struct {
 	internal *arm.Client
 }
@@ -37,8 +41,6 @@ func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential
 
 // Get - Details of a reservation recommendation for what-if analysis of reserved instances.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-10-01
 //   - billingScope - The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/'
 //     for subscription scope,
 //     '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
@@ -80,7 +82,7 @@ func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultReservationRecommendationDetailsClientVersion)
 	reqQP.Set("lookBackPeriod", string(lookBackPeriod))
 	reqQP.Set("product", product)
 	reqQP.Set("region", region)

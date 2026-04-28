@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultManagersClientVersion string = "2022-09-01"
+
 // ManagersClient contains the methods for the NetworkManagers group.
 // Don't use this type directly, use NewManagersClient() instead.
+//
+// Generated from API version 2022-09-01
 type ManagersClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewManagersClient(subscriptionID string, credential azcore.TokenCredential,
 
 // CreateOrUpdate - Creates or updates a Network Manager.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - parameters - Parameters supplied to specify which network manager is.
@@ -112,8 +114,6 @@ func (client *ManagersClient) createOrUpdateHandleResponse(resp *http.Response) 
 
 // BeginDelete - Deletes a network manager.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - options - ManagersClientBeginDeleteOptions contains the optional parameters for the ManagersClient.BeginDelete method.
@@ -137,8 +137,6 @@ func (client *ManagersClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Deletes a network manager.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *ManagersClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ManagersClient.BeginDelete"
@@ -191,8 +189,6 @@ func (client *ManagersClient) deleteCreateRequest(ctx context.Context, resourceG
 
 // Get - Gets the specified Network Manager.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - options - ManagersClientGetOptions contains the optional parameters for the ManagersClient.Get method.
@@ -238,7 +234,7 @@ func (client *ManagersClient) getCreateRequest(ctx context.Context, resourceGrou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultManagersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -254,8 +250,6 @@ func (client *ManagersClient) getHandleResponse(resp *http.Response) (ManagersCl
 }
 
 // NewListPager - List network managers in a resource group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - options - ManagersClientListOptions contains the optional parameters for the ManagersClient.NewListPager method.
 func (client *ManagersClient) NewListPager(resourceGroupName string, options *ManagersClientListOptions) *runtime.Pager[ManagersClientListResponse] {
@@ -319,8 +313,6 @@ func (client *ManagersClient) listHandleResponse(resp *http.Response) (ManagersC
 }
 
 // NewListBySubscriptionPager - List all network managers in a subscription.
-//
-// Generated from API version 2022-09-01
 //   - options - ManagersClientListBySubscriptionOptions contains the optional parameters for the ManagersClient.NewListBySubscriptionPager
 //     method.
 func (client *ManagersClient) NewListBySubscriptionPager(options *ManagersClientListBySubscriptionOptions) *runtime.Pager[ManagersClientListBySubscriptionResponse] {
@@ -381,8 +373,6 @@ func (client *ManagersClient) listBySubscriptionHandleResponse(resp *http.Respon
 
 // Patch - Patch NetworkManager.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - parameters - Parameters supplied to specify which network manager is.

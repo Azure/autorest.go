@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultSavingsPlanModelsClientVersion string = "2024-11-01-preview"
+
 // SavingsPlanModelsClient contains the methods for the SavingsPlanModels group.
 // Don't use this type directly, use NewSavingsPlanModelsClient() instead.
+//
+// Generated from API version 2024-11-01-preview
 type SavingsPlanModelsClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewSavingsPlanModelsClient(credential azcore.TokenCredential, options *arm.
 
 // Get - Get savings plan.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 //   - savingsPlanOrderID - Order ID of the savings plan
 //   - savingsPlanID - ID of the savings plan
 //   - options - SavingsPlanModelsClientGetOptions contains the optional parameters for the SavingsPlanModelsClient.Get method.
@@ -84,7 +86,7 @@ func (client *SavingsPlanModelsClient) getCreateRequest(ctx context.Context, sav
 	if options != nil && options.Expand != nil {
 		reqQP.Set("$expand", *options.Expand)
 	}
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -100,8 +102,6 @@ func (client *SavingsPlanModelsClient) getHandleResponse(resp *http.Response) (S
 }
 
 // NewListPager - List savings plans in an order.
-//
-// Generated from API version 2024-11-01-preview
 //   - savingsPlanOrderID - Order ID of the savings plan
 //   - options - SavingsPlanModelsClientListOptions contains the optional parameters for the SavingsPlanModelsClient.NewListPager
 //     method.
@@ -140,7 +140,7 @@ func (client *SavingsPlanModelsClient) listCreateRequest(ctx context.Context, sa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -157,8 +157,6 @@ func (client *SavingsPlanModelsClient) listHandleResponse(resp *http.Response) (
 
 // BeginUpdate - Update savings plan.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 //   - savingsPlanOrderID - Order ID of the savings plan
 //   - savingsPlanID - ID of the savings plan
 //   - body - Request body for patching a savings plan order alias
@@ -183,8 +181,6 @@ func (client *SavingsPlanModelsClient) BeginUpdate(ctx context.Context, savingsP
 
 // Update - Update savings plan.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 func (client *SavingsPlanModelsClient) update(ctx context.Context, savingsPlanOrderID string, savingsPlanID string, body SavingsPlanUpdateRequest, options *SavingsPlanModelsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SavingsPlanModelsClient.BeginUpdate"
@@ -222,7 +218,7 @@ func (client *SavingsPlanModelsClient) updateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -234,8 +230,6 @@ func (client *SavingsPlanModelsClient) updateCreateRequest(ctx context.Context, 
 
 // ValidateUpdate - Validate savings plan patch.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-11-01-preview
 //   - savingsPlanOrderID - Order ID of the savings plan
 //   - savingsPlanID - ID of the savings plan
 //   - body - Request body for validating a savings plan patch request
@@ -279,7 +273,7 @@ func (client *SavingsPlanModelsClient) validateUpdateCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-11-01-preview")
+	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

@@ -32,8 +32,6 @@ type Client struct {
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination
 // blob with zero length and full metadata.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -119,8 +117,6 @@ func (client *Client) abortCopyFromURLHandleResponse(resp *http.Response) (Clien
 
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -234,8 +230,6 @@ func (client *Client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcq
 
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -351,8 +345,6 @@ func (client *Client) breakLeaseHandleResponse(resp *http.Response) (ClientBreak
 
 // ChangeLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -467,8 +459,6 @@ func (client *Client) changeLeaseHandleResponse(resp *http.Response) (ClientChan
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response
 // until the copy is complete.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - xmsRequiresSync - This header indicates that this is a synchronous Copy Blob From URL instead of a Asynchronous Copy Blob.
@@ -655,8 +645,6 @@ func (client *Client) copyFromURLHandleResponse(resp *http.Response) (ClientCopy
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -808,8 +796,6 @@ func (client *Client) createSnapshotHandleResponse(resp *http.Response) (ClientC
 // All other operations on a soft-deleted blob or snapshot causes the service to
 // return an HTTP status code of 404 (ResourceNotFound).
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
@@ -917,8 +903,6 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 
 // DeleteImmutabilityPolicy - The Delete Immutability Policy operation deletes the immutability policy on the blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -998,8 +982,6 @@ func (client *Client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You
 // can also call Download to read a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - options - ClientDownloadOptions contains the optional parameters for the Client.Download method.
@@ -1316,8 +1298,6 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - restype - restype
@@ -1398,8 +1378,6 @@ func (client *Client) getAccountInfoHandleResponse(resp *http.Response) (ClientG
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties
 // for the blob. It does not return the content of the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - options - ClientGetPropertiesOptions contains the optional parameters for the Client.GetProperties method.
@@ -1729,8 +1707,6 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 
 // GetTags - The Get Tags operation enables users to get the tags associated with a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -1825,8 +1801,6 @@ func (client *Client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsR
 
 // Query - The Query operation enables users to select/project on blob data by providing simple query expressions.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2073,8 +2047,6 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2181,8 +2153,6 @@ func (client *Client) releaseLeaseHandleResponse(resp *http.Response) (ClientRel
 
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2292,8 +2262,6 @@ func (client *Client) renewLeaseHandleResponse(resp *http.Response) (ClientRenew
 
 // SetExpiry - Sets the time a blob will expire and be deleted.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2386,8 +2354,6 @@ func (client *Client) setExpiryHandleResponse(resp *http.Response) (ClientSetExp
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2521,8 +2487,6 @@ func (client *Client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientS
 
 // SetImmutabilityPolicy - The Set Immutability Policy operation sets the immutability policy on the blob
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2620,8 +2584,6 @@ func (client *Client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 
 // SetLegalHold - The Set Legal Hold operation sets a legal hold on the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2709,8 +2671,6 @@ func (client *Client) setLegalHoldHandleResponse(resp *http.Response) (ClientSet
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value
 // pairs
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2855,8 +2815,6 @@ func (client *Client) setMetadataHandleResponse(resp *http.Response) (ClientSetM
 
 // SetTags - The Set Tags operation enables users to set tags on a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -2960,8 +2918,6 @@ func (client *Client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsR
 // premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive
 // storage type. This operation does not update the blob's ETag.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp
@@ -3051,8 +3007,6 @@ func (client *Client) setTierHandleResponse(resp *http.Response) (ClientSetTierR
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
@@ -3216,8 +3170,6 @@ func (client *Client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 
 // Undelete - Undelete a blob that was previously soft deleted
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - comp - comp

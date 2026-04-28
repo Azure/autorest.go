@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultPublicIPAddressesClientVersion string = "2022-09-01"
+
 // PublicIPAddressesClient contains the methods for the PublicIPAddresses group.
 // Don't use this type directly, use NewPublicIPAddressesClient() instead.
+//
+// Generated from API version 2022-09-01
 type PublicIPAddressesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCr
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - publicIPAddressName - The name of the public IP address.
 //   - parameters - Parameters supplied to the create or update public IP address operation.
@@ -70,8 +72,6 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *PublicIPAddressesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "PublicIPAddressesClient.BeginCreateOrUpdate"
@@ -124,8 +124,6 @@ func (client *PublicIPAddressesClient) createOrUpdateCreateRequest(ctx context.C
 
 // BeginDdosProtectionStatus - Gets the Ddos Protection Status of a Public IP Address
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - publicIPAddressName - The name of the public IP address.
 //   - options - PublicIPAddressesClientBeginDdosProtectionStatusOptions contains the optional parameters for the PublicIPAddressesClient.BeginDdosProtectionStatus
@@ -150,8 +148,6 @@ func (client *PublicIPAddressesClient) BeginDdosProtectionStatus(ctx context.Con
 
 // DdosProtectionStatus - Gets the Ddos Protection Status of a Public IP Address
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *PublicIPAddressesClient) ddosProtectionStatus(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDdosProtectionStatusOptions) (*http.Response, error) {
 	var err error
 	const operationName = "PublicIPAddressesClient.BeginDdosProtectionStatus"
@@ -201,8 +197,6 @@ func (client *PublicIPAddressesClient) ddosProtectionStatusCreateRequest(ctx con
 
 // BeginDelete - Deletes the specified public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - publicIPAddressName - The name of the public IP address.
 //   - options - PublicIPAddressesClientBeginDeleteOptions contains the optional parameters for the PublicIPAddressesClient.BeginDelete
@@ -227,8 +221,6 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 
 // Delete - Deletes the specified public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *PublicIPAddressesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "PublicIPAddressesClient.BeginDelete"
@@ -278,8 +270,6 @@ func (client *PublicIPAddressesClient) deleteCreateRequest(ctx context.Context, 
 
 // Get - Gets the specified public IP address in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - publicIPAddressName - The name of the public IP address.
 //   - options - PublicIPAddressesClientGetOptions contains the optional parameters for the PublicIPAddressesClient.Get method.
@@ -345,8 +335,6 @@ func (client *PublicIPAddressesClient) getHandleResponse(resp *http.Response) (P
 
 // GetCloudServicePublicIPAddress - Get the specified public IP address in a cloud service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - cloudServiceName - The name of the cloud service.
 //   - roleInstanceName - The role instance name.
@@ -433,8 +421,6 @@ func (client *PublicIPAddressesClient) getCloudServicePublicIPAddressHandleRespo
 
 // GetVirtualMachineScaleSetPublicIPAddress - Get the specified public IP address in a virtual machine scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2018-10-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualMachineScaleSetName - The name of the virtual machine scale set.
 //   - virtualmachineIndex - The virtual machine index.
@@ -520,8 +506,6 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 }
 
 // NewListPager - Gets all public IP addresses in a resource group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - options - PublicIPAddressesClientListOptions contains the optional parameters for the PublicIPAddressesClient.NewListPager
 //     method.
@@ -580,8 +564,6 @@ func (client *PublicIPAddressesClient) listHandleResponse(resp *http.Response) (
 }
 
 // NewListAllPager - Gets all the public IP addresses in a subscription.
-//
-// Generated from API version 2022-09-01
 //   - options - PublicIPAddressesClientListAllOptions contains the optional parameters for the PublicIPAddressesClient.NewListAllPager
 //     method.
 func (client *PublicIPAddressesClient) NewListAllPager(options *PublicIPAddressesClientListAllOptions) *runtime.Pager[PublicIPAddressesClientListAllResponse] {
@@ -635,8 +617,6 @@ func (client *PublicIPAddressesClient) listAllHandleResponse(resp *http.Response
 }
 
 // NewListCloudServicePublicIPAddressesPager - Gets information about all public IP addresses on a cloud service level.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - cloudServiceName - The name of the cloud service.
 //   - options - PublicIPAddressesClientListCloudServicePublicIPAddressesOptions contains the optional parameters for the PublicIPAddressesClient.NewListCloudServicePublicIPAddressesPager
@@ -684,7 +664,7 @@ func (client *PublicIPAddressesClient) listCloudServicePublicIPAddressesCreateRe
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultPublicIPAddressesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -701,8 +681,6 @@ func (client *PublicIPAddressesClient) listCloudServicePublicIPAddressesHandleRe
 
 // NewListCloudServiceRoleInstancePublicIPAddressesPager - Gets information about all public IP addresses in a role instance
 // IP configuration in a cloud service.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - cloudServiceName - The name of the cloud service.
 //   - roleInstanceName - The name of role instance.
@@ -782,8 +760,6 @@ func (client *PublicIPAddressesClient) listCloudServiceRoleInstancePublicIPAddre
 
 // NewListVirtualMachineScaleSetPublicIPAddressesPager - Gets information about all public IP addresses on a virtual machine
 // scale set level.
-//
-// Generated from API version 2018-10-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualMachineScaleSetName - The name of the virtual machine scale set.
 //   - options - PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions contains the optional parameters for
@@ -848,8 +824,6 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 
 // NewListVirtualMachineScaleSetVMPublicIPAddressesPager - Gets information about all public IP addresses in a virtual machine
 // IP configuration in a virtual machine scale set.
-//
-// Generated from API version 2018-10-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualMachineScaleSetName - The name of the virtual machine scale set.
 //   - virtualmachineIndex - The virtual machine index.
@@ -929,8 +903,6 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 
 // UpdateTags - Updates public IP address tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - publicIPAddressName - The name of the public IP address.
 //   - parameters - Parameters supplied to update public IP address tags.

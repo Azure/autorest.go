@@ -49,8 +49,12 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     imports.add(azureARM ? 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm' : 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
     // generate client type
+    let clientText = '';
+    if (client.apiVersion) {
+      clientText += `const ${client.apiVersion.name} ${go.getTypeDeclaration(client.apiVersion, pkg)} = ${helpers.formatLiteralValue(client.apiVersion.literal, false)}\n\n`;
+    }
 
-    let clientText = helpers.formatDocComment(client.docs);
+    clientText += helpers.formatDocComment(client.docs);
     clientText += "// Don't use this type directly, use ";
     if (client.instance?.kind === 'constructable' && client.instance.constructors.length === 1) {
       clientText += `${client.instance.constructors[0].name}() instead.\n`;
@@ -69,6 +73,10 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       clientText += `[${client.parent.name}.${accessorMethod}] instead.\n`;
     } else {
       clientText += 'a constructor function instead.\n';
+    }
+
+    if (client.apiVersion) {
+      clientText += `//\n// Generated from API version ${client.apiVersion.literal.literal}\n`;
     }
 
     const indent = new helpers.Indentation();
@@ -806,13 +814,6 @@ function callPipelineDoWithErrCheck(method: go.MethodType, reqVarName: string, r
   return text;
 }
 
-function genApiVersionDoc(apiVersions: Array<string>): string {
-  if (apiVersions.length === 0) {
-    return '';
-  }
-  return `//\n// Generated from API version ${apiVersions.join(', ')}\n`;
-}
-
 function genRespErrorDoc(method: go.MethodType): string {
   if (!(method.returns.result?.kind === 'headAsBooleanResult') && !go.isPageableMethod(method)) {
     // when head-as-boolean is enabled, no error is returned for 4xx status codes.
@@ -841,17 +842,15 @@ function generateOperation(method: go.MethodType, options: go.Options, imports: 
   }
   let text = '';
   const respErrDoc = genRespErrorDoc(method);
-  const apiVerDoc = genApiVersionDoc(method.apiVersions);
   if (method.docs.summary || method.docs.description) {
     text += helpers.formatDocCommentWithPrefix(methodName, method.docs);
-  } else if (respErrDoc.length > 0 || apiVerDoc.length > 0) {
+  } else if (respErrDoc.length > 0) {
     // if the method has no doc comment but we're adding other
     // doc comments, add an empty method name comment. this preserves
     // existing behavior and makes the docs look better overall.
     text += `// ${methodName} -\n`;
   }
   text += respErrDoc;
-  text += apiVerDoc;
   if (go.isLROMethod(method)) {
     methodName = method.naming.internalMethod;
   } else {
@@ -1845,7 +1844,6 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, opt
   if (method.docs.summary || method.docs.description) {
     text += helpers.formatDocCommentWithPrefix(fixUpMethodName(method), method.docs);
     text += genRespErrorDoc(method);
-    text += genApiVersionDoc(method.apiVersions);
   }
   const zeroResp = getZeroReturnValue(method, 'lro');
   const methodParams = helpers.getMethodParameters(method);

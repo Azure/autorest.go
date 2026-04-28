@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultFetchSecondaryRecoveryPointsClientVersion string = "2025-07-01"
+
 // FetchSecondaryRecoveryPointsClient contains the methods for the FetchSecondaryRecoveryPoints group.
 // Don't use this type directly, use NewFetchSecondaryRecoveryPointsClient() instead.
+//
+// Generated from API version 2025-07-01
 type FetchSecondaryRecoveryPointsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewFetchSecondaryRecoveryPointsClient(subscriptionID string, credential azc
 
 // NewListPager - Returns a list of Secondary Recovery Points for a DataSource in a vault, that can be used for Cross Region
 // Restore.
-//
-// Generated from API version 2025-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - location - The name of the Azure region.
 //   - parameters - Request body for operation
@@ -97,7 +99,7 @@ func (client *FetchSecondaryRecoveryPointsClient) listCreateRequest(ctx context.
 	if options != nil && options.SkipToken != nil {
 		reqQP.Set("$skipToken", *options.SkipToken)
 	}
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultFetchSecondaryRecoveryPointsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

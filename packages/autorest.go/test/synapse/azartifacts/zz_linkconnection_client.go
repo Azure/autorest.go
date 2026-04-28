@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLinkConnectionClientVersion string = "2022-12-01-preview"
+
 // LinkConnectionClient contains the methods for the LinkConnection group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2022-12-01-preview
 type LinkConnectionClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type LinkConnectionClient struct {
 
 // CreateOrUpdate - Creates or updates a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - linkConnection - Link connection resource definition
 //   - options - LinkConnectionClientCreateOrUpdateOptions contains the optional parameters for the LinkConnectionClient.CreateOrUpdate
@@ -81,8 +83,6 @@ func (client *LinkConnectionClient) createOrUpdateHandleResponse(resp *http.Resp
 
 // Delete - Delete a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientDeleteOptions contains the optional parameters for the LinkConnectionClient.Delete method.
 func (client *LinkConnectionClient) Delete(ctx context.Context, linkConnectionName string, options *LinkConnectionClientDeleteOptions) (LinkConnectionClientDeleteResponse, error) {
@@ -122,8 +122,6 @@ func (client *LinkConnectionClient) deleteCreateRequest(ctx context.Context, lin
 
 // EditTables - Edit tables for a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - editTablesRequest - Edit tables request
 //   - options - LinkConnectionClientEditTablesOptions contains the optional parameters for the LinkConnectionClient.EditTables
@@ -168,8 +166,6 @@ func (client *LinkConnectionClient) editTablesCreateRequest(ctx context.Context,
 
 // Get - Get a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientGetOptions contains the optional parameters for the LinkConnectionClient.Get method.
 func (client *LinkConnectionClient) Get(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetOptions) (LinkConnectionClientGetResponse, error) {
@@ -219,8 +215,6 @@ func (client *LinkConnectionClient) getHandleResponse(resp *http.Response) (Link
 
 // GetDetailedStatus - Get the detailed status of a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientGetDetailedStatusOptions contains the optional parameters for the LinkConnectionClient.GetDetailedStatus
 //     method.
@@ -270,8 +264,6 @@ func (client *LinkConnectionClient) getDetailedStatusHandleResponse(resp *http.R
 }
 
 // NewListByWorkspacePager - List link connections
-//
-// Generated from API version 2022-12-01-preview
 //   - options - LinkConnectionClientListByWorkspaceOptions contains the optional parameters for the LinkConnectionClient.NewListByWorkspacePager
 //     method.
 func (client *LinkConnectionClient) NewListByWorkspacePager(options *LinkConnectionClientListByWorkspaceOptions) *runtime.Pager[LinkConnectionClientListByWorkspaceResponse] {
@@ -303,7 +295,7 @@ func (client *LinkConnectionClient) listByWorkspaceCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("api-version", defaultLinkConnectionClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -320,8 +312,6 @@ func (client *LinkConnectionClient) listByWorkspaceHandleResponse(resp *http.Res
 
 // ListLinkTables - List the link tables of a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientListLinkTablesOptions contains the optional parameters for the LinkConnectionClient.ListLinkTables
 //     method.
@@ -372,8 +362,6 @@ func (client *LinkConnectionClient) listLinkTablesHandleResponse(resp *http.Resp
 
 // Pause - Pause a link connection. It may take a few minutes from Pausing to Paused, monitor the status with LinkConnection_GetDetailedStatus.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientPauseOptions contains the optional parameters for the LinkConnectionClient.Pause method.
 func (client *LinkConnectionClient) Pause(ctx context.Context, linkConnectionName string, options *LinkConnectionClientPauseOptions) (LinkConnectionClientPauseResponse, error) {
@@ -413,8 +401,6 @@ func (client *LinkConnectionClient) pauseCreateRequest(ctx context.Context, link
 
 // QueryTableStatus - Query the link table status of a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - queryTableStatusRequest - Query table status request
 //   - options - LinkConnectionClientQueryTableStatusOptions contains the optional parameters for the LinkConnectionClient.QueryTableStatus
@@ -469,8 +455,6 @@ func (client *LinkConnectionClient) queryTableStatusHandleResponse(resp *http.Re
 
 // Resume - Resume a link connection. It may take a few minutes from Resuming to Running, monitor the status with LinkConnection_GetDetailedStatus.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientResumeOptions contains the optional parameters for the LinkConnectionClient.Resume method.
 func (client *LinkConnectionClient) Resume(ctx context.Context, linkConnectionName string, options *LinkConnectionClientResumeOptions) (LinkConnectionClientResumeResponse, error) {
@@ -510,8 +494,6 @@ func (client *LinkConnectionClient) resumeCreateRequest(ctx context.Context, lin
 
 // Start - Start a link connection. It may take a few minutes from Starting to Running, monitor the status with LinkConnection_GetDetailedStatus.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientStartOptions contains the optional parameters for the LinkConnectionClient.Start method.
 func (client *LinkConnectionClient) Start(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStartOptions) (LinkConnectionClientStartResponse, error) {
@@ -551,8 +533,6 @@ func (client *LinkConnectionClient) startCreateRequest(ctx context.Context, link
 
 // Stop - Stop a link connection. It may take a few minutes from Stopping to stopped, monitor the status with LinkConnection_GetDetailedStatus.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - options - LinkConnectionClientStopOptions contains the optional parameters for the LinkConnectionClient.Stop method.
 func (client *LinkConnectionClient) Stop(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStopOptions) (LinkConnectionClientStopResponse, error) {
@@ -592,8 +572,6 @@ func (client *LinkConnectionClient) stopCreateRequest(ctx context.Context, linkC
 
 // UpdateLandingZoneCredential - Update landing zone credential of a link connection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-12-01-preview
 //   - linkConnectionName - The link connection name
 //   - updateLandingZoneCredentialRequest - update landing zone credential request
 //   - options - LinkConnectionClientUpdateLandingZoneCredentialOptions contains the optional parameters for the LinkConnectionClient.UpdateLandingZoneCredential

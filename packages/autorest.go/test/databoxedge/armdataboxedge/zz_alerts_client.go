@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultAlertsClientVersion string = "2021-02-01"
+
 // AlertsClient contains the methods for the Alerts group.
 // Don't use this type directly, use NewAlertsClient() instead.
+//
+// Generated from API version 2021-02-01
 type AlertsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewAlertsClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // Get - Gets an alert by name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - name - The alert name.
 //   - resourceGroupName - The resource group name.
@@ -88,7 +90,7 @@ func (client *AlertsClient) getCreateRequest(ctx context.Context, deviceName str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultAlertsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -104,8 +106,6 @@ func (client *AlertsClient) getHandleResponse(resp *http.Response) (AlertsClient
 }
 
 // NewListByDataBoxEdgeDevicePager - Gets all the alerts for a Data Box Edge/Data Box Gateway device.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
 //   - options - AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.NewListByDataBoxEdgeDevicePager
@@ -149,7 +149,7 @@ func (client *AlertsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultAlertsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

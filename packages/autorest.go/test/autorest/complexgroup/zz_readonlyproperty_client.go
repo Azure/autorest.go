@@ -22,8 +22,6 @@ type ReadonlypropertyClient struct {
 
 // GetValid - Get complex types that have readonly properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - ReadonlypropertyClientGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid
 //     method.
 func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyClientGetValidOptions) (ReadonlypropertyClientGetValidResponse, error) {
@@ -70,8 +68,6 @@ func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response
 
 // PutValid - Put complex types that have readonly properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - ReadonlypropertyClientPutValidOptions contains the optional parameters for the ReadonlypropertyClient.PutValid
 //     method.
 func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyClientPutValidOptions) (ReadonlypropertyClientPutValidResponse, error) {

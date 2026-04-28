@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultHeaderClientVersion string = "2025-01-01"
+
 // HeaderClient contains the methods for the Header group.
 // Don't use this type directly, use NewHeaderClientWithNoCredential() instead.
+//
+// Generated from API version 2025-01-01
 type HeaderClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -49,8 +53,6 @@ func NewHeaderClientWithNoCredential(endpoint string, options *HeaderClientOptio
 
 // HeaderAPIVersion - Header api version parameter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - options - HeaderClientHeaderAPIVersionOptions contains the optional parameters for the HeaderClient.HeaderAPIVersion method.
 func (client *HeaderClient) HeaderAPIVersion(ctx context.Context, options *HeaderClientHeaderAPIVersionOptions) (HeaderClientHeaderAPIVersionResponse, error) {
 	var err error
@@ -80,6 +82,6 @@ func (client *HeaderClient) headerAPIVersionCreateRequest(ctx context.Context, _
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["x-ms-version"] = []string{"2025-01-01"}
+	req.Raw().Header["x-ms-version"] = []string{defaultHeaderClientVersion}
 	return req, nil
 }

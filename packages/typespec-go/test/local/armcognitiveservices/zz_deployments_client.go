@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultDeploymentsClientVersion string = "2025-10-01-preview"
+
 // DeploymentsClient contains the methods for the Deployments group.
 // Don't use this type directly, use NewDeploymentsClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type DeploymentsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewDeploymentsClient(subscriptionID string, credential azcore.TokenCredenti
 
 // BeginCreateOrUpdate - Update the state of specified deployments associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - deploymentName - The name of the deployment associated with the Cognitive Services Account
@@ -68,8 +70,6 @@ func (client *DeploymentsClient) BeginCreateOrUpdate(ctx context.Context, resour
 
 // CreateOrUpdate - Update the state of specified deployments associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *DeploymentsClient) createOrUpdate(ctx context.Context, resourceGroupName string, accountName string, deploymentName string, deployment Deployment, options *DeploymentsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DeploymentsClient.BeginCreateOrUpdate"
@@ -115,7 +115,7 @@ func (client *DeploymentsClient) createOrUpdateCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -127,8 +127,6 @@ func (client *DeploymentsClient) createOrUpdateCreateRequest(ctx context.Context
 
 // BeginDelete - Deletes the specified deployment associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - deploymentName - The name of the deployment associated with the Cognitive Services Account
@@ -152,8 +150,6 @@ func (client *DeploymentsClient) BeginDelete(ctx context.Context, resourceGroupN
 
 // Delete - Deletes the specified deployment associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *DeploymentsClient) deleteOperation(ctx context.Context, resourceGroupName string, accountName string, deploymentName string, options *DeploymentsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DeploymentsClient.BeginDelete"
@@ -199,15 +195,13 @@ func (client *DeploymentsClient) deleteCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Gets the specified deployments associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - deploymentName - The name of the deployment associated with the Cognitive Services Account
@@ -258,7 +252,7 @@ func (client *DeploymentsClient) getCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -274,8 +268,6 @@ func (client *DeploymentsClient) getHandleResponse(resp *http.Response) (Deploym
 }
 
 // NewListPager - Gets the deployments associated with the Cognitive Services account.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - options - DeploymentsClientListOptions contains the optional parameters for the DeploymentsClient.NewListPager method.
@@ -322,7 +314,7 @@ func (client *DeploymentsClient) listCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -338,8 +330,6 @@ func (client *DeploymentsClient) listHandleResponse(resp *http.Response) (Deploy
 }
 
 // NewListSKUsPager - Lists the specified deployments skus associated with the Cognitive Services account.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - deploymentName - The name of the deployment associated with the Cognitive Services Account
@@ -392,7 +382,7 @@ func (client *DeploymentsClient) listSKUsCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -413,8 +403,6 @@ func (client *DeploymentsClient) listSKUsHandleResponse(resp *http.Response) (De
 // Only Standard, DataZoneStandard, and GlobalStandard SKUs support this operation. Inference requests to the paused deployment
 // endpoint will receive HTTP 423 (Locked). This operation is idempotent.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - deploymentName - The name of the deployment associated with the Cognitive Services Account
@@ -465,7 +453,7 @@ func (client *DeploymentsClient) pauseCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -485,8 +473,6 @@ func (client *DeploymentsClient) pauseHandleResponse(resp *http.Response) (Deplo
 // Resumes inferencing on a previously paused deployment by setting the deploymentState to 'Running' (see #/definitions/DeploymentProperties/properties/deploymentState).
 // This operation is idempotent and can be safely called on already running deployments.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - deploymentName - The name of the deployment associated with the Cognitive Services Account
@@ -537,7 +523,7 @@ func (client *DeploymentsClient) resumeCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -554,8 +540,6 @@ func (client *DeploymentsClient) resumeHandleResponse(resp *http.Response) (Depl
 
 // BeginUpdate - Update specified deployments associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - deploymentName - The name of the deployment associated with the Cognitive Services Account
@@ -580,8 +564,6 @@ func (client *DeploymentsClient) BeginUpdate(ctx context.Context, resourceGroupN
 
 // Update - Update specified deployments associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *DeploymentsClient) update(ctx context.Context, resourceGroupName string, accountName string, deploymentName string, deployment PatchResourceTagsAndSKU, options *DeploymentsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "DeploymentsClient.BeginUpdate"
@@ -627,7 +609,7 @@ func (client *DeploymentsClient) updateCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultDeploymentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

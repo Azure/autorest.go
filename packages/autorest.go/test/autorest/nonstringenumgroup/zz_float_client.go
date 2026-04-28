@@ -22,8 +22,6 @@ type FloatClient struct {
 
 // Get - Get a float enum
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2.0-preview
 //   - options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
 func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (FloatClientGetResponse, error) {
 	var err error
@@ -69,8 +67,6 @@ func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGe
 
 // Put - Put a float enum
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2.0-preview
 //   - input - Input float enum.
 //   - options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
 func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (FloatClientPutResponse, error) {

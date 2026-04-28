@@ -22,8 +22,6 @@ type PrimitiveClient struct {
 
 // GetBool - Get complex types with bool properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetBoolOptions contains the optional parameters for the PrimitiveClient.GetBool method.
 func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveClientGetBoolOptions) (PrimitiveClientGetBoolResponse, error) {
 	var err error
@@ -69,8 +67,6 @@ func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (Primi
 
 // GetByte - Get complex types with byte properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetByteOptions contains the optional parameters for the PrimitiveClient.GetByte method.
 func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveClientGetByteOptions) (PrimitiveClientGetByteResponse, error) {
 	var err error
@@ -116,8 +112,6 @@ func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (Primi
 
 // GetDate - Get complex types with date properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDateOptions contains the optional parameters for the PrimitiveClient.GetDate method.
 func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveClientGetDateOptions) (PrimitiveClientGetDateResponse, error) {
 	var err error
@@ -163,8 +157,6 @@ func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (Primi
 
 // GetDateTime - Get complex types with datetime properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDateTimeOptions contains the optional parameters for the PrimitiveClient.GetDateTime method.
 func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveClientGetDateTimeOptions) (PrimitiveClientGetDateTimeResponse, error) {
 	var err error
@@ -210,8 +202,6 @@ func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (P
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.GetDateTimeRFC1123
 //     method.
 func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveClientGetDateTimeRFC1123Options) (PrimitiveClientGetDateTimeRFC1123Response, error) {
@@ -258,8 +248,6 @@ func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Respo
 
 // GetDouble - Get complex types with double properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDoubleOptions contains the optional parameters for the PrimitiveClient.GetDouble method.
 func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveClientGetDoubleOptions) (PrimitiveClientGetDoubleResponse, error) {
 	var err error
@@ -305,8 +293,6 @@ func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (Pri
 
 // GetDuration - Get complex types with duration properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetDurationOptions contains the optional parameters for the PrimitiveClient.GetDuration method.
 func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveClientGetDurationOptions) (PrimitiveClientGetDurationResponse, error) {
 	var err error
@@ -352,8 +338,6 @@ func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (P
 
 // GetFloat - Get complex types with float properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetFloatOptions contains the optional parameters for the PrimitiveClient.GetFloat method.
 func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveClientGetFloatOptions) (PrimitiveClientGetFloatResponse, error) {
 	var err error
@@ -399,8 +383,6 @@ func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (Prim
 
 // GetInt - Get complex types with integer properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetIntOptions contains the optional parameters for the PrimitiveClient.GetInt method.
 func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveClientGetIntOptions) (PrimitiveClientGetIntResponse, error) {
 	var err error
@@ -446,8 +428,6 @@ func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (Primit
 
 // GetLong - Get complex types with long properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetLongOptions contains the optional parameters for the PrimitiveClient.GetLong method.
 func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveClientGetLongOptions) (PrimitiveClientGetLongResponse, error) {
 	var err error
@@ -493,8 +473,6 @@ func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (Primi
 
 // GetString - Get complex types with string properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - PrimitiveClientGetStringOptions contains the optional parameters for the PrimitiveClient.GetString method.
 func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveClientGetStringOptions) (PrimitiveClientGetStringResponse, error) {
 	var err error
@@ -540,8 +518,6 @@ func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (Pri
 
 // PutBool - Put complex types with bool properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put true and false
 //   - options - PrimitiveClientPutBoolOptions contains the optional parameters for the PrimitiveClient.PutBool method.
 func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitiveClientPutBoolOptions) (PrimitiveClientPutBoolResponse, error) {
@@ -581,8 +557,6 @@ func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complex
 
 // PutByte - Put complex types with byte properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
 //   - options - PrimitiveClientPutByteOptions contains the optional parameters for the PrimitiveClient.PutByte method.
 func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitiveClientPutByteOptions) (PrimitiveClientPutByteResponse, error) {
@@ -622,8 +596,6 @@ func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complex
 
 // PutDate - Put complex types with date properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put '0001-01-01' and '2016-02-29'
 //   - options - PrimitiveClientPutDateOptions contains the optional parameters for the PrimitiveClient.PutDate method.
 func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitiveClientPutDateOptions) (PrimitiveClientPutDateResponse, error) {
@@ -663,8 +635,6 @@ func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complex
 
 // PutDateTime - Put complex types with datetime properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
 //   - options - PrimitiveClientPutDateTimeOptions contains the optional parameters for the PrimitiveClient.PutDateTime method.
 func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitiveClientPutDateTimeOptions) (PrimitiveClientPutDateTimeResponse, error) {
@@ -704,8 +674,6 @@ func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, com
 
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
 //   - options - PrimitiveClientPutDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.PutDateTimeRFC1123
 //     method.
@@ -746,8 +714,6 @@ func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Conte
 
 // PutDouble - Put complex types with double properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
 //   - options - PrimitiveClientPutDoubleOptions contains the optional parameters for the PrimitiveClient.PutDouble method.
 func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitiveClientPutDoubleOptions) (PrimitiveClientPutDoubleResponse, error) {
@@ -787,8 +753,6 @@ func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, compl
 
 // PutDuration - Put complex types with duration properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put 'P123DT22H14M12.011S'
 //   - options - PrimitiveClientPutDurationOptions contains the optional parameters for the PrimitiveClient.PutDuration method.
 func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitiveClientPutDurationOptions) (PrimitiveClientPutDurationResponse, error) {
@@ -828,8 +792,6 @@ func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, com
 
 // PutFloat - Put complex types with float properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put 1.05 and -0.003
 //   - options - PrimitiveClientPutFloatOptions contains the optional parameters for the PrimitiveClient.PutFloat method.
 func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitiveClientPutFloatOptions) (PrimitiveClientPutFloatResponse, error) {
@@ -869,8 +831,6 @@ func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, comple
 
 // PutInt - Put complex types with integer properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put -1 and 2
 //   - options - PrimitiveClientPutIntOptions contains the optional parameters for the PrimitiveClient.PutInt method.
 func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitiveClientPutIntOptions) (PrimitiveClientPutIntResponse, error) {
@@ -910,8 +870,6 @@ func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexB
 
 // PutLong - Put complex types with long properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put 1099511627775 and -999511627788
 //   - options - PrimitiveClientPutLongOptions contains the optional parameters for the PrimitiveClient.PutLong method.
 func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitiveClientPutLongOptions) (PrimitiveClientPutLongResponse, error) {
@@ -951,8 +909,6 @@ func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complex
 
 // PutString - Put complex types with string properties
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put 'goodrequest', ”, and null
 //   - options - PrimitiveClientPutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
 func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitiveClientPutStringOptions) (PrimitiveClientPutStringResponse, error) {

@@ -10,6 +10,8 @@
 ### Other Changes
 
 * Fixed sorting of case statements in polymorphic helpers.
+* Client API version values are now emitted as a `const` instead of repeated per method.
+* The API version doc string has been moved to the client definition instead of per method.
 
 ## 0.11.0 (2026-04-24)
 

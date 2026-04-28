@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultStorageAccountsClientVersion string = "2021-02-01"
+
 // StorageAccountsClient contains the methods for the StorageAccounts group.
 // Don't use this type directly, use NewStorageAccountsClient() instead.
+//
+// Generated from API version 2021-02-01
 type StorageAccountsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewStorageAccountsClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginCreateOrUpdate - Creates a new StorageAccount or updates an existing StorageAccount on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - storageAccountName - The StorageAccount name.
 //   - resourceGroupName - The resource group name.
@@ -65,8 +67,6 @@ func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, de
 
 // CreateOrUpdate - Creates a new StorageAccount or updates an existing StorageAccount on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 func (client *StorageAccountsClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountsClient.BeginCreateOrUpdate")
@@ -106,7 +106,7 @@ func (client *StorageAccountsClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, storageAccount); err != nil {
@@ -117,8 +117,6 @@ func (client *StorageAccountsClient) createOrUpdateCreateRequest(ctx context.Con
 
 // BeginDelete - Deletes the StorageAccount on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - storageAccountName - The StorageAccount name.
 //   - resourceGroupName - The resource group name.
@@ -139,8 +137,6 @@ func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName
 
 // Delete - Deletes the StorageAccount on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 func (client *StorageAccountsClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountsClient.BeginDelete")
@@ -180,7 +176,7 @@ func (client *StorageAccountsClient) deleteCreateRequest(ctx context.Context, de
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -188,8 +184,6 @@ func (client *StorageAccountsClient) deleteCreateRequest(ctx context.Context, de
 
 // Get - Gets a StorageAccount by name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - storageAccountName - The storage account name.
 //   - resourceGroupName - The resource group name.
@@ -234,7 +228,7 @@ func (client *StorageAccountsClient) getCreateRequest(ctx context.Context, devic
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -250,8 +244,6 @@ func (client *StorageAccountsClient) getHandleResponse(resp *http.Response) (Sto
 }
 
 // NewListByDataBoxEdgeDevicePager - Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
-//
-// Generated from API version 2021-02-01
 //   - deviceName - The device name.
 //   - resourceGroupName - The resource group name.
 //   - options - StorageAccountsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.NewListByDataBoxEdgeDevicePager
@@ -295,7 +287,7 @@ func (client *StorageAccountsClient) listByDataBoxEdgeDeviceCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-02-01")
+	reqQP.Set("api-version", defaultStorageAccountsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

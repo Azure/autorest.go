@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultConfigurationsClientVersion string = "2025-01-01"
+
 // ConfigurationsClient contains the methods for the Configurations group.
 // Don't use this type directly, use NewConfigurationsClient() instead.
+//
+// Generated from API version 2025-01-01
 type ConfigurationsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewConfigurationsClient(subscriptionID string, credential azcore.TokenCrede
 
 // GetContent - Get the content of the configuration.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - configurationName - The configuration name.
 //   - options - ConfigurationsClientGetContentOptions contains the optional parameters for the ConfigurationsClient.GetContent
@@ -90,7 +92,7 @@ func (client *ConfigurationsClient) getContentCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultConfigurationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -107,8 +109,6 @@ func (client *ConfigurationsClient) getContentHandleResponse(resp *http.Response
 
 // GetStreamingContent - Get the content of the configuration identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - configurationName - The configuration name.
 //   - options - ConfigurationsClientGetStreamingContentOptions contains the optional parameters for the ConfigurationsClient.GetStreamingContent
@@ -155,7 +155,7 @@ func (client *ConfigurationsClient) getStreamingContentCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultConfigurationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
@@ -173,8 +173,6 @@ func (client *ConfigurationsClient) getStreamingContentHandleResponse(resp *http
 
 // PutStreamingContent - Put the content of the configuration identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - configurationName - The configuration name.
 //   - options - ConfigurationsClientPutStreamingContentOptions contains the optional parameters for the ConfigurationsClient.PutStreamingContent
@@ -220,7 +218,7 @@ func (client *ConfigurationsClient) putStreamingContentCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultConfigurationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
 	if err := req.SetBody(body, "application/octet-stream"); err != nil {

@@ -34,8 +34,6 @@ type ContainerClient struct {
 // AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - comp - comp
 //   - restype - restype
@@ -138,8 +136,6 @@ func (client *ContainerClient) acquireLeaseHandleResponse(resp *http.Response) (
 // BreakLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - comp - comp
 //   - restype - restype
@@ -244,8 +240,6 @@ func (client *ContainerClient) breakLeaseHandleResponse(resp *http.Response) (Co
 // ChangeLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - comp - comp
 //   - restype - restype
@@ -348,8 +342,6 @@ func (client *ContainerClient) changeLeaseHandleResponse(resp *http.Response) (C
 // Create - creates a new container under the specified account. If the container with the same name already exists, the operation
 // fails
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - options - ContainerClientCreateOptions contains the optional parameters for the ContainerClient.Create method.
@@ -450,8 +442,6 @@ func (client *ContainerClient) createHandleResponse(resp *http.Response) (Contai
 // Delete - operation marks the specified container for deletion. The container and any blobs contained within it are later
 // deleted during garbage collection
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - options - ContainerClientDeleteOptions contains the optional parameters for the ContainerClient.Delete method.
@@ -536,8 +526,6 @@ func (client *ContainerClient) deleteHandleResponse(resp *http.Response) (Contai
 // FilterBlobs - The Filter Blobs operation enables callers to list blobs in a container whose tags match a given search expression.
 // Filter blobs searches within the given container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -628,8 +616,6 @@ func (client *ContainerClient) filterBlobsHandleResponse(resp *http.Response) (C
 // GetAccessPolicy - gets the permissions for the specified container. The permissions indicate whether container data may
 // be accessed publicly.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -725,8 +711,6 @@ func (client *ContainerClient) getAccessPolicyHandleResponse(resp *http.Response
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -803,8 +787,6 @@ func (client *ContainerClient) getAccountInfoHandleResponse(resp *http.Response)
 // GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned
 // does not include the container's list of blobs
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - options - ContainerClientGetPropertiesOptions contains the optional parameters for the ContainerClient.GetProperties method.
@@ -941,8 +923,6 @@ func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) 
 }
 
 // NewListBlobFlatSegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -1037,8 +1017,6 @@ func (client *ContainerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 }
 
 // NewListBlobHierarchySegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -1139,8 +1117,6 @@ func (client *ContainerClient) listBlobHierarchySegmentHandleResponse(resp *http
 // ReleaseLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - comp - comp
 //   - restype - restype
@@ -1235,8 +1211,6 @@ func (client *ContainerClient) releaseLeaseHandleResponse(resp *http.Response) (
 
 // Rename - Renames an existing container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -1317,8 +1291,6 @@ func (client *ContainerClient) renameHandleResponse(resp *http.Response) (Contai
 // RenewLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - comp - comp
 //   - restype - restype
@@ -1416,8 +1388,6 @@ func (client *ContainerClient) renewLeaseHandleResponse(resp *http.Response) (Co
 
 // Restore - Restores a previously-deleted container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -1499,8 +1469,6 @@ func (client *ContainerClient) restoreHandleResponse(resp *http.Response) (Conta
 // SetAccessPolicy - sets the permissions for the specified container. The permissions indicate whether blobs in a container
 // may be accessed publicly.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -1610,8 +1578,6 @@ func (client *ContainerClient) setAccessPolicyHandleResponse(resp *http.Response
 
 // SetMetadata - operation sets one or more user-defined name-value pairs for the specified container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp
@@ -1711,8 +1677,6 @@ func (client *ContainerClient) setMetadataHandleResponse(resp *http.Response) (C
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - containerName - The container name.
 //   - restype - restype
 //   - comp - comp

@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultCheckNameAvailabilityClientVersion string = "2023-12-01-preview"
+
 // CheckNameAvailabilityClient contains the methods for the CheckNameAvailability group.
 // Don't use this type directly, use NewCheckNameAvailabilityClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type CheckNameAvailabilityClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewCheckNameAvailabilityClient(subscriptionID string, credential azcore.Tok
 
 // CheckGlobal - Implements global CheckNameAvailability operations
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - body - The CheckAvailability request
 //   - options - CheckNameAvailabilityClientCheckGlobalOptions contains the optional parameters for the CheckNameAvailabilityClient.CheckGlobal
 //     method.
@@ -80,7 +82,7 @@ func (client *CheckNameAvailabilityClient) checkGlobalCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultCheckNameAvailabilityClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -101,8 +103,6 @@ func (client *CheckNameAvailabilityClient) checkGlobalHandleResponse(resp *http.
 
 // CheckLocal - Implements local CheckNameAvailability operations
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - body - The CheckAvailability request
 //   - options - CheckNameAvailabilityClientCheckLocalOptions contains the optional parameters for the CheckNameAvailabilityClient.CheckLocal
@@ -145,7 +145,7 @@ func (client *CheckNameAvailabilityClient) checkLocalCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultCheckNameAvailabilityClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

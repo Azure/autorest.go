@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultComplexModelClientVersion string = "2014-04-01-preview"
+
 // ComplexModelClient contains the methods for the ComplexModelClient group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2014-04-01-preview
 type ComplexModelClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type ComplexModelClient struct {
 
 // Create - Resets products.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2014-04-01-preview
 //   - subscriptionID - Subscription ID.
 //   - resourceGroupName - Resource Group ID.
 //   - bodyParameter - body Parameter
@@ -69,7 +71,7 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2014-04-01-preview")
+	reqQP.Set("api-version", defaultComplexModelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {
@@ -91,8 +93,6 @@ func (client *ComplexModelClient) createHandleResponse(resp *http.Response) (Com
 // the display name and other details about each product, and lists the products in
 // the proper display order.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2014-04-01-preview
 //   - resourceGroupName - Resource Group ID.
 //   - options - ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (ComplexModelClientListResponse, error) {
@@ -130,7 +130,7 @@ func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2014-04-01-preview")
+	reqQP.Set("api-version", defaultComplexModelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -147,8 +147,6 @@ func (client *ComplexModelClient) listHandleResponse(resp *http.Response) (Compl
 
 // Update - Resets products.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2014-04-01-preview
 //   - subscriptionID - Subscription ID.
 //   - resourceGroupName - Resource Group ID.
 //   - bodyParameter - body Parameter
@@ -191,7 +189,7 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2014-04-01-preview")
+	reqQP.Set("api-version", defaultComplexModelClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {

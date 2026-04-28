@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultEnvironmentsClientVersion string = "2024-03-15-preview"
+
 // EnvironmentsClient contains the methods for the Environments group.
 // Don't use this type directly, use NewEnvironmentsClient() instead.
+//
+// Generated from API version 2024-03-15-preview
 type EnvironmentsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewEnvironmentsClient(subscriptionID string, credential azcore.TokenCredent
 
 // CreateOrUpdate - Creates new or updates existing environment.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -100,7 +102,7 @@ func (client *EnvironmentsClient) createOrUpdateCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultEnvironmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -124,8 +126,6 @@ func (client *EnvironmentsClient) createOrUpdateHandleResponse(resp *http.Respon
 
 // Delete - Deletes the environment.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -180,15 +180,13 @@ func (client *EnvironmentsClient) deleteCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultEnvironmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Returns details of the environment.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -244,7 +242,7 @@ func (client *EnvironmentsClient) getCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultEnvironmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -263,8 +261,6 @@ func (client *EnvironmentsClient) getHandleResponse(resp *http.Response) (Enviro
 }
 
 // Head - Checks if specified environment exists.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -319,14 +315,12 @@ func (client *EnvironmentsClient) headCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultEnvironmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // NewListPager - Returns a collection of environments.
-//
-// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -381,7 +375,7 @@ func (client *EnvironmentsClient) listCreateRequest(ctx context.Context, resourc
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2024-03-15-preview")
+	reqQP.Set("api-version", defaultEnvironmentsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

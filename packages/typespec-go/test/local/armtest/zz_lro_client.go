@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLROClientVersion string = "2025-01-01"
+
 // LROClient contains the methods for the LRO group.
 // Don't use this type directly, use NewLROClient() instead.
+//
+// Generated from API version 2025-01-01
 type LROClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewLROClient(subscriptionID string, credential azcore.TokenCredential, opti
 
 // BeginOkResponseWithAsyncHeader - A sample LRO with Azure-AsyncOperation header in 200 response
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - lroModelName - LRO model resource name.
 //   - resource - Resource create parameters.
@@ -67,8 +69,6 @@ func (client *LROClient) BeginOkResponseWithAsyncHeader(ctx context.Context, res
 
 // OkResponseWithAsyncHeader - A sample LRO with Azure-AsyncOperation header in 200 response
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 func (client *LROClient) okResponseWithAsyncHeader(ctx context.Context, resourceGroupName string, lroModelName string, resource LROModel, options *LROClientBeginOkResponseWithAsyncHeaderOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LROClient.BeginOkResponseWithAsyncHeader"
@@ -110,7 +110,7 @@ func (client *LROClient) okResponseWithAsyncHeaderCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultLROClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -122,8 +122,6 @@ func (client *LROClient) okResponseWithAsyncHeaderCreateRequest(ctx context.Cont
 
 // BeginScalarResult - An LRO action that returns a scalar string result
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - lroModelName - LRO model resource name.
 //   - body - The content of the action request
@@ -147,8 +145,6 @@ func (client *LROClient) BeginScalarResult(ctx context.Context, resourceGroupNam
 
 // ScalarResult - An LRO action that returns a scalar string result
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 func (client *LROClient) scalarResult(ctx context.Context, resourceGroupName string, lroModelName string, body ActionRequest, options *LROClientBeginScalarResultOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LROClient.BeginScalarResult"
@@ -190,7 +186,7 @@ func (client *LROClient) scalarResultCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultLROClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"text/plain"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

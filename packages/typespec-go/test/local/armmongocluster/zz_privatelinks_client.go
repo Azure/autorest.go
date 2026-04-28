@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultPrivateLinksClientVersion string = "2024-07-01"
+
 // PrivateLinksClient contains the methods for the PrivateLinks group.
 // Don't use this type directly, use NewPrivateLinksClient() instead.
+//
+// Generated from API version 2024-07-01
 type PrivateLinksClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -40,8 +44,6 @@ func NewPrivateLinksClient(subscriptionID string, credential azcore.TokenCredent
 }
 
 // NewListByMongoClusterPager - list private links on the given resource
-//
-// Generated from API version 2024-07-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - mongoClusterName - The name of the mongo cluster.
 //   - options - PrivateLinksClientListByMongoClusterOptions contains the optional parameters for the PrivateLinksClient.NewListByMongoClusterPager
@@ -89,7 +91,7 @@ func (client *PrivateLinksClient) listByMongoClusterCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-07-01")
+	reqQP.Set("api-version", defaultPrivateLinksClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

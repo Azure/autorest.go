@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultPipelineRunClientVersion string = "2020-12-01"
+
 // PipelineRunClient contains the methods for the PipelineRun group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type PipelineRunClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -26,8 +30,6 @@ type PipelineRunClient struct {
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - runID - The pipeline run identifier.
 //   - options - PipelineRunClientCancelPipelineRunOptions contains the optional parameters for the PipelineRunClient.CancelPipelineRun
 //     method.
@@ -71,8 +73,6 @@ func (client *PipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 
 // GetPipelineRun - Get a pipeline run by its run ID.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - runID - The pipeline run identifier.
 //   - options - PipelineRunClientGetPipelineRunOptions contains the optional parameters for the PipelineRunClient.GetPipelineRun
 //     method.
@@ -123,8 +123,6 @@ func (client *PipelineRunClient) getPipelineRunHandleResponse(resp *http.Respons
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - pipelineName - The pipeline name.
 //   - runID - The pipeline run identifier.
 //   - filterParameters - Parameters to filter the activity runs.
@@ -184,8 +182,6 @@ func (client *PipelineRunClient) queryActivityRunsHandleResponse(resp *http.Resp
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - filterParameters - Parameters to filter the pipeline run.
 //   - options - PipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRunClient.QueryPipelineRunsByWorkspace
 //     method.
@@ -215,7 +211,7 @@ func (client *PipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultPipelineRunClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, filterParameters); err != nil {

@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultManagedNetworkProvisionsClientVersion string = "2025-10-01-preview"
+
 // ManagedNetworkProvisionsClient contains the methods for the ManagedNetworkProvisions group.
 // Don't use this type directly, use NewManagedNetworkProvisionsClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type ManagedNetworkProvisionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewManagedNetworkProvisionsClient(subscriptionID string, credential azcore.
 //
 // Provisions the managed network of a cognitive services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - options - ManagedNetworkProvisionsClientBeginProvisionManagedNetworkOptions contains the optional parameters for the ManagedNetworkProvisionsClient.BeginProvisionManagedNetwork
@@ -70,8 +72,6 @@ func (client *ManagedNetworkProvisionsClient) BeginProvisionManagedNetwork(ctx c
 //
 // Provisions the managed network of a cognitive services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *ManagedNetworkProvisionsClient) provisionManagedNetwork(ctx context.Context, resourceGroupName string, accountName string, options *ManagedNetworkProvisionsClientBeginProvisionManagedNetworkOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ManagedNetworkProvisionsClient.BeginProvisionManagedNetwork"
@@ -113,7 +113,7 @@ func (client *ManagedNetworkProvisionsClient) provisionManagedNetworkCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultManagedNetworkProvisionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Body != nil {

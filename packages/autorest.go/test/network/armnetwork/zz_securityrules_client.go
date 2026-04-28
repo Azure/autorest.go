@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultSecurityRulesClientVersion string = "2022-09-01"
+
 // SecurityRulesClient contains the methods for the SecurityRules group.
 // Don't use this type directly, use NewSecurityRulesClient() instead.
+//
+// Generated from API version 2022-09-01
 type SecurityRulesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 
 // BeginCreateOrUpdate - Creates or updates a security rule in the specified network security group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - securityRuleName - The name of the security rule.
@@ -71,8 +73,6 @@ func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SecurityRulesClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // BeginDelete - Deletes the specified network security rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - securityRuleName - The name of the security rule.
@@ -156,8 +154,6 @@ func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Deletes the specified network security rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *SecurityRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SecurityRulesClient.BeginDelete"
@@ -203,7 +199,7 @@ func (client *SecurityRulesClient) deleteCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultSecurityRulesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -211,8 +207,6 @@ func (client *SecurityRulesClient) deleteCreateRequest(ctx context.Context, reso
 
 // Get - Get the specified network security rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - securityRuleName - The name of the security rule.
@@ -279,8 +273,6 @@ func (client *SecurityRulesClient) getHandleResponse(resp *http.Response) (Secur
 }
 
 // NewListPager - Gets all security rules in a network security group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkSecurityGroupName - The name of the network security group.
 //   - options - SecurityRulesClientListOptions contains the optional parameters for the SecurityRulesClient.NewListPager method.

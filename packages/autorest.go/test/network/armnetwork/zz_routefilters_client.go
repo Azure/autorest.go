@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultRouteFiltersClientVersion string = "2022-09-01"
+
 // RouteFiltersClient contains the methods for the RouteFilters group.
 // Don't use this type directly, use NewRouteFiltersClient() instead.
+//
+// Generated from API version 2022-09-01
 type RouteFiltersClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredent
 
 // BeginCreateOrUpdate - Creates or updates a route filter in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - routeFilterParameters - Parameters supplied to the create or update route filter operation.
@@ -70,8 +72,6 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 
 // CreateOrUpdate - Creates or updates a route filter in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *RouteFiltersClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RouteFiltersClient.BeginCreateOrUpdate"
@@ -124,8 +124,6 @@ func (client *RouteFiltersClient) createOrUpdateCreateRequest(ctx context.Contex
 
 // BeginDelete - Deletes the specified route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - options - RouteFiltersClientBeginDeleteOptions contains the optional parameters for the RouteFiltersClient.BeginDelete
@@ -150,8 +148,6 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 
 // Delete - Deletes the specified route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *RouteFiltersClient) deleteOperation(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RouteFiltersClient.BeginDelete"
@@ -193,7 +189,7 @@ func (client *RouteFiltersClient) deleteCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultRouteFiltersClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -201,8 +197,6 @@ func (client *RouteFiltersClient) deleteCreateRequest(ctx context.Context, resou
 
 // Get - Gets the specified route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - options - RouteFiltersClientGetOptions contains the optional parameters for the RouteFiltersClient.Get method.
@@ -267,8 +261,6 @@ func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteF
 }
 
 // NewListPager - Gets all route filters in a subscription.
-//
-// Generated from API version 2022-09-01
 //   - options - RouteFiltersClientListOptions contains the optional parameters for the RouteFiltersClient.NewListPager method.
 func (client *RouteFiltersClient) NewListPager(options *RouteFiltersClientListOptions) *runtime.Pager[RouteFiltersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RouteFiltersClientListResponse]{
@@ -321,8 +313,6 @@ func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (Route
 }
 
 // NewListByResourceGroupPager - Gets all route filters in a resource group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - options - RouteFiltersClientListByResourceGroupOptions contains the optional parameters for the RouteFiltersClient.NewListByResourceGroupPager
 //     method.
@@ -382,8 +372,6 @@ func (client *RouteFiltersClient) listByResourceGroupHandleResponse(resp *http.R
 
 // UpdateTags - Updates tags of a route filter.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - routeFilterName - The name of the route filter.
 //   - parameters - Parameters supplied to update route filter tags.

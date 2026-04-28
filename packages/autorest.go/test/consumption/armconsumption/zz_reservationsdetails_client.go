@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultReservationsDetailsClientVersion string = "2019-10-01"
+
 // ReservationsDetailsClient contains the methods for the ReservationsDetails group.
 // Don't use this type directly, use NewReservationsDetailsClient() instead.
+//
+// Generated from API version 2019-10-01
 type ReservationsDetailsClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewReservationsDetailsClient(credential azcore.TokenCredential, options *ar
 }
 
 // NewListPager - Lists the reservations details for the defined scope and provided date range.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with reservations details operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
 //     for BillingAccount scope (legacy), and
 //     '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
@@ -79,7 +81,7 @@ func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, 
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultReservationsDetailsClientVersion)
 	if options != nil && options.EndDate != nil {
 		reqQP.Set("endDate", *options.EndDate)
 	}
@@ -107,8 +109,6 @@ func (client *ReservationsDetailsClient) listHandleResponse(resp *http.Response)
 }
 
 // NewListByReservationOrderPager - Lists the reservations details for provided date range.
-//
-// Generated from API version 2019-10-01
 //   - reservationOrderID - Order Id of the reservation
 //   - filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
 //     'le' and 'ge'
@@ -148,7 +148,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("$filter", filter)
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultReservationsDetailsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -164,8 +164,6 @@ func (client *ReservationsDetailsClient) listByReservationOrderHandleResponse(re
 }
 
 // NewListByReservationOrderAndReservationPager - Lists the reservations details for provided date range.
-//
-// Generated from API version 2019-10-01
 //   - reservationOrderID - Order Id of the reservation
 //   - reservationID - Id of the reservation
 //   - filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
@@ -210,7 +208,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCre
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("$filter", filter)
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultReservationsDetailsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

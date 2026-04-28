@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultContainerRegistryClientVersion string = "2021-07-01"
+
 // ContainerRegistryClient contains the methods for the ContainerRegistry group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2021-07-01
 type ContainerRegistryClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -26,8 +30,6 @@ type ContainerRegistryClient struct {
 
 // CheckDockerV2Support - Tells whether this Docker Registry instance supports Docker Registry HTTP API v2
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - options - ContainerRegistryClientCheckDockerV2SupportOptions contains the optional parameters for the ContainerRegistryClient.CheckDockerV2Support
 //     method.
 func (client *ContainerRegistryClient) CheckDockerV2Support(ctx context.Context, options *ContainerRegistryClientCheckDockerV2SupportOptions) (ContainerRegistryClientCheckDockerV2SupportResponse, error) {
@@ -64,8 +66,6 @@ func (client *ContainerRegistryClient) checkDockerV2SupportCreateRequest(ctx con
 
 // CreateManifest - Put the manifest identified by name and reference where reference can be a tag or digest.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - reference - A tag or a digest, pointing to a specific image
 //   - payload - Manifest body, can take v1 or v2 values depending on accept header
@@ -141,8 +141,6 @@ func (client *ContainerRegistryClient) createManifestHandleResponse(resp *http.R
 
 // DeleteManifest - Delete the manifest identified by name and reference. Note that a manifest can only be deleted by digest.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - reference - Digest of a BLOB
 //   - options - ContainerRegistryClientDeleteManifestOptions contains the optional parameters for the ContainerRegistryClient.DeleteManifest
@@ -189,8 +187,6 @@ func (client *ContainerRegistryClient) deleteManifestCreateRequest(ctx context.C
 
 // DeleteRepository - Delete the repository identified by name
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - options - ContainerRegistryClientDeleteRepositoryOptions contains the optional parameters for the ContainerRegistryClient.DeleteRepository
 //     method.
@@ -228,7 +224,7 @@ func (client *ContainerRegistryClient) deleteRepositoryCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -245,8 +241,6 @@ func (client *ContainerRegistryClient) deleteRepositoryHandleResponse(resp *http
 
 // DeleteTag - Delete tag
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - reference - Tag name
 //   - options - ContainerRegistryClientDeleteTagOptions contains the optional parameters for the ContainerRegistryClient.DeleteTag
@@ -288,7 +282,7 @@ func (client *ContainerRegistryClient) deleteTagCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -296,8 +290,6 @@ func (client *ContainerRegistryClient) deleteTagCreateRequest(ctx context.Contex
 
 // GetManifest - Get the manifest identified by name and reference where reference can be a tag or digest.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - reference - A tag or a digest, pointing to a specific image
 //   - options - ContainerRegistryClientGetManifestOptions contains the optional parameters for the ContainerRegistryClient.GetManifest
@@ -357,8 +349,6 @@ func (client *ContainerRegistryClient) getManifestHandleResponse(resp *http.Resp
 
 // GetManifestProperties - Get manifest attributes
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - options - ContainerRegistryClientGetManifestPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetManifestProperties
@@ -401,7 +391,7 @@ func (client *ContainerRegistryClient) getManifestPropertiesCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -417,8 +407,6 @@ func (client *ContainerRegistryClient) getManifestPropertiesHandleResponse(resp 
 }
 
 // NewGetManifestsPager - List manifests of a repository
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - options - ContainerRegistryClientGetManifestsOptions contains the optional parameters for the ContainerRegistryClient.NewGetManifestsPager
 //     method.
@@ -457,7 +445,7 @@ func (client *ContainerRegistryClient) getManifestsCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	if options != nil && options.Last != nil {
 		reqQP.Set("last", *options.Last)
 	}
@@ -486,8 +474,6 @@ func (client *ContainerRegistryClient) getManifestsHandleResponse(resp *http.Res
 
 // GetProperties - Get repository attributes
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - options - ContainerRegistryClientGetPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetProperties
 //     method.
@@ -525,7 +511,7 @@ func (client *ContainerRegistryClient) getPropertiesCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -541,8 +527,6 @@ func (client *ContainerRegistryClient) getPropertiesHandleResponse(resp *http.Re
 }
 
 // NewGetRepositoriesPager - List repositories
-//
-// Generated from API version 2021-07-01
 //   - options - ContainerRegistryClientGetRepositoriesOptions contains the optional parameters for the ContainerRegistryClient.NewGetRepositoriesPager
 //     method.
 func (client *ContainerRegistryClient) NewGetRepositoriesPager(options *ContainerRegistryClientGetRepositoriesOptions) *runtime.Pager[ContainerRegistryClientGetRepositoriesResponse] {
@@ -576,7 +560,7 @@ func (client *ContainerRegistryClient) getRepositoriesCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	if options != nil && options.Last != nil {
 		reqQP.Set("last", *options.Last)
 	}
@@ -602,8 +586,6 @@ func (client *ContainerRegistryClient) getRepositoriesHandleResponse(resp *http.
 
 // GetTagProperties - Get tag attributes by tag
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - reference - Tag name
 //   - options - ContainerRegistryClientGetTagPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetTagProperties
@@ -646,7 +628,7 @@ func (client *ContainerRegistryClient) getTagPropertiesCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -662,8 +644,6 @@ func (client *ContainerRegistryClient) getTagPropertiesHandleResponse(resp *http
 }
 
 // NewGetTagsPager - List tags of a repository
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - options - ContainerRegistryClientGetTagsOptions contains the optional parameters for the ContainerRegistryClient.NewGetTagsPager
 //     method.
@@ -702,7 +682,7 @@ func (client *ContainerRegistryClient) getTagsCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	if options != nil && options.Digest != nil {
 		reqQP.Set("digest", *options.Digest)
 	}
@@ -734,8 +714,6 @@ func (client *ContainerRegistryClient) getTagsHandleResponse(resp *http.Response
 
 // UpdateManifestProperties - Update properties of a manifest
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - digest - Digest of a BLOB
 //   - value - Manifest attribute value
@@ -779,7 +757,7 @@ func (client *ContainerRegistryClient) updateManifestPropertiesCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, value); err != nil {
@@ -799,8 +777,6 @@ func (client *ContainerRegistryClient) updateManifestPropertiesHandleResponse(re
 
 // UpdateProperties - Update the attribute identified by name where reference is the name of the repository.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - value - Repository attribute value
 //   - options - ContainerRegistryClientUpdatePropertiesOptions contains the optional parameters for the ContainerRegistryClient.UpdateProperties
@@ -839,7 +815,7 @@ func (client *ContainerRegistryClient) updatePropertiesCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, value); err != nil {
@@ -859,8 +835,6 @@ func (client *ContainerRegistryClient) updatePropertiesHandleResponse(resp *http
 
 // UpdateTagAttributes - Update tag attributes
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - name - Name of the image (including the namespace)
 //   - reference - Tag name
 //   - value - Tag attribute value
@@ -904,7 +878,7 @@ func (client *ContainerRegistryClient) updateTagAttributesCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, value); err != nil {

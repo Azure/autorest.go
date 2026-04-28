@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultImageVersionsClientVersion string = "2024-04-04-preview"
+
 // ImageVersionsClient contains the methods for the ImageVersions group.
 // Don't use this type directly, use NewImageVersionsClient() instead.
+//
+// Generated from API version 2024-04-04-preview
 type ImageVersionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -40,8 +44,6 @@ func NewImageVersionsClient(subscriptionID string, credential azcore.TokenCreden
 }
 
 // NewListByImagePager - List ImageVersion resources by Image
-//
-// Generated from API version 2024-04-04-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - imageName - Name of the image.
 //   - options - ImageVersionsClientListByImageOptions contains the optional parameters for the ImageVersionsClient.NewListByImagePager
@@ -89,7 +91,7 @@ func (client *ImageVersionsClient) listByImageCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-04-04-preview")
+	reqQP.Set("api-version", defaultImageVersionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultManagerDeploymentStatusClientVersion string = "2022-09-01"
+
 // ManagerDeploymentStatusClient contains the methods for the NetworkManagerDeploymentStatus group.
 // Don't use this type directly, use NewManagerDeploymentStatusClient() instead.
+//
+// Generated from API version 2022-09-01
 type ManagerDeploymentStatusClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewManagerDeploymentStatusClient(subscriptionID string, credential azcore.T
 
 // List - Post to List of Network Manager Deployment Status.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - parameters - Parameters supplied to specify which Managed Network deployment status is.
@@ -96,7 +98,7 @@ func (client *ManagerDeploymentStatusClient) listCreateRequest(ctx context.Conte
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultManagerDeploymentStatusClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

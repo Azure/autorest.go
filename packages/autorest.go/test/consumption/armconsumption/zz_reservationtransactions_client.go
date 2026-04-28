@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultReservationTransactionsClientVersion string = "2019-10-01"
+
 // ReservationTransactionsClient contains the methods for the ReservationTransactions group.
 // Don't use this type directly, use NewReservationTransactionsClient() instead.
+//
+// Generated from API version 2019-10-01
 type ReservationTransactionsClient struct {
 	internal *arm.Client
 }
@@ -38,8 +42,6 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 }
 
 // NewListPager - List of transactions for reserved instances on billing account scope
-//
-// Generated from API version 2019-10-01
 //   - billingAccountID - BillingAccount ID
 //   - options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.NewListPager
 //     method.
@@ -79,7 +81,7 @@ func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Conte
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultReservationTransactionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -95,8 +97,6 @@ func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Respo
 }
 
 // NewListByBillingProfilePager - List of transactions for reserved instances on billing account scope
-//
-// Generated from API version 2019-10-01
 //   - billingAccountID - BillingAccount ID
 //   - billingProfileID - Azure Billing Profile ID.
 //   - options - ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.NewListByBillingProfilePager
@@ -141,7 +141,7 @@ func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(c
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultReservationTransactionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

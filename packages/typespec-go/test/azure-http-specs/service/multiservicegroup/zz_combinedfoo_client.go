@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultCombinedFooClientVersion string = "av2"
+
 // CombinedFooClient contains the methods for the CombinedFoo group.
 // Don't use this type directly, use [CombinedClient.NewCombinedFooClient] instead.
+//
+// Generated from API version av2
 type CombinedFooClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -21,8 +25,6 @@ type CombinedFooClient struct {
 
 // Test -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version av2
 //   - options - CombinedFooClientTestOptions contains the optional parameters for the CombinedFooClient.Test method.
 func (client *CombinedFooClient) Test(ctx context.Context, options *CombinedFooClientTestOptions) (CombinedFooClientTestResponse, error) {
 	var err error
@@ -53,7 +55,7 @@ func (client *CombinedFooClient) testCreateRequest(ctx context.Context, _ *Combi
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "av2")
+	reqQP.Set("api-version", defaultCombinedFooClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

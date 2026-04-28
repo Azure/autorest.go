@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultLoadBalancerNetworkInterfacesClientVersion string = "2022-09-01"
+
 // LoadBalancerNetworkInterfacesClient contains the methods for the LoadBalancerNetworkInterfaces group.
 // Don't use this type directly, use NewLoadBalancerNetworkInterfacesClient() instead.
+//
+// Generated from API version 2022-09-01
 type LoadBalancerNetworkInterfacesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential az
 }
 
 // NewListPager - Gets associated load balancer network interfaces.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
 //   - options - LoadBalancerNetworkInterfacesClientListOptions contains the optional parameters for the LoadBalancerNetworkInterfacesClient.NewListPager
@@ -91,7 +93,7 @@ func (client *LoadBalancerNetworkInterfacesClient) listCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultLoadBalancerNetworkInterfacesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

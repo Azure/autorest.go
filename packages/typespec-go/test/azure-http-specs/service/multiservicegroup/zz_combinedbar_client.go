@@ -12,8 +12,12 @@ import (
 	"net/http"
 )
 
+const defaultCombinedBarClientVersion string = "bv2"
+
 // CombinedBarClient contains the methods for the CombinedBar group.
 // Don't use this type directly, use [CombinedClient.NewCombinedBarClient] instead.
+//
+// Generated from API version bv2
 type CombinedBarClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -21,8 +25,6 @@ type CombinedBarClient struct {
 
 // Test -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version bv2
 //   - options - CombinedBarClientTestOptions contains the optional parameters for the CombinedBarClient.Test method.
 func (client *CombinedBarClient) Test(ctx context.Context, options *CombinedBarClientTestOptions) (CombinedBarClientTestResponse, error) {
 	var err error
@@ -53,7 +55,7 @@ func (client *CombinedBarClient) testCreateRequest(ctx context.Context, _ *Combi
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "bv2")
+	reqQP.Set("api-version", defaultCombinedBarClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

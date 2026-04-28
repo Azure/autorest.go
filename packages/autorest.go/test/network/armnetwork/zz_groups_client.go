@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultGroupsClientVersion string = "2022-09-01"
+
 // GroupsClient contains the methods for the NetworkGroups group.
 // Don't use this type directly, use NewGroupsClient() instead.
+//
+// Generated from API version 2022-09-01
 type GroupsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewGroupsClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // CreateOrUpdate - Creates or updates a network group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - networkGroupName - The name of the network group.
@@ -123,8 +125,6 @@ func (client *GroupsClient) createOrUpdateHandleResponse(resp *http.Response) (G
 
 // BeginDelete - Deletes a network group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - networkGroupName - The name of the network group.
@@ -149,8 +149,6 @@ func (client *GroupsClient) BeginDelete(ctx context.Context, resourceGroupName s
 
 // Delete - Deletes a network group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *GroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, options *GroupsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "GroupsClient.BeginDelete"
@@ -207,8 +205,6 @@ func (client *GroupsClient) deleteCreateRequest(ctx context.Context, resourceGro
 
 // Get - Gets the specified network group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - networkGroupName - The name of the network group.
@@ -259,7 +255,7 @@ func (client *GroupsClient) getCreateRequest(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultGroupsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -275,8 +271,6 @@ func (client *GroupsClient) getHandleResponse(resp *http.Response) (GroupsClient
 }
 
 // NewListPager - Lists the specified network group.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - options - GroupsClientListOptions contains the optional parameters for the GroupsClient.NewListPager method.

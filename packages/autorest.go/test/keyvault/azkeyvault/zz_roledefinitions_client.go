@@ -16,16 +16,18 @@ import (
 	"strings"
 )
 
+const defaultRoleDefinitionsClientVersion string = "7.2"
+
 // RoleDefinitionsClient contains the methods for the RoleDefinitions group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 7.2
 type RoleDefinitionsClient struct {
 	internal *azcore.Client
 }
 
 // CreateOrUpdate - Creates or updates a custom role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role definition to create or update. Managed HSM only supports '/'.
 //   - roleDefinitionName - The name of the role definition to create or update. It can be any valid GUID.
@@ -65,7 +67,7 @@ func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleDefinitionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -85,8 +87,6 @@ func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Res
 
 // Delete - Deletes a custom role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role definition to delete. Managed HSM only supports '/'.
 //   - roleDefinitionName - The name (GUID) of the role definition to delete.
@@ -124,7 +124,7 @@ func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleDefinitionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -141,8 +141,6 @@ func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (
 
 // Get - Get the specified role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role definition to get. Managed HSM only supports '/'.
 //   - roleDefinitionName - The name of the role definition to get.
@@ -180,7 +178,7 @@ func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vault
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleDefinitionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -196,8 +194,6 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 }
 
 // NewListPager - Get all role definitions that are applicable at scope and above.
-//
-// Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 //   - scope - The scope of the role definition.
 //   - options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.NewListPager
@@ -237,7 +233,7 @@ func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaul
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "7.2")
+	reqQP.Set("api-version", defaultRoleDefinitionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

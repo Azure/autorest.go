@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultAlertRuleResourcesClientVersion string = "2024-07-19-preview"
+
 // AlertRuleResourcesClient contains the methods for the AlertRuleResources group.
 // Don't use this type directly, use NewAlertRuleResourcesClient() instead.
+//
+// Generated from API version 2024-07-19-preview
 type AlertRuleResourcesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewAlertRuleResourcesClient(subscriptionID string, credential azcore.TokenC
 
 // CreateOrUpdate - Create a AlertRuleResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - alertRuleResourceName - The alert rule proxy resource name.
@@ -95,7 +97,7 @@ func (client *AlertRuleResourcesClient) createOrUpdateCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-07-19-preview")
+	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,8 +118,6 @@ func (client *AlertRuleResourcesClient) createOrUpdateHandleResponse(resp *http.
 
 // Delete - Delete a AlertRuleResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - alertRuleResourceName - The alert rule proxy resource name.
@@ -168,15 +168,13 @@ func (client *AlertRuleResourcesClient) deleteCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-07-19-preview")
+	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a AlertRuleResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - alertRuleResourceName - The alert rule proxy resource name.
@@ -227,7 +225,7 @@ func (client *AlertRuleResourcesClient) getCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-07-19-preview")
+	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -243,8 +241,6 @@ func (client *AlertRuleResourcesClient) getHandleResponse(resp *http.Response) (
 }
 
 // NewListByParentPager - List AlertRuleResource resources by Watcher
-//
-// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - AlertRuleResourcesClientListByParentOptions contains the optional parameters for the AlertRuleResourcesClient.NewListByParentPager
@@ -292,7 +288,7 @@ func (client *AlertRuleResourcesClient) listByParentCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-07-19-preview")
+	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

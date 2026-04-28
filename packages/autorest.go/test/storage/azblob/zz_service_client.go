@@ -30,8 +30,6 @@ type ServiceClient struct {
 // expression. Filter blobs searches across all containers within a storage account but can
 // be scoped within the expression to a single container.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - comp - comp
 //   - options - ServiceClientFilterBlobsOptions contains the optional parameters for the ServiceClient.FilterBlobs method.
 func (client *ServiceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
@@ -113,8 +111,6 @@ func (client *ServiceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - restype - restype
 //   - comp - comp
 //   - options - ServiceClientGetAccountInfoOptions contains the optional parameters for the ServiceClient.GetAccountInfo method.
@@ -191,8 +187,6 @@ func (client *ServiceClient) getAccountInfoHandleResponse(resp *http.Response) (
 // GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and
 // CORS (Cross-Origin Resource Sharing) rules.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - restype - restype
 //   - comp - comp
 //   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
@@ -258,8 +252,6 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 // GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary
 // location endpoint when read-access geo-redundant replication is enabled for the storage account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - restype - restype
 //   - comp - comp
 //   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
@@ -332,8 +324,6 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 // GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using
 // bearer token authentication.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - restype - restype
 //   - comp - comp
 //   - keyInfo - Key information
@@ -410,8 +400,6 @@ func (client *ServiceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 
 // NewListContainersSegmentPager - The List Containers Segment operation returns a list of the containers under the specified
 // account
-//
-// Generated from API version 2021-12-02
 //   - comp - comp
 //   - options - ServiceClientListContainersSegmentOptions contains the optional parameters for the ServiceClient.NewListContainersSegmentPager
 //     method.
@@ -490,8 +478,6 @@ func (client *ServiceClient) listContainersSegmentHandleResponse(resp *http.Resp
 // SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics
 // and CORS (Cross-Origin Resource Sharing) rules
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - restype - restype
 //   - comp - comp
 //   - storageServiceProperties - The StorageService properties.
@@ -557,8 +543,6 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (S
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-12-02
 //   - comp - comp
 //   - contentLength - The length of the request.
 //   - multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header

@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultReservationRecommendationsClientVersion string = "2019-10-01"
+
 // ReservationRecommendationsClient contains the methods for the ReservationRecommendations group.
 // Don't use this type directly, use NewReservationRecommendationsClient() instead.
+//
+// Generated from API version 2019-10-01
 type ReservationRecommendationsClient struct {
 	internal *arm.Client
 }
@@ -36,8 +40,6 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 }
 
 // NewListPager - List of recommendations for purchasing reserved instances.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with reservation recommendations operations. This includes '/subscriptions/{subscriptionId}/'
 //     for subscription scope,
 //     '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
@@ -79,7 +81,7 @@ func (client *ReservationRecommendationsClient) listCreateRequest(ctx context.Co
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultReservationRecommendationsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

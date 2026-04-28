@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultOptionalBodyClientVersion string = "2023-12-01-preview"
+
 // OptionalBodyClient contains the methods for the OptionalBody group.
 // Don't use this type directly, use NewOptionalBodyClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type OptionalBodyClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewOptionalBodyClient(subscriptionID string, credential azcore.TokenCredent
 
 // Get - Get a Widget
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the Widget
 //   - options - OptionalBodyClientGetOptions contains the optional parameters for the OptionalBodyClient.Get method.
@@ -88,7 +90,7 @@ func (client *OptionalBodyClient) getCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultOptionalBodyClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -105,8 +107,6 @@ func (client *OptionalBodyClient) getHandleResponse(resp *http.Response) (Option
 
 // Patch - Update a Widget
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the Widget
 //   - properties - The resource properties to be updated.
@@ -153,7 +153,7 @@ func (client *OptionalBodyClient) patchCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultOptionalBodyClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -174,8 +174,6 @@ func (client *OptionalBodyClient) patchHandleResponse(resp *http.Response) (Opti
 
 // Post - A synchronous resource action.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the Widget
 //   - options - OptionalBodyClientPostOptions contains the optional parameters for the OptionalBodyClient.Post method.
@@ -221,7 +219,7 @@ func (client *OptionalBodyClient) postCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultOptionalBodyClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Body != nil {
@@ -245,8 +243,6 @@ func (client *OptionalBodyClient) postHandleResponse(resp *http.Response) (Optio
 
 // ProviderPost -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - options - OptionalBodyClientProviderPostOptions contains the optional parameters for the OptionalBodyClient.ProviderPost
 //     method.
 func (client *OptionalBodyClient) ProviderPost(ctx context.Context, options *OptionalBodyClientProviderPostOptions) (OptionalBodyClientProviderPostResponse, error) {
@@ -283,7 +279,7 @@ func (client *OptionalBodyClient) providerPostCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultOptionalBodyClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Body != nil {

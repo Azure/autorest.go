@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultTagsClientVersion string = "2019-10-01"
+
 // TagsClient contains the methods for the Tags group.
 // Don't use this type directly, use NewTagsClient() instead.
+//
+// Generated from API version 2019-10-01
 type TagsClient struct {
 	internal *arm.Client
 }
@@ -37,8 +41,6 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 
 // Get - Get all available tag keys for the defined scope
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with tags operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope,
 //     '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 //     resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -74,7 +76,7 @@ func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultTagsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

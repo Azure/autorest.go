@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultBodyRootsClientVersion string = "2025-01-01"
+
 // BodyRootsClient contains the methods for the BodyRoots group.
 // Don't use this type directly, use NewBodyRootsClient() instead.
+//
+// Generated from API version 2025-01-01
 type BodyRootsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewBodyRootsClient(subscriptionID string, credential azcore.TokenCredential
 
 // Action - Revoke a certificate under a certificate profile.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - bodyRootName - Body root resource name.
 //   - action - The content of the action request
@@ -88,7 +90,7 @@ func (client *BodyRootsClient) actionCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultBodyRootsClientVersion)
 	reqQP.Set("filter", "constantValue")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -100,8 +102,6 @@ func (client *BodyRootsClient) actionCreateRequest(ctx context.Context, resource
 
 // Get - Get details of a certificate profile.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - bodyRootName - Body root resource name.
 //   - options - BodyRootsClientGetOptions contains the optional parameters for the BodyRootsClient.Get method.
@@ -147,7 +147,7 @@ func (client *BodyRootsClient) getCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-01-01")
+	reqQP.Set("api-version", defaultBodyRootsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

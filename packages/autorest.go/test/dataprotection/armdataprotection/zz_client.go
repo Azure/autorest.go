@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultClientVersion string = "2025-07-01"
+
 // Client contains the methods for the DataProtection group.
 // Don't use this type directly, use NewClient() instead.
+//
+// Generated from API version 2025-07-01
 type Client struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewClient(subscriptionID string, credential azcore.TokenCredential, options
 
 // CheckFeatureSupport - Validates if a feature is supported
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-07-01
 //   - parameters - Feature support request object
 //   - options - ClientCheckFeatureSupportOptions contains the optional parameters for the Client.CheckFeatureSupport method.
 func (client *Client) CheckFeatureSupport(ctx context.Context, location string, parameters FeatureValidationRequestBaseClassification, options *ClientCheckFeatureSupportOptions) (ClientCheckFeatureSupportResponse, error) {
@@ -81,7 +83,7 @@ func (client *Client) checkFeatureSupportCreateRequest(ctx context.Context, loca
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-07-01")
+	reqQP.Set("api-version", defaultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

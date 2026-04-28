@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultScheduledActionsClientVersion string = "2025-05-01"
+
 // ScheduledActionsClient contains the methods for the ScheduledActions group.
 // Don't use this type directly, use NewScheduledActionsClient() instead.
+//
+// Generated from API version 2025-05-01
 type ScheduledActionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewScheduledActionsClient(subscriptionID string, credential azcore.TokenCre
 // VirtualMachinesCancelOperations - VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate)
 // request
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesCancelOperationsOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesCancelOperations
@@ -86,7 +88,7 @@ func (client *ScheduledActionsClient) virtualMachinesCancelOperationsCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -108,8 +110,6 @@ func (client *ScheduledActionsClient) virtualMachinesCancelOperationsHandleRespo
 // VirtualMachinesExecuteCreate - VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines,
 // this operation is triggered as soon as Computeschedule receives it.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesExecuteCreateOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesExecuteCreate
@@ -152,7 +152,7 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteCreateCreateRequest(
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -174,8 +174,6 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteCreateHandleResponse
 // VirtualMachinesExecuteDeallocate - VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual
 // machines, this operation is triggered as soon as Computeschedule receives it.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesExecuteDeallocateOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesExecuteDeallocate
@@ -218,7 +216,7 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteDeallocateCreateRequ
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -240,8 +238,6 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteDeallocateHandleResp
 // VirtualMachinesExecuteDelete - VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines,
 // this operation is triggered as soon as Computeschedule receives it.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesExecuteDeleteOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesExecuteDelete
@@ -284,7 +280,7 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteDeleteCreateRequest(
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -306,8 +302,6 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteDeleteHandleResponse
 // VirtualMachinesExecuteHibernate - VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines,
 // this operation is triggered as soon as Computeschedule receives it.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesExecuteHibernateOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesExecuteHibernate
@@ -350,7 +344,7 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteHibernateCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -372,8 +366,6 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteHibernateHandleRespo
 // VirtualMachinesExecuteStart - VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this
 // operation is triggered as soon as Computeschedule receives it.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesExecuteStartOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesExecuteStart
@@ -416,7 +408,7 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteStartCreateRequest(c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -438,8 +430,6 @@ func (client *ScheduledActionsClient) virtualMachinesExecuteStartHandleResponse(
 // VirtualMachinesGetOperationErrors - VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient
 // errors encountered, additional logs) if they exist.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesGetOperationErrorsOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesGetOperationErrors
@@ -482,7 +472,7 @@ func (client *ScheduledActionsClient) virtualMachinesGetOperationErrorsCreateReq
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -504,8 +494,6 @@ func (client *ScheduledActionsClient) virtualMachinesGetOperationErrorsHandleRes
 // VirtualMachinesGetOperationStatus - VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed
 // on virtual machines
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesGetOperationStatusOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesGetOperationStatus
@@ -548,7 +536,7 @@ func (client *ScheduledActionsClient) virtualMachinesGetOperationStatusCreateReq
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -570,8 +558,6 @@ func (client *ScheduledActionsClient) virtualMachinesGetOperationStatusHandleRes
 // VirtualMachinesSubmitDeallocate - VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual
 // machines at datetime in future.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesSubmitDeallocateOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesSubmitDeallocate
@@ -614,7 +600,7 @@ func (client *ScheduledActionsClient) virtualMachinesSubmitDeallocateCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -636,8 +622,6 @@ func (client *ScheduledActionsClient) virtualMachinesSubmitDeallocateHandleRespo
 // VirtualMachinesSubmitHibernate - VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines
 // at datetime in future.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesSubmitHibernateOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesSubmitHibernate
@@ -680,7 +664,7 @@ func (client *ScheduledActionsClient) virtualMachinesSubmitHibernateCreateReques
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -702,8 +686,6 @@ func (client *ScheduledActionsClient) virtualMachinesSubmitHibernateHandleRespon
 // VirtualMachinesSubmitStart - VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime
 // in future.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-05-01
 //   - locationparameter - The location name.
 //   - requestBody - The request body
 //   - options - ScheduledActionsClientVirtualMachinesSubmitStartOptions contains the optional parameters for the ScheduledActionsClient.VirtualMachinesSubmitStart
@@ -746,7 +728,7 @@ func (client *ScheduledActionsClient) virtualMachinesSubmitStartCreateRequest(ct
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-05-01")
+	reqQP.Set("api-version", defaultScheduledActionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLocationResourcesClientVersion string = "2023-12-01-preview"
+
 // LocationResourcesClient contains the methods for the LocationResources group.
 // Don't use this type directly, use NewLocationResourcesClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type LocationResourcesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewLocationResourcesClient(subscriptionID string, credential azcore.TokenCr
 
 // CreateOrUpdate - Create a LocationResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - locationResourceName - The name of the LocationResource
 //   - resource - Resource create parameters.
@@ -90,7 +92,7 @@ func (client *LocationResourcesClient) createOrUpdateCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -111,8 +113,6 @@ func (client *LocationResourcesClient) createOrUpdateHandleResponse(resp *http.R
 
 // Delete - Delete a LocationResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - locationResourceName - The name of the LocationResource
 //   - options - LocationResourcesClientDeleteOptions contains the optional parameters for the LocationResourcesClient.Delete
@@ -158,15 +158,13 @@ func (client *LocationResourcesClient) deleteCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a LocationResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - locationResourceName - The name of the LocationResource
 //   - options - LocationResourcesClientGetOptions contains the optional parameters for the LocationResourcesClient.Get method.
@@ -212,7 +210,7 @@ func (client *LocationResourcesClient) getCreateRequest(ctx context.Context, loc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -228,8 +226,6 @@ func (client *LocationResourcesClient) getHandleResponse(resp *http.Response) (L
 }
 
 // NewListByLocationPager - List LocationResource resources by SubscriptionLocationResource
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - options - LocationResourcesClientListByLocationOptions contains the optional parameters for the LocationResourcesClient.NewListByLocationPager
 //     method.
@@ -272,7 +268,7 @@ func (client *LocationResourcesClient) listByLocationCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -289,8 +285,6 @@ func (client *LocationResourcesClient) listByLocationHandleResponse(resp *http.R
 
 // Update - Update a LocationResource
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - locationResourceName - The name of the LocationResource
 //   - properties - The resource properties to be updated.
@@ -338,7 +332,7 @@ func (client *LocationResourcesClient) updateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

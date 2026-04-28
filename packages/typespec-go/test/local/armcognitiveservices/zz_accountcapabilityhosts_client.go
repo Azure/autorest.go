@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultAccountCapabilityHostsClientVersion string = "2025-10-01-preview"
+
 // AccountCapabilityHostsClient contains the methods for the AccountCapabilityHosts group.
 // Don't use this type directly, use NewAccountCapabilityHostsClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type AccountCapabilityHostsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewAccountCapabilityHostsClient(subscriptionID string, credential azcore.To
 //
 // Create or update account capabilityHost.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - capabilityHostName - The name of the capability host associated with the Cognitive Services Resource
@@ -73,8 +75,6 @@ func (client *AccountCapabilityHostsClient) BeginCreateOrUpdate(ctx context.Cont
 //
 // Create or update account capabilityHost.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *AccountCapabilityHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, accountName string, capabilityHostName string, capabilityHost CapabilityHost, options *AccountCapabilityHostsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AccountCapabilityHostsClient.BeginCreateOrUpdate"
@@ -120,7 +120,7 @@ func (client *AccountCapabilityHostsClient) createOrUpdateCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultAccountCapabilityHostsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -134,8 +134,6 @@ func (client *AccountCapabilityHostsClient) createOrUpdateCreateRequest(ctx cont
 //
 // Delete account capabilityHost.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - capabilityHostName - The name of the capability host associated with the Cognitive Services Resource
@@ -162,8 +160,6 @@ func (client *AccountCapabilityHostsClient) BeginDelete(ctx context.Context, res
 //
 // Delete account capabilityHost.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *AccountCapabilityHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, accountName string, capabilityHostName string, options *AccountCapabilityHostsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AccountCapabilityHostsClient.BeginDelete"
@@ -209,7 +205,7 @@ func (client *AccountCapabilityHostsClient) deleteCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultAccountCapabilityHostsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
@@ -218,8 +214,6 @@ func (client *AccountCapabilityHostsClient) deleteCreateRequest(ctx context.Cont
 //
 // Get account capabilityHost.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - capabilityHostName - The name of the capability host associated with the Cognitive Services Resource
@@ -271,7 +265,7 @@ func (client *AccountCapabilityHostsClient) getCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultAccountCapabilityHostsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -289,8 +283,6 @@ func (client *AccountCapabilityHostsClient) getHandleResponse(resp *http.Respons
 // NewListPager - List capabilityHost.
 //
 // List capabilityHost.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - options - AccountCapabilityHostsClientListOptions contains the optional parameters for the AccountCapabilityHostsClient.NewListPager
@@ -338,7 +330,7 @@ func (client *AccountCapabilityHostsClient) listCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultAccountCapabilityHostsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

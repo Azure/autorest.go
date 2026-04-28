@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultCommunityGalleryImageVersionsClientVersion string = "2021-07-01"
+
 // CommunityGalleryImageVersionsClient contains the methods for the CommunityGalleryImageVersions group.
 // Don't use this type directly, use NewCommunityGalleryImageVersionsClient() instead.
+//
+// Generated from API version 2021-07-01
 type CommunityGalleryImageVersionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewCommunityGalleryImageVersionsClient(subscriptionID string, credential az
 
 // Get - Get a community gallery image version.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2021-07-01
 //   - location - Resource location.
 //   - publicGalleryName - The public name of the community gallery.
 //   - galleryImageName - The name of the community gallery image definition.
@@ -103,7 +105,7 @@ func (client *CommunityGalleryImageVersionsClient) getCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01")
+	reqQP.Set("api-version", defaultCommunityGalleryImageVersionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

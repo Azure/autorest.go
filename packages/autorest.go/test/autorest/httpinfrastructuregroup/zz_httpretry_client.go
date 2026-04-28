@@ -22,8 +22,6 @@ type HTTPRetryClient struct {
 
 // Delete503 - Return 503 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientDelete503Options contains the optional parameters for the HTTPRetryClient.Delete503 method.
 func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetryClientDelete503Options) (HTTPRetryClientDelete503Response, error) {
 	var err error
@@ -65,8 +63,6 @@ func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, optio
 
 // Get502 - Return 502 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientGet502Options contains the optional parameters for the HTTPRetryClient.Get502 method.
 func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryClientGet502Options) (HTTPRetryClientGet502Response, error) {
 	var err error
@@ -101,8 +97,6 @@ func (client *HTTPRetryClient) get502CreateRequest(ctx context.Context, _ *HTTPR
 }
 
 // Head408 - Return 408 status code, then 200 after retry
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientHead408Options contains the optional parameters for the HTTPRetryClient.Head408 method.
 func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryClientHead408Options) (HTTPRetryClientHead408Response, error) {
 	var err error
@@ -138,8 +132,6 @@ func (client *HTTPRetryClient) head408CreateRequest(ctx context.Context, _ *HTTP
 
 // Options502 - Return 502 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientOptions502Options contains the optional parameters for the HTTPRetryClient.Options502 method.
 func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetryClientOptions502Options) (HTTPRetryClientOptions502Response, error) {
 	var err error
@@ -185,8 +177,6 @@ func (client *HTTPRetryClient) options502HandleResponse(resp *http.Response) (HT
 
 // Patch500 - Return 500 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientPatch500Options contains the optional parameters for the HTTPRetryClient.Patch500 method.
 func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryClientPatch500Options) (HTTPRetryClientPatch500Response, error) {
 	var err error
@@ -225,8 +215,6 @@ func (client *HTTPRetryClient) patch500CreateRequest(ctx context.Context, _ *HTT
 
 // Patch504 - Return 504 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientPatch504Options contains the optional parameters for the HTTPRetryClient.Patch504 method.
 func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryClientPatch504Options) (HTTPRetryClientPatch504Response, error) {
 	var err error
@@ -265,8 +253,6 @@ func (client *HTTPRetryClient) patch504CreateRequest(ctx context.Context, _ *HTT
 
 // Post503 - Return 503 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientPost503Options contains the optional parameters for the HTTPRetryClient.Post503 method.
 func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryClientPost503Options) (HTTPRetryClientPost503Response, error) {
 	var err error
@@ -308,8 +294,6 @@ func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options
 
 // Put500 - Return 500 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientPut500Options contains the optional parameters for the HTTPRetryClient.Put500 method.
 func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryClientPut500Options) (HTTPRetryClientPut500Response, error) {
 	var err error
@@ -348,8 +332,6 @@ func (client *HTTPRetryClient) put500CreateRequest(ctx context.Context, _ *HTTPR
 
 // Put504 - Return 504 status code, then 200 after retry
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - options - HTTPRetryClientPut504Options contains the optional parameters for the HTTPRetryClient.Put504 method.
 func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryClientPut504Options) (HTTPRetryClientPut504Response, error) {
 	var err error

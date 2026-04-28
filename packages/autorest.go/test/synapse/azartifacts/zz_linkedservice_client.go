@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLinkedServiceClientVersion string = "2020-12-01"
+
 // LinkedServiceClient contains the methods for the LinkedService group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type LinkedServiceClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type LinkedServiceClient struct {
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - linkedServiceName - The linked service name.
 //   - linkedService - Linked service resource definition.
 //   - options - LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginCreateOrUpdateLinkedService
@@ -46,8 +48,6 @@ func (client *LinkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *LinkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
 	var err error
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
@@ -91,8 +91,6 @@ func (client *LinkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 
 // BeginDeleteLinkedService - Deletes a linked service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - linkedServiceName - The linked service name.
 //   - options - LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginDeleteLinkedService
 //     method.
@@ -111,8 +109,6 @@ func (client *LinkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 
 // DeleteLinkedService - Deletes a linked service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *LinkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*http.Response, error) {
 	var err error
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
@@ -150,8 +146,6 @@ func (client *LinkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 
 // GetLinkedService - Gets a linked service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - linkedServiceName - The linked service name.
 //   - options - LinkedServiceClientGetLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.GetLinkedService
 //     method.
@@ -204,8 +198,6 @@ func (client *LinkedServiceClient) getLinkedServiceHandleResponse(resp *http.Res
 }
 
 // NewGetLinkedServicesByWorkspacePager - Lists linked services.
-//
-// Generated from API version 2020-12-01
 //   - options - LinkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the LinkedServiceClient.NewGetLinkedServicesByWorkspacePager
 //     method.
 func (client *LinkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[LinkedServiceClientGetLinkedServicesByWorkspaceResponse] {
@@ -237,7 +229,7 @@ func (client *LinkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultLinkedServiceClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -254,8 +246,6 @@ func (client *LinkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 
 // BeginRenameLinkedService - Renames a linked service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - linkedServiceName - The linked service name.
 //   - request - proposed new name.
 //   - options - LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginRenameLinkedService
@@ -275,8 +265,6 @@ func (client *LinkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 
 // RenameLinkedService - Renames a linked service.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 func (client *LinkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*http.Response, error) {
 	var err error
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)

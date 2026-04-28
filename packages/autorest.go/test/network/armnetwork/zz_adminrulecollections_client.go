@@ -18,8 +18,12 @@ import (
 	"strings"
 )
 
+const defaultAdminRuleCollectionsClientVersion string = "2022-09-01"
+
 // AdminRuleCollectionsClient contains the methods for the AdminRuleCollections group.
 // Don't use this type directly, use NewAdminRuleCollectionsClient() instead.
+//
+// Generated from API version 2022-09-01
 type AdminRuleCollectionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -44,8 +48,6 @@ func NewAdminRuleCollectionsClient(subscriptionID string, credential azcore.Toke
 
 // CreateOrUpdate - Creates or updates an admin rule collection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - configurationName - The name of the network manager Security Configuration.
@@ -123,8 +125,6 @@ func (client *AdminRuleCollectionsClient) createOrUpdateHandleResponse(resp *htt
 
 // BeginDelete - Deletes an admin rule collection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - configurationName - The name of the network manager Security Configuration.
@@ -151,8 +151,6 @@ func (client *AdminRuleCollectionsClient) BeginDelete(ctx context.Context, resou
 
 // Delete - Deletes an admin rule collection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *AdminRuleCollectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AdminRuleCollectionsClient.BeginDelete"
@@ -213,8 +211,6 @@ func (client *AdminRuleCollectionsClient) deleteCreateRequest(ctx context.Contex
 
 // Get - Gets a network manager security admin configuration rule collection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - configurationName - The name of the network manager Security Configuration.
@@ -287,8 +283,6 @@ func (client *AdminRuleCollectionsClient) getHandleResponse(resp *http.Response)
 }
 
 // NewListPager - Lists all the rule collections in a security admin configuration, in a paginated format.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - networkManagerName - The name of the network manager.
 //   - configurationName - The name of the network manager Security Configuration.
@@ -347,7 +341,7 @@ func (client *AdminRuleCollectionsClient) listCreateRequest(ctx context.Context,
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultAdminRuleCollectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

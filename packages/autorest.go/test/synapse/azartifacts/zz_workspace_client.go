@@ -13,8 +13,12 @@ import (
 	"net/http"
 )
 
+const defaultWorkspaceClientVersion string = "2020-12-01"
+
 // WorkspaceClient contains the methods for the Workspace group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type WorkspaceClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -22,8 +26,6 @@ type WorkspaceClient struct {
 
 // Get - Get Workspace
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - options - WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
 func (client *WorkspaceClient) Get(ctx context.Context, options *WorkspaceClientGetOptions) (WorkspaceClientGetResponse, error) {
 	var err error
@@ -51,7 +53,7 @@ func (client *WorkspaceClient) getCreateRequest(ctx context.Context, _ *Workspac
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultWorkspaceClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

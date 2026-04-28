@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultInboundNatRulesClientVersion string = "2022-09-01"
+
 // InboundNatRulesClient contains the methods for the InboundNatRules group.
 // Don't use this type directly, use NewInboundNatRulesClient() instead.
+//
+// Generated from API version 2022-09-01
 type InboundNatRulesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginCreateOrUpdate - Creates or updates a load balancer inbound NAT rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
 //   - inboundNatRuleName - The name of the inbound NAT rule.
@@ -71,8 +73,6 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 
 // CreateOrUpdate - Creates or updates a load balancer inbound NAT rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *InboundNatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "InboundNatRulesClient.BeginCreateOrUpdate"
@@ -129,8 +129,6 @@ func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Con
 
 // BeginDelete - Deletes the specified load balancer inbound NAT rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
 //   - inboundNatRuleName - The name of the inbound NAT rule.
@@ -156,8 +154,6 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 
 // Delete - Deletes the specified load balancer inbound NAT rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *InboundNatRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "InboundNatRulesClient.BeginDelete"
@@ -211,8 +207,6 @@ func (client *InboundNatRulesClient) deleteCreateRequest(ctx context.Context, re
 
 // Get - Gets the specified load balancer inbound NAT rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
 //   - inboundNatRuleName - The name of the inbound NAT rule.
@@ -282,8 +276,6 @@ func (client *InboundNatRulesClient) getHandleResponse(resp *http.Response) (Inb
 }
 
 // NewListPager - Gets all the inbound NAT rules in a load balancer.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - loadBalancerName - The name of the load balancer.
 //   - options - InboundNatRulesClientListOptions contains the optional parameters for the InboundNatRulesClient.NewListPager
@@ -331,7 +323,7 @@ func (client *InboundNatRulesClient) listCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultInboundNatRulesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

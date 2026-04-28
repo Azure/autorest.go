@@ -26,8 +26,6 @@ type PathsClient struct {
 
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - vault - The vault name, e.g. https://myvault
 //   - secret - Secret value.
 //   - keyName - The key name with value 'key1'.

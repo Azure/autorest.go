@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultEncryptionScopesClientVersion string = "2025-10-01-preview"
+
 // EncryptionScopesClient contains the methods for the EncryptionScopes group.
 // Don't use this type directly, use NewEncryptionScopesClient() instead.
+//
+// Generated from API version 2025-10-01-preview
 type EncryptionScopesClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewEncryptionScopesClient(subscriptionID string, credential azcore.TokenCre
 
 // CreateOrUpdate - Update the state of specified encryptionScope associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - encryptionScopeName - The name of the encryptionScope associated with the Cognitive Services Account
@@ -95,7 +97,7 @@ func (client *EncryptionScopesClient) createOrUpdateCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultEncryptionScopesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,8 +118,6 @@ func (client *EncryptionScopesClient) createOrUpdateHandleResponse(resp *http.Re
 
 // BeginDelete - Deletes the specified encryptionScope associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - encryptionScopeName - The name of the encryptionScope associated with the Cognitive Services Account
@@ -142,8 +142,6 @@ func (client *EncryptionScopesClient) BeginDelete(ctx context.Context, resourceG
 
 // Delete - Deletes the specified encryptionScope associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 func (client *EncryptionScopesClient) deleteOperation(ctx context.Context, resourceGroupName string, accountName string, encryptionScopeName string, options *EncryptionScopesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "EncryptionScopesClient.BeginDelete"
@@ -189,15 +187,13 @@ func (client *EncryptionScopesClient) deleteCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultEncryptionScopesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Gets the specified EncryptionScope associated with the Cognitive Services account.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - encryptionScopeName - The name of the encryptionScope associated with the Cognitive Services Account
@@ -248,7 +244,7 @@ func (client *EncryptionScopesClient) getCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultEncryptionScopesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -264,8 +260,6 @@ func (client *EncryptionScopesClient) getHandleResponse(resp *http.Response) (En
 }
 
 // NewListPager - Gets the content filters associated with the Azure OpenAI account.
-//
-// Generated from API version 2025-10-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - The name of Cognitive Services account.
 //   - options - EncryptionScopesClientListOptions contains the optional parameters for the EncryptionScopesClient.NewListPager
@@ -313,7 +307,7 @@ func (client *EncryptionScopesClient) listCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2025-10-01-preview")
+	reqQP.Set("api-version", defaultEncryptionScopesClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

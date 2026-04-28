@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultNotebookOperationResultClientVersion string = "2020-12-01"
+
 // NotebookOperationResultClient contains the methods for the NotebookOperationResult group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type NotebookOperationResultClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type NotebookOperationResultClient struct {
 
 // Get - Get notebook operation result
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - operationID - Operation ID.
 //   - options - NotebookOperationResultClientGetOptions contains the optional parameters for the NotebookOperationResultClient.Get
 //     method.
@@ -59,7 +61,7 @@ func (client *NotebookOperationResultClient) getCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultNotebookOperationResultClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

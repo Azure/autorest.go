@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultApplicationGatewayWafDynamicManifestsClientVersion string = "2022-09-01"
+
 // ApplicationGatewayWafDynamicManifestsClient contains the methods for the ApplicationGatewayWafDynamicManifests group.
 // Don't use this type directly, use NewApplicationGatewayWafDynamicManifestsClient() instead.
+//
+// Generated from API version 2022-09-01
 type ApplicationGatewayWafDynamicManifestsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -42,8 +46,6 @@ func NewApplicationGatewayWafDynamicManifestsClient(subscriptionID string, crede
 }
 
 // NewGetPager - Gets the regional application gateway waf manifest.
-//
-// Generated from API version 2022-09-01
 //   - location - The region where the nrp are located at.
 //   - options - ApplicationGatewayWafDynamicManifestsClientGetOptions contains the optional parameters for the ApplicationGatewayWafDynamicManifestsClient.NewGetPager
 //     method.
@@ -86,7 +88,7 @@ func (client *ApplicationGatewayWafDynamicManifestsClient) getCreateRequest(ctx 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultApplicationGatewayWafDynamicManifestsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

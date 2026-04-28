@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultBigDataPoolsClientVersion string = "2020-12-01"
+
 // BigDataPoolsClient contains the methods for the BigDataPools group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2020-12-01
 type BigDataPoolsClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -25,8 +29,6 @@ type BigDataPoolsClient struct {
 
 // Get - Get Big Data Pool
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - bigDataPoolName - The Big Data Pool name
 //   - options - BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
 func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (BigDataPoolsClientGetResponse, error) {
@@ -76,8 +78,6 @@ func (client *BigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDat
 
 // List - List Big Data Pools
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2020-12-01
 //   - options - BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
 func (client *BigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsClientListOptions) (BigDataPoolsClientListResponse, error) {
 	var err error
@@ -105,7 +105,7 @@ func (client *BigDataPoolsClient) listCreateRequest(ctx context.Context, _ *BigD
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", defaultBigDataPoolsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

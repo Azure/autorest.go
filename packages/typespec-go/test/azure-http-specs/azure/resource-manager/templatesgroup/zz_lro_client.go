@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultLroClientVersion string = "2023-12-01-preview"
+
 // LroClient contains the methods for the Lro group.
 // Don't use this type directly, use NewLroClient() instead.
+//
+// Generated from API version 2023-12-01-preview
 type LroClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewLroClient(subscriptionID string, credential azcore.TokenCredential, opti
 
 // BeginCreateOrReplace - Create a Order
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - orderName - The name of the Order
 //   - resource - Resource create parameters.
@@ -67,8 +69,6 @@ func (client *LroClient) BeginCreateOrReplace(ctx context.Context, resourceGroup
 
 // CreateOrReplace - Create a Order
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LroClient) createOrReplace(ctx context.Context, resourceGroupName string, orderName string, resource Order, options *LroClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LroClient.BeginCreateOrReplace"
@@ -110,7 +110,7 @@ func (client *LroClient) createOrReplaceCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLroClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -122,8 +122,6 @@ func (client *LroClient) createOrReplaceCreateRequest(ctx context.Context, resou
 
 // BeginDelete - Delete a Order
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - orderName - The name of the Order
 //   - options - LroClientBeginDeleteOptions contains the optional parameters for the LroClient.BeginDelete method.
@@ -146,8 +144,6 @@ func (client *LroClient) BeginDelete(ctx context.Context, resourceGroupName stri
 
 // Delete - Delete a Order
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LroClient) deleteOperation(ctx context.Context, resourceGroupName string, orderName string, options *LroClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LroClient.BeginDelete"
@@ -189,15 +185,13 @@ func (client *LroClient) deleteCreateRequest(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLroClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // BeginExport - A long-running resource action.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - orderName - The name of the Order
 //   - body - The content of the action request
@@ -221,8 +215,6 @@ func (client *LroClient) BeginExport(ctx context.Context, resourceGroupName stri
 
 // Export - A long-running resource action.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LroClient) export(ctx context.Context, resourceGroupName string, orderName string, body ExportRequest, options *LroClientBeginExportOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LroClient.BeginExport"
@@ -264,7 +256,7 @@ func (client *LroClient) exportCreateRequest(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLroClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -295,8 +287,6 @@ func (client *LroClient) BeginExportArray(ctx context.Context, body ExportReques
 
 // ExportArray -
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2023-12-01-preview
 func (client *LroClient) exportArray(ctx context.Context, body ExportRequest, options *LroClientBeginExportArrayOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LroClient.BeginExportArray"
@@ -330,7 +320,7 @@ func (client *LroClient) exportArrayCreateRequest(ctx context.Context, body Expo
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-12-01-preview")
+	reqQP.Set("api-version", defaultLroClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

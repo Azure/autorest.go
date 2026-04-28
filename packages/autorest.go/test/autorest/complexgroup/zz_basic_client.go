@@ -13,8 +13,12 @@ import (
 	"net/http"
 )
 
+const defaultBasicClientVersion string = "2016-02-29"
+
 // BasicClient contains the methods for the Basic group.
 // Don't use this type directly, use a constructor function instead.
+//
+// Generated from API version 2016-02-29
 type BasicClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -22,8 +26,6 @@ type BasicClient struct {
 
 // GetEmpty - Get a basic complex type that is empty
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
 func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicClientGetEmptyOptions) (BasicClientGetEmptyResponse, error) {
 	var err error
@@ -69,8 +71,6 @@ func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicCli
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - BasicClientGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
 func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicClientGetInvalidOptions) (BasicClientGetInvalidResponse, error) {
 	var err error
@@ -116,8 +116,6 @@ func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicC
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - BasicClientGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
 func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicClientGetNotProvidedOptions) (BasicClientGetNotProvidedResponse, error) {
 	var err error
@@ -163,8 +161,6 @@ func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (Ba
 
 // GetNull - Get a basic complex type whose properties are null
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - BasicClientGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
 func (client *BasicClient) GetNull(ctx context.Context, options *BasicClientGetNullOptions) (BasicClientGetNullResponse, error) {
 	var err error
@@ -210,8 +206,6 @@ func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicClie
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - options - BasicClientGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
 func (client *BasicClient) GetValid(ctx context.Context, options *BasicClientGetValidOptions) (BasicClientGetValidResponse, error) {
 	var err error
@@ -257,8 +251,6 @@ func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicCli
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2016-02-29
 //   - complexBody - Please put {id: 2, name: 'abc', color: 'Magenta'}
 //   - options - BasicClientPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
 func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicClientPutValidOptions) (BasicClientPutValidResponse, error) {
@@ -290,7 +282,7 @@ func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBod
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2016-02-29")
+	reqQP.Set("api-version", defaultBasicClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {

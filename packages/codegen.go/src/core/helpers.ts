@@ -360,7 +360,12 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
       return `string(${star}${paramName})`;
     case 'literal':
       // cannot use formatLiteralValue() since all values are treated as strings
-      return `"${type.literal}"`;
+      switch (type.type.kind) {
+        case 'constantDef':
+          return type.type.name;
+        default:
+          return `"${type.literal}"`;
+      }
     case 'scalar':
       switch (type.type) {
         case 'bool':
@@ -404,6 +409,8 @@ export function formatLiteralValue(value: go.Literal, withCast: boolean): string
         return `${value.type.name}("${value.literal}")`;
       }
       return `${value.type.name}(${value.literal})`;
+    case 'constantDef':
+      return value.type.name;
     case 'encodedBytes':
       return <string>value.literal;
     case 'scalar':

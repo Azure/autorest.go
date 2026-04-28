@@ -17,8 +17,12 @@ import (
 	"strings"
 )
 
+const defaultVirtualNetworkGatewayConnectionsClientVersion string = "2022-09-01"
+
 // VirtualNetworkGatewayConnectionsClient contains the methods for the VirtualNetworkGatewayConnections group.
 // Don't use this type directly, use NewVirtualNetworkGatewayConnectionsClient() instead.
+//
+// Generated from API version 2022-09-01
 type VirtualNetworkGatewayConnectionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -43,8 +47,6 @@ func NewVirtualNetworkGatewayConnectionsClient(subscriptionID string, credential
 
 // BeginCreateOrUpdate - Creates or updates a virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - parameters - Parameters supplied to the create or update virtual network gateway connection operation.
@@ -70,8 +72,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 
 // CreateOrUpdate - Creates or updates a virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate"
@@ -113,7 +113,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateCreateReques
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", defaultVirtualNetworkGatewayConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -124,8 +124,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateCreateReques
 
 // BeginDelete - Deletes the specified virtual network Gateway connection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginDeleteOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginDelete
@@ -150,8 +148,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 
 // Delete - Deletes the specified virtual network Gateway connection.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginDelete"
@@ -201,8 +197,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) deleteCreateRequest(ctx co
 
 // Get - Gets the specified virtual network gateway connection by resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - options - VirtualNetworkGatewayConnectionsClientGetOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.Get
@@ -266,8 +260,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) getHandleResponse(resp *ht
 
 // BeginGetIkeSas - Lists IKE Security Associations for the virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway Connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas
@@ -292,8 +284,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginGetIkeSas(ctx context
 
 // GetIkeSas - Lists IKE Security Associations for the virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) getIkeSas(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginGetIkeSasOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas"
@@ -344,8 +334,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) getIkeSasCreateRequest(ctx
 // GetSharedKey - The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual
 // network gateway connection shared key through Network resource provider.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The virtual network gateway connection shared key name.
 //   - options - VirtualNetworkGatewayConnectionsClientGetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.GetSharedKey
@@ -409,8 +397,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyHandleResponse
 
 // NewListPager - The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways connections
 // created.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - options - VirtualNetworkGatewayConnectionsClientListOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.NewListPager
 //     method.
@@ -470,8 +456,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) listHandleResponse(resp *h
 
 // BeginResetConnection - Resets the virtual network gateway connection specified.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway Connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginResetConnection
@@ -496,8 +480,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetConnection(ctx c
 
 // ResetConnection - Resets the virtual network gateway connection specified.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) resetConnection(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginResetConnection"
@@ -549,8 +531,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetConnectionCreateReque
 // shared key for passed virtual network gateway connection in the specified resource group
 // through Network resource provider.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The virtual network gateway connection reset shared key Name.
 //   - parameters - Parameters supplied to the begin reset virtual network gateway connection shared key operation through network
@@ -579,8 +559,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 // shared key for passed virtual network gateway connection in the specified resource group
 // through Network resource provider.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginResetSharedKeyOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey"
@@ -635,8 +613,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKeyCreateReques
 // shared key for passed virtual network gateway connection in the specified resource group through
 // Network resource provider.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The virtual network gateway connection name.
 //   - parameters - Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork
@@ -665,8 +641,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 // key for passed virtual network gateway connection in the specified resource group through
 // Network resource provider.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) setSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsClientBeginSetSharedKeyOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey"
@@ -719,8 +693,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) setSharedKeyCreateRequest(
 
 // BeginStartPacketCapture - Starts packet capture on virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - options - VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions contains the optional parameters for the
@@ -745,8 +717,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 
 // StartPacketCapture - Starts packet capture on virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) startPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsClientBeginStartPacketCaptureOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture"
@@ -802,8 +772,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureCreateRe
 
 // BeginStopPacketCapture - Stops packet capture on virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway Connection.
 //   - parameters - Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection.
@@ -829,8 +797,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 
 // StopPacketCapture - Stops packet capture on virtual network gateway connection in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsClientBeginStopPacketCaptureOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture"
@@ -883,8 +849,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCaptureCreateReq
 
 // BeginUpdateTags - Updates a virtual network gateway connection tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 //   - resourceGroupName - The name of the resource group.
 //   - virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 //   - parameters - Parameters supplied to update virtual network gateway connection tags.
@@ -910,8 +874,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 
 // UpdateTags - Updates a virtual network gateway connection tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2022-09-01
 func (client *VirtualNetworkGatewayConnectionsClient) updateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters TagsObject, options *VirtualNetworkGatewayConnectionsClientBeginUpdateTagsOptions) (*http.Response, error) {
 	var err error
 	const operationName = "VirtualNetworkGatewayConnectionsClient.BeginUpdateTags"

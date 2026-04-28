@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultPrivateEndpointConnectionsClientVersion string = "2024-06-30-preview"
+
 // PrivateEndpointConnectionsClient contains the methods for the PrivateEndpointConnections group.
 // Don't use this type directly, use NewPrivateEndpointConnectionsClient() instead.
+//
+// Generated from API version 2024-06-30-preview
 type PrivateEndpointConnectionsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewPrivateEndpointConnectionsClient(subscriptionID string, credential azcor
 
 // Create - Creates or updates the private endpoint connection for the Cloud Hsm Cluster.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - cloudHsmClusterName - The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must
 //     be between 3 and 23 characters in length.
@@ -96,7 +98,7 @@ func (client *PrivateEndpointConnectionsClient) createCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultPrivateEndpointConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -117,8 +119,6 @@ func (client *PrivateEndpointConnectionsClient) createHandleResponse(resp *http.
 
 // BeginDelete - Deletes the private endpoint connection for the Cloud Hsm Cluster.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - cloudHsmClusterName - The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must
 //     be between 3 and 23 characters in length.
@@ -144,8 +144,6 @@ func (client *PrivateEndpointConnectionsClient) BeginDelete(ctx context.Context,
 
 // Delete - Deletes the private endpoint connection for the Cloud Hsm Cluster.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 func (client *PrivateEndpointConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, cloudHsmClusterName string, peConnectionName string, options *PrivateEndpointConnectionsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "PrivateEndpointConnectionsClient.BeginDelete"
@@ -191,15 +189,13 @@ func (client *PrivateEndpointConnectionsClient) deleteCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultPrivateEndpointConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Gets the private endpoint connection for the Cloud Hsm Cluster.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - cloudHsmClusterName - The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must
 //     be between 3 and 23 characters in length.
@@ -252,7 +248,7 @@ func (client *PrivateEndpointConnectionsClient) getCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultPrivateEndpointConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -269,8 +265,6 @@ func (client *PrivateEndpointConnectionsClient) getHandleResponse(resp *http.Res
 
 // NewListByCloudHsmClusterPager - The List operation gets information about the private endpoint connections associated with
 // the Cloud HSM Cluster
-//
-// Generated from API version 2024-06-30-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - cloudHsmClusterName - The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must
 //     be between 3 and 23 characters in length.
@@ -319,7 +313,7 @@ func (client *PrivateEndpointConnectionsClient) listByCloudHsmClusterCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-06-30-preview")
+	reqQP.Set("api-version", defaultPrivateEndpointConnectionsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

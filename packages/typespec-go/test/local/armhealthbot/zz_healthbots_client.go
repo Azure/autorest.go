@@ -16,8 +16,12 @@ import (
 	"strings"
 )
 
+const defaultHealthBotsClientVersion string = "2024-02-01"
+
 // HealthBotsClient contains the methods for the HealthBots group.
 // Don't use this type directly, use NewHealthBotsClient() instead.
+//
+// Generated from API version 2024-02-01
 type HealthBotsClient struct {
 	internal       *arm.Client
 	subscriptionID string
@@ -41,8 +45,6 @@ func NewHealthBotsClient(subscriptionID string, credential azcore.TokenCredentia
 
 // BeginCreate - Create a new Azure Health Bot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - botName - The name of the Bot resource.
 //   - parameters - The parameters to provide for the created Azure Health Bot.
@@ -66,8 +68,6 @@ func (client *HealthBotsClient) BeginCreate(ctx context.Context, resourceGroupNa
 
 // Create - Create a new Azure Health Bot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 func (client *HealthBotsClient) create(ctx context.Context, resourceGroupName string, botName string, parameters HealthBot, options *HealthBotsClientBeginCreateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "HealthBotsClient.BeginCreate"
@@ -109,7 +109,7 @@ func (client *HealthBotsClient) createCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -121,8 +121,6 @@ func (client *HealthBotsClient) createCreateRequest(ctx context.Context, resourc
 
 // BeginDelete - Delete a HealthBot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - botName - The name of the Bot resource.
 //   - options - HealthBotsClientBeginDeleteOptions contains the optional parameters for the HealthBotsClient.BeginDelete method.
@@ -145,8 +143,6 @@ func (client *HealthBotsClient) BeginDelete(ctx context.Context, resourceGroupNa
 
 // Delete - Delete a HealthBot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 func (client *HealthBotsClient) deleteOperation(ctx context.Context, resourceGroupName string, botName string, options *HealthBotsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "HealthBotsClient.BeginDelete"
@@ -188,15 +184,13 @@ func (client *HealthBotsClient) deleteCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // Get - Get a HealthBot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - botName - The name of the Bot resource.
 //   - options - HealthBotsClientGetOptions contains the optional parameters for the HealthBotsClient.Get method.
@@ -242,7 +236,7 @@ func (client *HealthBotsClient) getCreateRequest(ctx context.Context, resourceGr
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -258,8 +252,6 @@ func (client *HealthBotsClient) getHandleResponse(resp *http.Response) (HealthBo
 }
 
 // NewListPager - Returns all the resources of a particular type belonging to a subscription.
-//
-// Generated from API version 2024-02-01
 //   - options - HealthBotsClientListOptions contains the optional parameters for the HealthBotsClient.NewListPager method.
 func (client *HealthBotsClient) NewListPager(options *HealthBotsClientListOptions) *runtime.Pager[HealthBotsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[HealthBotsClientListResponse]{
@@ -296,7 +288,7 @@ func (client *HealthBotsClient) listCreateRequest(ctx context.Context, _ *Health
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -312,8 +304,6 @@ func (client *HealthBotsClient) listHandleResponse(resp *http.Response) (HealthB
 }
 
 // NewListByResourceGroupPager - Returns all the resources of a particular type belonging to a resource group
-//
-// Generated from API version 2024-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - HealthBotsClientListByResourceGroupOptions contains the optional parameters for the HealthBotsClient.NewListByResourceGroupPager
 //     method.
@@ -356,7 +346,7 @@ func (client *HealthBotsClient) listByResourceGroupCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -373,8 +363,6 @@ func (client *HealthBotsClient) listByResourceGroupHandleResponse(resp *http.Res
 
 // ListSecrets - List all secrets of a HealthBot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - botName - The name of the Bot resource.
 //   - options - HealthBotsClientListSecretsOptions contains the optional parameters for the HealthBotsClient.ListSecrets method.
@@ -420,7 +408,7 @@ func (client *HealthBotsClient) listSecretsCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -437,8 +425,6 @@ func (client *HealthBotsClient) listSecretsHandleResponse(resp *http.Response) (
 
 // RegenerateAPIJwtSecret - Regenerate the API JWT Secret of a HealthBot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - botName - The name of the Bot resource.
 //   - options - HealthBotsClientRegenerateAPIJwtSecretOptions contains the optional parameters for the HealthBotsClient.RegenerateAPIJwtSecret
@@ -485,7 +471,7 @@ func (client *HealthBotsClient) regenerateAPIJwtSecretCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -502,8 +488,6 @@ func (client *HealthBotsClient) regenerateAPIJwtSecretHandleResponse(resp *http.
 
 // BeginUpdate - Patch a HealthBot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - botName - The name of the Bot resource.
 //   - parameters - The parameters to provide for the required Azure Health Bot.
@@ -527,8 +511,6 @@ func (client *HealthBotsClient) BeginUpdate(ctx context.Context, resourceGroupNa
 
 // Update - Patch a HealthBot.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2024-02-01
 func (client *HealthBotsClient) update(ctx context.Context, resourceGroupName string, botName string, parameters UpdateParameters, options *HealthBotsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "HealthBotsClient.BeginUpdate"
@@ -570,7 +552,7 @@ func (client *HealthBotsClient) updateCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2024-02-01")
+	reqQP.Set("api-version", defaultHealthBotsClientVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

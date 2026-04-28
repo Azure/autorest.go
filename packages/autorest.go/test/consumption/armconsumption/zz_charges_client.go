@@ -15,8 +15,12 @@ import (
 	"strings"
 )
 
+const defaultChargesClientVersion string = "2019-10-01"
+
 // ChargesClient contains the methods for the Charges group.
 // Don't use this type directly, use NewChargesClient() instead.
+//
+// Generated from API version 2019-10-01
 type ChargesClient struct {
 	internal *arm.Client
 }
@@ -37,8 +41,6 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 
 // List - Lists the charges based for the defined scope.
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 2019-10-01
 //   - scope - The scope associated with charges operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
 //     for Department scope, and
 //     '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
@@ -86,7 +88,7 @@ func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	reqQP.Set("api-version", defaultChargesClientVersion)
 	if options != nil && options.EndDate != nil {
 		reqQP.Set("endDate", *options.EndDate)
 	}

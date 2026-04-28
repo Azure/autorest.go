@@ -59,7 +59,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
     // if any client parameters were adapted, add them to the client
     if (group.language.go!.clientParams) {
       for (const param of <Array<m4.Parameter>>group.language.go!.clientParams) {
-        const adaptedParam = clientParams.get(param.language.go!.name);
+        const adaptedParam = clientParams.get(`${client.name}-${param.language.go!.name}`);
         if (!adaptedParam) {
           throw new Error(`missing adapted client parameter ${param.language.go!.name}`);
         }
@@ -141,10 +141,6 @@ function populateMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, method: go.
   }
 
   adaptMethodParameters(op, method);
-
-  for (const apiver of values(op.apiVersions)) {
-    method.apiVersions.push(apiver.version);
-  }
 }
 
 function adaptHeaderScalarType(schema: m4.Schema, forParam: boolean, pkg: go.PackageContent): go.HeaderScalarType {
@@ -237,7 +233,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.MethodType | go.Next
   }
 
   for (const param of values(helpers.aggregateParameters(op))) {
-    const methodParam = adaptMethodParameter(op, param, method.receiver.type.pkg);
+    const methodParam = adaptMethodParameter(op, param, method.receiver.type);
     method.parameters.push(methodParam);
   }
 }
@@ -357,18 +353,22 @@ function getStatusCodes(op: m4.Operation): Array<number> {
   return statusCodes;
 }
 
-function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.PackageContent): go.MethodParameter {
+function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, client: go.Client): go.MethodParameter {
   let adaptedParam: go.MethodParameter;
   let location: go.ParameterLocation = 'method';
+
+  const clientParamKey = `${client.name}-${param.language.go!.name}`;
   if (param.implementation === m4.ImplementationLocation.Client) {
     // check if we've already adapted this client parameter
     // TODO: grouped client params
-    const clientParam = clientParams.get(param.language.go!.name);
+    const clientParam = clientParams.get(clientParamKey);
     if (clientParam) {
       return clientParam;
     }
     location = 'client';
   }
+
+  const pkg = client.pkg;
 
   const style = adaptParameterStyle(param, pkg);
 
@@ -531,9 +531,18 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.Pac
     adaptedParam.docs.description = param.language.go!.description;
   }
 
+  if (param.origin === 'modelerfour:synthesized/api-version' && !client.apiVersion) {
+    if (adaptedParam.type.kind === 'literal' && adaptedParam.type.type.kind === 'string') {
+      client.apiVersion = new go.ConstantDef(`default${client.name}Version`, <go.Literal<go.String>>adaptedParam.type);
+      adaptedParam.type = new go.Literal(client.apiVersion, client.apiVersion.name);
+    } else {
+      throw new Error(`unexpected parameter type kind ${adaptedParam.type.kind} for API version`);
+    }
+  }
+
   // track client parameter for later use
   if (adaptedParam.location === 'client') {
-    clientParams.set(param.language.go!.name, adaptedParam);
+    clientParams.set(clientParamKey, adaptedParam);
   }
 
   if (param.language.go!.paramGroup) {

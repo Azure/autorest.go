@@ -23,8 +23,6 @@ type FormdataClient struct {
 
 // UploadFile - Upload file
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - fileContent - File to upload.
 //   - fileName - File name to upload. Name has to be spelled exactly as written here.
 //   - options - FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
@@ -69,8 +67,6 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 
 // UploadFileViaBody - Upload file
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - fileContent - File to upload.
 //   - options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
 //     method.
@@ -112,8 +108,6 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 
 // UploadFiles - Upload multiple files
 // If the operation fails it returns an *azcore.ResponseError type.
-//
-// Generated from API version 1.0.0
 //   - fileContent - Files to upload.
 //   - options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (FormdataClientUploadFilesResponse, error) {
