@@ -1206,7 +1206,7 @@ func TestQueryRequestRoundTrip(t *testing.T) {
 		Expression: to.Ptr("SELECT * FROM BlobStorage"),
 	}
 
-	data, err := xml.Marshal(qr)
+	data, err := xml.Marshal(qr) //nolint:staticcheck // we use custom helper for map[string]any
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1245,7 +1245,7 @@ func TestJSONTextConfigurationMarshalElementName(t *testing.T) {
 		JSONTextConfiguration: &jtc,
 	}
 
-	data, err = xml.Marshal(qf)
+	data, err = xml.Marshal(qf) //nolint:staticcheck // we use custom helper for map[string]any
 	if err != nil {
 		t.Fatal(err)
 	}
