@@ -49,7 +49,7 @@ export class TypeAdapter {
    */
   adaptTypes() {
     for (const enumType of this.ctx.sdkPackage.enums) {
-      if (<tcgc.UsageFlags>(enumType.usage & tcgc.UsageFlags.ApiVersionEnum) === tcgc.UsageFlags.ApiVersionEnum) {
+      if ((enumType.usage & tcgc.UsageFlags.ApiVersionEnum) !== 0) {
         // skip enums that are used for API version
         continue;
       } else if ((enumType.usage & tcgc.UsageFlags.Input) === 0 && (enumType.usage & tcgc.UsageFlags.Output) === 0) {
@@ -68,7 +68,7 @@ export class TypeAdapter {
         // tcgc creates some unnamed models for spread params.
         // we don't use these so just skip them.
         continue;
-      } else if (modelType.access === 'internal' && <tcgc.UsageFlags>(modelType.usage & tcgc.UsageFlags.Spread) === tcgc.UsageFlags.Spread) {
+      } else if (modelType.access === 'internal' && (modelType.usage & tcgc.UsageFlags.Spread) !== 0) {
         // we don't use the internal models for spread params
         continue;
       } else if ((modelType.usage & tcgc.UsageFlags.Input) === 0 && (modelType.usage & tcgc.UsageFlags.Output) === 0) {
@@ -595,7 +595,7 @@ export class TypeAdapter {
       }
     }
 
-    const annotations = new go.ModelAnnotations(omitSerde, <tcgc.UsageFlags>(model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
+    const annotations = new go.ModelAnnotations(omitSerde, (model.usage & tcgc.UsageFlags.MultipartFormData) !== 0);
     if (helpers.isPolymorphicRoot(model) || model.discriminatorValue) {
       let iface: go.Interface | undefined;
       let discriminatorLiteral: go.Literal | undefined;
@@ -671,7 +671,7 @@ export class TypeAdapter {
     const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false);
     // for multipart/form data containing models, default to fields not being pointer-to-type as we
     // don't have to deal with JSON patch shenanigans. only the optional fields will be pointer-to-type.
-    const isMultipartFormData = <tcgc.UsageFlags>(modelType.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData;
+    const isMultipartFormData = (modelType.usage & tcgc.UsageFlags.MultipartFormData) !== 0;
     let fieldByValue = isMultipartFormData ? true : helpers.isTypePassedByValue(prop.type);
     if (isMultipartFormData && prop.kind === 'property' && prop.optional) {
       fieldByValue = false;

@@ -308,7 +308,7 @@ export class ClientAdapter {
 
         // if no authentication type was specified, or the noAuth scheme was
         // explicitly specified, then include the WithNoCredential constructor
-        if (authType === AuthTypes.Default || <AuthTypes>(authType & AuthTypes.NoAuth) === AuthTypes.NoAuth) {
+        if (authType === AuthTypes.Default || (authType & AuthTypes.NoAuth) !== 0) {
           goClient.instance.constructors.push(new go.Constructor(this.ta.getPkg(), `New${clientName}WithNoCredential`));
         }
 
@@ -1004,7 +1004,7 @@ export class ClientAdapter {
         const client = method.receiver.type;
         if (!client.apiVersion) {
           // first method for this client, so apiVersion hasn't been set yet
-          const literalValue = new go.Literal(this.ta.getStringType(), <string>opParam.clientDefaultValue);
+          const literalValue = new go.Literal(this.ta.getStringType(), opParam.clientDefaultValue);
           client.apiVersion = new go.ConstantDef(`default${client.name}Version`, literalValue);
         }
         paramType = new go.Literal(client.apiVersion, client.apiVersion.name);
