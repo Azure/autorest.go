@@ -187,3 +187,33 @@ model Widget {
 @put
 @route("/model-with-default-const")
 op withClientDefaultModelField(@body widget: Widget): void;
+
+/**
+ * returns a boolean as text/plain
+ */
+@get
+@route("/text-body-as-bool")
+op getBool(): {
+  @header contentType: "text/plain; charset=utf-8";
+  @body body: boolean;
+};
+
+/**
+ * returns a floating point value as text/plain
+ */
+@get
+@route("/text-body-as-float")
+op getFloat(): {
+  @header contentType: "text/plain; charset=utf-8";
+  @body body: float64;
+};
+
+/**
+ * returns an integer value as text/plain
+ */
+@get
+@route("/text-body-as-int")
+op getInteger(): {
+  @header contentType: "text/plain; charset=utf-8";
+  @body body: int64;
+};

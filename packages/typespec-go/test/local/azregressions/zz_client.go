@@ -211,6 +211,60 @@ func (client *Client) forceRequiredBodyPutCreateRequest(ctx context.Context, bod
 	return req, nil
 }
 
+// GetBool - returns a boolean as text/plain
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientGetBoolOptions contains the optional parameters for the Client.GetBool method.
+func (client *Client) GetBool(ctx context.Context, options *ClientGetBoolOptions) (ClientGetBoolResponse, error) {
+	var err error
+	const operationName = "Client.GetBool"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getBoolCreateRequest(ctx, options)
+	if err != nil {
+		return ClientGetBoolResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientGetBoolResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetBoolResponse{}, err
+	}
+	resp, err := client.getBoolHandleResponse(httpResp)
+	return resp, err
+}
+
+// getBoolCreateRequest creates the GetBool request.
+func (client *Client) getBoolCreateRequest(ctx context.Context, _ *ClientGetBoolOptions) (*policy.Request, error) {
+	urlPath := "/text-body-as-bool"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"text/plain; charset=utf-8"}
+	return req, nil
+}
+
+// getBoolHandleResponse handles the GetBool response.
+func (client *Client) getBoolHandleResponse(resp *http.Response) (ClientGetBoolResponse, error) {
+	result := ClientGetBoolResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return ClientGetBoolResponse{}, err
+	}
+	parsedBody, err := strconv.ParseBool(string(body))
+	if err != nil {
+		return ClientGetBoolResponse{}, err
+	}
+	result.Value = &parsedBody
+	return result, nil
+}
+
 // GetDiscriminatedNoSubTypes -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientGetDiscriminatedNoSubTypesOptions contains the optional parameters for the Client.GetDiscriminatedNoSubTypes
@@ -254,6 +308,114 @@ func (client *Client) getDiscriminatedNoSubTypesHandleResponse(resp *http.Respon
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return ClientGetDiscriminatedNoSubTypesResponse{}, err
 	}
+	return result, nil
+}
+
+// GetFloat - returns a floating point value as text/plain
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientGetFloatOptions contains the optional parameters for the Client.GetFloat method.
+func (client *Client) GetFloat(ctx context.Context, options *ClientGetFloatOptions) (ClientGetFloatResponse, error) {
+	var err error
+	const operationName = "Client.GetFloat"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getFloatCreateRequest(ctx, options)
+	if err != nil {
+		return ClientGetFloatResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientGetFloatResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetFloatResponse{}, err
+	}
+	resp, err := client.getFloatHandleResponse(httpResp)
+	return resp, err
+}
+
+// getFloatCreateRequest creates the GetFloat request.
+func (client *Client) getFloatCreateRequest(ctx context.Context, _ *ClientGetFloatOptions) (*policy.Request, error) {
+	urlPath := "/text-body-as-float"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"text/plain; charset=utf-8"}
+	return req, nil
+}
+
+// getFloatHandleResponse handles the GetFloat response.
+func (client *Client) getFloatHandleResponse(resp *http.Response) (ClientGetFloatResponse, error) {
+	result := ClientGetFloatResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return ClientGetFloatResponse{}, err
+	}
+	parsedBody, err := strconv.ParseFloat(string(body), 64)
+	if err != nil {
+		return ClientGetFloatResponse{}, err
+	}
+	result.Value = &parsedBody
+	return result, nil
+}
+
+// GetInteger - returns an integer value as text/plain
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientGetIntegerOptions contains the optional parameters for the Client.GetInteger method.
+func (client *Client) GetInteger(ctx context.Context, options *ClientGetIntegerOptions) (ClientGetIntegerResponse, error) {
+	var err error
+	const operationName = "Client.GetInteger"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getIntegerCreateRequest(ctx, options)
+	if err != nil {
+		return ClientGetIntegerResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientGetIntegerResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetIntegerResponse{}, err
+	}
+	resp, err := client.getIntegerHandleResponse(httpResp)
+	return resp, err
+}
+
+// getIntegerCreateRequest creates the GetInteger request.
+func (client *Client) getIntegerCreateRequest(ctx context.Context, _ *ClientGetIntegerOptions) (*policy.Request, error) {
+	urlPath := "/text-body-as-int"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"text/plain; charset=utf-8"}
+	return req, nil
+}
+
+// getIntegerHandleResponse handles the GetInteger response.
+func (client *Client) getIntegerHandleResponse(resp *http.Response) (ClientGetIntegerResponse, error) {
+	result := ClientGetIntegerResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return ClientGetIntegerResponse{}, err
+	}
+	parsedBody, err := strconv.ParseInt(string(body), 10, 64)
+	if err != nil {
+		return ClientGetIntegerResponse{}, err
+	}
+	result.Value = &parsedBody
 	return result, nil
 }
 

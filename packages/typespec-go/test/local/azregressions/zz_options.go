@@ -27,8 +27,23 @@ type ClientForceRequiredBodyPutOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientGetBoolOptions contains the optional parameters for the Client.GetBool method.
+type ClientGetBoolOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientGetDiscriminatedNoSubTypesOptions contains the optional parameters for the Client.GetDiscriminatedNoSubTypes method.
 type ClientGetDiscriminatedNoSubTypesOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetFloatOptions contains the optional parameters for the Client.GetFloat method.
+type ClientGetFloatOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetIntegerOptions contains the optional parameters for the Client.GetInteger method.
+type ClientGetIntegerOptions struct {
 	// placeholder for future optional parameters
 }
 
