@@ -3,7 +3,7 @@
   "version": "0.11.1",
   "description": "TypeSpec emitter for Go SDKs",
   "type": "module",
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@10.33.2",
   "exports": {
     ".": {
       "import": "./dist/typespec-go/src/index.js"
@@ -55,7 +55,7 @@
     "@azure-tools/typespec-azure-core": "0.67.1",
     "@azure-tools/typespec-azure-resource-manager": "0.67.1",
     "@azure-tools/typespec-azure-rulesets": "0.67.0",
-    "@azure-tools/typespec-client-generator-core": "0.67.3",
+    "@azure-tools/typespec-client-generator-core": "0.67.4",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@typespec/compiler": "1.11.0",
@@ -64,7 +64,7 @@
     "@typespec/http-specs": "0.1.0-alpha.36",
     "@typespec/openapi": "1.11.0",
     "@typespec/rest": "0.81.0",
-    "@typespec/spec-api": "0.1.0-dev.3",
+    "@typespec/spec-api": "0.1.0-alpha.14",
     "@typespec/spector": "0.1.0-alpha.25",
     "@typespec/sse": "0.81.0",
     "@typespec/streams": "0.81.0",

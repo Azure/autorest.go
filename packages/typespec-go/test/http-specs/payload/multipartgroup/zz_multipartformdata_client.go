@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 )
 
@@ -39,7 +40,7 @@ func (client *MultiPartFormDataClient) NewMultiPartFormDataHTTPPartsClient() *Mu
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientAnonymousModelOptions contains the optional parameters for the MultiPartFormDataClient.AnonymousModel
 //     method.
-func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, profileImage []byte, options *MultiPartFormDataClientAnonymousModelOptions) (MultiPartFormDataClientAnonymousModelResponse, error) {
+func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, profileImage io.ReadSeekCloser, options *MultiPartFormDataClientAnonymousModelOptions) (MultiPartFormDataClientAnonymousModelResponse, error) {
 	var err error
 	const operationName = "MultiPartFormDataClient.AnonymousModel"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -61,7 +62,7 @@ func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, profi
 }
 
 // anonymousModelCreateRequest creates the AnonymousModel request.
-func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.Context, profileImage []byte, _ *MultiPartFormDataClientAnonymousModelOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.Context, profileImage io.ReadSeekCloser, _ *MultiPartFormDataClientAnonymousModelOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/anonymous-model"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
