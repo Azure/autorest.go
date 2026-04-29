@@ -217,3 +217,15 @@ op getInteger(): {
   @header contentType: "text/plain; charset=utf-8";
   @body body: int64;
 };
+
+/**
+ * optional contentType parameter is passed to req.SetBody() IFF body is not nil
+ */
+@route("/optional-binary-payload-with-content-type")
+op optionalBinaryBodyWithContentType(@body payload?: bytes, @header("content-type") contentType?: string): void;
+
+/**
+ * required contentType parameter is passed to req.SetBody()
+ */
+@route("/binary-payload-with-content-type")
+op binaryBodyWithContentType(@body payload: bytes, @header("content-type") contentType: string): void;

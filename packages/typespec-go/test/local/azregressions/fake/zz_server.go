@@ -24,6 +24,10 @@ import (
 
 // Server is a fake server for instances of the azregressions.Client type.
 type Server struct {
+	// BinaryBodyWithContentType is the fake for method Client.BinaryBodyWithContentType
+	// HTTP status codes to indicate success: http.StatusNoContent
+	BinaryBodyWithContentType func(ctx context.Context, payload io.ReadSeekCloser, contentType string, options *azregressions.ClientBinaryBodyWithContentTypeOptions) (resp azfake.Responder[azregressions.ClientBinaryBodyWithContentTypeResponse], errResp azfake.ErrorResponder)
+
 	// BinaryResponseWithXMLContentType is the fake for method Client.BinaryResponseWithXMLContentType
 	// HTTP status codes to indicate success: http.StatusOK
 	BinaryResponseWithXMLContentType func(ctx context.Context, options *azregressions.ClientBinaryResponseWithXMLContentTypeOptions) (resp azfake.Responder[azregressions.ClientBinaryResponseWithXMLContentTypeResponse], errResp azfake.ErrorResponder)
@@ -71,6 +75,10 @@ type Server struct {
 	// OptionalBinaryBody is the fake for method Client.OptionalBinaryBody
 	// HTTP status codes to indicate success: http.StatusNoContent
 	OptionalBinaryBody func(ctx context.Context, options *azregressions.ClientOptionalBinaryBodyOptions) (resp azfake.Responder[azregressions.ClientOptionalBinaryBodyResponse], errResp azfake.ErrorResponder)
+
+	// OptionalBinaryBodyWithContentType is the fake for method Client.OptionalBinaryBodyWithContentType
+	// HTTP status codes to indicate success: http.StatusNoContent
+	OptionalBinaryBodyWithContentType func(ctx context.Context, options *azregressions.ClientOptionalBinaryBodyWithContentTypeOptions) (resp azfake.Responder[azregressions.ClientOptionalBinaryBodyWithContentTypeResponse], errResp azfake.ErrorResponder)
 
 	// OptionalBodyPost is the fake for method Client.OptionalBodyPost
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -127,6 +135,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 		}
 		if !intercepted {
 			switch method {
+			case "Client.BinaryBodyWithContentType":
+				res.resp, res.err = s.dispatchBinaryBodyWithContentType(req)
 			case "Client.BinaryResponseWithXMLContentType":
 				res.resp, res.err = s.dispatchBinaryResponseWithXMLContentType(req)
 			case "Client.DoubleDecode":
@@ -151,6 +161,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 				res.resp, res.err = s.dispatchGetXMLTwo(req)
 			case "Client.OptionalBinaryBody":
 				res.resp, res.err = s.dispatchOptionalBinaryBody(req)
+			case "Client.OptionalBinaryBodyWithContentType":
+				res.resp, res.err = s.dispatchOptionalBinaryBodyWithContentType(req)
 			case "Client.OptionalBodyPost":
 				res.resp, res.err = s.dispatchOptionalBodyPost(req)
 			case "Client.SpreadWithModel":
@@ -175,6 +187,25 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (s *ServerTransport) dispatchBinaryBodyWithContentType(req *http.Request) (*http.Response, error) {
+	if s.srv.BinaryBodyWithContentType == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BinaryBodyWithContentType not implemented")}
+	}
+	respr, errRespr := s.srv.BinaryBodyWithContentType(req.Context(), req.Body.(io.ReadSeekCloser), getHeaderValue(req.Header, "Content-Type"), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (s *ServerTransport) dispatchBinaryResponseWithXMLContentType(req *http.Request) (*http.Response, error) {
@@ -452,6 +483,33 @@ func (s *ServerTransport) dispatchOptionalBinaryBody(req *http.Request) (*http.R
 		}
 	}
 	respr, errRespr := s.srv.OptionalBinaryBody(req.Context(), options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchOptionalBinaryBodyWithContentType(req *http.Request) (*http.Response, error) {
+	if s.srv.OptionalBinaryBodyWithContentType == nil {
+		return nil, &nonRetriableError{errors.New("fake for method OptionalBinaryBodyWithContentType not implemented")}
+	}
+	contentTypeParam := getOptional(getHeaderValue(req.Header, "Content-Type"))
+	var options *azregressions.ClientOptionalBinaryBodyWithContentTypeOptions
+	if req.Body != nil || contentTypeParam != nil {
+		options = &azregressions.ClientOptionalBinaryBodyWithContentTypeOptions{
+			Payload:     req.Body.(io.ReadSeekCloser),
+			ContentType: contentTypeParam,
+		}
+	}
+	respr, errRespr := s.srv.OptionalBinaryBodyWithContentType(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

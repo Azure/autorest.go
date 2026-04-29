@@ -1252,9 +1252,18 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   for (const param of methodParamGroups.headerParams.sort((a: go.HeaderParameter, b: go.HeaderParameter) => {
     return helpers.sortAscending(a.headerName, b.headerName);
   })) {
-    if (param.headerName.match(/^content-type$/)) {
+    if (param.headerName.match(/^content-type$/i)) {
       // canonicalize content-type as req.SetBody checks for it via its canonicalized name :(
       param.headerName = 'Content-Type';
+
+      // if the content-type is from a param, then the param will be passed
+      // explicitly to runtime.SetBody() so don't emit code to set it inline
+      if (go.isClientSideDefault(param.style)) {
+        text += emitClientSideDefault(param as go.HeaderScalarParameter, param.style, () => '', imports, indent);
+        continue;
+      } else if (param.style === 'required') {
+        continue;
+      }
     }
 
     if (param.headerName === 'Content-Type' && param.style === 'literal') {
@@ -1308,6 +1317,9 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           // find the param
           for (const param of method.parameters) {
             if (param.kind === 'headerScalarParam' && param.name === src.name) {
+              if (go.isClientSideDefault(param.style)) {
+                return getClientSideDefaultVarName(param);
+              }
               let paramName = helpers.getParamName(param);
               if (param.type.kind === 'constant') {
                 paramName = `string(${paramName})`;
@@ -1524,6 +1536,16 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   return text;
 }
 
+/**
+ * returns the var name to use for a param's client-side default value
+ *
+ * @param param the param for which to name the var
+ * @returns the var name
+ */
+function getClientSideDefaultVarName(param: go.HeaderCollectionParameter | go.HeaderScalarParameter | go.QueryParameter): string {
+  return naming.uncapitalize(param.name) + 'Default';
+}
+
 function emitClientSideDefault(
   param: go.HeaderCollectionParameter | go.HeaderScalarParameter | go.QueryParameter,
   csd: go.ClientSideDefault,
@@ -1531,7 +1553,7 @@ function emitClientSideDefault(
   imports: ImportManager,
   indent: helpers.Indentation,
 ): string {
-  const defaultVar = naming.uncapitalize(param.name) + 'Default';
+  const defaultVar = getClientSideDefaultVarName(param);
   let text = `${indent.get()}${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue, true)}\n`;
   text += `${indent.get()}if options != nil && options.${naming.capitalize(param.name)} != nil {\n`;
   text += `${indent.push().get()}${defaultVar} = *options.${naming.capitalize(param.name)}\n`;
@@ -1549,7 +1571,13 @@ function emitClientSideDefault(
       break;
   }
 
-  text += setterFormat(`"${serializedName}"`, helpers.formatValue(defaultVar, param.type, imports)) + '\n';
+  const setterFormatText = setterFormat(`"${serializedName}"`, helpers.formatValue(defaultVar, param.type, imports));
+  text += setterFormatText;
+  // setterFormat can return the empty string in some cases.
+  // if it does, there's no need for an extra new-line char.
+  if (setterFormatText.length > 0) {
+    text += '\n';
+  }
   return text;
 }
 

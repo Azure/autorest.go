@@ -666,6 +666,33 @@ export class ClientAdapter {
 
     const paramMapping = this.adaptMethodParameters(sdkMethod, method);
 
+    // check if the method takes a binary body with an explicit content-type param.
+    // if it does, then we need to fix up the body param to reference it. we must
+    // do this after adapting all of the method parameters.
+    const binaryBodyParam = method.parameters.find((param) => param.kind === 'bodyParam' && param.bodyFormat === 'binary');
+    const contentTypeParam = method.parameters.find((param) => param.kind === 'headerScalarParam' && param.headerName.match(/^content-type$/i) && param.style !== 'literal');
+    if (binaryBodyParam && contentTypeParam) {
+      // note that when content-type is a param, the defaultContentType on
+      // the body param will be a '*/*' literal. we want to replace that
+      // with the discrete param. if the param is optional, then we'll treat
+      // it as a client-side default.
+      const bodyParam = <go.BodyParameter>binaryBodyParam;
+      switch (contentTypeParam.style) {
+        case 'optional':
+          // convert the literal to a client-side default
+          contentTypeParam.style = new go.ClientSideDefault(bodyParam.contentType as go.Literal);
+          bodyParam.contentType = new go.ParameterRef(contentTypeParam.name);
+          break;
+        case 'required':
+          bodyParam.contentType = new go.ParameterRef(contentTypeParam.name);
+          break;
+        default: {
+          const style = go.isClientSideDefault(contentTypeParam.style) ? 'client-side default' : contentTypeParam.style;
+          throw new AdapterError('UnsupportedTsp', `unexpected content-type style ${style}`, sdkMethod.__raw?.node);
+        }
+      }
+    }
+
     // we must do this after adapting method params as it can add optional params
     this.ta.getPkg().paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
 
@@ -1605,6 +1632,10 @@ export class ClientAdapter {
           for (const param of example.parameters) {
             if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
               // skip the api-version param as it's not a formal parameter
+              continue;
+            } else if (param.parameter.type.kind === 'constant') {
+              // if the param's type is a constant then it's embedded
+              // in the code and not a formal parameter so skip it
               continue;
             }
             const goParams = paramMapping.get(param.parameter);
