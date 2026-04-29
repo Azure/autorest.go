@@ -20,7 +20,7 @@ func TestFormDataClient_AnonymousModel(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().AnonymousModel(context.Background(), jpgFile, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
