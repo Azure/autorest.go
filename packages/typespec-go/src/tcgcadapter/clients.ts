@@ -1207,6 +1207,8 @@ export class ClientAdapter {
     // should retain their underlying type (e.g. float64).
     if (multipartOptions?.isFilePart && multipartOptions.contentType?.type.kind === 'constant' && multipartOptions.defaultContentTypes.length === 1) {
       type = this.ta.getMultipartContent(paramType.kind === 'array', multipartOptions.defaultContentTypes[0]);
+    } else if (paramType.kind === 'bytes' && paramType.encode === 'bytes') {
+      type = this.ta.getReadSeekCloser(false);
     } else {
       type = this.ta.getWireType(paramType, true, true);
     }

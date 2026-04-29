@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -1512,7 +1513,7 @@ func (client *ContainerClient) setMetadataHandleResponse(resp *http.Response) (C
 //   - contentLength - The length of the request.
 //   - body - The body of the request.
 //   - options - ContainerClientSubmitBatchOptions contains the optional parameters for the ContainerClient.SubmitBatch method.
-func (client *ContainerClient) SubmitBatch(ctx context.Context, contentLength int64, body []byte, options *ContainerClientSubmitBatchOptions) (ContainerClientSubmitBatchResponse, error) {
+func (client *ContainerClient) SubmitBatch(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *ContainerClientSubmitBatchOptions) (ContainerClientSubmitBatchResponse, error) {
 	var err error
 	req, err := client.submitBatchCreateRequest(ctx, contentLength, body, options)
 	if err != nil {
@@ -1531,7 +1532,7 @@ func (client *ContainerClient) SubmitBatch(ctx context.Context, contentLength in
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.
-func (client *ContainerClient) submitBatchCreateRequest(ctx context.Context, contentLength int64, body []byte, options *ContainerClientSubmitBatchOptions) (*policy.Request, error) {
+func (client *ContainerClient) submitBatchCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *ContainerClientSubmitBatchOptions) (*policy.Request, error) {
 	urlPath := "?restype=container&comp=batch"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {

@@ -7,7 +7,6 @@ package fake
 import (
 	"bytes"
 	"context"
-	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,7 +35,7 @@ type MultiPartFormDataServer struct {
 
 	// AnonymousModel is the fake for method MultiPartFormDataClient.AnonymousModel
 	// HTTP status codes to indicate success: http.StatusNoContent
-	AnonymousModel func(ctx context.Context, profileImage []byte, options *multipartgroup.MultiPartFormDataClientAnonymousModelOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientAnonymousModelResponse], errResp azfake.ErrorResponder)
+	AnonymousModel func(ctx context.Context, profileImage io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientAnonymousModelOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientAnonymousModelResponse], errResp azfake.ErrorResponder)
 
 	// Basic is the fake for method MultiPartFormDataClient.Basic
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -176,7 +175,7 @@ func (m *MultiPartFormDataServerTransport) dispatchAnonymousModel(req *http.Requ
 		return nil, err
 	}
 	reader := multipart.NewReader(req.Body, params["boundary"])
-	var profileImage []byte
+	var profileImage io.ReadSeekCloser
 	for {
 		var part *multipart.Part
 		part, err = reader.NextPart()
@@ -192,10 +191,7 @@ func (m *MultiPartFormDataServerTransport) dispatchAnonymousModel(req *http.Requ
 			if err != nil {
 				return nil, err
 			}
-			profileImage, err = base64.StdEncoding.DecodeString(string(content))
-			if err != nil {
-				return nil, err
-			}
+			profileImage = streaming.NopCloser(bytes.NewReader(content))
 		default:
 			return nil, fmt.Errorf("unexpected part %s", fn)
 		}
