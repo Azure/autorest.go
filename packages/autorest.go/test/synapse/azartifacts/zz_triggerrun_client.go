@@ -67,7 +67,7 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -104,7 +104,7 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, filterParameters); err != nil {
 		return nil, err
@@ -161,7 +161,7 @@ func (client *TriggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultTriggerRunClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

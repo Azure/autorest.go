@@ -114,7 +114,7 @@ func (client *RouteTablesClient) createOrUpdateCreateRequest(ctx context.Context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -189,7 +189,7 @@ func (client *RouteTablesClient) deleteCreateRequest(ctx context.Context, resour
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRouteTablesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -245,7 +245,7 @@ func (client *RouteTablesClient) getCreateRequest(ctx context.Context, resourceG
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -302,7 +302,7 @@ func (client *RouteTablesClient) listCreateRequest(ctx context.Context, resource
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -354,7 +354,7 @@ func (client *RouteTablesClient) listAllCreateRequest(ctx context.Context, _ *Ro
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -417,7 +417,7 @@ func (client *RouteTablesClient) updateTagsCreateRequest(ctx context.Context, re
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err

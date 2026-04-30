@@ -161,7 +161,7 @@ func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, option
 		modelsDefault = *options.Models
 	}
 	reqQP.Set("models", modelsDefault)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

@@ -110,7 +110,7 @@ func (client *OnlineEndpointsClient) createOrUpdateCreateRequest(ctx context.Con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
@@ -182,7 +182,7 @@ func (client *OnlineEndpointsClient) deleteCreateRequest(ctx context.Context, re
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -236,7 +236,7 @@ func (client *OnlineEndpointsClient) getCreateRequest(ctx context.Context, resou
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -300,7 +300,7 @@ func (client *OnlineEndpointsClient) getTokenCreateRequest(ctx context.Context, 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -382,7 +382,7 @@ func (client *OnlineEndpointsClient) listCreateRequest(ctx context.Context, reso
 	if options != nil && options.Tags != nil {
 		reqQP.Set("tags", *options.Tags)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -446,7 +446,7 @@ func (client *OnlineEndpointsClient) listKeysCreateRequest(ctx context.Context, 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -527,7 +527,7 @@ func (client *OnlineEndpointsClient) regenerateKeysCreateRequest(ctx context.Con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
@@ -600,7 +600,7 @@ func (client *OnlineEndpointsClient) updateCreateRequest(ctx context.Context, re
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOnlineEndpointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err

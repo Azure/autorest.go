@@ -95,7 +95,7 @@ func (client *WorkspaceConnectionsClient) createCreateRequest(ctx context.Contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultWorkspaceConnectionsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -161,7 +161,7 @@ func (client *WorkspaceConnectionsClient) deleteCreateRequest(ctx context.Contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultWorkspaceConnectionsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -216,7 +216,7 @@ func (client *WorkspaceConnectionsClient) getCreateRequest(ctx context.Context, 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultWorkspaceConnectionsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -284,7 +284,7 @@ func (client *WorkspaceConnectionsClient) listCreateRequest(ctx context.Context,
 	if options != nil && options.Target != nil {
 		reqQP.Set("target", *options.Target)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

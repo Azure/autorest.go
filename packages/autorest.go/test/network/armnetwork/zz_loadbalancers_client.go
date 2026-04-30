@@ -114,7 +114,7 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -190,7 +190,7 @@ func (client *LoadBalancersClient) deleteCreateRequest(ctx context.Context, reso
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultLoadBalancersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -246,7 +246,7 @@ func (client *LoadBalancersClient) getCreateRequest(ctx context.Context, resourc
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -303,7 +303,7 @@ func (client *LoadBalancersClient) listCreateRequest(ctx context.Context, resour
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -356,7 +356,7 @@ func (client *LoadBalancersClient) listAllCreateRequest(ctx context.Context, _ *
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -444,7 +444,7 @@ func (client *LoadBalancersClient) listInboundNatRulePortMappingsCreateRequest(c
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -516,7 +516,7 @@ func (client *LoadBalancersClient) swapPublicIPAddressesCreateRequest(ctx contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -574,7 +574,7 @@ func (client *LoadBalancersClient) updateTagsCreateRequest(ctx context.Context, 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err

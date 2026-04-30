@@ -91,7 +91,7 @@ func (client *RaiContentFiltersClient) getCreateRequest(ctx context.Context, loc
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRaiContentFiltersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -149,7 +149,7 @@ func (client *RaiContentFiltersClient) listCreateRequest(ctx context.Context, lo
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRaiContentFiltersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

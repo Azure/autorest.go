@@ -114,7 +114,7 @@ func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, r
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -189,7 +189,7 @@ func (client *IPGroupsClient) deleteCreateRequest(ctx context.Context, resourceG
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -245,7 +245,7 @@ func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGrou
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", defaultIPGroupsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -297,7 +297,7 @@ func (client *IPGroupsClient) listCreateRequest(ctx context.Context, _ *IPGroups
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -355,7 +355,7 @@ func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -418,7 +418,7 @@ func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, res
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err

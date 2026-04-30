@@ -93,7 +93,7 @@ func (client *ConfigurationsClient) getContentCreateRequest(ctx context.Context,
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultConfigurationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -156,7 +156,7 @@ func (client *ConfigurationsClient) getStreamingContentCreateRequest(ctx context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultConfigurationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	return req, nil
@@ -219,7 +219,7 @@ func (client *ConfigurationsClient) putStreamingContentCreateRequest(ctx context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultConfigurationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
 	if err := req.SetBody(body, "application/octet-stream"); err != nil {
 		return nil, err

@@ -87,7 +87,7 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, dataBoxEdgeDevice); err != nil {
 		return nil, err
@@ -162,7 +162,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, securitySettings); err != nil {
 		return nil, err
@@ -226,7 +226,7 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -288,7 +288,7 @@ func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, d
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -336,7 +336,7 @@ func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -392,7 +392,7 @@ func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName st
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -449,7 +449,7 @@ func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -506,7 +506,7 @@ func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -564,7 +564,7 @@ func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -635,7 +635,7 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -686,7 +686,7 @@ func (client *DevicesClient) listByResourceGroupCreateRequest(ctx context.Contex
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -741,7 +741,7 @@ func (client *DevicesClient) listBySubscriptionCreateRequest(ctx context.Context
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -812,7 +812,7 @@ func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, de
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -860,7 +860,7 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -921,7 +921,7 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -982,7 +982,7 @@ func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context,
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDevicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err

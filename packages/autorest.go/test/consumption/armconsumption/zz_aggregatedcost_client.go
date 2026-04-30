@@ -81,7 +81,7 @@ func (client *AggregatedCostClient) getByManagementGroupCreateRequest(ctx contex
 		reqQP.Set("$filter", *options.Filter)
 	}
 	reqQP.Set("api-version", defaultAggregatedCostClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -137,7 +137,7 @@ func (client *AggregatedCostClient) getForBillingPeriodByManagementGroupCreateRe
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAggregatedCostClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

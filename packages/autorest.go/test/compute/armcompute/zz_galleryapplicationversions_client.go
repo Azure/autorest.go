@@ -125,7 +125,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateCreateRequest(ctx 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultGalleryApplicationVersionsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, galleryApplicationVersion); err != nil {
 		return nil, err
@@ -210,7 +210,7 @@ func (client *GalleryApplicationVersionsClient) deleteCreateRequest(ctx context.
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -277,7 +277,7 @@ func (client *GalleryApplicationVersionsClient) getCreateRequest(ctx context.Con
 		reqQP.Set("$expand", string(*options.Expand))
 	}
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -346,7 +346,7 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationCreateRe
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -440,7 +440,7 @@ func (client *GalleryApplicationVersionsClient) updateCreateRequest(ctx context.
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, galleryApplicationVersion); err != nil {
 		return nil, err

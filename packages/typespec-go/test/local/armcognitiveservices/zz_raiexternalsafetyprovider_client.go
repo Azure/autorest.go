@@ -89,7 +89,7 @@ func (client *RaiExternalSafetyProviderClient) createOrUpdateCreateRequest(ctx c
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRaiExternalSafetyProviderClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, safetyProvider); err != nil {
@@ -182,7 +182,7 @@ func (client *RaiExternalSafetyProviderClient) deleteCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRaiExternalSafetyProviderClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -230,7 +230,7 @@ func (client *RaiExternalSafetyProviderClient) getCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRaiExternalSafetyProviderClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

@@ -114,7 +114,7 @@ func (client *CloudServicesClient) createOrUpdateCreateRequest(ctx context.Conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultCloudServicesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -189,7 +189,7 @@ func (client *CloudServicesClient) deleteCreateRequest(ctx context.Context, reso
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -261,7 +261,7 @@ func (client *CloudServicesClient) deleteInstancesCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
 		if err := runtime.MarshalAsJSON(req, *options.Parameters); err != nil {
@@ -320,7 +320,7 @@ func (client *CloudServicesClient) getCreateRequest(ctx context.Context, resourc
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -383,7 +383,7 @@ func (client *CloudServicesClient) getInstanceViewCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -441,7 +441,7 @@ func (client *CloudServicesClient) listCreateRequest(ctx context.Context, resour
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -496,7 +496,7 @@ func (client *CloudServicesClient) listAllCreateRequest(ctx context.Context, _ *
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -578,7 +578,7 @@ func (client *CloudServicesClient) powerOffCreateRequest(ctx context.Context, re
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -654,7 +654,7 @@ func (client *CloudServicesClient) rebuildCreateRequest(ctx context.Context, res
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
 		if err := runtime.MarshalAsJSON(req, *options.Parameters); err != nil {
@@ -732,7 +732,7 @@ func (client *CloudServicesClient) reimageCreateRequest(ctx context.Context, res
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
 		if err := runtime.MarshalAsJSON(req, *options.Parameters); err != nil {
@@ -810,7 +810,7 @@ func (client *CloudServicesClient) restartCreateRequest(ctx context.Context, res
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
 		if err := runtime.MarshalAsJSON(req, *options.Parameters); err != nil {
@@ -888,7 +888,7 @@ func (client *CloudServicesClient) startCreateRequest(ctx context.Context, resou
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -961,7 +961,7 @@ func (client *CloudServicesClient) updateCreateRequest(ctx context.Context, reso
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err

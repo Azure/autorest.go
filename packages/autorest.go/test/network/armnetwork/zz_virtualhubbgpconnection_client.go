@@ -119,7 +119,7 @@ func (client *VirtualHubBgpConnectionClient) createOrUpdateCreateRequest(ctx con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err
@@ -200,7 +200,7 @@ func (client *VirtualHubBgpConnectionClient) deleteCreateRequest(ctx context.Con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -259,7 +259,7 @@ func (client *VirtualHubBgpConnectionClient) getCreateRequest(ctx context.Contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultVirtualHubBgpConnectionClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

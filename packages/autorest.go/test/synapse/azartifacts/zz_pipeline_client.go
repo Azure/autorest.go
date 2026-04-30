@@ -79,7 +79,7 @@ func (client *PipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.IfMatch != nil {
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
@@ -135,7 +135,7 @@ func (client *PipelineClient) createPipelineRunCreateRequest(ctx context.Context
 	if options != nil && options.StartActivityName != nil {
 		reqQP.Set("startActivityName", *options.StartActivityName)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
 		if err := runtime.MarshalAsJSON(req, options.Parameters); err != nil {
@@ -205,7 +205,7 @@ func (client *PipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -245,7 +245,7 @@ func (client *PipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.IfNoneMatch != nil {
 		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
@@ -295,7 +295,7 @@ func (client *PipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultPipelineClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -360,7 +360,7 @@ func (client *PipelineClient) renamePipelineCreateRequest(ctx context.Context, p
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, request); err != nil {
 		return nil, err

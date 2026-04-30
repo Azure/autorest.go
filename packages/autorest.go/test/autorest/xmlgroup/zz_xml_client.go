@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // XMLClient contains the methods for the XML group.
@@ -56,7 +57,7 @@ func (client *XMLClient) getACLsCreateRequest(ctx context.Context, _ *XMLClientG
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", "acl")
 	reqQP.Set("restype", "container")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
@@ -560,7 +561,7 @@ func (client *XMLClient) getServicePropertiesCreateRequest(ctx context.Context, 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", "properties")
 	reqQP.Set("restype", "service")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
@@ -872,7 +873,7 @@ func (client *XMLClient) listBlobsCreateRequest(ctx context.Context, _ *XMLClien
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", "list")
 	reqQP.Set("restype", "container")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
@@ -920,7 +921,7 @@ func (client *XMLClient) listContainersCreateRequest(ctx context.Context, _ *XML
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", "list")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
@@ -968,7 +969,7 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", "acl")
 	reqQP.Set("restype", "container")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	type wrapper struct {
 		XMLName    xml.Name             `xml:"SignedIdentifiers"`
 		Properties *[]*SignedIdentifier `xml:"SignedIdentifier"`
@@ -1365,7 +1366,7 @@ func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", "properties")
 	reqQP.Set("restype", "service")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	if err := runtime.MarshalAsXML(req, properties); err != nil {
 		return nil, err
 	}

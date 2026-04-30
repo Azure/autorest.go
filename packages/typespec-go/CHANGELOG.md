@@ -6,6 +6,7 @@
 
 * Operations with a binary body and parameterized `Content-Type` correctly utilize the parameterized value.
 * Improved detection for operations that consume `multipart` content.
+* Encoding of query parameters replaces `+` with `%20` which is the correct URI encoding for space characters.
 
 ## 0.11.1 (2026-04-29)
 

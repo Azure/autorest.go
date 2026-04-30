@@ -119,7 +119,7 @@ func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, res
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, routeParameters); err != nil {
 		return nil, err
@@ -199,7 +199,7 @@ func (client *RoutesClient) deleteCreateRequest(ctx context.Context, resourceGro
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRoutesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -257,7 +257,7 @@ func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupN
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -319,7 +319,7 @@ func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroup
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

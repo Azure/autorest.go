@@ -62,6 +62,6 @@ func (client *OverrideRemoveOptionalParameterClient) removeOptionalCreateRequest
 	if options != nil && options.Param2 != nil {
 		reqQP.Set("param2", *options.Param2)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

@@ -118,7 +118,7 @@ func (client *VirtualMachineRunCommandsClient) createOrUpdateCreateRequest(ctx c
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
 	if err := runtime.MarshalAsJSON(req, runCommand); err != nil {
 		return nil, err
@@ -198,7 +198,7 @@ func (client *VirtualMachineRunCommandsClient) deleteCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
 	return req, nil
 }
@@ -252,7 +252,7 @@ func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
 	return req, nil
 }
@@ -323,7 +323,7 @@ func (client *VirtualMachineRunCommandsClient) getByVirtualMachineCreateRequest(
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
 	return req, nil
 }
@@ -381,7 +381,7 @@ func (client *VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultVirtualMachineRunCommandsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
 	return req, nil
 }
@@ -447,7 +447,7 @@ func (client *VirtualMachineRunCommandsClient) listByVirtualMachineCreateRequest
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
 	return req, nil
 }
@@ -534,7 +534,7 @@ func (client *VirtualMachineRunCommandsClient) updateCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json, text/json"}
 	if err := runtime.MarshalAsJSON(req, runCommand); err != nil {
 		return nil, err

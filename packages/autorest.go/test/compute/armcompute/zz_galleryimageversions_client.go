@@ -125,7 +125,7 @@ func (client *GalleryImageVersionsClient) createOrUpdateCreateRequest(ctx contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultGalleryImageVersionsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, galleryImageVersion); err != nil {
 		return nil, err
@@ -210,7 +210,7 @@ func (client *GalleryImageVersionsClient) deleteCreateRequest(ctx context.Contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -277,7 +277,7 @@ func (client *GalleryImageVersionsClient) getCreateRequest(ctx context.Context, 
 		reqQP.Set("$expand", string(*options.Expand))
 	}
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -345,7 +345,7 @@ func (client *GalleryImageVersionsClient) listByGalleryImageCreateRequest(ctx co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -439,7 +439,7 @@ func (client *GalleryImageVersionsClient) updateCreateRequest(ctx context.Contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-10-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, galleryImageVersion); err != nil {
 		return nil, err

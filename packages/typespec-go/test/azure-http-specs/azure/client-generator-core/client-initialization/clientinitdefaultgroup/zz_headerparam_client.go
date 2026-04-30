@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // HeaderParamClient - Client for testing header parameter moved to client level.
@@ -116,7 +117,7 @@ func (client *HeaderParamClient) withQueryCreateRequest(ctx context.Context, id 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("id", id)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["name"] = []string{client.name}
 	return req, nil
 }

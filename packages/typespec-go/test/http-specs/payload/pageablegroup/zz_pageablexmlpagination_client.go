@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // PageableXMLPaginationClient contains the methods for the PageableXMLPagination group.
@@ -63,7 +64,7 @@ func (client *PageableXMLPaginationClient) listWithContinuationCreateRequest(ctx
 	if options != nil && options.Marker != nil {
 		reqQP.Set("marker", *options.Marker)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }

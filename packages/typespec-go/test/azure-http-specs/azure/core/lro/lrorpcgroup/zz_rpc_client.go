@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 const defaultRPCClientVersion string = "2022-12-01-preview"
@@ -109,7 +110,7 @@ func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, body G
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRPCClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {

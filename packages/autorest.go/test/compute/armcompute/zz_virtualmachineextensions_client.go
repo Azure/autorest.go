@@ -118,7 +118,7 @@ func (client *VirtualMachineExtensionsClient) createOrUpdateCreateRequest(ctx co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultVirtualMachineExtensionsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, extensionParameters); err != nil {
 		return nil, err
@@ -198,7 +198,7 @@ func (client *VirtualMachineExtensionsClient) deleteCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -260,7 +260,7 @@ func (client *VirtualMachineExtensionsClient) getCreateRequest(ctx context.Conte
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -326,7 +326,7 @@ func (client *VirtualMachineExtensionsClient) listCreateRequest(ctx context.Cont
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -413,7 +413,7 @@ func (client *VirtualMachineExtensionsClient) updateCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-11-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, extensionParameters); err != nil {
 		return nil, err

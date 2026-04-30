@@ -1192,7 +1192,12 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       }
       text += emitQueryParam(qp, setter);
     }
-    text += `${indent.get()}req.Raw().URL.RawQuery = reqQP.Encode()\n`;
+
+    // reqQP.Encode() encodes space chars as '+' which is application/x-www-form-urlencoded
+    // thus not applicable for URIs. the correct URI encoding for SP is %20.
+    // see https://www.rfc-editor.org/rfc/rfc3986 sections 2.1, 2.2, and 3.4
+    imports.add('strings');
+    text += `${indent.get()}req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")\n`;
   }
 
   // tack on any unencoded params to the end

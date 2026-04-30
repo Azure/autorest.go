@@ -83,7 +83,7 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 	if options != nil && options.PathItemStringQuery != nil {
 		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -146,7 +146,7 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 	if options != nil && options.PathItemStringQuery != nil {
 		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -209,7 +209,7 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 	if options != nil && options.PathItemStringQuery != nil {
 		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -272,7 +272,7 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 	if options != nil && options.PathItemStringQuery != nil {
 		reqQP.Set("pathItemStringQuery", *options.PathItemStringQuery)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

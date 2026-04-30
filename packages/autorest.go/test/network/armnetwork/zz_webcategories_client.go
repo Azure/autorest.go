@@ -91,7 +91,7 @@ func (client *WebCategoriesClient) getCreateRequest(ctx context.Context, name st
 		reqQP.Set("$expand", *options.Expand)
 	}
 	reqQP.Set("api-version", defaultWebCategoriesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -144,7 +144,7 @@ func (client *WebCategoriesClient) listBySubscriptionCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-09-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

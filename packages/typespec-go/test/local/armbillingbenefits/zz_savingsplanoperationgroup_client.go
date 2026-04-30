@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 const defaultSavingsPlanOperationGroupClientVersion string = "2024-11-01-preview"
@@ -91,7 +92,7 @@ func (client *SavingsPlanOperationGroupClient) listAllCreateRequest(ctx context.
 	if options != nil && options.Take != nil {
 		reqQP.Set("take", strconv.FormatFloat(float64(*options.Take), 'f', -1, 32))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -141,7 +142,7 @@ func (client *SavingsPlanOperationGroupClient) validatePurchaseCreateRequest(ctx
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultSavingsPlanOperationGroupClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {

@@ -78,7 +78,7 @@ func (client *TriggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.IfMatch != nil {
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
@@ -139,7 +139,7 @@ func (client *TriggerClient) deleteTriggerCreateRequest(ctx context.Context, tri
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -180,7 +180,7 @@ func (client *TriggerClient) getEventSubscriptionStatusCreateRequest(ctx context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -229,7 +229,7 @@ func (client *TriggerClient) getTriggerCreateRequest(ctx context.Context, trigge
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.IfNoneMatch != nil {
 		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
@@ -279,7 +279,7 @@ func (client *TriggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultTriggerClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -343,7 +343,7 @@ func (client *TriggerClient) startTriggerCreateRequest(ctx context.Context, trig
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -398,7 +398,7 @@ func (client *TriggerClient) stopTriggerCreateRequest(ctx context.Context, trigg
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -453,7 +453,7 @@ func (client *TriggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -508,7 +508,7 @@ func (client *TriggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

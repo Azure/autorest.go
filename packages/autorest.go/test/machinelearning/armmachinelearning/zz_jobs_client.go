@@ -93,7 +93,7 @@ func (client *JobsClient) cancelCreateRequest(ctx context.Context, resourceGroup
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultJobsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -148,7 +148,7 @@ func (client *JobsClient) createOrUpdateCreateRequest(ctx context.Context, resou
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultJobsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
@@ -228,7 +228,7 @@ func (client *JobsClient) deleteCreateRequest(ctx context.Context, resourceGroup
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultJobsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -282,7 +282,7 @@ func (client *JobsClient) getCreateRequest(ctx context.Context, resourceGroupNam
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultJobsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -360,7 +360,7 @@ func (client *JobsClient) listCreateRequest(ctx context.Context, resourceGroupNa
 	if options != nil && options.Tag != nil {
 		reqQP.Set("tag", *options.Tag)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

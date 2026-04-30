@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // MultipleParamsClient - Client for testing multiple parameters (header and query) moved to client level.
@@ -79,7 +80,7 @@ func (client *MultipleParamsClient) withBodyCreateRequest(ctx context.Context, b
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("region", client.region)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["name"] = []string{client.name}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -123,7 +124,7 @@ func (client *MultipleParamsClient) withQueryCreateRequest(ctx context.Context, 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("id", id)
 	reqQP.Set("region", client.region)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["name"] = []string{client.name}
 	return req, nil
 }

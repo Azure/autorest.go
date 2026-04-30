@@ -225,7 +225,7 @@ func (client *ContainerRegistryClient) deleteRepositoryCreateRequest(ctx context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -283,7 +283,7 @@ func (client *ContainerRegistryClient) deleteTagCreateRequest(ctx context.Contex
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -392,7 +392,7 @@ func (client *ContainerRegistryClient) getManifestPropertiesCreateRequest(ctx co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -455,7 +455,7 @@ func (client *ContainerRegistryClient) getManifestsCreateRequest(ctx context.Con
 	if options != nil && options.Orderby != nil {
 		reqQP.Set("orderby", *options.Orderby)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -512,7 +512,7 @@ func (client *ContainerRegistryClient) getPropertiesCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -567,7 +567,7 @@ func (client *ContainerRegistryClient) getRepositoriesCreateRequest(ctx context.
 	if options != nil && options.N != nil {
 		reqQP.Set("n", strconv.FormatInt(int64(*options.N), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -629,7 +629,7 @@ func (client *ContainerRegistryClient) getTagPropertiesCreateRequest(ctx context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -695,7 +695,7 @@ func (client *ContainerRegistryClient) getTagsCreateRequest(ctx context.Context,
 	if options != nil && options.Orderby != nil {
 		reqQP.Set("orderby", *options.Orderby)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -758,7 +758,7 @@ func (client *ContainerRegistryClient) updateManifestPropertiesCreateRequest(ctx
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, value); err != nil {
 		return nil, err
@@ -816,7 +816,7 @@ func (client *ContainerRegistryClient) updatePropertiesCreateRequest(ctx context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, value); err != nil {
 		return nil, err
@@ -879,7 +879,7 @@ func (client *ContainerRegistryClient) updateTagAttributesCreateRequest(ctx cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainerRegistryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, value); err != nil {
 		return nil, err

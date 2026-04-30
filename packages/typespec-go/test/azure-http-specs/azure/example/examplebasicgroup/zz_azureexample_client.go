@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 const defaultAzureExampleClientVersion string = "2022-12-01-preview"
@@ -87,7 +88,7 @@ func (client *AzureExampleClient) basicActionCreateRequest(ctx context.Context, 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAzureExampleClientVersion)
 	reqQP.Set("query-param", queryParam)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["header-param"] = []string{headerParam}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

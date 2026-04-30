@@ -112,7 +112,7 @@ func (client *DedicatedHsmsClient) createOrUpdateCreateRequest(ctx context.Conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -188,7 +188,7 @@ func (client *DedicatedHsmsClient) deleteCreateRequest(ctx context.Context, reso
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -240,7 +240,7 @@ func (client *DedicatedHsmsClient) getCreateRequest(ctx context.Context, resourc
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -302,7 +302,7 @@ func (client *DedicatedHsmsClient) listByResourceGroupCreateRequest(ctx context.
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
 	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -358,7 +358,7 @@ func (client *DedicatedHsmsClient) listBySubscriptionCreateRequest(ctx context.C
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
 	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -422,7 +422,7 @@ func (client *DedicatedHsmsClient) listOutboundNetworkDependenciesEndpointsCreat
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -504,7 +504,7 @@ func (client *DedicatedHsmsClient) updateCreateRequest(ctx context.Context, reso
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDedicatedHsmsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

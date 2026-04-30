@@ -107,7 +107,7 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultTriggersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, trigger); err != nil {
 		return nil, err
@@ -176,7 +176,7 @@ func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceNam
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultTriggersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -228,7 +228,7 @@ func (client *TriggersClient) getCreateRequest(ctx context.Context, deviceName s
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultTriggersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -290,7 +290,7 @@ func (client *TriggersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.C
 		reqQP.Set("$filter", *options.Filter)
 	}
 	reqQP.Set("api-version", defaultTriggersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

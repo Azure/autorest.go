@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // VisibilityClient - Illustrates models with visibility properties.
@@ -115,7 +116,7 @@ func (client *VisibilityClient) getModelCreateRequest(ctx context.Context, query
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("queryProp", strconv.FormatInt(int64(queryProp), 10))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -160,7 +161,7 @@ func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, quer
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("queryProp", strconv.FormatInt(int64(queryProp), 10))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 

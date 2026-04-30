@@ -111,7 +111,7 @@ func (client *LroClient) createOrReplaceCreateRequest(ctx context.Context, resou
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultLroClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, resource); err != nil {
@@ -186,7 +186,7 @@ func (client *LroClient) deleteCreateRequest(ctx context.Context, resourceGroupN
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultLroClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -257,7 +257,7 @@ func (client *LroClient) exportCreateRequest(ctx context.Context, resourceGroupN
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultLroClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -321,7 +321,7 @@ func (client *LroClient) exportArrayCreateRequest(ctx context.Context, body Expo
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultLroClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {

@@ -115,7 +115,7 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDisksClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, disk); err != nil {
 		return nil, err
@@ -191,7 +191,7 @@ func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGrou
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -245,7 +245,7 @@ func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupNa
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -329,7 +329,7 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, grantAccessData); err != nil {
 		return nil, err
@@ -375,7 +375,7 @@ func (client *DisksClient) listCreateRequest(ctx context.Context, _ *DisksClient
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -433,7 +433,7 @@ func (client *DisksClient) listByResourceGroupCreateRequest(ctx context.Context,
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -516,7 +516,7 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -589,7 +589,7 @@ func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGrou
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, disk); err != nil {
 		return nil, err

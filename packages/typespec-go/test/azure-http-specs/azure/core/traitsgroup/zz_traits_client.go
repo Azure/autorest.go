@@ -92,7 +92,7 @@ func (client *TraitsClient) repeatableActionCreateRequest(ctx context.Context, i
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultTraitsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.RepeatabilityFirstSent != nil {
 		req.Raw().Header["Repeatability-First-Sent"] = []string{datetime.RFC1123(*options.RepeatabilityFirstSent).String()}
@@ -156,7 +156,7 @@ func (client *TraitsClient) smokeTestCreateRequest(ctx context.Context, id int32
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultTraitsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.IfMatch != nil {
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}

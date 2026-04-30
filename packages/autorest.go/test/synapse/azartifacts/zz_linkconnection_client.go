@@ -64,7 +64,7 @@ func (client *LinkConnectionClient) createOrUpdateCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, linkConnection); err != nil {
 		return nil, err
@@ -115,7 +115,7 @@ func (client *LinkConnectionClient) deleteCreateRequest(ctx context.Context, lin
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -156,7 +156,7 @@ func (client *LinkConnectionClient) editTablesCreateRequest(ctx context.Context,
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, editTablesRequest); err != nil {
 		return nil, err
@@ -199,7 +199,7 @@ func (client *LinkConnectionClient) getCreateRequest(ctx context.Context, linkCo
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -249,7 +249,7 @@ func (client *LinkConnectionClient) getDetailedStatusCreateRequest(ctx context.C
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -296,7 +296,7 @@ func (client *LinkConnectionClient) listByWorkspaceCreateRequest(ctx context.Con
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultLinkConnectionClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -346,7 +346,7 @@ func (client *LinkConnectionClient) listLinkTablesCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -394,7 +394,7 @@ func (client *LinkConnectionClient) pauseCreateRequest(ctx context.Context, link
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -436,7 +436,7 @@ func (client *LinkConnectionClient) queryTableStatusCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, queryTableStatusRequest); err != nil {
 		return nil, err
@@ -487,7 +487,7 @@ func (client *LinkConnectionClient) resumeCreateRequest(ctx context.Context, lin
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -526,7 +526,7 @@ func (client *LinkConnectionClient) startCreateRequest(ctx context.Context, link
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -565,7 +565,7 @@ func (client *LinkConnectionClient) stopCreateRequest(ctx context.Context, linkC
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -606,7 +606,7 @@ func (client *LinkConnectionClient) updateLandingZoneCredentialCreateRequest(ctx
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, updateLandingZoneCredentialRequest); err != nil {
 		return nil, err

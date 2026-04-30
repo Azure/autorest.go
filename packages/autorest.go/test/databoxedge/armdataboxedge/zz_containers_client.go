@@ -112,7 +112,7 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, containerParam); err != nil {
 		return nil, err
@@ -186,7 +186,7 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -243,7 +243,7 @@ func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -307,7 +307,7 @@ func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -387,7 +387,7 @@ func (client *ContainersClient) refreshCreateRequest(ctx context.Context, device
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultContainersClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

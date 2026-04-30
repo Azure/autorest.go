@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // NamingClient - Describe changing names of types in a client with `@clientName`
@@ -141,6 +142,6 @@ func (client *NamingClient) parameterCreateRequest(ctx context.Context, clientNa
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("defaultName", clientName)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

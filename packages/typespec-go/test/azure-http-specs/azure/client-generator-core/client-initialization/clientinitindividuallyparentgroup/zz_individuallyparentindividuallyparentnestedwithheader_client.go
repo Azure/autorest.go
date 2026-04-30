@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // IndividuallyParentIndividuallyParentNestedWithHeaderClient - Operations for nested default -> individually and parent header
@@ -153,7 +154,7 @@ func (client *IndividuallyParentIndividuallyParentNestedWithHeaderClient) withQu
 	if options != nil && options.Format != nil {
 		reqQP.Set("format", *options.Format)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["name"] = []string{client.name}
 	return req, nil
 }

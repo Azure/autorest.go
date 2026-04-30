@@ -95,7 +95,7 @@ func (client *CloudServiceOperatingSystemsClient) getOSFamilyCreateRequest(ctx c
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -159,7 +159,7 @@ func (client *CloudServiceOperatingSystemsClient) getOSVersionCreateRequest(ctx 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultCloudServiceOperatingSystemsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -219,7 +219,7 @@ func (client *CloudServiceOperatingSystemsClient) listOSFamiliesCreateRequest(ct
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -279,7 +279,7 @@ func (client *CloudServiceOperatingSystemsClient) listOSVersionsCreateRequest(ct
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

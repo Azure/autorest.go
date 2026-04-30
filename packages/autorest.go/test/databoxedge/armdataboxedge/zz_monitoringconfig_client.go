@@ -107,7 +107,7 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultMonitoringConfigClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, monitoringMetricConfiguration); err != nil {
 		return nil, err
@@ -177,7 +177,7 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultMonitoringConfigClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -229,7 +229,7 @@ func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, devi
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultMonitoringConfigClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -293,7 +293,7 @@ func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, dev
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultMonitoringConfigClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

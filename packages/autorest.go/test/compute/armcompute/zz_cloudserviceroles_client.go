@@ -96,7 +96,7 @@ func (client *CloudServiceRolesClient) getCreateRequest(ctx context.Context, rol
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultCloudServiceRolesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -158,7 +158,7 @@ func (client *CloudServiceRolesClient) listCreateRequest(ctx context.Context, re
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-03-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

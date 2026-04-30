@@ -98,7 +98,7 @@ func (client *ServiceTagInformationClient) listCreateRequest(ctx context.Context
 	if options != nil && options.TagName != nil {
 		reqQP.Set("tagName", *options.TagName)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // IndividuallyNestedWithQueryClient - Operations for nested default -> individually with query parameters
@@ -78,7 +79,7 @@ func (client *IndividuallyNestedWithQueryClient) deleteStandaloneCreateRequest(c
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("blobName", client.blobName)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -117,7 +118,7 @@ func (client *IndividuallyNestedWithQueryClient) getStandaloneCreateRequest(ctx 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("blobName", client.blobName)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -168,6 +169,6 @@ func (client *IndividuallyNestedWithQueryClient) withQueryCreateRequest(ctx cont
 	if options != nil && options.Format != nil {
 		reqQP.Set("format", *options.Format)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

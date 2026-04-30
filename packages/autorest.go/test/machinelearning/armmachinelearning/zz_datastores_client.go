@@ -99,7 +99,7 @@ func (client *DatastoresClient) createOrUpdateCreateRequest(ctx context.Context,
 	if options != nil && options.SkipValidation != nil {
 		reqQP.Set("skipValidation", strconv.FormatBool(*options.SkipValidation))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
@@ -164,7 +164,7 @@ func (client *DatastoresClient) deleteCreateRequest(ctx context.Context, resourc
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDatastoresClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -218,7 +218,7 @@ func (client *DatastoresClient) getCreateRequest(ctx context.Context, resourceGr
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDatastoresClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -299,7 +299,7 @@ func (client *DatastoresClient) listCreateRequest(ctx context.Context, resourceG
 	if options != nil && options.SearchText != nil {
 		reqQP.Set("searchText", *options.SearchText)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -362,7 +362,7 @@ func (client *DatastoresClient) listSecretsCreateRequest(ctx context.Context, re
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDatastoresClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

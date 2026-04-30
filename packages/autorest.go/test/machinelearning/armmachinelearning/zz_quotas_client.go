@@ -85,7 +85,7 @@ func (client *QuotasClient) listCreateRequest(ctx context.Context, location stri
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultQuotasClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -139,7 +139,7 @@ func (client *QuotasClient) updateCreateRequest(ctx context.Context, location st
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultQuotasClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
 		return nil, err

@@ -60,7 +60,7 @@ func (client *MetastoreClient) deleteCreateRequest(ctx context.Context, id strin
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-07-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -100,7 +100,7 @@ func (client *MetastoreClient) getDatabaseOperationsCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-07-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -151,7 +151,7 @@ func (client *MetastoreClient) registerCreateRequest(ctx context.Context, id str
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultMetastoreClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, registerBody); err != nil {
 		return nil, err
@@ -204,7 +204,7 @@ func (client *MetastoreClient) updateCreateRequest(ctx context.Context, id strin
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-07-01-preview")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, updateBody); err != nil {
 		return nil, err

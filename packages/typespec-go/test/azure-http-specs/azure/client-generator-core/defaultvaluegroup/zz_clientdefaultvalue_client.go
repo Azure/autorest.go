@@ -135,7 +135,7 @@ func (client *ClientDefaultValueClient) getOperationParameterCreateRequest(ctx c
 		pageSizeDefault = *options.PageSize
 	}
 	reqQP.Set("pageSize", strconv.FormatInt(int64(pageSizeDefault), 10))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 

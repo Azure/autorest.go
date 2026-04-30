@@ -91,7 +91,7 @@ func (client *JobsClient) getCreateRequest(ctx context.Context, deviceName strin
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultJobsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

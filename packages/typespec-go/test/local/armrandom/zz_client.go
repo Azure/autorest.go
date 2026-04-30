@@ -86,7 +86,7 @@ func (client *Client) getCreateRequest(ctx context.Context, resourceGroupName st
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

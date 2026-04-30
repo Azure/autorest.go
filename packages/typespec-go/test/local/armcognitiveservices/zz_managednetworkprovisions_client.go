@@ -114,7 +114,7 @@ func (client *ManagedNetworkProvisionsClient) provisionManagedNetworkCreateReque
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultManagedNetworkProvisionsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Body != nil {
 		req.Raw().Header["Content-Type"] = []string{"application/json"}

@@ -63,7 +63,7 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 	if client.optionalGlobalQuery != nil {
 		reqQP.Set("optional-global-query", strconv.FormatInt(int64(*client.optionalGlobalQuery), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -142,7 +142,7 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("required-global-query", client.requiredGlobalQuery)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -346,7 +346,7 @@ func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context,
 	if options != nil && options.QueryParameter != nil {
 		reqQP.Set("queryParameter", *options.QueryParameter)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

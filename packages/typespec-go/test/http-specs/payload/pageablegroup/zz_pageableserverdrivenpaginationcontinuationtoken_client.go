@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // PageableServerDrivenPaginationContinuationTokenClient contains the methods for the PageableServerDrivenPaginationContinuationToken
@@ -64,7 +65,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 	if options != nil && options.Bar != nil {
 		reqQP.Set("bar", *options.Bar)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Foo != nil {
 		req.Raw().Header["foo"] = []string{*options.Foo}
@@ -128,7 +129,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 	if options != nil && options.Bar != nil {
 		reqQP.Set("bar", *options.Bar)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Foo != nil {
 		req.Raw().Header["foo"] = []string{*options.Foo}
@@ -192,7 +193,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 	if options != nil && options.Bar != nil {
 		reqQP.Set("bar", *options.Bar)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Foo != nil {
 		req.Raw().Header["foo"] = []string{*options.Foo}
@@ -262,7 +263,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQuer
 	if options != nil && options.Token != nil {
 		reqQP.Set("token", *options.Token)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Foo != nil {
 		req.Raw().Header["foo"] = []string{*options.Foo}
@@ -326,7 +327,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQuer
 	if options != nil && options.Token != nil {
 		reqQP.Set("token", *options.Token)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Foo != nil {
 		req.Raw().Header["foo"] = []string{*options.Foo}
@@ -390,7 +391,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQuer
 	if options != nil && options.Token != nil {
 		reqQP.Set("token", *options.Token)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Foo != nil {
 		req.Raw().Header["foo"] = []string{*options.Foo}
