@@ -1,5 +1,12 @@
 # Release History
 
+## 0.11.2 (unreleased)
+
+### Bug Fixes
+
+* Operations with a binary body and parameterized `Content-Type` correctly utilize the parameterized value.
+* Improved detection for operations that consume `multipart` content.
+
 ## 0.11.1 (2026-04-29)
 
 ### Bugs Fixed

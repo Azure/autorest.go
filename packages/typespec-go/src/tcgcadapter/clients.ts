@@ -816,7 +816,7 @@ export class ClientAdapter {
             break;
           }
           case 'binary':
-            if (opParam.defaultContentType.match(/multipart/i)) {
+            if (isMultipartBody(opParam)) {
               adaptedParam = this.adaptMultipartFormParameter(param, paramStyle, byVal);
             } else {
               const contentTypeLiteral = this.ta.getLiteral(this.ta.getStringType(), opParam.defaultContentType);
@@ -1108,8 +1108,7 @@ export class ClientAdapter {
     let adaptedParam: go.MethodParameter;
     switch (opParam.kind) {
       case 'body':
-        // TODO: form data? (non-multipart)
-        if (opParam.defaultContentType.match(/multipart/i)) {
+        if (isMultipartBody(opParam)) {
           adaptedParam = this.adaptMultipartFormParameter(methodParam, paramStyle, byVal);
         } else {
           const contentType = this.adaptContentType(opParam.defaultContentType);
@@ -1856,3 +1855,28 @@ type ParamsMapForPageable = Map<tcgc.SdkMethodParameter, go.HeaderScalarParamete
  * this is used when creating certain pageable method strategies.
  */
 type RespHeadersMapForPageable = Map<tcgc.SdkServiceResponseHeader, go.HeaderScalarResponse>;
+
+/**
+ * returns true if the provided body parameter is multipart
+ *
+ * @param body the body param to check
+ * @returns true if body is multipart
+ */
+function isMultipartBody(body: tcgc.SdkBodyParameter): boolean {
+  // multipart body params are always a model type.
+  // note that it's legal for models to have zero
+  // properties, so they would never be multipart.
+  if (body.type.kind !== 'model' || body.type.properties.length === 0) {
+    return false;
+  }
+
+  // check for multipart serialization options.
+  // it's never just some of the properties, i.e.
+  // either they all have it or none of them do
+  for (const prop of body.type.properties) {
+    if (!prop.serializationOptions.multipart) {
+      return false;
+    }
+  }
+  return true;
+}

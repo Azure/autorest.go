@@ -202,7 +202,7 @@ interface Service {
   submitBatch(
     /** Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_<GUID> */
     @header("Content-Type")
-    @alternateType(string, "javascript,csharp")
+    @alternateType(string, "javascript,csharp,go")
     contentType: "multipart/mixed",
 
     ...ApiVersionHeader,
@@ -447,7 +447,7 @@ interface Container {
   submitBatch(
     /** Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_<GUID> */
     @header("Content-Type")
-    @alternateType(string, "javascript")
+    @alternateType(string, "javascript,go")
     contentType: "multipart/mixed",
 
     ...ApiVersionHeader,
