@@ -6,6 +6,11 @@ package azregressions
 
 import "io"
 
+// ClientBinaryBodyWithContentTypeOptions contains the optional parameters for the Client.BinaryBodyWithContentType method.
+type ClientBinaryBodyWithContentTypeOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientBinaryResponseWithXMLContentTypeOptions contains the optional parameters for the Client.BinaryResponseWithXMLContentType
 // method.
 type ClientBinaryResponseWithXMLContentTypeOptions struct {
@@ -65,6 +70,13 @@ type ClientGetXMLTwoOptions struct {
 // ClientOptionalBinaryBodyOptions contains the optional parameters for the Client.OptionalBinaryBody method.
 type ClientOptionalBinaryBodyOptions struct {
 	Payload io.ReadSeekCloser
+}
+
+// ClientOptionalBinaryBodyWithContentTypeOptions contains the optional parameters for the Client.OptionalBinaryBodyWithContentType
+// method.
+type ClientOptionalBinaryBodyWithContentTypeOptions struct {
+	ContentType *string
+	Payload     io.ReadSeekCloser
 }
 
 // ClientOptionalBodyPostOptions contains the optional parameters for the Client.OptionalBodyPost method.

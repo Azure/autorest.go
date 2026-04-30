@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -45,6 +46,44 @@ func NewClientWithNoCredential(endpoint string, options *ClientOptions) (*Client
 		internal: cl,
 	}
 	return client, nil
+}
+
+// BinaryBodyWithContentType - required contentType parameter is passed to req.SetBody()
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientBinaryBodyWithContentTypeOptions contains the optional parameters for the Client.BinaryBodyWithContentType
+//     method.
+func (client *Client) BinaryBodyWithContentType(ctx context.Context, payload io.ReadSeekCloser, contentType string, options *ClientBinaryBodyWithContentTypeOptions) (ClientBinaryBodyWithContentTypeResponse, error) {
+	var err error
+	const operationName = "Client.BinaryBodyWithContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.binaryBodyWithContentTypeCreateRequest(ctx, payload, contentType, options)
+	if err != nil {
+		return ClientBinaryBodyWithContentTypeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientBinaryBodyWithContentTypeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientBinaryBodyWithContentTypeResponse{}, err
+	}
+	return ClientBinaryBodyWithContentTypeResponse{}, nil
+}
+
+// binaryBodyWithContentTypeCreateRequest creates the BinaryBodyWithContentType request.
+func (client *Client) binaryBodyWithContentTypeCreateRequest(ctx context.Context, payload io.ReadSeekCloser, contentType string, _ *ClientBinaryBodyWithContentTypeOptions) (*policy.Request, error) {
+	urlPath := "/binary-payload-with-content-type"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	if err := req.SetBody(payload, contentType); err != nil {
+		return nil, err
+	}
+	return req, nil
 }
 
 // BinaryResponseWithXMLContentType -
@@ -598,6 +637,51 @@ func (client *Client) optionalBinaryBodyCreateRequest(ctx context.Context, optio
 	if options != nil && options.Payload != nil {
 		req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
 		if err := req.SetBody(options.Payload, "application/octet-stream"); err != nil {
+			return nil, err
+		}
+		return req, nil
+	}
+	return req, nil
+}
+
+// OptionalBinaryBodyWithContentType - optional contentType parameter is passed to req.SetBody() IFF body is not nil
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientOptionalBinaryBodyWithContentTypeOptions contains the optional parameters for the Client.OptionalBinaryBodyWithContentType
+//     method.
+func (client *Client) OptionalBinaryBodyWithContentType(ctx context.Context, options *ClientOptionalBinaryBodyWithContentTypeOptions) (ClientOptionalBinaryBodyWithContentTypeResponse, error) {
+	var err error
+	const operationName = "Client.OptionalBinaryBodyWithContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.optionalBinaryBodyWithContentTypeCreateRequest(ctx, options)
+	if err != nil {
+		return ClientOptionalBinaryBodyWithContentTypeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientOptionalBinaryBodyWithContentTypeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientOptionalBinaryBodyWithContentTypeResponse{}, err
+	}
+	return ClientOptionalBinaryBodyWithContentTypeResponse{}, nil
+}
+
+// optionalBinaryBodyWithContentTypeCreateRequest creates the OptionalBinaryBodyWithContentType request.
+func (client *Client) optionalBinaryBodyWithContentTypeCreateRequest(ctx context.Context, options *ClientOptionalBinaryBodyWithContentTypeOptions) (*policy.Request, error) {
+	urlPath := "/optional-binary-payload-with-content-type"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	contentTypeDefault := "*/*"
+	if options != nil && options.ContentType != nil {
+		contentTypeDefault = *options.ContentType
+	}
+	if options != nil && options.Payload != nil {
+		if err := req.SetBody(options.Payload, contentTypeDefault); err != nil {
 			return nil, err
 		}
 		return req, nil

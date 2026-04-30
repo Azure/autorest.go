@@ -6,6 +6,11 @@ package azregressions
 
 import "io"
 
+// ClientBinaryBodyWithContentTypeResponse contains the response from method Client.BinaryBodyWithContentType.
+type ClientBinaryBodyWithContentTypeResponse struct {
+	// placeholder for future response values
+}
+
 // ClientBinaryResponseWithXMLContentTypeResponse contains the response from method Client.BinaryResponseWithXMLContentType.
 type ClientBinaryResponseWithXMLContentTypeResponse struct {
 	// Body contains the streaming response.
@@ -72,6 +77,11 @@ type ClientGetXMLTwoResponse struct {
 
 // ClientOptionalBinaryBodyResponse contains the response from method Client.OptionalBinaryBody.
 type ClientOptionalBinaryBodyResponse struct {
+	// placeholder for future response values
+}
+
+// ClientOptionalBinaryBodyWithContentTypeResponse contains the response from method Client.OptionalBinaryBodyWithContentType.
+type ClientOptionalBinaryBodyWithContentTypeResponse struct {
 	// placeholder for future response values
 }
 
