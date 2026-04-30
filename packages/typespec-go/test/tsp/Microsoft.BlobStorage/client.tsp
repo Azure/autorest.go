@@ -603,7 +603,17 @@ model SignedIdentifiersGo is Array<SignedIdentifier>;
   "BlobClientDownloadResponseInternal",
   "go"
 );
-
+/** The multipart body parameter. */
+alias MultipartBodyParameterGo = {
+  /** The body of the request. */
+  @body
+  @encode("bytes")
+  body: bytes;
+};
+@@alternateType(MultipartBodyParameter.body,
+  MultipartBodyParameterGo.body,
+  "go"
+);
 @@clientName(QueryType, "QueryFormatType", "python");
 @@clientName(Storage.Blob.BlockBlob.uploadBlobFromUrl,
   "putBlobFromUrl",

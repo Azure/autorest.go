@@ -563,12 +563,14 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (S
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 // If the operation fails it returns an *azcore.ResponseError type.
+//   - contentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed;
+//     boundary=batch_<GUID>
 //   - contentLength - The length of the request.
 //   - body - The body of the request.
 //   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the ServiceClient.SubmitBatch method.
-func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
+func (client *ServiceClient) SubmitBatch(ctx context.Context, contentType string, contentLength int64, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
 	var err error
-	req, err := client.submitBatchCreateRequest(ctx, contentLength, body, options)
+	req, err := client.submitBatchCreateRequest(ctx, contentType, contentLength, body, options)
 	if err != nil {
 		return ServiceClientSubmitBatchResponse{}, err
 	}
@@ -585,7 +587,7 @@ func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int6
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.
-func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (*policy.Request, error) {
+func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, contentType string, contentLength int64, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (*policy.Request, error) {
 	urlPath := "?comp=batch"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
@@ -603,9 +605,7 @@ func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, conte
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
 	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
-	formData := map[string]any{}
-	formData["body"] = body
-	if err := runtime.SetMultipartFormData(req, formData); err != nil {
+	if err := req.SetBody(body, contentType); err != nil {
 		return nil, err
 	}
 	return req, nil
