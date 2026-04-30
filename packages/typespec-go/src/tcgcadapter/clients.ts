@@ -816,8 +816,8 @@ export class ClientAdapter {
             break;
           }
           case 'binary':
-            if (isMultipartBody(opParam)) {
-              adaptedParam = this.adaptMultipartFormParameter(param, paramStyle, byVal);
+            if (isMultipartBodyType(opParam.type)) {
+              adaptedParam = this.adaptMultipartFormParameter(param.name, opParam.type, paramStyle, byVal);
             } else {
               const contentTypeLiteral = this.ta.getLiteral(this.ta.getStringType(), opParam.defaultContentType);
               adaptedParam = new go.BodyParameter(paramName, contentType, contentTypeLiteral, this.ta.getReadSeekCloser(false), paramStyle, byVal);
@@ -1108,8 +1108,8 @@ export class ClientAdapter {
     let adaptedParam: go.MethodParameter;
     switch (opParam.kind) {
       case 'body':
-        if (isMultipartBody(opParam)) {
-          adaptedParam = this.adaptMultipartFormParameter(methodParam, paramStyle, byVal);
+        if (isMultipartBodyType(opParam.type)) {
+          adaptedParam = this.adaptMultipartFormParameter(methodParam.name, opParam.type, paramStyle, byVal);
         } else {
           const contentType = this.adaptContentType(opParam.defaultContentType);
           let bodyType = this.ta.getWireType(methodParam.type, false, true);
@@ -1207,13 +1207,8 @@ export class ClientAdapter {
    * for file parts with a fixed content type (e.g. HttpPart<File<"image/png">>),
    * uses a MultipartContent type with the content type baked in.
    */
-  private adaptMultipartFormParameter(param: tcgc.SdkMethodParameter | tcgc.SdkModelPropertyType, paramStyle: go.ParameterStyle, byVal: boolean): go.MultipartFormBodyParameter {
-    let paramName = param.name;
-    if (param.type.kind !== 'model') {
-      throw new AdapterError('InternalError', `unexpected kind ${param.type.kind}`, param.__raw?.node);
-    }
-
-    let paramType: tcgc.SdkType = param.type;
+  private adaptMultipartFormParameter(paramName: string, paramType: tcgc.SdkModelType, paramStyle: go.ParameterStyle, byVal: boolean): go.MultipartFormBodyParameter {
+    let paramAsSdkType: tcgc.SdkType = paramType;
     let multipartOptions: tcgc.MultipartOptions | undefined;
     if (paramType.isGeneratedName) {
       // tcgc wraps inline multipart params in a generated model with a single property.
@@ -1224,7 +1219,7 @@ export class ClientAdapter {
       const prop = paramType.properties[0];
       paramName = prop.name;
       multipartOptions = prop.serializationOptions.multipart;
-      paramType = prop.type;
+      paramAsSdkType = prop.type;
     }
 
     let type: go.WireType;
@@ -1232,11 +1227,11 @@ export class ClientAdapter {
     // non-file parts (e.g. HttpPart<{ @body body: float64; @header contentType: "text/plain" }>)
     // should retain their underlying type (e.g. float64).
     if (multipartOptions?.isFilePart && multipartOptions.contentType?.type.kind === 'constant' && multipartOptions.defaultContentTypes.length === 1) {
-      type = this.ta.getMultipartContent(paramType.kind === 'array', multipartOptions.defaultContentTypes[0]);
-    } else if (paramType.kind === 'bytes' && paramType.encode === 'bytes') {
+      type = this.ta.getMultipartContent(paramAsSdkType.kind === 'array', multipartOptions.defaultContentTypes[0]);
+    } else if (paramAsSdkType.kind === 'bytes' && paramAsSdkType.encode === 'bytes') {
       type = this.ta.getReadSeekCloser(false);
     } else {
-      type = this.ta.getWireType(paramType, true, true);
+      type = this.ta.getWireType(paramAsSdkType, true, true);
     }
 
     paramName = getEscapedReservedName(ensureNameCase(paramName, paramStyle === 'required'), 'Param');
@@ -1862,18 +1857,18 @@ type RespHeadersMapForPageable = Map<tcgc.SdkServiceResponseHeader, go.HeaderSca
  * @param body the body param to check
  * @returns true if body is multipart
  */
-function isMultipartBody(body: tcgc.SdkBodyParameter): boolean {
+function isMultipartBodyType(type: tcgc.SdkType): type is tcgc.SdkModelType {
   // multipart body params are always a model type.
   // note that it's legal for models to have zero
   // properties, so they would never be multipart.
-  if (body.type.kind !== 'model' || body.type.properties.length === 0) {
+  if (type.kind !== 'model' || type.properties.length === 0) {
     return false;
   }
 
   // check for multipart serialization options.
   // it's never just some of the properties, i.e.
   // either they all have it or none of them do
-  for (const prop of body.type.properties) {
+  for (const prop of type.properties) {
     if (!prop.serializationOptions.multipart) {
       return false;
     }
