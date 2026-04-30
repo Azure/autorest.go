@@ -2,7 +2,7 @@
 
 ## 0.11.2 (unreleased)
 
-### Bug Fixes
+### Bugs Fixed
 
 * Operations with a binary body and parameterized `Content-Type` correctly utilize the parameterized value.
 * Improved detection for operations that consume `multipart` content.
