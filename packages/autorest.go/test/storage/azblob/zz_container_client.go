@@ -1726,7 +1726,6 @@ func (client *ContainerClient) submitBatchCreateRequest(ctx context.Context, con
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	req.Raw().Header["Content-Length"] = []string{strconv.FormatInt(contentLength, 10)}
-	req.Raw().Header["Content-Type"] = []string{multipartContentType}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
