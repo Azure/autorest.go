@@ -74,7 +74,7 @@ func (client *Client) backupKeyCreateRequest(ctx context.Context, name string, _
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -133,7 +133,7 @@ func (client *Client) createKeyCreateRequest(ctx context.Context, name string, p
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -203,7 +203,7 @@ func (client *Client) decryptCreateRequest(ctx context.Context, name string, ver
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -264,7 +264,7 @@ func (client *Client) deleteKeyCreateRequest(ctx context.Context, name string, _
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -330,7 +330,7 @@ func (client *Client) encryptCreateRequest(ctx context.Context, name string, ver
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -390,7 +390,7 @@ func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, name strin
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -452,7 +452,7 @@ func (client *Client) getKeyCreateRequest(ctx context.Context, name string, vers
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -514,7 +514,7 @@ func (client *Client) getKeyAttestationCreateRequest(ctx context.Context, name s
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -570,7 +570,7 @@ func (client *Client) getKeyRotationPolicyCreateRequest(ctx context.Context, nam
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -621,7 +621,7 @@ func (client *Client) getRandomBytesCreateRequest(ctx context.Context, parameter
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -683,7 +683,7 @@ func (client *Client) importKeyCreateRequest(ctx context.Context, name string, p
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -741,7 +741,7 @@ func (client *Client) listDeletedKeyPropertiesCreateRequest(ctx context.Context,
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -793,7 +793,7 @@ func (client *Client) listKeyPropertiesCreateRequest(ctx context.Context, _ *Lis
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -849,7 +849,7 @@ func (client *Client) listKeyPropertiesVersionsCreateRequest(ctx context.Context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -904,7 +904,7 @@ func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, name str
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -951,7 +951,7 @@ func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, name s
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -1013,7 +1013,7 @@ func (client *Client) releaseCreateRequest(ctx context.Context, name string, ver
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -1075,7 +1075,7 @@ func (client *Client) restoreKeyCreateRequest(ctx context.Context, parameters Re
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -1134,7 +1134,7 @@ func (client *Client) rotateKeyCreateRequest(ctx context.Context, name string, _
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -1196,7 +1196,7 @@ func (client *Client) signCreateRequest(ctx context.Context, name string, versio
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -1263,7 +1263,7 @@ func (client *Client) unwrapKeyCreateRequest(ctx context.Context, name string, v
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -1330,7 +1330,7 @@ func (client *Client) updateKeyCreateRequest(ctx context.Context, name string, v
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -1390,7 +1390,7 @@ func (client *Client) updateKeyRotationPolicyCreateRequest(ctx context.Context, 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, keyRotationPolicy); err != nil {
@@ -1458,7 +1458,7 @@ func (client *Client) verifyCreateRequest(ctx context.Context, name string, vers
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -1527,7 +1527,7 @@ func (client *Client) wrapKeyCreateRequest(ctx context.Context, name string, ver
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

@@ -59,7 +59,7 @@ func (client *Client) createCreateRequest(ctx context.Context, tableProperties P
 	if options != nil && options.Format != nil {
 		reqQP.Set("$format", string(*options.Format))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	if options != nil && options.ResponsePreference != nil {
@@ -218,7 +218,7 @@ func (client *Client) deleteEntityCreateRequest(ctx context.Context, table strin
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	req.Raw().Header["If-Match"] = []string{ifMatch}
@@ -290,7 +290,7 @@ func (client *Client) getAccessPolicyCreateRequest(ctx context.Context, table st
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
@@ -364,7 +364,7 @@ func (client *Client) insertEntityCreateRequest(ctx context.Context, table strin
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	if options != nil && options.ResponsePreference != nil {
@@ -468,7 +468,7 @@ func (client *Client) mergeEntityCreateRequest(ctx context.Context, table string
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	if options != nil && options.IfMatch != nil {
@@ -553,7 +553,7 @@ func (client *Client) queryCreateRequest(ctx context.Context, options *ClientQue
 	if options != nil && options.NextTableName != nil {
 		reqQP.Set("NextTableName", *options.NextTableName)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	if options != nil && options.RequestID != nil {
@@ -646,7 +646,7 @@ func (client *Client) queryEntitiesCreateRequest(ctx context.Context, table stri
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	if options != nil && options.RequestID != nil {
@@ -744,7 +744,7 @@ func (client *Client) queryEntityWithPartitionAndRowKeyCreateRequest(ctx context
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json;odata=minimalmetadata"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	if options != nil && options.RequestID != nil {
@@ -827,7 +827,7 @@ func (client *Client) setAccessPolicyCreateRequest(ctx context.Context, table st
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
@@ -916,7 +916,7 @@ func (client *Client) updateEntityCreateRequest(ctx context.Context, table strin
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["DataServiceVersion"] = []string{"3.0"}
 	if options != nil && options.IfMatch != nil {

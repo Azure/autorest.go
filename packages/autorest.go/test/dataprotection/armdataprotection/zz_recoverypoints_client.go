@@ -98,7 +98,7 @@ func (client *RecoveryPointsClient) getCreateRequest(ctx context.Context, resour
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRecoveryPointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -170,7 +170,7 @@ func (client *RecoveryPointsClient) listCreateRequest(ctx context.Context, resou
 		reqQP.Set("$skipToken", *options.SkipToken)
 	}
 	reqQP.Set("api-version", defaultRecoveryPointsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

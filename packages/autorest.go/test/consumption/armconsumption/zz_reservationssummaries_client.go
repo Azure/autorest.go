@@ -96,7 +96,7 @@ func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context
 	if options != nil && options.StartDate != nil {
 		reqQP.Set("startDate", *options.StartDate)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -153,7 +153,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(c
 	}
 	reqQP.Set("api-version", defaultReservationsSummariesClientVersion)
 	reqQP.Set("grain", string(grain))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -215,7 +215,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderAndReservationC
 	}
 	reqQP.Set("api-version", defaultReservationsSummariesClientVersion)
 	reqQP.Set("grain", string(grain))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

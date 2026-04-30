@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // MixedParamsClient - Client for testing a mix of client-level and method-level parameters.
@@ -77,7 +78,7 @@ func (client *MixedParamsClient) withBodyCreateRequest(ctx context.Context, regi
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("region", region)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["name"] = []string{client.name}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -120,7 +121,7 @@ func (client *MixedParamsClient) withQueryCreateRequest(ctx context.Context, reg
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("id", id)
 	reqQP.Set("region", region)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["name"] = []string{client.name}
 	return req, nil
 }

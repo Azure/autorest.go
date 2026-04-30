@@ -174,6 +174,6 @@ func (client *PathParamClient) withQueryCreateRequest(ctx context.Context, optio
 	if options != nil && options.Format != nil {
 		reqQP.Set("format", *options.Format)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

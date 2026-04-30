@@ -87,7 +87,7 @@ func (client *ExpressRouteProviderPortsLocationClient) listCreateRequest(ctx con
 		reqQP.Set("$filter", *options.Filter)
 	}
 	reqQP.Set("api-version", defaultExpressRouteProviderPortsLocationClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

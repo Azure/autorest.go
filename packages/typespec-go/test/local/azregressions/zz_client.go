@@ -170,7 +170,7 @@ func (client *Client) doubleDecodeCreateRequest(ctx context.Context, pathParam s
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("query", query)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -901,6 +901,6 @@ func (client *Client) withExpandParamCreateRequest(ctx context.Context, expand s
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

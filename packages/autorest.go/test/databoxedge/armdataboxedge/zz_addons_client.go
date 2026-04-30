@@ -112,7 +112,7 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAddonsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, addon); err != nil {
 		return nil, err
@@ -186,7 +186,7 @@ func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAddonsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -243,7 +243,7 @@ func (client *AddonsClient) getCreateRequest(ctx context.Context, deviceName str
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAddonsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -306,7 +306,7 @@ func (client *AddonsClient) listByRoleCreateRequest(ctx context.Context, deviceN
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAddonsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

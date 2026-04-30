@@ -54,7 +54,7 @@ func (client *BytesQueryClient) base64CreateRequest(ctx context.Context, value [
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("value", base64.StdEncoding.EncodeToString(value))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -91,7 +91,7 @@ func (client *BytesQueryClient) base64URLCreateRequest(ctx context.Context, valu
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("value", base64.RawURLEncoding.EncodeToString(value))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -135,7 +135,7 @@ func (client *BytesQueryClient) base64URLArrayCreateRequest(ctx context.Context,
 		}
 		return encodedValue
 	}(), ","))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -172,6 +172,6 @@ func (client *BytesQueryClient) defaultCreateRequest(ctx context.Context, value 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("value", base64.StdEncoding.EncodeToString(value))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // QueriesClient contains the methods for the Queries group.
@@ -58,7 +59,7 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -101,7 +102,7 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -145,7 +146,7 @@ func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Cont
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

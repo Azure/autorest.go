@@ -64,7 +64,7 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCrea
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAuthenticationClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}
 	formData.Set("grant_type", string(grantType))
@@ -133,7 +133,7 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCrea
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultAuthenticationClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}
 	formData.Set("service", service)
@@ -197,7 +197,7 @@ func (client *AuthenticationClient) getAcrAccessTokenFromLoginCreateRequest(ctx 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("scope", scope)
 	reqQP.Set("service", service)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

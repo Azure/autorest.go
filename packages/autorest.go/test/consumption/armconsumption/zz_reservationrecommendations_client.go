@@ -82,7 +82,7 @@ func (client *ReservationRecommendationsClient) listCreateRequest(ctx context.Co
 		reqQP.Set("$filter", *options.Filter)
 	}
 	reqQP.Set("api-version", defaultReservationRecommendationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

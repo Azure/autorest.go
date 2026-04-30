@@ -96,7 +96,7 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 	reqQP.Set("queryEnum", string(queryEnum))
 	reqQP.Set("stringQuery", stringQuery)
 	reqQP.Set("unixTimeQuery", datetime.Unix(unixTimeQuery).String())
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	assignedIDDefault := float32(8989)
 	if options != nil && options.AssignedID != nil {
@@ -174,7 +174,7 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts [
 		}
 	}
 	reqQP.Set("queryCounts", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(queryCounts), "[]")), ","))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
 	req.Raw().Header["headerStrings"] = []string{strings.Join(someGroup.HeaderStrings, ",")}
@@ -262,7 +262,7 @@ func (client *Client) listCreateRequest(ctx context.Context, headerEnums []IntEn
 			reqQP.Add("queryEnums", fmt.Sprintf("%d", qv))
 		}
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.HeaderEnum != nil {
 		req.Raw().Header["headerEnum"] = []string{fmt.Sprintf("%v", *options.HeaderEnum)}
@@ -510,7 +510,7 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, things 
 	if options != nil && options.Unique != nil {
 		reqQP.Set("unique", *options.Unique)
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalIndex != nil {
 		req.Raw().Header["optional-index"] = []string{strconv.FormatInt(int64(*client.clientOptionalGroup.OptionalIndex), 10)}

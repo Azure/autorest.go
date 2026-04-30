@@ -120,3 +120,44 @@ func TestDoubleDecodeQueryParam(t *testing.T) {
 	require.Equal(t, pathValue, receivedPath, "path param was double-decoded")
 	require.Equal(t, queryValue, receivedQuery, "query param was double-decoded")
 }
+
+// TestDoubleDecodeQueryParamPlusAndSpace verifies that query parameter values containing
+// literal '+' characters and spaces round-trip correctly. Line 173 of zz_client.go replaces
+// '+' (which url.Values.Encode uses for spaces) with '%20'. A literal '+' in the original
+// value is encoded as '%2B' by Set and must not be corrupted by this replacement.
+func TestDoubleDecodeQueryParamPlusAndSpace(t *testing.T) {
+	tests := []struct {
+		name  string
+		path  string
+		query string
+	}{
+		{"literal plus", "path-value", "hello+world"},
+		{"space", "path-value", "hello world"},
+		{"plus and space", "path-value", "a + b = c"},
+		{"encoded plus in path", "path+value", "query+value"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var receivedPath, receivedQuery string
+			client, err := azregressions.NewClientWithNoCredential("https://fake.endpoint", &azregressions.ClientOptions{
+				ClientOptions: policy.ClientOptions{
+					Transport: fake.NewServerTransport(&fake.Server{
+						DoubleDecode: func(_ context.Context, pathParam string, query string, _ *azregressions.ClientDoubleDecodeOptions) (resp azfake.Responder[azregressions.ClientDoubleDecodeResponse], errResp azfake.ErrorResponder) {
+							receivedPath = pathParam
+							receivedQuery = query
+							resp.SetResponse(http.StatusNoContent, azregressions.ClientDoubleDecodeResponse{}, nil)
+							return
+						},
+					}),
+				},
+			})
+			require.NoError(t, err)
+
+			_, err = client.DoubleDecode(context.Background(), tt.path, tt.query, nil)
+			require.NoError(t, err)
+			require.Equal(t, tt.path, receivedPath, "path param mismatch")
+			require.Equal(t, tt.query, receivedQuery, "query param mismatch")
+		})
+	}
+}

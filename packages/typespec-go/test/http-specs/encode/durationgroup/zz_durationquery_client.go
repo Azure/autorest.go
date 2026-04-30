@@ -55,7 +55,7 @@ func (client *DurationQueryClient) defaultCreateRequest(ctx context.Context, inp
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", input)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -93,7 +93,7 @@ func (client *DurationQueryClient) float64MillisecondsCreateRequest(ctx context.
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatFloat(input, 'f', -1, 64))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -131,7 +131,7 @@ func (client *DurationQueryClient) float64SecondsCreateRequest(ctx context.Conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatFloat(input, 'f', -1, 64))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -169,7 +169,7 @@ func (client *DurationQueryClient) floatMillisecondsCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatFloat(float64(input), 'f', -1, 32))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -207,7 +207,7 @@ func (client *DurationQueryClient) floatMillisecondsLargerUnitCreateRequest(ctx 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatFloat(float64(input), 'f', -1, 32))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -245,7 +245,7 @@ func (client *DurationQueryClient) floatSecondsCreateRequest(ctx context.Context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatFloat(float64(input), 'f', -1, 32))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -283,7 +283,7 @@ func (client *DurationQueryClient) floatSecondsLargerUnitCreateRequest(ctx conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatFloat(float64(input), 'f', -1, 32))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -321,7 +321,7 @@ func (client *DurationQueryClient) int32MillisecondsCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -359,7 +359,7 @@ func (client *DurationQueryClient) int32MillisecondsArrayCreateRequest(ctx conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(input), "[]")), ","))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -397,7 +397,7 @@ func (client *DurationQueryClient) int32MillisecondsLargerUnitCreateRequest(ctx 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -435,7 +435,7 @@ func (client *DurationQueryClient) int32SecondsCreateRequest(ctx context.Context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -473,7 +473,7 @@ func (client *DurationQueryClient) int32SecondsArrayCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(input), "[]")), ","))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -511,7 +511,7 @@ func (client *DurationQueryClient) int32SecondsLargerUnitCreateRequest(ctx conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
 
@@ -548,6 +548,6 @@ func (client *DurationQueryClient) iso8601CreateRequest(ctx context.Context, inp
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", input)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

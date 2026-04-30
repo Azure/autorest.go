@@ -107,7 +107,7 @@ func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, devi
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRolesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, role); err != nil {
 		return nil, err
@@ -176,7 +176,7 @@ func (client *RolesClient) deleteCreateRequest(ctx context.Context, deviceName s
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRolesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -228,7 +228,7 @@ func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName stri
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRolesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -287,7 +287,7 @@ func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultRolesClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

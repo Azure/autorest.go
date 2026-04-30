@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 const defaultKqlScriptsClientVersion string = "2021-11-01-preview"
@@ -56,7 +57,7 @@ func (client *KqlScriptsClient) getAllCreateRequest(ctx context.Context, _ *KqlS
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultKqlScriptsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

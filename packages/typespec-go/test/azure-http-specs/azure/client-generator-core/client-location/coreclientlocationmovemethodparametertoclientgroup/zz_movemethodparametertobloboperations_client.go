@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // MoveMethodParameterToBlobOperationsClient contains the methods for the MoveMethodParameterToBlobOperations group.
@@ -57,7 +58,7 @@ func (client *MoveMethodParameterToBlobOperationsClient) getBlobCreateRequest(ct
 	reqQP.Set("blob", blob)
 	reqQP.Set("container", containerParam)
 	reqQP.Set("storageAccount", client.storageAccount)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

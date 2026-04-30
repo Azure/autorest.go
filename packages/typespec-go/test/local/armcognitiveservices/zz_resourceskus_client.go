@@ -81,7 +81,7 @@ func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, _ *Reso
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultResourceSKUsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 const defaultServiceAOperationsClientVersion string = "av2"
@@ -56,6 +57,6 @@ func (client *ServiceAOperationsClient) opACreateRequest(ctx context.Context, _ 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultServiceAOperationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

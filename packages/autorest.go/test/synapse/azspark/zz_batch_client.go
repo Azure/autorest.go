@@ -96,7 +96,7 @@ func (client *BatchClient) createSparkBatchJobCreateRequest(ctx context.Context,
 	if options != nil && options.Detailed != nil {
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, sparkBatchJobOptions); err != nil {
 		return nil, err
@@ -149,7 +149,7 @@ func (client *BatchClient) getSparkBatchJobCreateRequest(ctx context.Context, ba
 	if options != nil && options.Detailed != nil {
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -203,7 +203,7 @@ func (client *BatchClient) getSparkBatchJobsCreateRequest(ctx context.Context, o
 	if options != nil && options.Size != nil {
 		reqQP.Set("size", strconv.FormatInt(int64(*options.Size), 10))
 	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

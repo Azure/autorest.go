@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 const defaultOperationsClientVersion string = "2024-03-01"
@@ -71,7 +72,7 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *Operat
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultOperationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

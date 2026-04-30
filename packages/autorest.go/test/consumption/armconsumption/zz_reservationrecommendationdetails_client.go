@@ -88,7 +88,7 @@ func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx conte
 	reqQP.Set("region", region)
 	reqQP.Set("scope", string(scope))
 	reqQP.Set("term", string(term))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

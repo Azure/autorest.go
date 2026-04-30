@@ -92,7 +92,7 @@ func (client *ParameterGroupOperationsClient) noParameterGroupCreateRequest(ctx 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultParameterGroupOperationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.CorrelationID != nil {
 		req.Raw().Header["x-ms-correlation-id"] = []string{*options.CorrelationID}
@@ -159,7 +159,7 @@ func (client *ParameterGroupOperationsClient) sharedParameterGroup1CreateRequest
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultParameterGroupOperationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["x-ms-client-request-id"] = []string{params.ClientRequestID}
 	if options != nil && options.CorrelationID != nil {
@@ -227,7 +227,7 @@ func (client *ParameterGroupOperationsClient) sharedParameterGroup2CreateRequest
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultParameterGroupOperationsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["x-ms-client-request-id"] = []string{params.ClientRequestID}
 	if options != nil && options.CorrelationID != nil {

@@ -96,7 +96,7 @@ func (client *DeletedAccountsClient) getCreateRequest(ctx context.Context, locat
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDeletedAccountsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -149,7 +149,7 @@ func (client *DeletedAccountsClient) listCreateRequest(ctx context.Context, _ *D
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDeletedAccountsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -235,6 +235,6 @@ func (client *DeletedAccountsClient) purgeCreateRequest(ctx context.Context, loc
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultDeletedAccountsClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

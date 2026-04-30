@@ -67,7 +67,7 @@ func (client *LibraryClient) appendCreateRequest(ctx context.Context, comp Enum9
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
 	reqQP.Set("comp", string(comp))
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BlobConditionAppendPosition != nil {
 		req.Raw().Header["x-ms-blob-condition-appendpos"] = []string{strconv.FormatInt(*options.BlobConditionAppendPosition, 10)}
@@ -127,7 +127,7 @@ func (client *LibraryClient) createCreateRequest(ctx context.Context, libraryNam
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -181,7 +181,7 @@ func (client *LibraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -235,7 +235,7 @@ func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -275,7 +275,7 @@ func (client *LibraryClient) getCreateRequest(ctx context.Context, libraryName s
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -325,7 +325,7 @@ func (client *LibraryClient) getOperationResultCreateRequest(ctx context.Context
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -384,7 +384,7 @@ func (client *LibraryClient) listCreateRequest(ctx context.Context, _ *LibraryCl
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", defaultLibraryClientVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

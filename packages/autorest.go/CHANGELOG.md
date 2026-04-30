@@ -1,5 +1,17 @@
 # Release History
 
+## 4.0.0-preview.78 (unreleased)
+
+### Bugs Fixed
+
+* Encoding of query parameters replaces `+` with `%20` which is the correct URI encoding for space characters.
+
+### Other Changes
+
+* Fixed sorting of case statements in polymorphic helpers.
+* Client API version values are now emitted as a `const` instead of repeated per method.
+* The API version doc string has been moved to the client definition instead of per method.
+
 ## 4.0.0-preview.77 (2026-04-21)
 
 ### Bugs Fixed

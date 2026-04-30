@@ -231,7 +231,7 @@ func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("digest", digest)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Value != nil {
 		if err := req.SetBody(options.Value, "application/octet-stream"); err != nil {
@@ -541,7 +541,7 @@ func (client *ContainerRegistryBlobClient) mountBlobCreateRequest(ctx context.Co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("from", from)
 	reqQP.Set("mount", mount)
-	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
