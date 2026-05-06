@@ -14,6 +14,7 @@ import (
 )
 
 func TestResiliencyServiceDrivenClientv2_AddOperation(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/pull/4386")
 	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClientWithNoCredential("http://localhost:3000", "v2", nil)
 	require.NoError(t, err)
 	resp, err := client.AddOperation(context.Background(), nil)
@@ -22,6 +23,7 @@ func TestResiliencyServiceDrivenClientv2_AddOperation(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClientv1_FromNone(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/pull/4386")
 	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClientWithNoCredential("http://localhost:3000", "v2", &srvdrivennewgroup.ResiliencyServiceDrivenClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			APIVersion: "v1",
@@ -36,6 +38,7 @@ func TestResiliencyServiceDrivenClientv1_FromNone(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClientv1_FromOneOptional(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/pull/4386")
 	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClientWithNoCredential("http://localhost:3000", "v2", &srvdrivennewgroup.ResiliencyServiceDrivenClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			APIVersion: "v1",
@@ -51,6 +54,7 @@ func TestResiliencyServiceDrivenClientv1_FromOneOptional(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClientv1_FromOneRequired(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/pull/4386")
 	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClientWithNoCredential("http://localhost:3000", "v2", &srvdrivennewgroup.ResiliencyServiceDrivenClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			APIVersion: "v1",
@@ -65,6 +69,7 @@ func TestResiliencyServiceDrivenClientv1_FromOneRequired(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClientv2_FromNone(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/pull/4386")
 	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClientWithNoCredential("http://localhost:3000", "v2", nil)
 	require.NoError(t, err)
 	resp, err := client.FromNone(context.Background(), &srvdrivennewgroup.ResiliencyServiceDrivenClientFromNoneOptions{
@@ -75,6 +80,7 @@ func TestResiliencyServiceDrivenClientv2_FromNone(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClientv2_FromOneOptional(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/pull/4386")
 	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClientWithNoCredential("http://localhost:3000", "v2", nil)
 	require.NoError(t, err)
 	resp, err := client.FromOneOptional(context.Background(), &srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
@@ -86,6 +92,7 @@ func TestResiliencyServiceDrivenClientv2_FromOneOptional(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClientv2_FromOneRequired(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/pull/4386")
 	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClientWithNoCredential("http://localhost:3000", "v2", nil)
 	require.NoError(t, err)
 	resp, err := client.FromOneRequired(context.Background(), "required", &srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneRequiredOptions{
