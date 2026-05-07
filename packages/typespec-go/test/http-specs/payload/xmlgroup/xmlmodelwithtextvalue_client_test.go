@@ -28,7 +28,7 @@ func TestXMLModelWithTextValueClient_Put(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithTextValueClient().Put(context.Background(), xmlgroup.ModelWithText{
 		Language: to.Ptr("foo"),
-		Content:  to.Ptr("\n  This is some text.\n"),
+		Content:  to.Ptr("This is some text."),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
