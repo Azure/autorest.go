@@ -115,3 +115,11 @@ func (client *SpecialWordsClient) NewSpecialWordsParametersClient() *SpecialWord
 		internal: client.internal,
 	}
 }
+
+// NewSpecialWordsReservedOperationBodyParamsClient creates a new instance of [SpecialWordsReservedOperationBodyParamsClient].
+func (client *SpecialWordsClient) NewSpecialWordsReservedOperationBodyParamsClient() *SpecialWordsReservedOperationBodyParamsClient {
+	return &SpecialWordsReservedOperationBodyParamsClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
