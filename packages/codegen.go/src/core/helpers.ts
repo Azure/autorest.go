@@ -16,7 +16,9 @@ export const RFC3339Format = 'time.RFC3339Nano';
 export const RFC1123Format = 'time.RFC1123';
 export const plainTimeFormat = 'time.TimeOnly';
 
-export const doNotEditRegex = /^\/\/ Code generated .* DO NOT EDIT\.$/m;
+// matches both current format (DO NOT EDIT on same line as Code generated)
+// and legacy autorest format (DO NOT EDIT on a separate line)
+export const doNotEditRegex = /^\/\/ Code generated .*( DO NOT EDIT\.$|[\s\S]*?^\/\/ DO NOT EDIT\.$)/m;
 
 const defaultHeaderText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
