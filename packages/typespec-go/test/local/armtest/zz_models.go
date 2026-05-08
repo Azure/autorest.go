@@ -22,7 +22,7 @@ type AvailabilityProperties struct {
 	// Indicates if the resource is in preview.
 	IsPreview *bool
 
-	// FLAG; CONSTANT; Field has constant value 1, any specified value is ignored.
+	// FLAG; CONSTANT; The availability status code.
 	// Field has constant value 1, any specified value is ignored.
 	Status *int32
 }
