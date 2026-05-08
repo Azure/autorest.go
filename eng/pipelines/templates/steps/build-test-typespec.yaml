@@ -14,6 +14,11 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - script: |
+      pnpm test
+    displayName: "Run Unit Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+
+  - script: |
       pnpm -w format:check
     displayName: "Formatting and Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)
