@@ -29,9 +29,6 @@ type SpecialWordsServer struct {
 
 	// SpecialWordsParametersServer contains the fakes for client SpecialWordsParametersClient
 	SpecialWordsParametersServer SpecialWordsParametersServer
-
-	// SpecialWordsReservedOperationBodyParamsServer contains the fakes for client SpecialWordsReservedOperationBodyParamsClient
-	SpecialWordsReservedOperationBodyParamsServer SpecialWordsReservedOperationBodyParamsServer
 }
 
 // NewSpecialWordsServerTransport creates a new instance of SpecialWordsServerTransport with the provided implementation.
@@ -44,14 +41,13 @@ func NewSpecialWordsServerTransport(srv *SpecialWordsServer) *SpecialWordsServer
 // SpecialWordsServerTransport connects instances of specialwordsgroup.SpecialWordsClient to instances of SpecialWordsServer.
 // Don't use this type directly, use NewSpecialWordsServerTransport instead.
 type SpecialWordsServerTransport struct {
-	srv                                             *SpecialWordsServer
-	trMu                                            sync.Mutex
-	trSpecialWordsExtensibleStringsServer           *SpecialWordsExtensibleStringsServerTransport
-	trSpecialWordsModelPropertiesServer             *SpecialWordsModelPropertiesServerTransport
-	trSpecialWordsModelsServer                      *SpecialWordsModelsServerTransport
-	trSpecialWordsOperationsServer                  *SpecialWordsOperationsServerTransport
-	trSpecialWordsParametersServer                  *SpecialWordsParametersServerTransport
-	trSpecialWordsReservedOperationBodyParamsServer *SpecialWordsReservedOperationBodyParamsServerTransport
+	srv                                   *SpecialWordsServer
+	trMu                                  sync.Mutex
+	trSpecialWordsExtensibleStringsServer *SpecialWordsExtensibleStringsServerTransport
+	trSpecialWordsModelPropertiesServer   *SpecialWordsModelPropertiesServerTransport
+	trSpecialWordsModelsServer            *SpecialWordsModelsServerTransport
+	trSpecialWordsOperationsServer        *SpecialWordsOperationsServerTransport
+	trSpecialWordsParametersServer        *SpecialWordsParametersServerTransport
 }
 
 // Do implements the policy.Transporter interface for SpecialWordsServerTransport.
@@ -95,11 +91,6 @@ func (s *SpecialWordsServerTransport) dispatchToClientFake(req *http.Request, cl
 			return NewSpecialWordsParametersServerTransport(&s.srv.SpecialWordsParametersServer)
 		})
 		resp, err = s.trSpecialWordsParametersServer.Do(req)
-	case "SpecialWordsReservedOperationBodyParamsClient":
-		initServer(&s.trMu, &s.trSpecialWordsReservedOperationBodyParamsServer, func() *SpecialWordsReservedOperationBodyParamsServerTransport {
-			return NewSpecialWordsReservedOperationBodyParamsServerTransport(&s.srv.SpecialWordsReservedOperationBodyParamsServer)
-		})
-		resp, err = s.trSpecialWordsReservedOperationBodyParamsServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

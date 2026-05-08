@@ -579,9 +579,3 @@ type SpecialWordsParametersClientWithWithOptions struct {
 type SpecialWordsParametersClientWithYieldOptions struct {
 	// placeholder for future optional parameters
 }
-
-// SpecialWordsReservedOperationBodyParamsClientWithItemsOptions contains the optional parameters for the SpecialWordsReservedOperationBodyParamsClient.WithItems
-// method.
-type SpecialWordsReservedOperationBodyParamsClientWithItemsOptions struct {
-	// placeholder for future optional parameters
-}

@@ -524,8 +524,3 @@ type SpecialWordsParametersClientWithWithResponse struct {
 type SpecialWordsParametersClientWithYieldResponse struct {
 	// placeholder for future response values
 }
-
-// SpecialWordsReservedOperationBodyParamsClientWithItemsResponse contains the response from method SpecialWordsReservedOperationBodyParamsClient.WithItems.
-type SpecialWordsReservedOperationBodyParamsClientWithItemsResponse struct {
-	// placeholder for future response values
-}
