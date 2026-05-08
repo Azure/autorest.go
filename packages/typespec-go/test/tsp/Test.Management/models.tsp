@@ -9,6 +9,9 @@ model BodyRootProperties {
 
   @doc("The value property.")
   value?: unknown;
+
+  @doc("The availability property.")
+  availability?: AvailabilityProperties;
 }
 
 @doc("The status of the current operation.")
@@ -51,4 +54,13 @@ model WidgetProperties {
   @doc("Status of the current operation on widget.")
   @visibility(Lifecycle.Read)
   provisioningState?: ProvisioningState;
+}
+
+@doc("Properties of the availability resource.")
+model AvailabilityProperties {
+  @doc("Indicates if the resource is in preview.")
+  isPreview?: boolean;
+
+  @doc("Field has constant value 1, any specified value is ignored.")
+  status?: 1;
 }

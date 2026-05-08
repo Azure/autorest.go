@@ -67,6 +67,39 @@ func (a *ActionRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AvailabilityProperties.
+func (a AvailabilityProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "isPreview", a.IsPreview)
+	if a.Status != nil {
+		objectMap["status"] = int32(1)
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type AvailabilityProperties.
+func (a *AvailabilityProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", a, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "isPreview":
+			err = unpopulate(val, "IsPreview", &a.IsPreview)
+			delete(rawMsg, key)
+		case "status":
+			err = unpopulate(val, "Status", &a.Status)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", a, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type BodyRoot.
 func (b BodyRoot) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -121,6 +154,7 @@ func (b *BodyRoot) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type BodyRootProperties.
 func (b BodyRootProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
+	populate(objectMap, "availability", b.Availability)
 	populate(objectMap, "description", b.Description)
 	populate(objectMap, "provisioningState", b.ProvisioningState)
 	populateAny(objectMap, "value", b.Value)
@@ -136,6 +170,9 @@ func (b *BodyRootProperties) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "availability":
+			err = unpopulate(val, "Availability", &b.Availability)
+			delete(rawMsg, key)
 		case "description":
 			err = unpopulate(val, "Description", &b.Description)
 			delete(rawMsg, key)

@@ -1,0 +1,28 @@
+{
+  "operationId": "BodyRoots_get",
+  "title": "BodyRoots_get_with_availability",
+  "parameters": {
+    "api-version": "2025-01-01",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "bodyRootName": "myBodyRoot"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Test/bodyRoots/myBodyRoot",
+        "name": "myBodyRoot",
+        "type": "Microsoft.Test/bodyRoots",
+        "location": "eastus",
+        "properties": {
+          "description": "my body root",
+          "provisioningState": "Succeeded",
+          "availability": {
+            "isPreview": true,
+            "status": 1
+          }
+        }
+      }
+    }
+  }
+}

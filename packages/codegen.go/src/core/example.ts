@@ -402,11 +402,13 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
     case 'any':
     case 'constant':
     case 'etag':
-    case 'literal':
     case 'string':
     case 'time':
       if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       return `to.Ptr(${valueString})`;
+    case 'literal':
+      // unwrap the literal and delegate to the inner type's case
+      return getPointerValue(type.type as go.WireType, valueString, byValue, imports);
     case 'scalar': {
       if (type.type === 'byte') {
         return valueString;
