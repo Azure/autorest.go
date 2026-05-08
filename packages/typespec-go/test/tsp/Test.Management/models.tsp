@@ -61,6 +61,6 @@ model AvailabilityProperties {
   @doc("Indicates if the resource is in preview.")
   isPreview?: boolean;
 
-  @doc("Field has constant value 1, any specified value is ignored.")
+  @doc("The availability status code.")
   status?: 1;
 }

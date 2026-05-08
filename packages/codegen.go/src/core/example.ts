@@ -401,6 +401,7 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
   switch (type.kind) {
     case 'any':
     case 'constant':
+    case 'constantDef':
     case 'etag':
     case 'string':
     case 'time':
