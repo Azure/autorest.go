@@ -157,7 +157,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         if (methodOptionalParameters.length > 0) {
           methodOptionalParametersText = `&${go.getPackageName(method.optionalParamsGroup.pkg)}.${method.optionalParamsGroup.groupName}{\n`;
           methodOptionalParametersText += methodOptionalParameters
-            .map((p) => `${naming.capitalize(p.parameter.name)}: ${getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)}`)
+            .map((p) => `${naming.capitalize(p.parameter.name)}: ${getExampleValue(pkg, p.value, '\t', imports, isParamByValue(p)).slice(1)}`)
             .join(',\n');
           methodOptionalParametersText += `}`;
         }
@@ -165,7 +165,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
-            exampleText += `${indent.get()}poller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}poller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, isParamByValue(p)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
             exampleText += `${indent.get()}if err != nil {\n`;
             exampleText += `${indent.push().get()}log.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `${indent.pop().get()}}\n`;
@@ -176,13 +176,13 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             exampleText += `${indent.pop().get()}}\n`;
             break;
           case 'method':
-            exampleText += `${indent.get()}${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, isParamByValue(p)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
             exampleText += `${indent.get()}if err != nil {\n`;
             exampleText += `${indent.push().get()}log.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `${indent.pop().get()}}\n`;
             break;
           case 'pageableMethod':
-            exampleText += `${indent.get()}pager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}pager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, isParamByValue(p)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
             break;
           default:
             method satisfies never;
@@ -324,8 +324,7 @@ function getExampleValue(pkg: go.TestPackage, example: go.ExampleType, indent: s
       return exampleText;
     }
     case 'model': {
-      const isModelPolymorphic = example.type.kind === 'polymorphicModel';
-      let exampleText = `${indent}${getRef(byValue && !isModelPolymorphic)}${go.getTypeDeclaration(example.type, pkg)}{\n`;
+      let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, pkg)}{\n`;
       if (inArray) {
         exampleText = `${indent}{\n`;
       }
@@ -521,4 +520,10 @@ function generateFakeExample(goType: go.Type, name?: string): go.ExampleType {
 
 function escapeString(str: string): string {
   return str.split('\\').join('\\\\').split('"').join('\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+}
+
+// interface parameters require a pointer (&) for Go interface satisfaction via pointer receivers,
+// even when the parameter style is byValue. This helper computes the effective byValue for example generation.
+function isParamByValue(p: go.ParameterExample): boolean {
+  return p.parameter.byValue && p.parameter.type.kind !== 'interface';
 }

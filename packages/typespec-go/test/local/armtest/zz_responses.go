@@ -69,3 +69,21 @@ type ParameterGroupOperationsClientSharedParameterGroup2Response struct {
 	// Widget resource for testing parameter groups
 	Widget
 }
+
+// PetsClientAdoptCatResponse contains the response from method PetsClient.AdoptCat.
+type PetsClientAdoptCatResponse struct {
+	// A cat.
+	Cat
+}
+
+// PetsClientAdoptPetResponse contains the response from method PetsClient.AdoptPet.
+type PetsClientAdoptPetResponse struct {
+	// Base pet model.
+	PetClassification
+}
+
+// PetsClientGetResponse contains the response from method PetsClient.Get.
+type PetsClientGetResponse struct {
+	// Pet resource.
+	PetResource
+}

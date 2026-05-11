@@ -75,3 +75,18 @@ type ParameterGroupOperationsClientSharedParameterGroup2Options struct {
 	// Optional correlation ID
 	CorrelationID *string
 }
+
+// PetsClientAdoptCatOptions contains the optional parameters for the PetsClient.AdoptCat method.
+type PetsClientAdoptCatOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetsClientAdoptPetOptions contains the optional parameters for the PetsClient.AdoptPet method.
+type PetsClientAdoptPetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PetsClientGetOptions contains the optional parameters for the PetsClient.Get method.
+type PetsClientGetOptions struct {
+	// placeholder for future optional parameters
+}

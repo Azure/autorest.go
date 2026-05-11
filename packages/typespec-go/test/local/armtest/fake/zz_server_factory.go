@@ -26,6 +26,9 @@ type ServerFactory struct {
 
 	// ParameterGroupOperationsServer contains the fakes for client ParameterGroupOperationsClient
 	ParameterGroupOperationsServer ParameterGroupOperationsServer
+
+	// PetsServer contains the fakes for client PetsClient
+	PetsServer PetsServer
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
@@ -46,6 +49,7 @@ type ServerFactoryTransport struct {
 	trConfigurationsServer           *ConfigurationsServerTransport
 	trLROServer                      *LROServerTransport
 	trParameterGroupOperationsServer *ParameterGroupOperationsServerTransport
+	trPetsServer                     *PetsServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -77,6 +81,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 			return NewParameterGroupOperationsServerTransport(&s.srv.ParameterGroupOperationsServer)
 		})
 		resp, err = s.trParameterGroupOperationsServer.Do(req)
+	case "PetsClient":
+		initServer(&s.trMu, &s.trPetsServer, func() *PetsServerTransport { return NewPetsServerTransport(&s.srv.PetsServer) })
+		resp, err = s.trPetsServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

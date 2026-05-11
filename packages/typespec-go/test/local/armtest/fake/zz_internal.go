@@ -6,6 +6,7 @@ package fake
 
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
+	"io"
 	"net/http"
 	"reflect"
 	"sync"
@@ -45,6 +46,18 @@ func initServer[T any](mu *sync.Mutex, dst **T, src func() *T) {
 		*dst = src()
 	}
 	mu.Unlock()
+}
+
+func readRequestBody(req *http.Request) ([]byte, error) {
+	if req.Body == nil {
+		return nil, nil
+	}
+	body, err := io.ReadAll(req.Body)
+	if err != nil {
+		return nil, err
+	}
+	req.Body.Close()
+	return body, nil
 }
 
 func newTracker[T any]() *tracker[T] {

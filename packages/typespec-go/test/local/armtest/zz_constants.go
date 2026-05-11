@@ -28,6 +28,24 @@ func PossibleCreatedByTypeValues() []CreatedByType {
 	}
 }
 
+// PetKind - The kind of the pet.
+type PetKind string
+
+const (
+	// PetKindCat - A cat.
+	PetKindCat PetKind = "Cat"
+	// PetKindDog - A dog.
+	PetKindDog PetKind = "Dog"
+)
+
+// PossiblePetKindValues returns the possible values for the PetKind const type.
+func PossiblePetKindValues() []PetKind {
+	return []PetKind{
+		PetKindCat,
+		PetKindDog,
+	}
+}
+
 // ProvisioningState - The status of the current operation.
 type ProvisioningState string
 

@@ -10,3 +10,13 @@ import "encoding/json"
 func (l *LROClientScalarResultResponse) UnmarshalJSON(data []byte) error {
 	return json.Unmarshal(data, &l.Value)
 }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetsClientAdoptPetResponse.
+func (p *PetsClientAdoptPetResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalPetClassification(data)
+	if err != nil {
+		return err
+	}
+	p.PetClassification = res
+	return nil
+}
