@@ -231,10 +231,14 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             // modelResult and polymorphicResult are anonymously embedded by value in the response struct.
             // monomorphicResult has an explicit byValue property. all other result types default to by value.
             let resultByValue = true;
+            let resultFieldName = fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name;
             if (method.returns.result?.kind === 'monomorphicResult') {
               resultByValue = method.returns.result.byValue;
+            } else if (method.returns.result?.kind === 'polymorphicResult') {
+              resultFieldName = method.returns.result.interface.name;
+              resultByValue = false;
             }
-            exampleText += `${indent.get()}// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, resultByValue).split('\n').join(`\n${indent.get()}// \t`)},\n`;
+            exampleText += `${indent.get()}// \t${resultFieldName}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, resultByValue).split('\n').join(`\n${indent.get()}// \t`)},\n`;
           }
           exampleText += `${indent.get()}// }\n`;
         }
