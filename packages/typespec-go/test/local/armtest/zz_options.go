@@ -14,6 +14,11 @@ type BodyRootsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BodyRootsClientPutOptions contains the optional parameters for the BodyRootsClient.Put method.
+type BodyRootsClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ConfigurationsClientGetContentOptions contains the optional parameters for the ConfigurationsClient.GetContent method.
 type ConfigurationsClientGetContentOptions struct {
 	// placeholder for future optional parameters

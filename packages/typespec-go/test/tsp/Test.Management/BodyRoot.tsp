@@ -23,6 +23,9 @@ model BodyRoot is TrackedResource<BodyRootProperties> {
 
 @armResourceOperations
 interface BodyRoots {
+  @doc("Create or update a body root resource.")
+  put is ArmResourceCreateOrReplaceSync<BodyRoot>;
+
   @doc("Get details of a certificate profile.")
   get is ArmResourceRead<BodyRoot>;
 

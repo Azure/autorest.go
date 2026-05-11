@@ -161,3 +161,70 @@ func (client *BodyRootsClient) getHandleResponse(resp *http.Response) (BodyRoots
 	}
 	return result, nil
 }
+
+// Put - Create or update a body root resource.
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - bodyRootName - Body root resource name.
+//   - resource - Resource create parameters.
+//   - options - BodyRootsClientPutOptions contains the optional parameters for the BodyRootsClient.Put method.
+func (client *BodyRootsClient) Put(ctx context.Context, resourceGroupName string, bodyRootName string, resource BodyRoot, options *BodyRootsClientPutOptions) (BodyRootsClientPutResponse, error) {
+	var err error
+	const operationName = "BodyRootsClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.putCreateRequest(ctx, resourceGroupName, bodyRootName, resource, options)
+	if err != nil {
+		return BodyRootsClientPutResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return BodyRootsClientPutResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return BodyRootsClientPutResponse{}, err
+	}
+	resp, err := client.putHandleResponse(httpResp)
+	return resp, err
+}
+
+// putCreateRequest creates the Put request.
+func (client *BodyRootsClient) putCreateRequest(ctx context.Context, resourceGroupName string, bodyRootName string, resource BodyRoot, _ *BodyRootsClientPutOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/bodyRoots/{bodyRootName}"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if bodyRootName == "" {
+		return nil, errors.New("parameter bodyRootName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{bodyRootName}", url.PathEscape(bodyRootName))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", defaultBodyRootsClientVersion)
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, resource); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putHandleResponse handles the Put response.
+func (client *BodyRootsClient) putHandleResponse(resp *http.Response) (BodyRootsClientPutResponse, error) {
+	result := BodyRootsClientPutResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BodyRoot); err != nil {
+		return BodyRootsClientPutResponse{}, err
+	}
+	return result, nil
+}
