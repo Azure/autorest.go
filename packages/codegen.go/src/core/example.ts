@@ -526,8 +526,20 @@ function escapeString(str: string): string {
   return str.split('\\').join('\\\\').split('"').join('\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
 }
 
-// interface parameters require a pointer (&) for Go interface satisfaction via pointer receivers,
-// even when the parameter style is byValue. This helper computes the effective byValue for example generation.
+/**
+ * returns true if the parameter's example value should be passed by value,
+ * false if it should be passed by reference. For interface parameters,
+ * it returns false when passing concrete types to ensure the example value
+ * is passed by reference for Go interface satisfaction via pointer receivers,
+ * even when the parameter style is byValue.
+ * @param p the parameter example to check
+ * @returns true if the parameter's example value should be passed by value, false if it should be passed by reference
+ */
 function isParamByValue(p: go.ParameterExample): boolean {
-  return p.parameter.byValue && p.parameter.type.kind !== 'interface';
+  switch (p.parameter.type.kind) {
+    case 'interface':
+      return p.value.kind === 'null';
+    default:
+      return p.parameter.byValue;
+  }
 }
