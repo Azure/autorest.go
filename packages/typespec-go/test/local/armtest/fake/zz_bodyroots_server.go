@@ -27,6 +27,10 @@ type BodyRootsServer struct {
 	// Get is the fake for method BodyRootsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
 	Get func(ctx context.Context, resourceGroupName string, bodyRootName string, options *armtest.BodyRootsClientGetOptions) (resp azfake.Responder[armtest.BodyRootsClientGetResponse], errResp azfake.ErrorResponder)
+
+	// Put is the fake for method BodyRootsClient.Put
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	Put func(ctx context.Context, resourceGroupName string, bodyRootName string, resource armtest.BodyRoot, options *armtest.BodyRootsClientPutOptions) (resp azfake.Responder[armtest.BodyRootsClientPutResponse], errResp azfake.ErrorResponder)
 }
 
 // NewBodyRootsServerTransport creates a new instance of BodyRootsServerTransport with the provided implementation.
@@ -67,6 +71,8 @@ func (b *BodyRootsServerTransport) dispatchToMethodFake(req *http.Request, metho
 				res.resp, res.err = b.dispatchAction(req)
 			case "BodyRootsClient.Get":
 				res.resp, res.err = b.dispatchGet(req)
+			case "BodyRootsClient.Put":
+				res.resp, res.err = b.dispatchPut(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -145,6 +151,43 @@ func (b *BodyRootsServerTransport) dispatchGet(req *http.Request) (*http.Respons
 	respContent := server.GetResponseContent(respr)
 	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).BodyRoot, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (b *BodyRootsServerTransport) dispatchPut(req *http.Request) (*http.Response, error) {
+	if b.srv.Put == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Put not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/bodyRoots/(?P<bodyRootName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armtest.BodyRoot](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	bodyRootNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bodyRootName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := b.srv.Put(req.Context(), resourceGroupNameParam, bodyRootNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).BodyRoot, req)
 	if err != nil {

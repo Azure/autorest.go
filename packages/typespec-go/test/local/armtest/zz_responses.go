@@ -17,6 +17,12 @@ type BodyRootsClientGetResponse struct {
 	BodyRoot
 }
 
+// BodyRootsClientPutResponse contains the response from method BodyRootsClient.Put.
+type BodyRootsClientPutResponse struct {
+	// Body root resource.
+	BodyRoot
+}
+
 // ConfigurationsClientGetContentResponse contains the response from method ConfigurationsClient.GetContent.
 type ConfigurationsClientGetContentResponse struct {
 	// Configuration resource.

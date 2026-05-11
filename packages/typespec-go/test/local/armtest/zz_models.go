@@ -17,6 +17,16 @@ type ActionRequest struct {
 	Prop *string
 }
 
+// AvailabilityProperties - Properties of the availability resource.
+type AvailabilityProperties struct {
+	// Indicates if the resource is in preview.
+	IsPreview *bool
+
+	// FLAG; CONSTANT; The availability status code.
+	// Field has constant value 1, any specified value is ignored.
+	Status *int32
+}
+
 // BodyRoot - Body root resource.
 type BodyRoot struct {
 	// REQUIRED; The geo-location where the resource lives
@@ -43,6 +53,9 @@ type BodyRoot struct {
 
 // BodyRootProperties - Properties of the trusted signing account.
 type BodyRootProperties struct {
+	// The availability property.
+	Availability *AvailabilityProperties
+
 	// The URI of the trusted signing account which is used during signing files.
 	Description *string
 

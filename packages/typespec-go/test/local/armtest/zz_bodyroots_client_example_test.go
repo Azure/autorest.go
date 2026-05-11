@@ -30,3 +30,84 @@ func ExampleBodyRootsClient_Action() {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
 }
+
+// Generated from example definition: 2025-01-01/BodyRoots_get_with_availability.json
+func ExampleBodyRootsClient_Get() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := clientFactory.NewBodyRootsClient().Get(ctx, "myResourceGroup", "myBodyRoot", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// You could use response here. We use blank identifier for just demo purposes.
+	_ = res
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// res = armtest.BodyRootsClientGetResponse{
+	// 	BodyRoot: armtest.BodyRoot{
+	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Test/bodyRoots/myBodyRoot"),
+	// 		Name: to.Ptr("myBodyRoot"),
+	// 		Type: to.Ptr("Microsoft.Test/bodyRoots"),
+	// 		Location: to.Ptr("eastus"),
+	// 		Properties: &armtest.BodyRootProperties{
+	// 			Description: to.Ptr("my body root"),
+	// 			ProvisioningState: to.Ptr(armtest.ProvisioningStateSucceeded),
+	// 			Availability: &armtest.AvailabilityProperties{
+	// 				IsPreview: to.Ptr(true),
+	// 				Status: to.Ptr[int32](1),
+	// 			},
+	// 		},
+	// 	},
+	// }
+}
+
+// Generated from example definition: 2025-01-01/BodyRoots_put_with_availability.json
+func ExampleBodyRootsClient_Put() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := clientFactory.NewBodyRootsClient().Put(ctx, "myResourceGroup", "myBodyRoot", armtest.BodyRoot{
+		Location: to.Ptr("eastus"),
+		Properties: &armtest.BodyRootProperties{
+			Description: to.Ptr("my body root"),
+			Availability: &armtest.AvailabilityProperties{
+				IsPreview: to.Ptr(true),
+				Status:    to.Ptr[int32](1),
+			},
+		},
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// You could use response here. We use blank identifier for just demo purposes.
+	_ = res
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// res = armtest.BodyRootsClientPutResponse{
+	// 	BodyRoot: armtest.BodyRoot{
+	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Test/bodyRoots/myBodyRoot"),
+	// 		Name: to.Ptr("myBodyRoot"),
+	// 		Type: to.Ptr("Microsoft.Test/bodyRoots"),
+	// 		Location: to.Ptr("eastus"),
+	// 		Properties: &armtest.BodyRootProperties{
+	// 			Description: to.Ptr("my body root"),
+	// 			ProvisioningState: to.Ptr(armtest.ProvisioningStateSucceeded),
+	// 			Availability: &armtest.AvailabilityProperties{
+	// 				IsPreview: to.Ptr(true),
+	// 				Status: to.Ptr[int32](1),
+	// 			},
+	// 		},
+	// 	},
+	// }
+}

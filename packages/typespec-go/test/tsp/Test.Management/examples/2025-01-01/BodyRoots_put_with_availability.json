@@ -1,0 +1,54 @@
+{
+  "operationId": "BodyRoots_put",
+  "title": "BodyRoots_put_with_availability",
+  "parameters": {
+    "api-version": "2025-01-01",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "bodyRootName": "myBodyRoot",
+    "resource": {
+      "location": "eastus",
+      "properties": {
+        "description": "my body root",
+        "availability": {
+          "isPreview": true,
+          "status": 1
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Test/bodyRoots/myBodyRoot",
+        "name": "myBodyRoot",
+        "type": "Microsoft.Test/bodyRoots",
+        "location": "eastus",
+        "properties": {
+          "description": "my body root",
+          "provisioningState": "Succeeded",
+          "availability": {
+            "isPreview": true,
+            "status": 1
+          }
+        }
+      }
+    },
+    "201": {
+      "body": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Test/bodyRoots/myBodyRoot",
+        "name": "myBodyRoot",
+        "type": "Microsoft.Test/bodyRoots",
+        "location": "eastus",
+        "properties": {
+          "description": "my body root",
+          "provisioningState": "Succeeded",
+          "availability": {
+            "isPreview": true,
+            "status": 1
+          }
+        }
+      }
+    }
+  }
+}

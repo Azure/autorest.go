@@ -1,5 +1,12 @@
 # Release History
 
+## 0.11.3 (unreleased)
+
+### Bugs Fixed
+
+* Fixed cleanup to remove legacy autorest-generated example files during regeneration.
+* Fixed typed pointer generation for literal-typed values in generated examples (for example, `to.Ptr[int32](1)` instead of `to.Ptr(1)`).
+
 ## 0.11.2 (2026-05-07)
 
 ### Bugs Fixed
