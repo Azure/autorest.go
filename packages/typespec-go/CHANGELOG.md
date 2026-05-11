@@ -6,8 +6,8 @@
 
 * Fixed cleanup to remove legacy autorest-generated example files during regeneration.
 * Fixed typed pointer generation for literal-typed values in generated examples (for example, `to.Ptr[int32](1)` instead of `to.Ptr(1)`).
-* Fixed incorrect pointer (`&`) generation in examples for concrete polymorphic model parameters.
-* Fixed incorrect field name and missing pointer in response example comments for polymorphic results.
+* Fixed example generation adding unnecessary pointer (`&`) for method parameters typed as a concrete polymorphic model.
+* Fixed example response using wrong field name and missing pointer for polymorphic result types.
 
 ## 0.11.2 (2026-05-07)
 
