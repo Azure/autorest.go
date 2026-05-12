@@ -64,7 +64,7 @@
     "@typespec/http-specs": "0.1.0-alpha.36",
     "@typespec/openapi": "1.11.0",
     "@typespec/rest": "0.81.0",
-    "@typespec/spec-api": "0.1.0-alpha.14",
+    "@typespec/spec-api": "0.1.0-dev.3",
     "@typespec/spector": "0.1.0-alpha.25",
     "@typespec/sse": "0.81.0",
     "@typespec/streams": "0.81.0",
