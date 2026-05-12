@@ -66,6 +66,27 @@ type BodyRootProperties struct {
 	ProvisioningState *ProvisioningState
 }
 
+// Cat - A cat.
+type Cat struct {
+	// CONSTANT; The kind of the pet.
+	// Field has constant value PetKindCat, any specified value is ignored.
+	Kind *PetKind
+
+	// REQUIRED; The name of the pet.
+	Name *string
+
+	// REQUIRED; Whether the cat purrs.
+	Purrs *bool
+}
+
+// GetPet implements the PetClassification interface for type Cat.
+func (c *Cat) GetPet() *Pet {
+	return &Pet{
+		Kind: c.Kind,
+		Name: c.Name,
+	}
+}
+
 // Configuration resource.
 type Configuration struct {
 	// REQUIRED; The geo-location where the resource lives
@@ -99,6 +120,27 @@ type ConfigurationProperties struct {
 	ProvisioningState *ProvisioningState
 }
 
+// Dog - A dog.
+type Dog struct {
+	// REQUIRED; The breed of the dog.
+	Breed *string
+
+	// CONSTANT; The kind of the pet.
+	// Field has constant value PetKindDog, any specified value is ignored.
+	Kind *PetKind
+
+	// REQUIRED; The name of the pet.
+	Name *string
+}
+
+// GetPet implements the PetClassification interface for type Dog.
+func (d *Dog) GetPet() *Pet {
+	return &Pet{
+		Kind: d.Kind,
+		Name: d.Name,
+	}
+}
+
 // LROModel - LRO model resource.
 type LROModel struct {
 	// REQUIRED; The geo-location where the resource lives
@@ -121,6 +163,48 @@ type LROModel struct {
 
 	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string
+}
+
+// Pet - Base pet model.
+type Pet struct {
+	// REQUIRED; The kind of the pet.
+	Kind *PetKind
+
+	// REQUIRED; The name of the pet.
+	Name *string
+}
+
+// GetPet implements the PetClassification interface for type Pet.
+func (p *Pet) GetPet() *Pet { return p }
+
+// PetResource - Pet resource.
+type PetResource struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// The resource-specific properties for this resource.
+	Properties *PetResourceProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// PetResourceProperties - Properties of the pet resource.
+type PetResourceProperties struct {
+	// READ-ONLY; Status of the current operation.
+	ProvisioningState *ProvisioningState
 }
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.

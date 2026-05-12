@@ -63,3 +63,11 @@ func (c *ClientFactory) NewParameterGroupOperationsClient() *ParameterGroupOpera
 		internal:       c.internal,
 	}
 }
+
+// NewPetsClient creates a new instance of PetsClient.
+func (c *ClientFactory) NewPetsClient() *PetsClient {
+	return &PetsClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}

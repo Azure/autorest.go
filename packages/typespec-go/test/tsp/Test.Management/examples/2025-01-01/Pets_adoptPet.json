@@ -1,0 +1,24 @@
+{
+  "operationId": "Pets_adoptPet",
+  "title": "Pets_adoptPet",
+  "parameters": {
+    "api-version": "2025-01-01",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "petResourceName": "myPetResource",
+    "pet": {
+      "kind": "Dog",
+      "name": "Buddy",
+      "breed": "Labrador"
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "kind": "Dog",
+        "name": "Buddy",
+        "breed": "Labrador"
+      }
+    }
+  }
+}

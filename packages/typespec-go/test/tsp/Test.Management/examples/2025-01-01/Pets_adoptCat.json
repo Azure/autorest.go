@@ -1,0 +1,24 @@
+{
+  "operationId": "Pets_adoptCat",
+  "title": "Pets_adoptCat",
+  "parameters": {
+    "api-version": "2025-01-01",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "petResourceName": "myPetResource",
+    "cat": {
+      "kind": "Cat",
+      "name": "Whiskers",
+      "purrs": true
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "kind": "Cat",
+        "name": "Whiskers",
+        "purrs": true
+      }
+    }
+  }
+}
