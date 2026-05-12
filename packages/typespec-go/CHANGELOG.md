@@ -1,6 +1,10 @@
 # Release History
 
-## 0.11.3 (unreleased)
+## 0.12.0 (2026-05-12)
+
+### Breaking Changes
+
+* The minimum Node version has moved from `20.x` to `22.x`.
 
 ### Bugs Fixed
 
@@ -8,6 +12,10 @@
 * Fixed typed pointer generation for literal-typed values in generated examples (for example, `to.Ptr[int32](1)` instead of `to.Ptr(1)`).
 * Fixed example generation adding unnecessary pointer (`&`) for method parameters typed as a concrete polymorphic model.
 * Fixed example response using wrong field name and missing pointer for polymorphic result types.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
 
 ## 0.11.2 (2026-05-07)
 
