@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.78 (unreleased)
+## 4.0.0-preview.78 (2026-05-13)
 
 ### Bugs Fixed
 
