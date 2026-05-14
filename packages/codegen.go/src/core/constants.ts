@@ -18,7 +18,7 @@ export function generateConstants(pkg: go.PackageContent): string {
   for (const client of pkg.clients) {
     for (const apiVersion of client.apiVersions) {
       // filter out any duplicates across clients
-      if (!apiVersionConstants.some(c => c.name === apiVersion.name)) {
+      if (!apiVersionConstants.some((c) => c.name === apiVersion.name)) {
         apiVersionConstants.push(apiVersion);
       }
     }

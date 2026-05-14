@@ -538,8 +538,8 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, client: go.
       // check if we already have a ConstantDef for this API version.
       let versionConst = client.apiVersions.find((e) => e.literal.literal === versionLiteral.literal);
       if (!versionConst) {
-          versionConst = new go.ConstantDef(`version${ensureNameCase(<string>versionLiteral.literal)}`, versionLiteral);
-          client.apiVersions.push(versionConst);
+        versionConst = new go.ConstantDef(`version${ensureNameCase(<string>versionLiteral.literal)}`, versionLiteral);
+        client.apiVersions.push(versionConst);
       }
       adaptedParam.type = new go.Literal(versionConst, versionConst.name);
     } else {
