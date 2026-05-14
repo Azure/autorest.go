@@ -20,7 +20,7 @@ import (
 // PublicIPAddressesClient contains the methods for the PublicIPAddresses group.
 // Don't use this type directly, use NewPublicIPAddressesClient() instead.
 //
-// Generated from API versions 2022-09-01, 2018-10-01
+// Generated from API versions 2018-10-01, 2022-09-01
 type PublicIPAddressesClient struct {
 	internal       *arm.Client
 	subscriptionID string

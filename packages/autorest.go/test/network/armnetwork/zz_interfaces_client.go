@@ -20,7 +20,7 @@ import (
 // InterfacesClient contains the methods for the NetworkInterfaces group.
 // Don't use this type directly, use NewInterfacesClient() instead.
 //
-// Generated from API versions 2022-09-01, 2018-10-01
+// Generated from API versions 2018-10-01, 2022-09-01
 type InterfacesClient struct {
 	internal       *arm.Client
 	subscriptionID string

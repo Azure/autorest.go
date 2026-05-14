@@ -73,7 +73,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     if (client.apiVersions.length > 0) {
       clientText += `//\n// Generated from API version`;
       if (client.apiVersions.length > 1) {
-        clientText += `s ${client.apiVersions.map(v => v.literal.literal).join(', ')}\n`;
+        clientText += `s ${client.apiVersions.map(v => v.literal.literal).sort().join(', ')}\n`;
       } else {
         clientText += ` ${client.apiVersions[0].literal.literal}\n`;
       }
