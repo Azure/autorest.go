@@ -336,7 +336,9 @@ export class ClientAdapter {
     if (sdkClient.children && sdkClient.children.length > 0) {
       for (const child of sdkClient.children) {
         const subClient = this.recursiveAdaptClient(child, goClient);
-        if (subClient) {
+        // for ARM we skip adding client accessors as we use a customized
+        // client factory instead of hierarchical clients.
+        if (subClient && this.ta.codeModel.type !== 'azure-arm') {
           this.adaptClientAccessor(sdkClient, child, goClient, subClient);
         }
       }
@@ -346,7 +348,7 @@ export class ClientAdapter {
       this.adaptMethod(sdkMethod, goClient);
     }
 
-    if (this.ta.codeModel.type === 'azure-arm' && goClient.clientAccessors.length > 0 && goClient.methods.length === 0) {
+    if (this.ta.codeModel.type === 'azure-arm' && goClient.clientAccessors.length === 0 && goClient.methods.length === 0) {
       // this is the service client. to keep compat with existing
       // ARM SDKs we skip adding it to the code model in favor of
       // the synthesized client factory.

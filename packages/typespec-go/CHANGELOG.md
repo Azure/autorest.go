@@ -1,5 +1,11 @@
 # Release History
 
+## 0.13.0 (unreleased)
+
+### Breaking Changes
+
+* Fixed an issue causing client accessor methods to be emitted for certain ARM clients.
+
 ## 0.12.0 (2026-05-12)
 
 ### Breaking Changes
