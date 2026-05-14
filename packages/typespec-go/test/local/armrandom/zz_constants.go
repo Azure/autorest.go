@@ -4,6 +4,10 @@
 
 package armrandom
 
+const (
+	version20240301 string = "2024-03-01"
+)
+
 // SKUTier - This field is required to be implemented by the Resource Provider if the service has more than one tier, but
 // is not required on a PUT.
 type SKUTier string

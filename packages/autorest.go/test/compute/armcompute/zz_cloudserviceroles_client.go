@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultCloudServiceRolesClientVersion string = "2021-03-01"
-
 // CloudServiceRolesClient contains the methods for the CloudServiceRoles group.
 // Don't use this type directly, use NewCloudServiceRolesClient() instead.
 //
@@ -95,7 +93,7 @@ func (client *CloudServiceRolesClient) getCreateRequest(ctx context.Context, rol
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudServiceRolesClientVersion)
+	reqQP.Set("api-version", version20210301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -157,7 +155,7 @@ func (client *CloudServiceRolesClient) listCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-03-01")
+	reqQP.Set("api-version", version20210301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

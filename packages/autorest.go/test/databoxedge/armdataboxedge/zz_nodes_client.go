@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultNodesClientVersion string = "2021-02-01"
-
 // NodesClient contains the methods for the Nodes group.
 // Don't use this type directly, use NewNodesClient() instead.
 //
@@ -88,7 +86,7 @@ func (client *NodesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultNodesClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

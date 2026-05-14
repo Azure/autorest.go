@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultLocationBasedModelCapacitiesClientVersion string = "2025-10-01-preview"
-
 // LocationBasedModelCapacitiesClient contains the methods for the LocationBasedModelCapacities group.
 // Don't use this type directly, use NewLocationBasedModelCapacitiesClient() instead.
 //
@@ -89,7 +87,7 @@ func (client *LocationBasedModelCapacitiesClient) listCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLocationBasedModelCapacitiesClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	reqQP.Set("modelFormat", modelFormat)
 	reqQP.Set("modelName", modelName)
 	reqQP.Set("modelVersion", modelVersion)

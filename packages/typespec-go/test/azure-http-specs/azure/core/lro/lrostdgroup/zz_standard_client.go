@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultStandardClientVersion string = "2022-12-01-preview"
-
 // StandardClient - Illustrates bodies templated with Azure Core with long-running operation
 // Don't use this type directly, use NewStandardClientWithNoCredential() instead.
 //
@@ -116,7 +114,7 @@ func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultStandardClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -186,7 +184,7 @@ func (client *StandardClient) deleteCreateRequest(ctx context.Context, name stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultStandardClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -254,7 +252,7 @@ func (client *StandardClient) exportCreateRequest(ctx context.Context, name stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultStandardClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	reqQP.Set("format", formatParam)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}

@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultServiceBSubNamespaceClientVersion string = "bv2"
-
 // ServiceBSubNamespaceClient contains the methods for the ServiceBSubNamespace group.
 // Don't use this type directly, use [ServiceBClient.NewServiceBSubNamespaceClient] instead.
 //
@@ -57,7 +55,7 @@ func (client *ServiceBSubNamespaceClient) subOpBCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultServiceBSubNamespaceClientVersion)
+	reqQP.Set("api-version", versionBv2)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

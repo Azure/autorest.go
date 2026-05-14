@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.79 (2026-05-14)
+
+### Bugs Fixed
+
+* Fixed a regression introduced in `4bf93f9` that can cause some service methods to use the wrong API version.
+
 ## 4.0.0-preview.78 (2026-05-13)
 
 ### Bugs Fixed

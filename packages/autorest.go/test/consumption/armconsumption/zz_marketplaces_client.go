@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultMarketplacesClientVersion string = "2019-10-01"
-
 // MarketplacesClient contains the methods for the Marketplaces group.
 // Don't use this type directly, use NewMarketplacesClient() instead.
 //
@@ -91,7 +89,7 @@ func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope s
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", defaultMarketplacesClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

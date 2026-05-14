@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultRPCClientVersion string = "2022-12-01-preview"
-
 // RPCClient - Illustrates bodies templated with Azure Core with long-running RPC operation
 // Don't use this type directly, use NewRPCClientWithNoCredential() instead.
 //
@@ -109,7 +107,7 @@ func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, body G
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRPCClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

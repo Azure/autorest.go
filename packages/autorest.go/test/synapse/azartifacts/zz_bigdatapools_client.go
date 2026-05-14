@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultBigDataPoolsClientVersion string = "2020-12-01"
-
 // BigDataPoolsClient contains the methods for the BigDataPools group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -61,7 +59,7 @@ func (client *BigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataP
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -105,7 +103,7 @@ func (client *BigDataPoolsClient) listCreateRequest(ctx context.Context, _ *BigD
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBigDataPoolsClientVersion)
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

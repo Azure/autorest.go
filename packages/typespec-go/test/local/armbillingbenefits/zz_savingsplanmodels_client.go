@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSavingsPlanModelsClientVersion string = "2024-11-01-preview"
-
 // SavingsPlanModelsClient contains the methods for the SavingsPlanModels group.
 // Don't use this type directly, use NewSavingsPlanModelsClient() instead.
 //
@@ -86,7 +84,7 @@ func (client *SavingsPlanModelsClient) getCreateRequest(ctx context.Context, sav
 	if options != nil && options.Expand != nil {
 		reqQP.Set("$expand", *options.Expand)
 	}
-	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -140,7 +138,7 @@ func (client *SavingsPlanModelsClient) listCreateRequest(ctx context.Context, sa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -218,7 +216,7 @@ func (client *SavingsPlanModelsClient) updateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -273,7 +271,7 @@ func (client *SavingsPlanModelsClient) validateUpdateCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSavingsPlanModelsClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

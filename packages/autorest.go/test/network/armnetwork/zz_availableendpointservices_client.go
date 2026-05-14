@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultAvailableEndpointServicesClientVersion string = "2022-09-01"
-
 // AvailableEndpointServicesClient contains the methods for the AvailableEndpointServices group.
 // Don't use this type directly, use NewAvailableEndpointServicesClient() instead.
 //
@@ -88,7 +86,7 @@ func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAvailableEndpointServicesClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

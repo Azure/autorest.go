@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultClientVersion string = "7.2"
-
 // Client contains the methods for the KeyVaultClient group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -65,7 +63,7 @@ func (client *Client) backupCertificateCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -126,7 +124,7 @@ func (client *Client) backupKeyCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -179,7 +177,7 @@ func (client *Client) backupSecretCreateRequest(ctx context.Context, vaultBaseUR
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -232,7 +230,7 @@ func (client *Client) backupStorageAccountCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -286,7 +284,7 @@ func (client *Client) createCertificateCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -344,7 +342,7 @@ func (client *Client) createKeyCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -409,7 +407,7 @@ func (client *Client) decryptCreateRequest(ctx context.Context, vaultBaseURL str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -466,7 +464,7 @@ func (client *Client) deleteCertificateCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -515,7 +513,7 @@ func (client *Client) deleteCertificateContactsCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -569,7 +567,7 @@ func (client *Client) deleteCertificateIssuerCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -623,7 +621,7 @@ func (client *Client) deleteCertificateOperationCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -677,7 +675,7 @@ func (client *Client) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -735,7 +733,7 @@ func (client *Client) deleteSasDefinitionCreateRequest(ctx context.Context, vaul
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -788,7 +786,7 @@ func (client *Client) deleteSecretCreateRequest(ctx context.Context, vaultBaseUR
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -840,7 +838,7 @@ func (client *Client) deleteStorageAccountCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -904,7 +902,7 @@ func (client *Client) encryptCreateRequest(ctx context.Context, vaultBaseURL str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -972,7 +970,7 @@ func (client *Client) fullBackupCreateRequest(ctx context.Context, vaultBaseURL 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.AzureStorageBlobContainerURI != nil {
@@ -1021,7 +1019,7 @@ func (client *Client) fullBackupStatusCreateRequest(ctx context.Context, vaultBa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1088,7 +1086,7 @@ func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, restoreBlobDetails); err != nil {
@@ -1140,7 +1138,7 @@ func (client *Client) getCertificateCreateRequest(ctx context.Context, vaultBase
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1188,7 +1186,7 @@ func (client *Client) getCertificateContactsCreateRequest(ctx context.Context, v
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1241,7 +1239,7 @@ func (client *Client) getCertificateIssuerCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1292,7 +1290,7 @@ func (client *Client) getCertificateIssuersCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -1349,7 +1347,7 @@ func (client *Client) getCertificateOperationCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1402,7 +1400,7 @@ func (client *Client) getCertificatePolicyCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1458,7 +1456,7 @@ func (client *Client) getCertificateVersionsCreateRequest(ctx context.Context, v
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -1511,7 +1509,7 @@ func (client *Client) getCertificatesCreateRequest(ctx context.Context, vaultBas
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.IncludePending != nil {
 		reqQP.Set("includePending", strconv.FormatBool(*options.IncludePending))
 	}
@@ -1571,7 +1569,7 @@ func (client *Client) getDeletedCertificateCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1624,7 +1622,7 @@ func (client *Client) getDeletedCertificatesCreateRequest(ctx context.Context, v
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.IncludePending != nil {
 		reqQP.Set("includePending", strconv.FormatBool(*options.IncludePending))
 	}
@@ -1684,7 +1682,7 @@ func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseU
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1737,7 +1735,7 @@ func (client *Client) getDeletedKeysCreateRequest(ctx context.Context, vaultBase
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -1799,7 +1797,7 @@ func (client *Client) getDeletedSasDefinitionCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1855,7 +1853,7 @@ func (client *Client) getDeletedSasDefinitionsCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -1911,7 +1909,7 @@ func (client *Client) getDeletedSecretCreateRequest(ctx context.Context, vaultBa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1961,7 +1959,7 @@ func (client *Client) getDeletedSecretsCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2018,7 +2016,7 @@ func (client *Client) getDeletedStorageAccountCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2069,7 +2067,7 @@ func (client *Client) getDeletedStorageAccountsCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2131,7 +2129,7 @@ func (client *Client) getKeyCreateRequest(ctx context.Context, vaultBaseURL stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2186,7 +2184,7 @@ func (client *Client) getKeyVersionsCreateRequest(ctx context.Context, vaultBase
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2241,7 +2239,7 @@ func (client *Client) getKeysCreateRequest(ctx context.Context, vaultBaseURL str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2302,7 +2300,7 @@ func (client *Client) getSasDefinitionCreateRequest(ctx context.Context, vaultBa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2357,7 +2355,7 @@ func (client *Client) getSasDefinitionsCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2419,7 +2417,7 @@ func (client *Client) getSecretCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2474,7 +2472,7 @@ func (client *Client) getSecretVersionsCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2528,7 +2526,7 @@ func (client *Client) getSecretsCreateRequest(ctx context.Context, vaultBaseURL 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2583,7 +2581,7 @@ func (client *Client) getStorageAccountCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2633,7 +2631,7 @@ func (client *Client) getStorageAccountsCreateRequest(ctx context.Context, vault
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -2691,7 +2689,7 @@ func (client *Client) importCertificateCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -2749,7 +2747,7 @@ func (client *Client) importKeyCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -2807,7 +2805,7 @@ func (client *Client) mergeCertificateCreateRequest(ctx context.Context, vaultBa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -2864,7 +2862,7 @@ func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2908,7 +2906,7 @@ func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBas
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2952,7 +2950,7 @@ func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vault
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -2997,7 +2995,7 @@ func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -3043,7 +3041,7 @@ func (client *Client) recoverDeletedCertificateCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -3098,7 +3096,7 @@ func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -3157,7 +3155,7 @@ func (client *Client) recoverDeletedSasDefinitionCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -3210,7 +3208,7 @@ func (client *Client) recoverDeletedSecretCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -3264,7 +3262,7 @@ func (client *Client) recoverDeletedStorageAccountCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -3319,7 +3317,7 @@ func (client *Client) regenerateStorageAccountKeyCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3371,7 +3369,7 @@ func (client *Client) restoreCertificateCreateRequest(ctx context.Context, vault
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3430,7 +3428,7 @@ func (client *Client) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3482,7 +3480,7 @@ func (client *Client) restoreSecretCreateRequest(ctx context.Context, vaultBaseU
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3537,7 +3535,7 @@ func (client *Client) restoreStatusCreateRequest(ctx context.Context, vaultBaseU
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -3585,7 +3583,7 @@ func (client *Client) restoreStorageAccountCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3660,7 +3658,7 @@ func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, restoreBlobDetails); err != nil {
@@ -3703,7 +3701,7 @@ func (client *Client) setCertificateContactsCreateRequest(ctx context.Context, v
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, contacts); err != nil {
@@ -3760,7 +3758,7 @@ func (client *Client) setCertificateIssuerCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameter); err != nil {
@@ -3822,7 +3820,7 @@ func (client *Client) setSasDefinitionCreateRequest(ctx context.Context, vaultBa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3879,7 +3877,7 @@ func (client *Client) setSecretCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3935,7 +3933,7 @@ func (client *Client) setStorageAccountCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -3997,7 +3995,7 @@ func (client *Client) signCreateRequest(ctx context.Context, vaultBaseURL string
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4061,7 +4059,7 @@ func (client *Client) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4124,7 +4122,7 @@ func (client *Client) updateCertificateCreateRequest(ctx context.Context, vaultB
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4182,7 +4180,7 @@ func (client *Client) updateCertificateIssuerCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameter); err != nil {
@@ -4240,7 +4238,7 @@ func (client *Client) updateCertificateOperationCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, certificateOperation); err != nil {
@@ -4298,7 +4296,7 @@ func (client *Client) updateCertificatePolicyCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, certificatePolicy); err != nil {
@@ -4360,7 +4358,7 @@ func (client *Client) updateKeyCreateRequest(ctx context.Context, vaultBaseURL s
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4422,7 +4420,7 @@ func (client *Client) updateSasDefinitionCreateRequest(ctx context.Context, vaul
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4485,7 +4483,7 @@ func (client *Client) updateSecretCreateRequest(ctx context.Context, vaultBaseUR
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4542,7 +4540,7 @@ func (client *Client) updateStorageAccountCreateRequest(ctx context.Context, vau
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4607,7 +4605,7 @@ func (client *Client) verifyCreateRequest(ctx context.Context, vaultBaseURL stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -4673,7 +4671,7 @@ func (client *Client) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

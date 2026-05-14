@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultBgpServiceCommunitiesClientVersion string = "2022-09-01"
-
 // BgpServiceCommunitiesClient contains the methods for the BgpServiceCommunities group.
 // Don't use this type directly, use NewBgpServiceCommunitiesClient() instead.
 //
@@ -83,7 +81,7 @@ func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBgpServiceCommunitiesClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

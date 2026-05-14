@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultTestRaiExternalSafetyProviderClientVersion string = "2025-10-01-preview"
-
 // TestRaiExternalSafetyProviderClient contains the methods for the TestRaiExternalSafetyProvider group.
 // Don't use this type directly, use NewTestRaiExternalSafetyProviderClient() instead.
 //
@@ -97,7 +95,7 @@ func (client *TestRaiExternalSafetyProviderClient) createOrUpdateCreateRequest(c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultTestRaiExternalSafetyProviderClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

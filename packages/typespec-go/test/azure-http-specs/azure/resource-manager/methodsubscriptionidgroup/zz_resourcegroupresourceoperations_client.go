@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultResourceGroupResourceOperationsClientVersion string = "2023-12-01-preview"
-
 // ResourceGroupResourceOperationsClient contains the methods for the ResourceGroupResourceOperations group.
 // Don't use this type directly, use NewResourceGroupResourceOperationsClient() instead.
 //
@@ -90,7 +88,7 @@ func (client *ResourceGroupResourceOperationsClient) deleteCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultResourceGroupResourceOperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -143,7 +141,7 @@ func (client *ResourceGroupResourceOperationsClient) getCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultResourceGroupResourceOperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -207,7 +205,7 @@ func (client *ResourceGroupResourceOperationsClient) putCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultResourceGroupResourceOperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

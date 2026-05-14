@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultCommunityTrainingsClientVersion string = "2023-11-01"
-
 // CommunityTrainingsClient contains the methods for the CommunityTrainings group.
 // Don't use this type directly, use NewCommunityTrainingsClient() instead.
 //
@@ -111,7 +109,7 @@ func (client *CommunityTrainingsClient) createCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
+	reqQP.Set("api-version", version20231101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -187,7 +185,7 @@ func (client *CommunityTrainingsClient) deleteCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
+	reqQP.Set("api-version", version20231101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -239,7 +237,7 @@ func (client *CommunityTrainingsClient) getCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
+	reqQP.Set("api-version", version20231101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -297,7 +295,7 @@ func (client *CommunityTrainingsClient) listByResourceGroupCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
+	reqQP.Set("api-version", version20231101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -350,7 +348,7 @@ func (client *CommunityTrainingsClient) listBySubscriptionCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
+	reqQP.Set("api-version", version20231101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -432,7 +430,7 @@ func (client *CommunityTrainingsClient) updateCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCommunityTrainingsClientVersion)
+	reqQP.Set("api-version", version20231101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

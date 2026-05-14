@@ -4,6 +4,10 @@
 
 package methodsubscriptionidgroup
 
+const (
+	version20231201Preview string = "2023-12-01-preview"
+)
+
 // ActionType - Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 type ActionType string
 

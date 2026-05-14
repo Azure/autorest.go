@@ -4,6 +4,10 @@
 
 package armdatabasewatcher
 
+const (
+	version20240719Preview string = "2024-07-19-preview"
+)
+
 // ActionType - Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 type ActionType string
 

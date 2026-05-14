@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultFetchCrossRegionRestoreJobsClientVersion string = "2025-07-01"
-
 // FetchCrossRegionRestoreJobsClient contains the methods for the FetchCrossRegionRestoreJobs group.
 // Don't use this type directly, use NewFetchCrossRegionRestoreJobsClient() instead.
 //
@@ -95,7 +93,7 @@ func (client *FetchCrossRegionRestoreJobsClient) listCreateRequest(ctx context.C
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultFetchCrossRegionRestoreJobsClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

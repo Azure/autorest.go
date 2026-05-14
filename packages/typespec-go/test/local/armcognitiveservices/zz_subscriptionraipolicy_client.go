@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSubscriptionRaiPolicyClientVersion string = "2025-10-01-preview"
-
 // SubscriptionRaiPolicyClient contains the methods for the SubscriptionRaiPolicy group.
 // Don't use this type directly, use NewSubscriptionRaiPolicyClient() instead.
 //
@@ -87,7 +85,7 @@ func (client *SubscriptionRaiPolicyClient) createOrUpdateCreateRequest(ctx conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionRaiPolicyClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -167,7 +165,7 @@ func (client *SubscriptionRaiPolicyClient) deleteCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionRaiPolicyClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -215,7 +213,7 @@ func (client *SubscriptionRaiPolicyClient) getCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionRaiPolicyClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

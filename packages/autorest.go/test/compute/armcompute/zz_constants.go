@@ -5,6 +5,14 @@
 
 package armcompute
 
+const (
+	version20210301 string = "2021-03-01"
+	version20210701 string = "2021-07-01"
+	version20211001 string = "2021-10-01"
+	version20211101 string = "2021-11-01"
+	version20211201 string = "2021-12-01"
+)
+
 type AccessLevel string
 
 const (

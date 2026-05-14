@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultCommunityGalleryImagesClientVersion string = "2021-07-01"
-
 // CommunityGalleryImagesClient contains the methods for the CommunityGalleryImages group.
 // Don't use this type directly, use NewCommunityGalleryImagesClient() instead.
 //
@@ -98,7 +96,7 @@ func (client *CommunityGalleryImagesClient) getCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCommunityGalleryImagesClientVersion)
+	reqQP.Set("api-version", version20210701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

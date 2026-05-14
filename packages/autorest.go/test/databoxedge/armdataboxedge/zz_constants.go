@@ -5,6 +5,10 @@
 
 package armdataboxedge
 
+const (
+	version20210201 string = "2021-02-01"
+)
+
 // AccessLevel - Access level allowed for this remote application type
 type AccessLevel string
 

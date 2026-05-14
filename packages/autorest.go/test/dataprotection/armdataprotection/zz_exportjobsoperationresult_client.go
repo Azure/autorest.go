@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultExportJobsOperationResultClientVersion string = "2025-07-01"
-
 // ExportJobsOperationResultClient contains the methods for the ExportJobsOperationResult group.
 // Don't use this type directly, use NewExportJobsOperationResultClient() instead.
 //
@@ -96,7 +94,7 @@ func (client *ExportJobsOperationResultClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultExportJobsOperationResultClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

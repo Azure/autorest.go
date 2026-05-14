@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultPrivateLinksClientVersion string = "2024-07-01"
-
 // PrivateLinksClient contains the methods for the PrivateLinks group.
 // Don't use this type directly, use NewPrivateLinksClient() instead.
 //
@@ -91,7 +89,7 @@ func (client *PrivateLinksClient) listByMongoClusterCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPrivateLinksClientVersion)
+	reqQP.Set("api-version", version20240701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

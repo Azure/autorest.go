@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultBasicClientVersion string = "2022-12-01-preview"
-
 // BasicClient - Illustrates bodies templated with Azure Core
 // Don't use this type directly, use NewBasicClientWithNoCredential() instead.
 //
@@ -92,7 +90,7 @@ func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, id 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -149,7 +147,7 @@ func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, id i
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
@@ -204,7 +202,7 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -247,7 +245,7 @@ func (client *BasicClient) exportCreateRequest(ctx context.Context, id int32, fo
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	reqQP.Set("format", formatParam)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -299,7 +297,7 @@ func (client *BasicClient) exportAllUsersCreateRequest(ctx context.Context, form
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	reqQP.Set("format", formatParam)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -352,7 +350,7 @@ func (client *BasicClient) getCreateRequest(ctx context.Context, id int32, _ *Ba
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -402,7 +400,7 @@ func (client *BasicClient) listCreateRequest(ctx context.Context, options *Basic
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	if options != nil && options.Expand != nil {
 		for _, qv := range options.Expand {
 			reqQP.Add("expand", qv)

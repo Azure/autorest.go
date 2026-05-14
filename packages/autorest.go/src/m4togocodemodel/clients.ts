@@ -13,6 +13,7 @@ import { values } from '@azure-tools/linq';
 import { adaptXMLInfo } from './types.js';
 import { adaptWireType, hasDescription } from './types.js';
 import * as go from '../../../codemodel.go/src/index.js';
+import { ensureNameCase } from '../../../naming.go/src/index.js';
 import * as helpers from '../transform/helpers.js';
 import { OperationNaming } from '../transform/namer.js';
 
@@ -531,10 +532,16 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, client: go.
     adaptedParam.docs.description = param.language.go!.description;
   }
 
-  if (param.origin === 'modelerfour:synthesized/api-version' && !client.apiVersion) {
+  if (param.origin === 'modelerfour:synthesized/api-version') {
     if (adaptedParam.type.kind === 'literal' && adaptedParam.type.type.kind === 'string') {
-      client.apiVersion = new go.ConstantDef(`default${client.name}Version`, <go.Literal<go.String>>adaptedParam.type);
-      adaptedParam.type = new go.Literal(client.apiVersion, client.apiVersion.name);
+      const versionLiteral = <go.Literal<go.String>>adaptedParam.type;
+      // check if we already have a ConstantDef for this API version.
+      let versionConst = client.apiVersions.find((e) => e.literal.literal === versionLiteral.literal);
+      if (!versionConst) {
+          versionConst = new go.ConstantDef(`version${ensureNameCase(<string>versionLiteral.literal)}`, versionLiteral);
+          client.apiVersions.push(versionConst);
+      }
+      adaptedParam.type = new go.Literal(versionConst, versionConst.name);
     } else {
       throw new Error(`unexpected parameter type kind ${adaptedParam.type.kind} for API version`);
     }

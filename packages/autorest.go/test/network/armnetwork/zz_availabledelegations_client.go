@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultAvailableDelegationsClientVersion string = "2022-09-01"
-
 // AvailableDelegationsClient contains the methods for the AvailableDelegations group.
 // Don't use this type directly, use NewAvailableDelegationsClient() instead.
 //
@@ -88,7 +86,7 @@ func (client *AvailableDelegationsClient) listCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAvailableDelegationsClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultReservationOrderAliasResponsesClientVersion string = "2024-11-01-preview"
-
 // ReservationOrderAliasResponsesClient contains the methods for the ReservationOrderAliasResponses group.
 // Don't use this type directly, use NewReservationOrderAliasResponsesClient() instead.
 //
@@ -98,7 +96,7 @@ func (client *ReservationOrderAliasResponsesClient) createCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultReservationOrderAliasResponsesClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -147,7 +145,7 @@ func (client *ReservationOrderAliasResponsesClient) getCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultReservationOrderAliasResponsesClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

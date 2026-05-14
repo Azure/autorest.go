@@ -18,8 +18,6 @@ import (
 	"strings"
 )
 
-const defaultServiceTagInformationClientVersion string = "2022-09-01"
-
 // ServiceTagInformationClient contains the methods for the ServiceTagInformation group.
 // Don't use this type directly, use NewServiceTagInformationClient() instead.
 //
@@ -91,7 +89,7 @@ func (client *ServiceTagInformationClient) listCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultServiceTagInformationClientVersion)
+	reqQP.Set("api-version", version20220901)
 	if options != nil && options.NoAddressPrefixes != nil {
 		reqQP.Set("noAddressPrefixes", strconv.FormatBool(*options.NoAddressPrefixes))
 	}

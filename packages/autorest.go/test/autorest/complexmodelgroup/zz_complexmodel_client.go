@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultComplexModelClientVersion string = "2014-04-01-preview"
-
 // ComplexModelClient contains the methods for the ComplexModelClient group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -71,7 +69,7 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultComplexModelClientVersion)
+	reqQP.Set("api-version", version20140401Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {
@@ -130,7 +128,7 @@ func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultComplexModelClientVersion)
+	reqQP.Set("api-version", version20140401Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -189,7 +187,7 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultComplexModelClientVersion)
+	reqQP.Set("api-version", version20140401Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {

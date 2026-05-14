@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultAvailableSKUsClientVersion string = "2021-02-01"
-
 // AvailableSKUsClient contains the methods for the AvailableSKUs group.
 // Don't use this type directly, use NewAvailableSKUsClient() instead.
 //
@@ -80,7 +78,7 @@ func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, _ *Ava
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAvailableSKUsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

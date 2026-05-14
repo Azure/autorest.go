@@ -4,6 +4,10 @@
 
 package azblob
 
+const (
+	version20260606 string = "2026-06-06"
+)
+
 // AccessTier - The access tiers.
 type AccessTier string
 

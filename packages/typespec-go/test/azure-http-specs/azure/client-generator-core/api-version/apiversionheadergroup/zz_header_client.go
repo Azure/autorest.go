@@ -12,8 +12,6 @@ import (
 	"net/http"
 )
 
-const defaultHeaderClientVersion string = "2025-01-01"
-
 // HeaderClient contains the methods for the Header group.
 // Don't use this type directly, use NewHeaderClientWithNoCredential() instead.
 //
@@ -82,6 +80,6 @@ func (client *HeaderClient) headerAPIVersionCreateRequest(ctx context.Context, _
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultHeaderClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20250101}
 	return req, nil
 }

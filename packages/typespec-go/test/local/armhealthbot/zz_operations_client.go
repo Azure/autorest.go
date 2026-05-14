@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultOperationsClientVersion string = "2024-02-01"
-
 // OperationsClient - This is the interface that implements the standard Azure Resource Manager operation that returns
 // all supported RP operations. You should have exactly one declaration for each
 // Azure Resource Manager service. It implements
@@ -74,7 +72,7 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *Operat
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultOperationsClientVersion)
+	reqQP.Set("api-version", version20240201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

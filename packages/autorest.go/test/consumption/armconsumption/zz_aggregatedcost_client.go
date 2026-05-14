@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultAggregatedCostClientVersion string = "2019-10-01"
-
 // AggregatedCostClient contains the methods for the AggregatedCost group.
 // Don't use this type directly, use NewAggregatedCostClient() instead.
 //
@@ -80,7 +78,7 @@ func (client *AggregatedCostClient) getByManagementGroupCreateRequest(ctx contex
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultAggregatedCostClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -136,7 +134,7 @@ func (client *AggregatedCostClient) getForBillingPeriodByManagementGroupCreateRe
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAggregatedCostClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

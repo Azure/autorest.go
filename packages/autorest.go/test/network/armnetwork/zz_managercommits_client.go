@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultManagerCommitsClientVersion string = "2022-09-01"
-
 // ManagerCommitsClient contains the methods for the NetworkManagerCommits group.
 // Don't use this type directly, use NewManagerCommitsClient() instead.
 //
@@ -113,7 +111,7 @@ func (client *ManagerCommitsClient) postCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultManagerCommitsClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

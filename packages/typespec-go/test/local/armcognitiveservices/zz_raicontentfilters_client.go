@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultRaiContentFiltersClientVersion string = "2025-10-01-preview"
-
 // RaiContentFiltersClient contains the methods for the RaiContentFilters group.
 // Don't use this type directly, use NewRaiContentFiltersClient() instead.
 //
@@ -90,7 +88,7 @@ func (client *RaiContentFiltersClient) getCreateRequest(ctx context.Context, loc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRaiContentFiltersClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -148,7 +146,7 @@ func (client *RaiContentFiltersClient) listCreateRequest(ctx context.Context, lo
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRaiContentFiltersClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

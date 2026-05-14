@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultSupportPackagesClientVersion string = "2021-02-01"
-
 // SupportPackagesClient contains the methods for the SupportPackages group.
 // Don't use this type directly, use NewSupportPackagesClient() instead.
 //
@@ -101,7 +99,7 @@ func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSupportPackagesClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, triggerSupportPackageRequest); err != nil {

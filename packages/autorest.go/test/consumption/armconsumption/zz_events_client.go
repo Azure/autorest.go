@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultEventsClientVersion string = "2019-10-01"
-
 // EventsClient contains the methods for the Events group.
 // Don't use this type directly, use NewEventsClient() instead.
 //
@@ -76,7 +74,7 @@ func (client *EventsClient) listCreateRequest(ctx context.Context, startDate str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultEventsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	reqQP.Set("endDate", endDate)
 	reqQP.Set("startDate", startDate)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")

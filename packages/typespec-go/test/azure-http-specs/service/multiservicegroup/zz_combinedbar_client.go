@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultCombinedBarClientVersion string = "bv2"
-
 // CombinedBarClient contains the methods for the CombinedBar group.
 // Don't use this type directly, use [CombinedClient.NewCombinedBarClient] instead.
 //
@@ -56,7 +54,7 @@ func (client *CombinedBarClient) testCreateRequest(ctx context.Context, _ *Combi
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCombinedBarClientVersion)
+	reqQP.Set("api-version", versionBv2)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

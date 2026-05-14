@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultKqlScriptsClientVersion string = "2021-11-01-preview"
-
 // KqlScriptsClient contains the methods for the KqlScripts group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -56,7 +54,7 @@ func (client *KqlScriptsClient) getAllCreateRequest(ctx context.Context, _ *KqlS
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultKqlScriptsClientVersion)
+	reqQP.Set("api-version", version20211101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

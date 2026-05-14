@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultModelsClientVersion string = "2025-10-01-preview"
-
 // ModelsClient contains the methods for the Models group.
 // Don't use this type directly, use NewModelsClient() instead.
 //
@@ -85,7 +83,7 @@ func (client *ModelsClient) listCreateRequest(ctx context.Context, location stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultModelsClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

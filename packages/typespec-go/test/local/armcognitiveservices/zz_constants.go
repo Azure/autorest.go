@@ -4,6 +4,10 @@
 
 package armcognitiveservices
 
+const (
+	version20251001Preview string = "2025-10-01-preview"
+)
+
 // AbusePenaltyAction - The action of AbusePenalty.
 type AbusePenaltyAction string
 

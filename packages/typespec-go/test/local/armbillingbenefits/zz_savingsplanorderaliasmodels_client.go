@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSavingsPlanOrderAliasModelsClientVersion string = "2024-11-01-preview"
-
 // SavingsPlanOrderAliasModelsClient contains the methods for the SavingsPlanOrderAliasModels group.
 // Don't use this type directly, use NewSavingsPlanOrderAliasModelsClient() instead.
 //
@@ -98,7 +96,7 @@ func (client *SavingsPlanOrderAliasModelsClient) createCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSavingsPlanOrderAliasModelsClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -147,7 +145,7 @@ func (client *SavingsPlanOrderAliasModelsClient) getCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSavingsPlanOrderAliasModelsClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

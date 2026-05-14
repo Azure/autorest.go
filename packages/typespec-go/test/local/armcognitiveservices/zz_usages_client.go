@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultUsagesClientVersion string = "2025-10-01-preview"
-
 // UsagesClient contains the methods for the Usages group.
 // Don't use this type directly, use NewUsagesClient() instead.
 //
@@ -88,7 +86,7 @@ func (client *UsagesClient) listCreateRequest(ctx context.Context, location stri
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultUsagesClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultResourceSKUsClientVersion string = "2021-07-01"
-
 // ResourceSKUsClient contains the methods for the ResourceSKUs group.
 // Don't use this type directly, use NewResourceSKUsClient() instead.
 //
@@ -85,7 +83,7 @@ func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, options
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultResourceSKUsClientVersion)
+	reqQP.Set("api-version", version20210701)
 	if options != nil && options.IncludeExtendedLocations != nil {
 		reqQP.Set("includeExtendedLocations", *options.IncludeExtendedLocations)
 	}

@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultManagedNetworkProvisionsClientVersion string = "2025-10-01-preview"
-
 // ManagedNetworkProvisionsClient contains the methods for the ManagedNetworkProvisions group.
 // Don't use this type directly, use NewManagedNetworkProvisionsClient() instead.
 //
@@ -113,7 +111,7 @@ func (client *ManagedNetworkProvisionsClient) provisionManagedNetworkCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultManagedNetworkProvisionsClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Body != nil {

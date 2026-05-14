@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSubscriptionInCredentialsClientVersion string = "2015-07-01-preview"
-
 // SubscriptionInCredentialsClient contains the methods for the SubscriptionInCredentials group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -66,7 +64,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionInCredentialsClientVersion)
+	reqQP.Set("api-version", version20150701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultChargesClientVersion string = "2019-10-01"
-
 // ChargesClient contains the methods for the Charges group.
 // Don't use this type directly, use NewChargesClient() instead.
 //
@@ -88,7 +86,7 @@ func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultChargesClientVersion)
+	reqQP.Set("api-version", version20191001)
 	if options != nil && options.EndDate != nil {
 		reqQP.Set("endDate", *options.EndDate)
 	}

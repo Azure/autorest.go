@@ -5,6 +5,10 @@
 
 package azkeyvault
 
+const (
+	version72 string = "7.2"
+)
+
 // ActionType - The type of the action.
 type ActionType string
 

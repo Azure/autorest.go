@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultAuthenticationClientVersion string = "2021-07-01"
-
 // AuthenticationClient contains the methods for the Authentication group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -63,7 +61,7 @@ func (client *AuthenticationClient) exchangeAADAccessTokenForAcrRefreshTokenCrea
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAuthenticationClientVersion)
+	reqQP.Set("api-version", version20210701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}
@@ -132,7 +130,7 @@ func (client *AuthenticationClient) exchangeAcrRefreshTokenForAcrAccessTokenCrea
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAuthenticationClientVersion)
+	reqQP.Set("api-version", version20210701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	formData := url.Values{}

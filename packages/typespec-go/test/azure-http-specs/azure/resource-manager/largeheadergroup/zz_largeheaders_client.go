@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultLargeHeadersClientVersion string = "2023-12-01-preview"
-
 // LargeHeadersClient contains the methods for the LargeHeaders group.
 // Don't use this type directly, use NewLargeHeadersClient() instead.
 //
@@ -108,7 +106,7 @@ func (client *LargeHeadersClient) two6KCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLargeHeadersClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

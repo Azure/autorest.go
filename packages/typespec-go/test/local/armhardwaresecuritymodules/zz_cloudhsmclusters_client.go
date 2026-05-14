@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultCloudHsmClustersClientVersion string = "2024-06-30-preview"
-
 // CloudHsmClustersClient contains the methods for the CloudHsmClusters group.
 // Don't use this type directly, use NewCloudHsmClustersClient() instead.
 //
@@ -111,7 +109,7 @@ func (client *CloudHsmClustersClient) backupCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BackupRequestProperties != nil {
@@ -176,7 +174,7 @@ func (client *CloudHsmClustersClient) cloudHsmClusterBackupStatusGetCreateReques
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -252,7 +250,7 @@ func (client *CloudHsmClustersClient) cloudHsmClusterRestoreStatusGetCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -344,7 +342,7 @@ func (client *CloudHsmClustersClient) createOrUpdateCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -421,7 +419,7 @@ func (client *CloudHsmClustersClient) deleteCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -474,7 +472,7 @@ func (client *CloudHsmClustersClient) getCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -538,7 +536,7 @@ func (client *CloudHsmClustersClient) listByCloudHsmClusterCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -600,7 +598,7 @@ func (client *CloudHsmClustersClient) listByResourceGroupCreateRequest(ctx conte
 	if options != nil && options.Skiptoken != nil {
 		reqQP.Set("$skiptoken", *options.Skiptoken)
 	}
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -656,7 +654,7 @@ func (client *CloudHsmClustersClient) listBySubscriptionCreateRequest(ctx contex
 	if options != nil && options.Skiptoken != nil {
 		reqQP.Set("$skiptoken", *options.Skiptoken)
 	}
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -739,7 +737,7 @@ func (client *CloudHsmClustersClient) restoreCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -817,7 +815,7 @@ func (client *CloudHsmClustersClient) updateCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -896,7 +894,7 @@ func (client *CloudHsmClustersClient) validateBackupPropertiesCreateRequest(ctx 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BackupRequestProperties != nil {
@@ -976,7 +974,7 @@ func (client *CloudHsmClustersClient) validateRestorePropertiesCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCloudHsmClustersClientVersion)
+	reqQP.Set("api-version", version20240630Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.RestoreRequestProperties != nil {

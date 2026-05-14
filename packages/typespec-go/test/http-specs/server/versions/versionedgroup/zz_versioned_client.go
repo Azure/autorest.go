@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultVersionedClientVersion string = "2022-12-01-preview"
-
 // VersionedClient - Illustrates versioned server.
 // Don't use this type directly, use NewVersionedClientWithNoCredential() instead.
 //
@@ -79,7 +77,7 @@ func (client *VersionedClient) WithPathAPIVersion(ctx context.Context, options *
 // withPathAPIVersionCreateRequest creates the WithPathAPIVersion request.
 func (client *VersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, _ *VersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
 	urlPath := "/server/versions/versioned/with-path-api-version/{apiVersion}"
-	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape(defaultVersionedClientVersion))
+	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape(version20221201Preview))
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
@@ -118,7 +116,7 @@ func (client *VersionedClient) withQueryAPIVersionCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultVersionedClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -154,7 +152,7 @@ func (client *VersionedClient) withQueryOldAPIVersionCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultVersionedClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

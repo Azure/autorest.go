@@ -4,6 +4,10 @@
 
 package commonpropsgroup
 
+const (
+	version20231201Preview string = "2023-12-01-preview"
+)
+
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 

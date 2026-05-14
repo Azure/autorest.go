@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultSavingsPlanOperationGroupClientVersion string = "2024-11-01-preview"
-
 // SavingsPlanOperationGroupClient contains the methods for the SavingsPlanOperationGroup group.
 // Don't use this type directly, use NewSavingsPlanOperationGroupClient() instead.
 //
@@ -82,7 +80,7 @@ func (client *SavingsPlanOperationGroupClient) listAllCreateRequest(ctx context.
 	if options != nil && options.Skiptoken != nil {
 		reqQP.Set("$skiptoken", strconv.FormatFloat(float64(*options.Skiptoken), 'f', -1, 32))
 	}
-	reqQP.Set("api-version", defaultSavingsPlanOperationGroupClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	if options != nil && options.RefreshSummary != nil {
 		reqQP.Set("refreshSummary", *options.RefreshSummary)
 	}
@@ -141,7 +139,7 @@ func (client *SavingsPlanOperationGroupClient) validatePurchaseCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSavingsPlanOperationGroupClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

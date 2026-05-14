@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultBgpPeersClientVersion string = "2024-03-01"
-
 // BgpPeersClient contains the methods for the BgpPeers group.
 // Don't use this type directly, use NewBgpPeersClient() instead.
 //
@@ -104,7 +102,7 @@ func (client *BgpPeersClient) createOrUpdateCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBgpPeersClientVersion)
+	reqQP.Set("api-version", version20240301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -156,7 +154,7 @@ func (client *BgpPeersClient) deleteCreateRequest(ctx context.Context, resourceU
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBgpPeersClientVersion)
+	reqQP.Set("api-version", version20240301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -204,7 +202,7 @@ func (client *BgpPeersClient) getCreateRequest(ctx context.Context, resourceURI 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBgpPeersClientVersion)
+	reqQP.Set("api-version", version20240301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -257,7 +255,7 @@ func (client *BgpPeersClient) listCreateRequest(ctx context.Context, resourceURI
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBgpPeersClientVersion)
+	reqQP.Set("api-version", version20240301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

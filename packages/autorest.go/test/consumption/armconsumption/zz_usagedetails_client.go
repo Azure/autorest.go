@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultUsageDetailsClientVersion string = "2019-10-01"
-
 // UsageDetailsClient contains the methods for the UsageDetails group.
 // Don't use this type directly, use NewUsageDetailsClient() instead.
 //
@@ -101,7 +99,7 @@ func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope s
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", defaultUsageDetailsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	if options != nil && options.Metric != nil {
 		reqQP.Set("metric", string(*options.Metric))
 	}

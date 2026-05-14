@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultPagingClientVersion string = "1.0.0"
-
 // PagingClient contains the methods for the Paging group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -63,7 +61,7 @@ func (client *PagingClient) appendAPIVersionCreateRequest(ctx context.Context, _
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPagingClientVersion)
+	reqQP.Set("api-version", version100)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1207,7 +1205,7 @@ func (client *PagingClient) replaceAPIVersionCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPagingClientVersion)
+	reqQP.Set("api-version", version100)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultExpressRouteProviderPortsLocationClientVersion string = "2022-09-01"
-
 // ExpressRouteProviderPortsLocationClient contains the methods for the ExpressRouteProviderPortsLocation group.
 // Don't use this type directly, use NewExpressRouteProviderPortsLocationClient() instead.
 //
@@ -86,7 +84,7 @@ func (client *ExpressRouteProviderPortsLocationClient) listCreateRequest(ctx con
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultExpressRouteProviderPortsLocationClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

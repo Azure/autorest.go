@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultSomeServiceClientVersion string = "2024-03-01"
-
 // SomeServiceClient contains the methods for the SomeService group.
 // Don't use this type directly, use NewSomeServiceClient() instead.
 //
@@ -124,7 +122,7 @@ func (client *SomeServiceClient) listThingsCreateRequest(ctx context.Context, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSomeServiceClientVersion)
+	reqQP.Set("api-version", version20240301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

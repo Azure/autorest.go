@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSQLPoolsClientVersion string = "2020-12-01"
-
 // SQLPoolsClient contains the methods for the SQLPools group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -61,7 +59,7 @@ func (client *SQLPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -105,7 +103,7 @@ func (client *SQLPoolsClient) listCreateRequest(ctx context.Context, _ *SQLPools
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSQLPoolsClientVersion)
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

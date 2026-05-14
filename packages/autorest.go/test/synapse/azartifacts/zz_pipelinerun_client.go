@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultPipelineRunClientVersion string = "2020-12-01"
-
 // PipelineRunClient contains the methods for the PipelineRun group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -62,7 +60,7 @@ func (client *PipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", version20201201)
 	if options != nil && options.IsRecursive != nil {
 		reqQP.Set("isRecursive", strconv.FormatBool(*options.IsRecursive))
 	}
@@ -106,7 +104,7 @@ func (client *PipelineRunClient) getPipelineRunCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -162,7 +160,7 @@ func (client *PipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, filterParameters); err != nil {
@@ -211,7 +209,7 @@ func (client *PipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPipelineRunClientVersion)
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, filterParameters); err != nil {

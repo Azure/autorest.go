@@ -4,6 +4,10 @@
 
 package azkeys
 
+const (
+	version20250601Preview string = "2025-06-01-preview"
+)
+
 // CurveName - Elliptic curve name. For valid values, see JsonWebKeyCurveName.
 type CurveName string
 

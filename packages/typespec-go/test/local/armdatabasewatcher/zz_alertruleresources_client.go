@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultAlertRuleResourcesClientVersion string = "2024-07-19-preview"
-
 // AlertRuleResourcesClient contains the methods for the AlertRuleResources group.
 // Don't use this type directly, use NewAlertRuleResourcesClient() instead.
 //
@@ -97,7 +95,7 @@ func (client *AlertRuleResourcesClient) createOrUpdateCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
+	reqQP.Set("api-version", version20240719Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -168,7 +166,7 @@ func (client *AlertRuleResourcesClient) deleteCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
+	reqQP.Set("api-version", version20240719Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -225,7 +223,7 @@ func (client *AlertRuleResourcesClient) getCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
+	reqQP.Set("api-version", version20240719Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -288,7 +286,7 @@ func (client *AlertRuleResourcesClient) listByParentCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAlertRuleResourcesClientVersion)
+	reqQP.Set("api-version", version20240719Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

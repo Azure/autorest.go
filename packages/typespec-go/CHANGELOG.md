@@ -1,10 +1,14 @@
 # Release History
 
-## 0.13.0 (unreleased)
+## 0.13.0 (2026-05-14)
 
 ### Breaking Changes
 
 * Fixed an issue causing client accessor methods to be emitted for certain ARM clients.
+
+### Bugs Fixed
+
+* Fixed a regression introduced in `4bf93f9` that can cause some service methods to use the wrong API version.
 
 ## 0.12.0 (2026-05-12)
 

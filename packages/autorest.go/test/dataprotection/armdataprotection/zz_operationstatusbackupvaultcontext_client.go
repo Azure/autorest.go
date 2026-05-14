@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultOperationStatusBackupVaultContextClientVersion string = "2025-07-01"
-
 // OperationStatusBackupVaultContextClient contains the methods for the OperationStatusBackupVaultContext group.
 // Don't use this type directly, use NewOperationStatusBackupVaultContextClient() instead.
 //
@@ -93,7 +91,7 @@ func (client *OperationStatusBackupVaultContextClient) getCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultOperationStatusBackupVaultContextClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

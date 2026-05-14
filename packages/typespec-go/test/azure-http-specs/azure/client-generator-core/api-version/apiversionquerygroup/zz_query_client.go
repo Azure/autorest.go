@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultQueryClientVersion string = "2025-01-01"
-
 // QueryClient contains the methods for the Query group.
 // Don't use this type directly, use NewQueryClientWithNoCredential() instead.
 //
@@ -84,7 +82,7 @@ func (client *QueryClient) queryAPIVersionCreateRequest(ctx context.Context, _ *
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("version", defaultQueryClientVersion)
+	reqQP.Set("version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

@@ -4,6 +4,10 @@
 
 package armtest
 
+const (
+	version20250101 string = "2025-01-01"
+)
+
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 

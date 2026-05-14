@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultClientVersion string = "2024-03-01"
-
 // Client contains the methods for the service.
 // Don't use this type directly, use NewClient() instead.
 //
@@ -85,7 +83,7 @@ func (client *Client) getCreateRequest(ctx context.Context, resourceGroupName st
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version20240301)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

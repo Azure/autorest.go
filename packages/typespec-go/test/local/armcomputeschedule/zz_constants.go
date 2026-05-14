@@ -4,6 +4,10 @@
 
 package armcomputeschedule
 
+const (
+	version20250501 string = "2025-05-01"
+)
+
 // ActionType - Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 type ActionType string
 
