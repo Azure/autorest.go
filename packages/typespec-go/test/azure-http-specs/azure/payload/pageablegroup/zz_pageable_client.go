@@ -56,7 +56,7 @@ func (client *PageableClient) NewListPager(options *PageableClientListOptions) *
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}

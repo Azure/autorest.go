@@ -758,7 +758,7 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
           const endpointExpr = getEndpointExpression(azureARM, method.receiver.type);
           if (endpointExpr) {
             imports.add('strings');
-            text += `${indent.get()}if !strings.Contains(nextLink, "://") {\n`;
+            text += `${indent.get()}if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {\n`;
             text += `${indent.push().get()}nextLink = runtime.JoinPaths(${endpointExpr}, nextLink)\n`;
             text += `${indent.pop().get()}}\n`;
           }

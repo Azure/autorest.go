@@ -48,7 +48,7 @@ func (client *PageableServerDrivenPaginationClient) NewLinkPager(options *Pageab
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.Next
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}
@@ -96,7 +96,7 @@ func (client *PageableServerDrivenPaginationClient) NewLinkStringPager(options *
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.Next
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}
@@ -144,7 +144,7 @@ func (client *PageableServerDrivenPaginationClient) NewNestedLinkPager(options *
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NestedNext.Next
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}

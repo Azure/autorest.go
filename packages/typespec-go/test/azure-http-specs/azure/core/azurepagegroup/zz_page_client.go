@@ -73,7 +73,7 @@ func (client *PageClient) NewListWithCustomPageModelPager(options *PageClientLis
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}
@@ -124,7 +124,7 @@ func (client *PageClient) NewListWithPagePager(options *PageClientListWithPageOp
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}
@@ -177,7 +177,7 @@ func (client *PageClient) NewListWithParametersPager(bodyInput ListItemInputBody
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}
@@ -236,7 +236,7 @@ func (client *PageClient) NewWithRelativeNextLinkPager(options *PageClientWithRe
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
-				if !strings.Contains(nextLink, "://") {
+				if !strings.HasPrefix(nextLink, "http://") && !strings.HasPrefix(nextLink, "https://") {
 					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
 				}
 			}
