@@ -165,9 +165,9 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       // it must be done before the imports are written out
       if (go.isLROMethod(method)) {
         // generate Begin method
-        opText += generateLROBeginMethod(method, options, imports, indent);
+        opText += generateLROBeginMethod(method, options, imports, indent, azureARM);
       }
-      opText += generateOperation(method, options, imports, indent);
+      opText += generateOperation(method, options, imports, indent, azureARM);
       opText += createProtocolRequest(azureARM, method, imports, indent);
       if (method.kind !== 'lroMethod') {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
@@ -624,6 +624,26 @@ function generateNilChecks(segments: Array<go.ModelField>, varName: string = 'pa
 }
 
 /**
+ * returns the Go expression for a client's service endpoint, used to resolve relative nextLink URLs.
+ * returns undefined for templated hosts where the endpoint can't be statically expressed.
+ *
+ * @param azureARM true if this is an Azure ARM client
+ * @param client the client type
+ * @returns a Go expression for the client's endpoint, or undefined
+ */
+function getEndpointExpression(azureARM: boolean, client: go.Client): string | undefined {
+  if (azureARM) {
+    return 'client.internal.Endpoint()';
+  }
+  // find the URI parameter that represents the service endpoint (not an API version parameter)
+  const endpointParam = client.parameters.find((p) => p.kind === 'uriParam' && !p.isApiVersion);
+  if (endpointParam) {
+    return `client.${endpointParam.name}`;
+  }
+  return undefined;
+}
+
+/**
  * emits code that calls runtime.NewPager
  *
  * @param method the pageable method
@@ -632,7 +652,7 @@ function generateNilChecks(segments: Array<go.ModelField>, varName: string = 'pa
  * @param indent the indentation helper currently in scope
  * @returns the complete call to runtime.NewPager(...)
  */
-function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
+function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, options: go.Options, imports: ImportManager, indent: helpers.Indentation, azureARM: boolean): string {
   imports.add('context');
   let text = `runtime.NewPager(runtime.PagingHandler[${method.returns.name}]{\n`;
   text += `${indent.push().get()}More: func(page ${method.returns.name}) bool {\n`;
@@ -734,6 +754,14 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
           nextLinkVar = 'nextLink';
           text += `${indent.get()}if page != nil {\n`;
           text += `${indent.push().get()}nextLink = *page.${nextLinkPath}\n`;
+          // resolve any relative nextLink URLs against the service endpoint
+          const endpointExpr = getEndpointExpression(azureARM, method.receiver.type);
+          if (endpointExpr) {
+            imports.add('strings');
+            text += `${indent.get()}if !strings.Contains(nextLink, "://") {\n`;
+            text += `${indent.push().get()}nextLink = runtime.JoinPaths(${endpointExpr}, nextLink)\n`;
+            text += `${indent.pop().get()}}\n`;
+          }
           text += `${indent.pop().get()}}\n`;
         } else {
           nextLinkVar = `*page.${nextLinkPath}`;
@@ -842,7 +870,7 @@ function getClientReceiverDefinition(receiver: go.Receiver<go.Client>): string {
   return `(${receiver.name} ${receiver.byValue ? '' : '*'}${receiver.type.name})`;
 }
 
-function generateOperation(method: go.MethodType, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
+function generateOperation(method: go.MethodType, options: go.Options, imports: ImportManager, indent: helpers.Indentation, azureARM: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
   let methodName = method.name;
@@ -870,7 +898,7 @@ function generateOperation(method: go.MethodType, options: go.Options, imports: 
   text += `func ${getClientReceiverDefinition(method.receiver)} ${methodName}(${params}) (${returns.join(', ')}) {\n`;
   if (method.kind === 'pageableMethod') {
     text += `${indent.get()}return `;
-    text += emitPagerDefinition(method, options, imports, indent);
+    text += emitPagerDefinition(method, options, imports, indent, azureARM);
     text += '}\n\n';
     return text;
   }
@@ -1896,7 +1924,7 @@ function generateReturnsInfo(method: go.MethodType, apiType: 'api' | 'op' | 'han
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
+function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, options: go.Options, imports: ImportManager, indent: helpers.Indentation, azureARM: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
@@ -1918,7 +1946,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, opt
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += `${indent.get()}pager := `;
-    text += emitPagerDefinition(method, options, imports, indent);
+    text += emitPagerDefinition(method, options, imports, indent, azureARM);
   }
 
   text += `${indent.get()}if options == nil || options.ResumeToken == "" {\n`;

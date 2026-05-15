@@ -381,6 +381,9 @@ func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtim
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
+				if !strings.Contains(nextLink, "://") {
+					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
+				}
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, options)

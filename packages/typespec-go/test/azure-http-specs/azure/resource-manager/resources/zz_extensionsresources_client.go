@@ -234,6 +234,9 @@ func (client *ExtensionsResourcesClient) NewListByScopePager(resourceURI string,
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
+				if !strings.Contains(nextLink, "://") {
+					nextLink = runtime.JoinPaths(client.internal.Endpoint(), nextLink)
+				}
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByScopeCreateRequest(ctx, resourceURI, options)

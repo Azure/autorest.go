@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // PageableServerDrivenPaginationAlternateInitialVerbClient - Scenario where the initial request is not a GET request. However
@@ -32,6 +33,9 @@ func (client *PageableServerDrivenPaginationAlternateInitialVerbClient) NewPostP
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.Next
+				if !strings.Contains(nextLink, "://") {
+					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
+				}
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.postCreateRequest(ctx, body, options)

@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // PageableServerDrivenPaginationClient contains the methods for the PageableServerDrivenPagination group.
@@ -47,6 +48,9 @@ func (client *PageableServerDrivenPaginationClient) NewLinkPager(options *Pageab
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.Next
+				if !strings.Contains(nextLink, "://") {
+					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
+				}
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.linkCreateRequest(ctx, options)
@@ -92,6 +96,9 @@ func (client *PageableServerDrivenPaginationClient) NewLinkStringPager(options *
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.Next
+				if !strings.Contains(nextLink, "://") {
+					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
+				}
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.linkStringCreateRequest(ctx, options)
@@ -137,6 +144,9 @@ func (client *PageableServerDrivenPaginationClient) NewNestedLinkPager(options *
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NestedNext.Next
+				if !strings.Contains(nextLink, "://") {
+					nextLink = runtime.JoinPaths(client.endpoint, nextLink)
+				}
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.nestedLinkCreateRequest(ctx, options)
