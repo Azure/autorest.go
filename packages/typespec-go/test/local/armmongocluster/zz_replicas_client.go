@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultReplicasClientVersion string = "2024-07-01"
-
 // ReplicasClient contains the methods for the Replicas group.
 // Don't use this type directly, use NewReplicasClient() instead.
 //
@@ -91,7 +89,7 @@ func (client *ReplicasClient) listByParentCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultReplicasClientVersion)
+	reqQP.Set("api-version", version20240701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

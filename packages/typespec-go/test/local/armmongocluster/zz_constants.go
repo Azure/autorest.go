@@ -4,6 +4,10 @@
 
 package armmongocluster
 
+const (
+	version20240701 string = "2024-07-01"
+)
+
 // ActionType - Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 type ActionType string
 

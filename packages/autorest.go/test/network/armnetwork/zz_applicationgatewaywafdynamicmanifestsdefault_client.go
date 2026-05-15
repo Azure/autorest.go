@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultApplicationGatewayWafDynamicManifestsDefaultClientVersion string = "2022-09-01"
-
 // ApplicationGatewayWafDynamicManifestsDefaultClient contains the methods for the ApplicationGatewayWafDynamicManifestsDefault
 // group.
 // Don't use this type directly, use NewApplicationGatewayWafDynamicManifestsDefaultClient() instead.
@@ -89,7 +87,7 @@ func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) getCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultApplicationGatewayWafDynamicManifestsDefaultClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

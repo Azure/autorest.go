@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultPetsClientVersion string = "2025-01-01"
-
 // PetsClient contains the methods for the Pets group.
 // Don't use this type directly, use NewPetsClient() instead.
 //
@@ -90,7 +88,7 @@ func (client *PetsClient) adoptCatCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPetsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -156,7 +154,7 @@ func (client *PetsClient) adoptPetCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPetsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -222,7 +220,7 @@ func (client *PetsClient) getCreateRequest(ctx context.Context, resourceGroupNam
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPetsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

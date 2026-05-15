@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultOperationsStatusClientVersion string = "2021-02-01"
-
 // OperationsStatusClient contains the methods for the OperationsStatus group.
 // Don't use this type directly, use NewOperationsStatusClient() instead.
 //
@@ -90,7 +88,7 @@ func (client *OperationsStatusClient) getCreateRequest(ctx context.Context, devi
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultOperationsStatusClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

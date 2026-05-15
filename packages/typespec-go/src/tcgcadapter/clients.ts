@@ -1031,12 +1031,14 @@ export class ClientAdapter {
       let paramStyle: go.ParameterStyle;
       if (opParam.clientDefaultValue) {
         const client = method.receiver.type;
-        if (!client.apiVersion) {
-          // first method for this client, so apiVersion hasn't been set yet
+        // check if we already have a ConstantDef for this API version.
+        let versionConst = client.apiVersions.find((e) => e.literal.literal === opParam.clientDefaultValue);
+        if (!versionConst) {
           const literalValue = new go.Literal(this.ta.getStringType(), opParam.clientDefaultValue);
-          client.apiVersion = new go.ConstantDef(`default${client.name}Version`, literalValue);
+          versionConst = new go.ConstantDef(`version${ensureNameCase(<string>opParam.clientDefaultValue)}`, literalValue);
+          client.apiVersions.push(versionConst);
         }
-        paramType = new go.Literal(client.apiVersion, client.apiVersion.name);
+        paramType = new go.Literal(versionConst, versionConst.name);
         paramStyle = 'literal';
       } else {
         paramType = this.ta.getStringType();

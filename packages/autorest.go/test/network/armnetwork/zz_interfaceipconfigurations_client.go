@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultInterfaceIPConfigurationsClientVersion string = "2022-09-01"
-
 // InterfaceIPConfigurationsClient contains the methods for the NetworkInterfaceIPConfigurations group.
 // Don't use this type directly, use NewInterfaceIPConfigurationsClient() instead.
 //
@@ -98,7 +96,7 @@ func (client *InterfaceIPConfigurationsClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -161,7 +159,7 @@ func (client *InterfaceIPConfigurationsClient) listCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultInterfaceIPConfigurationsClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

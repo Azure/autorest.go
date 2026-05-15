@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultMetastoreClientVersion string = "2021-07-01-preview"
-
 // MetastoreClient contains the methods for the Metastore group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -59,7 +57,7 @@ func (client *MetastoreClient) deleteCreateRequest(ctx context.Context, id strin
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01-preview")
+	reqQP.Set("api-version", version20210701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -99,7 +97,7 @@ func (client *MetastoreClient) getDatabaseOperationsCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01-preview")
+	reqQP.Set("api-version", version20210701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -150,7 +148,7 @@ func (client *MetastoreClient) registerCreateRequest(ctx context.Context, id str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultMetastoreClientVersion)
+	reqQP.Set("api-version", version20210701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, registerBody); err != nil {
@@ -203,7 +201,7 @@ func (client *MetastoreClient) updateCreateRequest(ctx context.Context, id strin
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-07-01-preview")
+	reqQP.Set("api-version", version20210701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, updateBody); err != nil {

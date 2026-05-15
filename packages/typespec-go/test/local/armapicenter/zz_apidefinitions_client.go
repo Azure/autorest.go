@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultAPIDefinitionsClientVersion string = "2024-03-15-preview"
-
 // APIDefinitionsClient contains the methods for the APIDefinitions group.
 // Don't use this type directly, use NewAPIDefinitionsClient() instead.
 //
@@ -112,7 +110,7 @@ func (client *APIDefinitionsClient) createOrUpdateCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIDefinitionsClientVersion)
+	reqQP.Set("api-version", version20240315Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -200,7 +198,7 @@ func (client *APIDefinitionsClient) deleteCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIDefinitionsClientVersion)
+	reqQP.Set("api-version", version20240315Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -291,7 +289,7 @@ func (client *APIDefinitionsClient) exportSpecificationCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIDefinitionsClientVersion)
+	reqQP.Set("api-version", version20240315Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -364,7 +362,7 @@ func (client *APIDefinitionsClient) getCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIDefinitionsClientVersion)
+	reqQP.Set("api-version", version20240315Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -447,7 +445,7 @@ func (client *APIDefinitionsClient) headCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIDefinitionsClientVersion)
+	reqQP.Set("api-version", version20240315Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -539,7 +537,7 @@ func (client *APIDefinitionsClient) importSpecificationCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIDefinitionsClientVersion)
+	reqQP.Set("api-version", version20240315Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, payload); err != nil {
@@ -613,7 +611,7 @@ func (client *APIDefinitionsClient) listCreateRequest(ctx context.Context, resou
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultAPIDefinitionsClientVersion)
+	reqQP.Set("api-version", version20240315Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

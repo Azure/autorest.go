@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultOutboundRulesClientVersion string = "2025-10-01-preview"
-
 // OutboundRulesClient contains the methods for the OutboundRules group.
 // Don't use this type directly, use NewOutboundRulesClient() instead.
 //
@@ -119,7 +117,7 @@ func (client *OutboundRulesClient) postCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultOutboundRulesClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

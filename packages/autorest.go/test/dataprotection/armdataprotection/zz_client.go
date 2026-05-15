@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultClientVersion string = "2025-07-01"
-
 // Client contains the methods for the DataProtection group.
 // Don't use this type directly, use NewClient() instead.
 //
@@ -83,7 +81,7 @@ func (client *Client) checkFeatureSupportCreateRequest(ctx context.Context, loca
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

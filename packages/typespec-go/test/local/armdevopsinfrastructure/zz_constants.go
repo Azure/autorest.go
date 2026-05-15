@@ -4,6 +4,10 @@
 
 package armdevopsinfrastructure
 
+const (
+	version20240404Preview string = "2024-04-04-preview"
+)
+
 // AzureDevOpsPermissionType - Determines who has admin permissions to the Azure DevOps pool.
 type AzureDevOpsPermissionType string
 

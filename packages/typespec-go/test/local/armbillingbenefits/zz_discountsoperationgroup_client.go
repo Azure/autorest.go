@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultDiscountsOperationGroupClientVersion string = "2024-11-01-preview"
-
 // DiscountsOperationGroupClient contains the methods for the DiscountsOperationGroup group.
 // Don't use this type directly, use NewDiscountsOperationGroupClient() instead.
 //
@@ -79,7 +77,7 @@ func (client *DiscountsOperationGroupClient) scopeListCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultDiscountsOperationGroupClientVersion)
+	reqQP.Set("api-version", version20241101Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

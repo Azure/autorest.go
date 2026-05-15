@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultBasicClientVersion string = "2016-02-29"
-
 // BasicClient contains the methods for the Basic group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -283,7 +281,7 @@ func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBod
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBasicClientVersion)
+	reqQP.Set("api-version", version20160229)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, complexBody); err != nil {

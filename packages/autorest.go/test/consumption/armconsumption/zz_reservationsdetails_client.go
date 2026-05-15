@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultReservationsDetailsClientVersion string = "2019-10-01"
-
 // ReservationsDetailsClient contains the methods for the ReservationsDetails group.
 // Don't use this type directly, use NewReservationsDetailsClient() instead.
 //
@@ -81,7 +79,7 @@ func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, 
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultReservationsDetailsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	if options != nil && options.EndDate != nil {
 		reqQP.Set("endDate", *options.EndDate)
 	}
@@ -148,7 +146,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("$filter", filter)
-	reqQP.Set("api-version", defaultReservationsDetailsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -208,7 +206,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCre
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("$filter", filter)
-	reqQP.Set("api-version", defaultReservationsDetailsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultModelCapacitiesClientVersion string = "2025-10-01-preview"
-
 // ModelCapacitiesClient contains the methods for the ModelCapacities group.
 // Don't use this type directly, use NewModelCapacitiesClient() instead.
 //
@@ -84,7 +82,7 @@ func (client *ModelCapacitiesClient) listCreateRequest(ctx context.Context, mode
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultModelCapacitiesClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	reqQP.Set("modelFormat", modelFormat)
 	reqQP.Set("modelName", modelName)
 	reqQP.Set("modelVersion", modelVersion)

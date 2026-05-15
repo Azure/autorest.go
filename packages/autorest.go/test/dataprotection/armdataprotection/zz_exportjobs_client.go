@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultExportJobsClientVersion string = "2025-07-01"
-
 // ExportJobsClient contains the methods for the ExportJobs group.
 // Don't use this type directly, use NewExportJobsClient() instead.
 //
@@ -104,7 +102,7 @@ func (client *ExportJobsClient) triggerCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultExportJobsClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

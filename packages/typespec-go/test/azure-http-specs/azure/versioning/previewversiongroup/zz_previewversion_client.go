@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultPreviewVersionClientVersion string = "2024-12-01-preview"
-
 // PreviewVersionClient contains the methods for the PreviewVersion group.
 // Don't use this type directly, use NewPreviewVersionClientWithNoCredential() instead.
 //
@@ -92,7 +90,7 @@ func (client *PreviewVersionClient) getWidgetCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
+	reqQP.Set("api-version", version20241201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -141,7 +139,7 @@ func (client *PreviewVersionClient) listWidgetsCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
+	reqQP.Set("api-version", version20241201Preview)
 	if options != nil && options.Color != nil {
 		reqQP.Set("color", *options.Color)
 	}
@@ -200,7 +198,7 @@ func (client *PreviewVersionClient) updateWidgetColorCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPreviewVersionClientVersion)
+	reqQP.Set("api-version", version20241201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}

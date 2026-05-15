@@ -13,13 +13,33 @@ import * as go from '../../../codemodel.go/src/index.js';
  * @returns the text for the file or the empty string
  */
 export function generateConstants(pkg: go.PackageContent): string {
-  if (pkg.constants.length === 0) {
+  // collect all of the client api version constants
+  const apiVersionConstants = new Array<go.ConstantDef>();
+  for (const client of pkg.clients) {
+    for (const apiVersion of client.apiVersions) {
+      // filter out any duplicates across clients
+      if (!apiVersionConstants.some((c) => c.name === apiVersion.name)) {
+        apiVersionConstants.push(apiVersion);
+      }
+    }
+  }
+
+  if (apiVersionConstants.length === 0 && pkg.constants.length === 0) {
     return '';
   }
 
   const indent = new helpers.Indentation();
 
   let text = helpers.contentPreamble(pkg);
+
+  if (apiVersionConstants.length > 0) {
+    apiVersionConstants.sort((a, b) => helpers.sortAscending(a.name, b.name));
+    text += 'const (\n';
+    for (const apiVersion of apiVersionConstants) {
+      text += `${indent.get()}${apiVersion.name} ${go.getTypeDeclaration(apiVersion, pkg)} = ${helpers.formatLiteralValue(apiVersion.literal, false)}\n`;
+    }
+    text += ')\n\n';
+  }
 
   for (const enm of pkg.constants) {
     text += helpers.formatDocCommentWithPrefix(enm.name, enm.docs);

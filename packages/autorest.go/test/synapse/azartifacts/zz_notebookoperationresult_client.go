@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultNotebookOperationResultClientVersion string = "2020-12-01"
-
 // NotebookOperationResultClient contains the methods for the NotebookOperationResult group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -61,7 +59,7 @@ func (client *NotebookOperationResultClient) getCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultNotebookOperationResultClientVersion)
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

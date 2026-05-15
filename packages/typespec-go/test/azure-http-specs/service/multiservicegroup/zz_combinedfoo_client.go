@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultCombinedFooClientVersion string = "av2"
-
 // CombinedFooClient contains the methods for the CombinedFoo group.
 // Don't use this type directly, use [CombinedClient.NewCombinedFooClient] instead.
 //
@@ -56,7 +54,7 @@ func (client *CombinedFooClient) testCreateRequest(ctx context.Context, _ *Combi
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultCombinedFooClientVersion)
+	reqQP.Set("api-version", versionAv2)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

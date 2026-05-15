@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultJobsClientVersion string = "2021-02-01"
-
 // JobsClient contains the methods for the Jobs group.
 // Don't use this type directly, use NewJobsClient() instead.
 //
@@ -90,7 +88,7 @@ func (client *JobsClient) getCreateRequest(ctx context.Context, deviceName strin
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultJobsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

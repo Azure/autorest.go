@@ -18,8 +18,6 @@ import (
 	"time"
 )
 
-const defaultAppendBlobClientVersion string = "2026-06-06"
-
 // AppendBlobClient contains the methods for the AppendBlob group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -116,7 +114,7 @@ func (client *AppendBlobClient) appendBlockCreateRequest(ctx context.Context, bo
 	if options != nil && options.StructuredContentLength != nil {
 		req.Raw().Header["x-ms-structured-content-length"] = []string{strconv.FormatInt(*options.StructuredContentLength, 10)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultAppendBlobClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
 	if err := req.SetBody(body, "application/octet-stream"); err != nil {
 		return nil, err
@@ -314,7 +312,7 @@ func (client *AppendBlobClient) appendBlockFromURLCreateRequest(ctx context.Cont
 	if options != nil && options.SourceRange != nil {
 		req.Raw().Header["x-ms-source-range"] = []string{*options.SourceRange}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultAppendBlobClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -492,7 +490,7 @@ func (client *AppendBlobClient) createCreateRequest(ctx context.Context, options
 	if options != nil && options.BlobTagsString != nil {
 		req.Raw().Header["x-ms-tags"] = []string{*options.BlobTagsString}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultAppendBlobClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -606,7 +604,7 @@ func (client *AppendBlobClient) sealCreateRequest(ctx context.Context, options *
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultAppendBlobClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 

@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultHSMSecurityDomainClientVersion string = "7.2"
-
 // HSMSecurityDomainClient contains the methods for the HSMSecurityDomain group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -77,7 +75,7 @@ func (client *HSMSecurityDomainClient) downloadCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultHSMSecurityDomainClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, certificateInfoObject); err != nil {
@@ -164,7 +162,7 @@ func (client *HSMSecurityDomainClient) transferKeyCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultHSMSecurityDomainClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

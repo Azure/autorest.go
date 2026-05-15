@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultQuotasClientVersion string = "2022-02-01-preview"
-
 // QuotasClient contains the methods for the Quotas group.
 // Don't use this type directly, use NewQuotasClient() instead.
 //
@@ -84,7 +82,7 @@ func (client *QuotasClient) listCreateRequest(ctx context.Context, location stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultQuotasClientVersion)
+	reqQP.Set("api-version", version20220201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -138,7 +136,7 @@ func (client *QuotasClient) updateCreateRequest(ctx context.Context, location st
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultQuotasClientVersion)
+	reqQP.Set("api-version", version20220201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

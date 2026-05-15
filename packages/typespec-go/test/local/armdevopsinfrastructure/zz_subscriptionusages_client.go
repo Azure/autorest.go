@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSubscriptionUsagesClientVersion string = "2024-04-04-preview"
-
 // SubscriptionUsagesClient contains the methods for the SubscriptionUsages group.
 // Don't use this type directly, use NewSubscriptionUsagesClient() instead.
 //
@@ -86,7 +84,7 @@ func (client *SubscriptionUsagesClient) usagesCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionUsagesClientVersion)
+	reqQP.Set("api-version", version20240404Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

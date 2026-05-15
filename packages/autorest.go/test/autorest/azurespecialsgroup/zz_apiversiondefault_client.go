@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultAPIVersionDefaultClientVersion string = "2015-07-01-preview"
-
 // APIVersionDefaultClient contains the methods for the APIVersionDefault group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -58,7 +56,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
+	reqQP.Set("api-version", version20150701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -97,7 +95,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
+	reqQP.Set("api-version", version20150701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -136,7 +134,7 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
+	reqQP.Set("api-version", version20150701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -175,7 +173,7 @@ func (client *APIVersionDefaultClient) getSwaggerGlobalValidCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAPIVersionDefaultClientVersion)
+	reqQP.Set("api-version", version20150701Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

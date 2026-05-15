@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultErrorClientVersion string = "2023-12-01-preview"
-
 // ErrorClient contains the methods for the Error group.
 // Don't use this type directly, use NewErrorClient() instead.
 //
@@ -92,7 +90,7 @@ func (client *ErrorClient) createForUserDefinedErrorCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultErrorClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -159,7 +157,7 @@ func (client *ErrorClient) getForPredefinedErrorCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultErrorClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

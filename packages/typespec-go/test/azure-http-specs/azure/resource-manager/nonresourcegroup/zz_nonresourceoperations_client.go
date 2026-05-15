@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultNonResourceOperationsClientVersion string = "2023-12-01-preview"
-
 // NonResourceOperationsClient - Operations on non resource model should not be marked as `@armResourceOperations`.
 // Don't use this type directly, use NewNonResourceOperationsClient() instead.
 //
@@ -92,7 +90,7 @@ func (client *NonResourceOperationsClient) createCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultNonResourceOperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -159,7 +157,7 @@ func (client *NonResourceOperationsClient) getCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultNonResourceOperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

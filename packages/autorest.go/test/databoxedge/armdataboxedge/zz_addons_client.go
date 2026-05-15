@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultAddonsClientVersion string = "2021-02-01"
-
 // AddonsClient contains the methods for the Addons group.
 // Don't use this type directly, use NewAddonsClient() instead.
 //
@@ -111,7 +109,7 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAddonsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, addon); err != nil {
@@ -185,7 +183,7 @@ func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAddonsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -242,7 +240,7 @@ func (client *AddonsClient) getCreateRequest(ctx context.Context, deviceName str
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAddonsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -305,7 +303,7 @@ func (client *AddonsClient) listByRoleCreateRequest(ctx context.Context, deviceN
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAddonsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

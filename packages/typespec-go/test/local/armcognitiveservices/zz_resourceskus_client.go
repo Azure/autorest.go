@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultResourceSKUsClientVersion string = "2025-10-01-preview"
-
 // ResourceSKUsClient contains the methods for the ResourceSKUs group.
 // Don't use this type directly, use NewResourceSKUsClient() instead.
 //
@@ -80,7 +78,7 @@ func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, _ *Reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultResourceSKUsClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

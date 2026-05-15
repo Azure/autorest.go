@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultReservationRecommendationDetailsClientVersion string = "2019-10-01"
-
 // ReservationRecommendationDetailsClient contains the methods for the ReservationRecommendationDetails group.
 // Don't use this type directly, use NewReservationRecommendationDetailsClient() instead.
 //
@@ -82,7 +80,7 @@ func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultReservationRecommendationDetailsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	reqQP.Set("lookBackPeriod", string(lookBackPeriod))
 	reqQP.Set("product", product)
 	reqQP.Set("region", region)

@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultServiceAOperationsClientVersion string = "av2"
-
 // ServiceAOperationsClient contains the methods for the ServiceAOperations group.
 // Don't use this type directly, use [ServiceAClient.NewServiceAOperationsClient] instead.
 //
@@ -56,7 +54,7 @@ func (client *ServiceAOperationsClient) opACreateRequest(ctx context.Context, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultServiceAOperationsClientVersion)
+	reqQP.Set("api-version", versionAv2)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

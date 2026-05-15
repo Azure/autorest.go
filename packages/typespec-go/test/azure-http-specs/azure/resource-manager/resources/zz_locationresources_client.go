@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultLocationResourcesClientVersion string = "2023-12-01-preview"
-
 // LocationResourcesClient contains the methods for the LocationResources group.
 // Don't use this type directly, use NewLocationResourcesClient() instead.
 //
@@ -92,7 +90,7 @@ func (client *LocationResourcesClient) createOrUpdateCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -158,7 +156,7 @@ func (client *LocationResourcesClient) deleteCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -210,7 +208,7 @@ func (client *LocationResourcesClient) getCreateRequest(ctx context.Context, loc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -268,7 +266,7 @@ func (client *LocationResourcesClient) listByLocationCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -332,7 +330,7 @@ func (client *LocationResourcesClient) updateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLocationResourcesClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

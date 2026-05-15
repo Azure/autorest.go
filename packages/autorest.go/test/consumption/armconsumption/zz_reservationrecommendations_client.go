@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultReservationRecommendationsClientVersion string = "2019-10-01"
-
 // ReservationRecommendationsClient contains the methods for the ReservationRecommendations group.
 // Don't use this type directly, use NewReservationRecommendationsClient() instead.
 //
@@ -81,7 +79,7 @@ func (client *ReservationRecommendationsClient) listCreateRequest(ctx context.Co
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultReservationRecommendationsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

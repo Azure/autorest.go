@@ -18,8 +18,6 @@ import (
 	"strings"
 )
 
-const defaultBackupVaultOperationResultsClientVersion string = "2025-07-01"
-
 // BackupVaultOperationResultsClient contains the methods for the BackupVaultOperationResults group.
 // Don't use this type directly, use NewBackupVaultOperationResultsClient() instead.
 //
@@ -94,7 +92,7 @@ func (client *BackupVaultOperationResultsClient) getCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBackupVaultOperationResultsClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

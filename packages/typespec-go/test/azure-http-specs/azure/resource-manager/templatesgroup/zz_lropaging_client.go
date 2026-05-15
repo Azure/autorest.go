@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultLroPagingClientVersion string = "2023-12-01-preview"
-
 // LroPagingClient contains the methods for the LroPaging group.
 // Don't use this type directly, use NewLroPagingClient() instead.
 //
@@ -125,7 +123,7 @@ func (client *LroPagingClient) postPagingLroCreateRequest(ctx context.Context, r
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultLroPagingClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

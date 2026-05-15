@@ -4,6 +4,10 @@
 
 package traitsgroup
 
+const (
+	version20221201Preview string = "2022-12-01-preview"
+)
+
 // RepeatabilityResult - Repeatability Result header options
 type RepeatabilityResult string
 

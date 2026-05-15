@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultRestorableTimeRangesClientVersion string = "2025-07-01"
-
 // RestorableTimeRangesClient contains the methods for the RestorableTimeRanges group.
 // Don't use this type directly, use NewRestorableTimeRangesClient() instead.
 //
@@ -95,7 +93,7 @@ func (client *RestorableTimeRangesClient) findCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRestorableTimeRangesClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

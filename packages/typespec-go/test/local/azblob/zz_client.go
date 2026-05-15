@@ -18,8 +18,6 @@ import (
 	"time"
 )
 
-const defaultClientVersion string = "2026-06-06"
-
 // Client contains the methods for the service.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -72,7 +70,7 @@ func (client *Client) abortCopyFromURLCreateRequest(ctx context.Context, copyID 
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -157,7 +155,7 @@ func (client *Client) acquireLeaseCreateRequest(ctx context.Context, duration in
 	if options != nil && options.ProposedLeaseID != nil {
 		req.Raw().Header["x-ms-proposed-lease-id"] = []string{*options.ProposedLeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -252,7 +250,7 @@ func (client *Client) breakLeaseCreateRequest(ctx context.Context, options *Clie
 	if options != nil && options.BreakPeriod != nil {
 		req.Raw().Header["x-ms-lease-break-period"] = []string{strconv.FormatInt(int64(*options.BreakPeriod), 10)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -353,7 +351,7 @@ func (client *Client) changeLeaseCreateRequest(ctx context.Context, leaseID stri
 	req.Raw().Header["x-ms-lease-action"] = []string{"change"}
 	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
 	req.Raw().Header["x-ms-proposed-lease-id"] = []string{proposedLeaseID}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -500,7 +498,7 @@ func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource s
 	if options != nil && options.BlobTagsString != nil {
 		req.Raw().Header["x-ms-tags"] = []string{*options.BlobTagsString}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -635,7 +633,7 @@ func (client *Client) createSnapshotCreateRequest(ctx context.Context, options *
 			}
 		}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -763,7 +761,7 @@ func (client *Client) deleteCreateRequest(ctx context.Context, options *ClientDe
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -832,7 +830,7 @@ func (client *Client) deleteImmutabilityPolicyCreateRequest(ctx context.Context,
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -941,7 +939,7 @@ func (client *Client) downloadCreateRequest(ctx context.Context, options *Client
 	if options != nil && options.StructuredBodyType != nil {
 		req.Raw().Header["x-ms-structured-body"] = []string{*options.StructuredBodyType}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -1208,7 +1206,7 @@ func (client *Client) getAccountInfoCreateRequest(ctx context.Context, options *
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -1315,7 +1313,7 @@ func (client *Client) getPropertiesCreateRequest(ctx context.Context, options *C
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -1623,7 +1621,7 @@ func (client *Client) getTagsCreateRequest(ctx context.Context, options *ClientG
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -1711,7 +1709,7 @@ func (client *Client) releaseLeaseCreateRequest(ctx context.Context, leaseID str
 	}
 	req.Raw().Header["x-ms-lease-action"] = []string{"release"}
 	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -1802,7 +1800,7 @@ func (client *Client) renewLeaseCreateRequest(ctx context.Context, leaseID strin
 	}
 	req.Raw().Header["x-ms-lease-action"] = []string{"renew"}
 	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -1882,7 +1880,7 @@ func (client *Client) setExpiryCreateRequest(ctx context.Context, expiryOptions 
 	if options != nil && options.ExpiresOn != nil {
 		req.Raw().Header["x-ms-expiry-time"] = []string{*options.ExpiresOn}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -1990,7 +1988,7 @@ func (client *Client) setHTTPHeadersCreateRequest(ctx context.Context, options *
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -2083,7 +2081,7 @@ func (client *Client) setImmutabilityPolicyCreateRequest(ctx context.Context, ex
 		req.Raw().Header["x-ms-immutability-policy-mode"] = []string{string(*options.ImmutabilityPolicyMode)}
 	}
 	req.Raw().Header["x-ms-immutability-policy-until-date"] = []string{datetime.RFC1123(expiry).String()}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -2163,7 +2161,7 @@ func (client *Client) setLegalHoldCreateRequest(ctx context.Context, legalHold b
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
 	req.Raw().Header["x-ms-legal-hold"] = []string{strconv.FormatBool(legalHold)}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -2269,7 +2267,7 @@ func (client *Client) setMetadataCreateRequest(ctx context.Context, options *Cli
 			}
 		}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -2385,7 +2383,7 @@ func (client *Client) setTagsCreateRequest(ctx context.Context, tags Tags, optio
 	if options != nil && options.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	req.Raw().Header["Content-Type"] = []string{"application/xml"}
 	if err := runtime.MarshalAsXML(req, tags); err != nil {
 		return nil, err
@@ -2470,7 +2468,7 @@ func (client *Client) setTierCreateRequest(ctx context.Context, tier AccessTier,
 	if options != nil && options.RehydratePriority != nil {
 		req.Raw().Header["x-ms-rehydrate-priority"] = []string{string(*options.RehydratePriority)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -2596,7 +2594,7 @@ func (client *Client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 	if options != nil && options.BlobTagsString != nil {
 		req.Raw().Header["x-ms-tags"] = []string{*options.BlobTagsString}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -2677,7 +2675,7 @@ func (client *Client) undeleteCreateRequest(ctx context.Context, options *Client
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 

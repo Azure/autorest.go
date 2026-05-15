@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultDiagnosticSettingsClientVersion string = "2021-02-01"
-
 // DiagnosticSettingsClient contains the methods for the DiagnosticSettings group.
 // Don't use this type directly, use NewDiagnosticSettingsClient() instead.
 //
@@ -87,7 +85,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultDiagnosticSettingsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -145,7 +143,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsCreate
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultDiagnosticSettingsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -219,7 +217,7 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultDiagnosticSettingsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, proactiveLogCollectionSettings); err != nil {
@@ -287,7 +285,7 @@ func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettingsCre
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultDiagnosticSettingsClientVersion)
+	reqQP.Set("api-version", version20210201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, diagnosticRemoteSupportSettings); err != nil {

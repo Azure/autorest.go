@@ -5,6 +5,11 @@
 
 package armnetwork
 
+const (
+	version20181001 string = "2018-10-01"
+	version20220901 string = "2022-09-01"
+)
+
 // Access - Access to be allowed or denied.
 type Access string
 

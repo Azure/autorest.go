@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultFirewallPolicyIdpsSignaturesClientVersion string = "2022-09-01"
-
 // FirewallPolicyIdpsSignaturesClient contains the methods for the FirewallPolicyIdpsSignatures group.
 // Don't use this type directly, use NewFirewallPolicyIdpsSignaturesClient() instead.
 //
@@ -93,7 +91,7 @@ func (client *FirewallPolicyIdpsSignaturesClient) listCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultFirewallPolicyIdpsSignaturesClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

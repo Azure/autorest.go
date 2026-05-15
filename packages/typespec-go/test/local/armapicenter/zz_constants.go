@@ -4,6 +4,10 @@
 
 package armapicenter
 
+const (
+	version20240315Preview string = "2024-03-15-preview"
+)
+
 // APIKind - The kind of the API
 type APIKind string
 

@@ -4,6 +4,11 @@
 
 package armmultipleservicegroup
 
+const (
+	version20250102 string = "2025-01-02"
+	version20250401 string = "2025-04-01"
+)
+
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 

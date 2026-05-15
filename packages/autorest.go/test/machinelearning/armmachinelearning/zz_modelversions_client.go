@@ -18,8 +18,6 @@ import (
 	"strings"
 )
 
-const defaultModelVersionsClientVersion string = "2022-02-01-preview"
-
 // ModelVersionsClient contains the methods for the ModelVersions group.
 // Don't use this type directly, use NewModelVersionsClient() instead.
 //
@@ -100,7 +98,7 @@ func (client *ModelVersionsClient) createOrUpdateCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultModelVersionsClientVersion)
+	reqQP.Set("api-version", version20220201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -170,7 +168,7 @@ func (client *ModelVersionsClient) deleteCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultModelVersionsClientVersion)
+	reqQP.Set("api-version", version20220201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -229,7 +227,7 @@ func (client *ModelVersionsClient) getCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultModelVersionsClientVersion)
+	reqQP.Set("api-version", version20220201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -303,7 +301,7 @@ func (client *ModelVersionsClient) listCreateRequest(ctx context.Context, resour
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	reqQP.Set("api-version", defaultModelVersionsClientVersion)
+	reqQP.Set("api-version", version20220201Preview)
 	if options != nil && options.Description != nil {
 		reqQP.Set("description", *options.Description)
 	}

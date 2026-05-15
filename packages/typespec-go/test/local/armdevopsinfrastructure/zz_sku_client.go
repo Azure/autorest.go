@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSKUClientVersion string = "2024-04-04-preview"
-
 // SKUClient contains the methods for the SKU group.
 // Don't use this type directly, use NewSKUClient() instead.
 //
@@ -85,7 +83,7 @@ func (client *SKUClient) listByLocationCreateRequest(ctx context.Context, locati
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSKUClientVersion)
+	reqQP.Set("api-version", version20240404Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultServiceAssociationLinksClientVersion string = "2022-09-01"
-
 // ServiceAssociationLinksClient contains the methods for the ServiceAssociationLinks group.
 // Don't use this type directly, use NewServiceAssociationLinksClient() instead.
 //
@@ -98,7 +96,7 @@ func (client *ServiceAssociationLinksClient) listCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultServiceAssociationLinksClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

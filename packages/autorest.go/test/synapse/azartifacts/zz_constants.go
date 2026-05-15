@@ -5,6 +5,14 @@
 
 package azartifacts
 
+const (
+	version20201201        string = "2020-12-01"
+	version20210601Preview string = "2021-06-01-preview"
+	version20210701Preview string = "2021-07-01-preview"
+	version20211101Preview string = "2021-11-01-preview"
+	version20221201Preview string = "2022-12-01-preview"
+)
+
 type AmazonRdsForOraclePartitionOption string
 
 const (

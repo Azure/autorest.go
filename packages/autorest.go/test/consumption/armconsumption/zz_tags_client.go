@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const defaultTagsClientVersion string = "2019-10-01"
-
 // TagsClient contains the methods for the Tags group.
 // Don't use this type directly, use NewTagsClient() instead.
 //
@@ -76,7 +74,7 @@ func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultTagsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

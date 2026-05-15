@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultForecastsClientVersion string = "2019-10-01"
-
 // ForecastsClient contains the methods for the Forecasts group.
 // Don't use this type directly, use NewForecastsClient() instead.
 //
@@ -85,7 +83,7 @@ func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *F
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultForecastsClientVersion)
+	reqQP.Set("api-version", version20191001)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

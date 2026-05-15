@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultServiceBOperationsClientVersion string = "bv2"
-
 // ServiceBOperationsClient contains the methods for the ServiceBOperations group.
 // Don't use this type directly, use [ServiceBClient.NewServiceBOperationsClient] instead.
 //
@@ -56,7 +54,7 @@ func (client *ServiceBOperationsClient) opBCreateRequest(ctx context.Context, _ 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultServiceBOperationsClientVersion)
+	reqQP.Set("api-version", versionBv2)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }

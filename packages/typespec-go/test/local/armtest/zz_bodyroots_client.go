@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultBodyRootsClientVersion string = "2025-01-01"
-
 // BodyRootsClient contains the methods for the BodyRoots group.
 // Don't use this type directly, use NewBodyRootsClient() instead.
 //
@@ -90,7 +88,7 @@ func (client *BodyRootsClient) actionCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBodyRootsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	reqQP.Set("filter", "constantValue")
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -147,7 +145,7 @@ func (client *BodyRootsClient) getCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBodyRootsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -210,7 +208,7 @@ func (client *BodyRootsClient) putCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultBodyRootsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

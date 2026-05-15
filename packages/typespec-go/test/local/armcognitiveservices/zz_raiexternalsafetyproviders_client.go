@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultRaiExternalSafetyProvidersClientVersion string = "2025-10-01-preview"
-
 // RaiExternalSafetyProvidersClient contains the methods for the RaiExternalSafetyProviders group.
 // Don't use this type directly, use NewRaiExternalSafetyProvidersClient() instead.
 //
@@ -81,7 +79,7 @@ func (client *RaiExternalSafetyProvidersClient) listCreateRequest(ctx context.Co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRaiExternalSafetyProvidersClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

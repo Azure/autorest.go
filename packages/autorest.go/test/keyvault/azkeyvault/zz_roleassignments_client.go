@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultRoleAssignmentsClientVersion string = "7.2"
-
 // RoleAssignmentsClient contains the methods for the RoleAssignments group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -66,7 +64,7 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
@@ -123,7 +121,7 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -177,7 +175,7 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -232,7 +230,7 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", defaultRoleAssignmentsClientVersion)
+	reqQP.Set("api-version", version72)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

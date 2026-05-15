@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultAzureFirewallFqdnTagsClientVersion string = "2022-09-01"
-
 // AzureFirewallFqdnTagsClient contains the methods for the AzureFirewallFqdnTags group.
 // Don't use this type directly, use NewAzureFirewallFqdnTagsClient() instead.
 //
@@ -83,7 +81,7 @@ func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultAzureFirewallFqdnTagsClientVersion)
+	reqQP.Set("api-version", version20220901)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

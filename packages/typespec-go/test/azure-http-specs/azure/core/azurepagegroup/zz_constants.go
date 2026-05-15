@@ -4,6 +4,10 @@
 
 package azurepagegroup
 
+const (
+	version20221201Preview string = "2022-12-01-preview"
+)
+
 // ListItemInputExtensibleEnum - An extensible enum input parameter.
 type ListItemInputExtensibleEnum string
 

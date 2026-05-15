@@ -5,6 +5,10 @@
 
 package armmachinelearning
 
+const (
+	version20220201Preview string = "2022-02-01-preview"
+)
+
 // AllocationState - Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing.
 // There are no changes to the number of compute nodes in the compute in progress. A compute
 // enters this state when it is created and when no operations are being performed on the compute to change the number of

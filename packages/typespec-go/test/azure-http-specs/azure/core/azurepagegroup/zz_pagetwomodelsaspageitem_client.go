@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultPageTwoModelsAsPageItemClientVersion string = "2022-12-01-preview"
-
 // PageTwoModelsAsPageItemClient contains the methods for the PageTwoModelsAsPageItem group.
 // Don't use this type directly, use [PageClient.NewPageTwoModelsAsPageItemClient] instead.
 //
@@ -59,7 +57,7 @@ func (client *PageTwoModelsAsPageItemClient) listFirstItemCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPageTwoModelsAsPageItemClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -109,7 +107,7 @@ func (client *PageTwoModelsAsPageItemClient) listSecondItemCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPageTwoModelsAsPageItemClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

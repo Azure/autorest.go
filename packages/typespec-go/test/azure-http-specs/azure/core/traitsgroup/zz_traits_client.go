@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultTraitsClientVersion string = "2022-12-01-preview"
-
 // TraitsClient - Illustrates Azure Core operation customizations by traits
 // Don't use this type directly, use NewTraitsClientWithNoCredential() instead.
 //
@@ -91,7 +89,7 @@ func (client *TraitsClient) repeatableActionCreateRequest(ctx context.Context, i
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultTraitsClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.RepeatabilityFirstSent != nil {
@@ -155,7 +153,7 @@ func (client *TraitsClient) smokeTestCreateRequest(ctx context.Context, id int32
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultTraitsClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.IfMatch != nil {

@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultRaiExternalSafetyProviderClientVersion string = "2025-10-01-preview"
-
 // RaiExternalSafetyProviderClient contains the methods for the RaiExternalSafetyProvider group.
 // Don't use this type directly, use NewRaiExternalSafetyProviderClient() instead.
 //
@@ -88,7 +86,7 @@ func (client *RaiExternalSafetyProviderClient) createOrUpdateCreateRequest(ctx c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRaiExternalSafetyProviderClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -181,7 +179,7 @@ func (client *RaiExternalSafetyProviderClient) deleteCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRaiExternalSafetyProviderClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -229,7 +227,7 @@ func (client *RaiExternalSafetyProviderClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultRaiExternalSafetyProviderClientVersion)
+	reqQP.Set("api-version", version20251001Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

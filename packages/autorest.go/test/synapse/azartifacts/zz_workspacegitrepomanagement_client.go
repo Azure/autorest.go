@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultWorkspaceGitRepoManagementClientVersion string = "2020-12-01"
-
 // WorkspaceGitRepoManagementClient contains the methods for the WorkspaceGitRepoManagement group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -55,7 +53,7 @@ func (client *WorkspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultWorkspaceGitRepoManagementClientVersion)
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.ClientRequestID != nil {

@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-const defaultWorkspaceClientVersion string = "2020-12-01"
-
 // WorkspaceClient contains the methods for the Workspace group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -54,7 +52,7 @@ func (client *WorkspaceClient) getCreateRequest(ctx context.Context, _ *Workspac
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultWorkspaceClientVersion)
+	reqQP.Set("api-version", version20201201)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

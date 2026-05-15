@@ -49,12 +49,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     imports.add(azureARM ? 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm' : 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
     // generate client type
-    let clientText = '';
-    if (client.apiVersion) {
-      clientText += `const ${client.apiVersion.name} ${go.getTypeDeclaration(client.apiVersion, pkg)} = ${helpers.formatLiteralValue(client.apiVersion.literal, false)}\n\n`;
-    }
-
-    clientText += helpers.formatDocComment(client.docs);
+    let clientText = helpers.formatDocComment(client.docs);
     clientText += "// Don't use this type directly, use ";
     if (client.instance?.kind === 'constructable' && client.instance.constructors.length === 1) {
       clientText += `${client.instance.constructors[0].name}() instead.\n`;
@@ -75,8 +70,16 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       clientText += 'a constructor function instead.\n';
     }
 
-    if (client.apiVersion) {
-      clientText += `//\n// Generated from API version ${client.apiVersion.literal.literal}\n`;
+    if (client.apiVersions.length > 0) {
+      clientText += `//\n// Generated from API version`;
+      if (client.apiVersions.length > 1) {
+        clientText += `s ${client.apiVersions
+          .map((v) => v.literal.literal)
+          .sort()
+          .join(', ')}\n`;
+      } else {
+        clientText += ` ${client.apiVersions[0].literal.literal}\n`;
+      }
     }
 
     const indent = new helpers.Indentation();

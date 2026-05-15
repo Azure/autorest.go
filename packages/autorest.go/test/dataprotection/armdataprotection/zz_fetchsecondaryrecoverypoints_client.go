@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultFetchSecondaryRecoveryPointsClientVersion string = "2025-07-01"
-
 // FetchSecondaryRecoveryPointsClient contains the methods for the FetchSecondaryRecoveryPoints group.
 // Don't use this type directly, use NewFetchSecondaryRecoveryPointsClient() instead.
 //
@@ -99,7 +97,7 @@ func (client *FetchSecondaryRecoveryPointsClient) listCreateRequest(ctx context.
 	if options != nil && options.SkipToken != nil {
 		reqQP.Set("$skipToken", *options.SkipToken)
 	}
-	reqQP.Set("api-version", defaultFetchSecondaryRecoveryPointsClientVersion)
+	reqQP.Set("api-version", version20250701)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {

@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultAutoRestValidationTestClientVersion string = "1.0.0"
-
 // AutoRestValidationTestClient contains the methods for the AutoRestValidationTest group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -163,7 +161,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("apiVersion", defaultAutoRestValidationTestClientVersion)
+	reqQP.Set("apiVersion", version100)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
@@ -226,7 +224,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("apiVersion", defaultAutoRestValidationTestClientVersion)
+	reqQP.Set("apiVersion", version100)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

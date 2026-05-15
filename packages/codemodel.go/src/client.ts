@@ -38,10 +38,12 @@ export interface Client {
   pkg: module.PackageContent;
 
   /**
-   * for versioned clients, the API version used to generate the
-   * content as well as the default API version used in requests
+   * for versioned clients, the API versions used to generate the
+   * content as well as the default API version used in requests.
+   * while most versioned clients will have a single API version,
+   * some may use distinct API versions for different methods.
    */
-  apiVersion?: type.ConstantDef;
+  apiVersions: Array<type.ConstantDef>;
 
   /** the parent client in a hierarchical client */
   parent?: Client;
@@ -377,6 +379,7 @@ export class Client implements Client {
     this.clientAccessors = new Array<ClientAccessor>();
     this.parameters = new Array<ClientParameter>();
     this.pkg = pkg;
+    this.apiVersions = new Array<type.ConstantDef>();
   }
 }
 

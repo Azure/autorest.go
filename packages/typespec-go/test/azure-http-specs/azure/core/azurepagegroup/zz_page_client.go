@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-const defaultPageClientVersion string = "2022-12-01-preview"
-
 // PageClient - Illustrates bodies templated with Azure Core with paging support
 // Don't use this type directly, use NewPageClientWithNoCredential() instead.
 //
@@ -94,7 +92,7 @@ func (client *PageClient) listWithCustomPageModelCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPageClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -142,7 +140,7 @@ func (client *PageClient) listWithPageCreateRequest(ctx context.Context, _ *Page
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultPageClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -195,7 +193,7 @@ func (client *PageClient) listWithParametersCreateRequest(ctx context.Context, b
 	if options != nil && options.Another != nil {
 		reqQP.Set("another", string(*options.Another))
 	}
-	reqQP.Set("api-version", defaultPageClientVersion)
+	reqQP.Set("api-version", version20221201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

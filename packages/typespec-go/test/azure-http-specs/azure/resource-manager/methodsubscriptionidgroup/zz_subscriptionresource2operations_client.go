@@ -16,8 +16,6 @@ import (
 	"strings"
 )
 
-const defaultSubscriptionResource2OperationsClientVersion string = "2023-12-01-preview"
-
 // SubscriptionResource2OperationsClient contains the methods for the SubscriptionResource2Operations group.
 // Don't use this type directly, use NewSubscriptionResource2OperationsClient() instead.
 //
@@ -83,7 +81,7 @@ func (client *SubscriptionResource2OperationsClient) deleteCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionResource2OperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
@@ -132,7 +130,7 @@ func (client *SubscriptionResource2OperationsClient) getCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionResource2OperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -192,7 +190,7 @@ func (client *SubscriptionResource2OperationsClient) putCreateRequest(ctx contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultSubscriptionResource2OperationsClientVersion)
+	reqQP.Set("api-version", version20231201Preview)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

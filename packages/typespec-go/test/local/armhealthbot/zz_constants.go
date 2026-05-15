@@ -4,6 +4,10 @@
 
 package armhealthbot
 
+const (
+	version20240201 string = "2024-02-01"
+)
+
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 

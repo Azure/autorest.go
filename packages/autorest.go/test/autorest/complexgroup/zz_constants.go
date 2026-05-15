@@ -5,6 +5,10 @@
 
 package complexgroup
 
+const (
+	version20160229 string = "2016-02-29"
+)
+
 type CMYKColors string
 
 const (

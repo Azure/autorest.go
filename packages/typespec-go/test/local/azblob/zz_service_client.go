@@ -17,8 +17,6 @@ import (
 	"time"
 )
 
-const defaultServiceClientVersion string = "2026-06-06"
-
 // ServiceClient contains the methods for the Service group.
 // Don't use this type directly, use a constructor function instead.
 //
@@ -77,7 +75,7 @@ func (client *ServiceClient) filterBlobsCreateRequest(ctx context.Context, filte
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -145,7 +143,7 @@ func (client *ServiceClient) getAccountInfoCreateRequest(ctx context.Context, op
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -222,7 +220,7 @@ func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, opt
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -292,7 +290,7 @@ func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, opt
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -364,7 +362,7 @@ func (client *ServiceClient) getUserDelegationKeyCreateRequest(ctx context.Conte
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	req.Raw().Header["Content-Type"] = []string{"application/xml"}
 	if err := runtime.MarshalAsXML(req, keyInfo); err != nil {
 		return nil, err
@@ -461,7 +459,7 @@ func (client *ServiceClient) listContainersSegmentCreateRequest(ctx context.Cont
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	return req, nil
 }
 
@@ -531,7 +529,7 @@ func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, sto
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	req.Raw().Header["Content-Type"] = []string{"application/xml"}
 	if err := runtime.MarshalAsXML(req, storageServiceProperties); err != nil {
 		return nil, err
@@ -604,7 +602,7 @@ func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, conte
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["x-ms-version"] = []string{defaultServiceClientVersion}
+	req.Raw().Header["x-ms-version"] = []string{version20260606}
 	if err := req.SetBody(body, contentType); err != nil {
 		return nil, err
 	}

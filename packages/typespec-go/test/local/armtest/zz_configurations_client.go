@@ -17,8 +17,6 @@ import (
 	"strings"
 )
 
-const defaultConfigurationsClientVersion string = "2025-01-01"
-
 // ConfigurationsClient contains the methods for the Configurations group.
 // Don't use this type directly, use NewConfigurationsClient() instead.
 //
@@ -92,7 +90,7 @@ func (client *ConfigurationsClient) getContentCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultConfigurationsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -155,7 +153,7 @@ func (client *ConfigurationsClient) getStreamingContentCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultConfigurationsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
@@ -218,7 +216,7 @@ func (client *ConfigurationsClient) putStreamingContentCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", defaultConfigurationsClientVersion)
+	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
 	if err := req.SetBody(body, "application/octet-stream"); err != nil {
