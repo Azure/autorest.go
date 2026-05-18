@@ -136,7 +136,11 @@ export type ClientOptionKind = (typeof clientOptionKinds)[number];
  * @param program the tsp Program currently in scope, used to report warning diagnostics for unhandled key/value pairs
  * @returns the value of the client option if found, otherwise undefined
  */
-export function getClientOption<T extends boolean | string>(option: ClientOptionKind, src: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkModelType, program: tsp.Program): T | undefined {
+export function getClientOption<T extends boolean | string>(
+  option: ClientOptionKind,
+  src: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkModelType,
+  program: tsp.Program,
+): T | undefined {
   const clientOptions = src.decorators.filter((decorator) => decorator.name === 'Azure.ClientGenerator.Core.@clientOption');
   for (const clientOption of clientOptions) {
     const optionName = <string>clientOption.arguments['name'];
