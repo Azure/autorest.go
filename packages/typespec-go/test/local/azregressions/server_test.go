@@ -74,8 +74,7 @@ func TestGetIntegerFake(t *testing.T) {
 			Transport: fake.NewServerTransport(&fake.Server{
 				GetInteger: func(_ context.Context, _ *azregressions.ClientGetIntegerOptions) (resp azfake.Responder[azregressions.ClientGetIntegerResponse], errResp azfake.ErrorResponder) {
 					resp.SetResponse(http.StatusOK, azregressions.ClientGetIntegerResponse{
-						ContentType: to.Ptr("text/plain; charset=utf-8"),
-						Value:       to.Ptr(expected),
+						Value: to.Ptr(expected),
 					}, nil)
 					return
 				},
@@ -88,8 +87,6 @@ func TestGetIntegerFake(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, result.Value)
 	require.Equal(t, expected, *result.Value)
-	require.NotNil(t, result.ContentType)
-	require.Equal(t, "text/plain; charset=utf-8", *result.ContentType)
 }
 
 // TestDoubleDecodeQueryParam verifies that query parameter values containing
