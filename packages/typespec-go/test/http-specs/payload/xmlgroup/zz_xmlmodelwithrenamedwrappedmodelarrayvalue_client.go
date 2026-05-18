@@ -59,9 +59,6 @@ func (client *XMLModelWithRenamedWrappedModelArrayValueClient) getCreateRequest(
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithRenamedWrappedModelArrayValueClient) getHandleResponse(resp *http.Response) (XMLModelWithRenamedWrappedModelArrayValueClientGetResponse, error) {
 	result := XMLModelWithRenamedWrappedModelArrayValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithRenamedWrappedModelArray); err != nil {
 		return XMLModelWithRenamedWrappedModelArrayValueClientGetResponse{}, err
 	}

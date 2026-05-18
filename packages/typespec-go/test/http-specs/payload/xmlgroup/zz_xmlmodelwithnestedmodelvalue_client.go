@@ -59,9 +59,6 @@ func (client *XMLModelWithNestedModelValueClient) getCreateRequest(ctx context.C
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithNestedModelValueClient) getHandleResponse(resp *http.Response) (XMLModelWithNestedModelValueClientGetResponse, error) {
 	result := XMLModelWithNestedModelValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithNestedModel); err != nil {
 		return XMLModelWithNestedModelValueClientGetResponse{}, err
 	}

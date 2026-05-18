@@ -6,14 +6,12 @@ package extensiblegroup
 
 // ExtensibleStringClientGetKnownValueResponse contains the response from method ExtensibleStringClient.GetKnownValue.
 type ExtensibleStringClientGetKnownValueResponse struct {
-	ContentType *string
-	Value       *DaysOfWeekExtensibleEnum
+	Value *DaysOfWeekExtensibleEnum
 }
 
 // ExtensibleStringClientGetUnknownValueResponse contains the response from method ExtensibleStringClient.GetUnknownValue.
 type ExtensibleStringClientGetUnknownValueResponse struct {
-	ContentType *string
-	Value       *DaysOfWeekExtensibleEnum
+	Value *DaysOfWeekExtensibleEnum
 }
 
 // ExtensibleStringClientPutKnownValueResponse contains the response from method ExtensibleStringClient.PutKnownValue.

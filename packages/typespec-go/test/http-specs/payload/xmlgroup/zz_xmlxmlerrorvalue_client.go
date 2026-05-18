@@ -58,9 +58,6 @@ func (client *XMLXMLErrorValueClient) getCreateRequest(ctx context.Context, _ *X
 // getHandleResponse handles the Get response.
 func (client *XMLXMLErrorValueClient) getHandleResponse(resp *http.Response) (XMLXMLErrorValueClientGetResponse, error) {
 	result := XMLXMLErrorValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.SimpleModel); err != nil {
 		return XMLXMLErrorValueClientGetResponse{}, err
 	}

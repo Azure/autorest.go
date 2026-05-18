@@ -4,6 +4,12 @@
 
 package azclientoption
 
+// ClientPreserveContentTypeHeaderResponse contains the response from method Client.PreserveContentTypeHeader.
+type ClientPreserveContentTypeHeaderResponse struct {
+	ContentType *string
+	Value       *string
+}
+
 // RenamedResponse contains the response from method Client.CustomFieldName.
 type RenamedResponse struct {
 	Users []*Person

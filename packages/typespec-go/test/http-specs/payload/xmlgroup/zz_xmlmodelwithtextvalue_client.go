@@ -59,9 +59,6 @@ func (client *XMLModelWithTextValueClient) getCreateRequest(ctx context.Context,
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithTextValueClient) getHandleResponse(resp *http.Response) (XMLModelWithTextValueClientGetResponse, error) {
 	result := XMLModelWithTextValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithText); err != nil {
 		return XMLModelWithTextValueClientGetResponse{}, err
 	}

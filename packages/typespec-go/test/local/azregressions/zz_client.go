@@ -289,9 +289,6 @@ func (client *Client) getBoolCreateRequest(ctx context.Context, _ *ClientGetBool
 // getBoolHandleResponse handles the GetBool response.
 func (client *Client) getBoolHandleResponse(resp *http.Response) (ClientGetBoolResponse, error) {
 	result := ClientGetBoolResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return ClientGetBoolResponse{}, err
@@ -389,9 +386,6 @@ func (client *Client) getFloatCreateRequest(ctx context.Context, _ *ClientGetFlo
 // getFloatHandleResponse handles the GetFloat response.
 func (client *Client) getFloatHandleResponse(resp *http.Response) (ClientGetFloatResponse, error) {
 	result := ClientGetFloatResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return ClientGetFloatResponse{}, err
@@ -443,9 +437,6 @@ func (client *Client) getIntegerCreateRequest(ctx context.Context, _ *ClientGetI
 // getIntegerHandleResponse handles the GetInteger response.
 func (client *Client) getIntegerHandleResponse(resp *http.Response) (ClientGetIntegerResponse, error) {
 	result := ClientGetIntegerResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return ClientGetIntegerResponse{}, err
@@ -497,9 +488,6 @@ func (client *Client) getQueueCreateRequest(ctx context.Context, _ *ClientGetQue
 // getQueueHandleResponse handles the GetQueue response.
 func (client *Client) getQueueHandleResponse(resp *http.Response) (ClientGetQueueResponse, error) {
 	result := ClientGetQueueResponse{}
-	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.QueueItem); err != nil {
 		return ClientGetQueueResponse{}, err
 	}
@@ -546,9 +534,6 @@ func (client *Client) getXMLOneCreateRequest(ctx context.Context, _ *ClientGetXM
 // getXMLOneHandleResponse handles the GetXMLOne response.
 func (client *Client) getXMLOneHandleResponse(resp *http.Response) (ClientGetXMLOneResponse, error) {
 	result := ClientGetXMLOneResponse{}
-	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
 		return ClientGetXMLOneResponse{}, err
 	}
@@ -594,9 +579,6 @@ func (client *Client) getXMLTwoCreateRequest(ctx context.Context, _ *ClientGetXM
 // getXMLTwoHandleResponse handles the GetXMLTwo response.
 func (client *Client) getXMLTwoHandleResponse(resp *http.Response) (ClientGetXMLTwoResponse, error) {
 	result := ClientGetXMLTwoResponse{}
-	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
 		return ClientGetXMLTwoResponse{}, err
 	}

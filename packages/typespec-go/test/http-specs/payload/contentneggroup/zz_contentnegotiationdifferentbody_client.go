@@ -59,9 +59,6 @@ func (client *ContentNegotiationDifferentBodyClient) getAvatarAsJSONCreateReques
 // getAvatarAsJSONHandleResponse handles the GetAvatarAsJSON response.
 func (client *ContentNegotiationDifferentBodyClient) getAvatarAsJSONHandleResponse(resp *http.Response) (ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse, error) {
 	result := ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PNGImageAsJSON); err != nil {
 		return ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse{}, err
 	}

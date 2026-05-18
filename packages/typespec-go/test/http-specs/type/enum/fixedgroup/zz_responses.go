@@ -6,8 +6,7 @@ package fixedgroup
 
 // FixedStringClientGetKnownValueResponse contains the response from method FixedStringClient.GetKnownValue.
 type FixedStringClientGetKnownValueResponse struct {
-	ContentType *string
-	Value       *DaysOfWeekEnum
+	Value *DaysOfWeekEnum
 }
 
 // FixedStringClientPutKnownValueResponse contains the response from method FixedStringClient.PutKnownValue.

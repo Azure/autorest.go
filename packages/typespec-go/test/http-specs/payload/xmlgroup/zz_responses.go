@@ -8,7 +8,6 @@ package xmlgroup
 type XMLModelWithArrayOfModelValueClientGetResponse struct {
 	// §4.1 — Contains an array of models.
 	ModelWithArrayOfModel
-	ContentType *string
 }
 
 // XMLModelWithArrayOfModelValueClientPutResponse contains the response from method XMLModelWithArrayOfModelValueClient.Put.
@@ -20,7 +19,6 @@ type XMLModelWithArrayOfModelValueClientPutResponse struct {
 type XMLModelWithAttributesValueClientGetResponse struct {
 	// §5.1 — Contains fields that are XML attributes.
 	ModelWithAttributes
-	ContentType *string
 }
 
 // XMLModelWithAttributesValueClientPutResponse contains the response from method XMLModelWithAttributesValueClient.Put.
@@ -32,7 +30,6 @@ type XMLModelWithAttributesValueClientPutResponse struct {
 type XMLModelWithDatetimeValueClientGetResponse struct {
 	// Contains datetime properties with different encodings.
 	ModelWithDatetime
-	ContentType *string
 }
 
 // XMLModelWithDatetimeValueClientPutResponse contains the response from method XMLModelWithDatetimeValueClient.Put.
@@ -44,7 +41,6 @@ type XMLModelWithDatetimeValueClientPutResponse struct {
 type XMLModelWithDictionaryValueClientGetResponse struct {
 	// Contains a dictionary of key value pairs.
 	ModelWithDictionary
-	ContentType *string
 }
 
 // XMLModelWithDictionaryValueClientPutResponse contains the response from method XMLModelWithDictionaryValueClient.Put.
@@ -56,7 +52,6 @@ type XMLModelWithDictionaryValueClientPutResponse struct {
 type XMLModelWithEmptyArrayValueClientGetResponse struct {
 	// Contains an array of models that's supposed to be sent/received as an empty XML element.
 	ModelWithEmptyArray
-	ContentType *string
 }
 
 // XMLModelWithEmptyArrayValueClientPutResponse contains the response from method XMLModelWithEmptyArrayValueClient.Put.
@@ -68,7 +63,6 @@ type XMLModelWithEmptyArrayValueClientPutResponse struct {
 type XMLModelWithEncodedNamesValueClientGetResponse struct {
 	// Uses encodedName instead of Xml.Name which is functionally equivalent.
 	ModelWithEncodedNames
-	ContentType *string
 }
 
 // XMLModelWithEncodedNamesValueClientPutResponse contains the response from method XMLModelWithEncodedNamesValueClient.Put.
@@ -80,7 +74,6 @@ type XMLModelWithEncodedNamesValueClientPutResponse struct {
 type XMLModelWithEnumValueClientGetResponse struct {
 	// Contains a single property with an enum value.
 	ModelWithEnum
-	ContentType *string
 }
 
 // XMLModelWithEnumValueClientPutResponse contains the response from method XMLModelWithEnumValueClient.Put.
@@ -92,7 +85,6 @@ type XMLModelWithEnumValueClientPutResponse struct {
 type XMLModelWithNamespaceOnPropertiesValueClientGetResponse struct {
 	// §6.2, §7.2 — Contains fields with different XML namespaces on individual properties.
 	ModelWithNamespaceOnProperties
-	ContentType *string
 }
 
 // XMLModelWithNamespaceOnPropertiesValueClientPutResponse contains the response from method XMLModelWithNamespaceOnPropertiesValueClient.Put.
@@ -104,7 +96,6 @@ type XMLModelWithNamespaceOnPropertiesValueClientPutResponse struct {
 type XMLModelWithNamespaceValueClientGetResponse struct {
 	// §6.1, §7.1 — Contains fields with XML namespace on the model.
 	ModelWithNamespace
-	ContentType *string
 }
 
 // XMLModelWithNamespaceValueClientPutResponse contains the response from method XMLModelWithNamespaceValueClient.Put.
@@ -116,7 +107,6 @@ type XMLModelWithNamespaceValueClientPutResponse struct {
 type XMLModelWithNestedModelValueClientGetResponse struct {
 	// §2.1 — Contains a property that references another model.
 	ModelWithNestedModel
-	ContentType *string
 }
 
 // XMLModelWithNestedModelValueClientPutResponse contains the response from method XMLModelWithNestedModelValueClient.Put.
@@ -128,7 +118,6 @@ type XMLModelWithNestedModelValueClientPutResponse struct {
 type XMLModelWithOptionalFieldValueClientGetResponse struct {
 	// Contains an optional field.
 	ModelWithOptionalField
-	ContentType *string
 }
 
 // XMLModelWithOptionalFieldValueClientPutResponse contains the response from method XMLModelWithOptionalFieldValueClient.Put.
@@ -140,7 +129,6 @@ type XMLModelWithOptionalFieldValueClientPutResponse struct {
 type XMLModelWithRenamedArraysValueClientGetResponse struct {
 	// §3.3, §3.4 — Contains fields of wrapped and unwrapped arrays of primitive types that have different XML representations.
 	ModelWithRenamedArrays
-	ContentType *string
 }
 
 // XMLModelWithRenamedArraysValueClientPutResponse contains the response from method XMLModelWithRenamedArraysValueClient.Put.
@@ -152,7 +140,6 @@ type XMLModelWithRenamedArraysValueClientPutResponse struct {
 type XMLModelWithRenamedAttributeValueClientGetResponse struct {
 	// §5.2 — Contains a renamed XML attribute.
 	ModelWithRenamedAttribute
-	ContentType *string
 }
 
 // XMLModelWithRenamedAttributeValueClientPutResponse contains the response from method XMLModelWithRenamedAttributeValueClient.Put.
@@ -164,7 +151,6 @@ type XMLModelWithRenamedAttributeValueClientPutResponse struct {
 type XMLModelWithRenamedFieldsValueClientGetResponse struct {
 	// §1.3, §2.3 — Contains fields of the same type that have different XML representation.
 	ModelWithRenamedFields
-	ContentType *string
 }
 
 // XMLModelWithRenamedFieldsValueClientPutResponse contains the response from method XMLModelWithRenamedFieldsValueClient.Put.
@@ -176,7 +162,6 @@ type XMLModelWithRenamedFieldsValueClientPutResponse struct {
 type XMLModelWithRenamedNestedModelValueClientGetResponse struct {
 	// §2.2 — Contains a property whose type has
 	ModelWithRenamedNestedModel
-	ContentType *string
 }
 
 // XMLModelWithRenamedNestedModelValueClientPutResponse contains the response from method XMLModelWithRenamedNestedModelValueClient.Put.
@@ -188,7 +173,6 @@ type XMLModelWithRenamedNestedModelValueClientPutResponse struct {
 type XMLModelWithRenamedPropertyValueClientGetResponse struct {
 	// §1.2 — Contains a scalar property with a custom XML name.
 	ModelWithRenamedProperty
-	ContentType *string
 }
 
 // XMLModelWithRenamedPropertyValueClientPutResponse contains the response from method XMLModelWithRenamedPropertyValueClient.Put.
@@ -200,7 +184,6 @@ type XMLModelWithRenamedPropertyValueClientPutResponse struct {
 type XMLModelWithRenamedUnwrappedModelArrayValueClientGetResponse struct {
 	// §4.4 — Contains an unwrapped array of models with a custom item name.
 	ModelWithRenamedUnwrappedModelArray
-	ContentType *string
 }
 
 // XMLModelWithRenamedUnwrappedModelArrayValueClientPutResponse contains the response from method XMLModelWithRenamedUnwrappedModelArrayValueClient.Put.
@@ -212,7 +195,6 @@ type XMLModelWithRenamedUnwrappedModelArrayValueClientPutResponse struct {
 type XMLModelWithRenamedWrappedAndItemModelArrayValueClientGetResponse struct {
 	// §4.5 — Contains a wrapped array of models with custom wrapper and item names.
 	ModelWithRenamedWrappedAndItemModelArray
-	ContentType *string
 }
 
 // XMLModelWithRenamedWrappedAndItemModelArrayValueClientPutResponse contains the response from method XMLModelWithRenamedWrappedAndItemModelArrayValueClient.Put.
@@ -224,7 +206,6 @@ type XMLModelWithRenamedWrappedAndItemModelArrayValueClientPutResponse struct {
 type XMLModelWithRenamedWrappedModelArrayValueClientGetResponse struct {
 	// §4.3 — Contains a wrapped array of models with a custom wrapper name.
 	ModelWithRenamedWrappedModelArray
-	ContentType *string
 }
 
 // XMLModelWithRenamedWrappedModelArrayValueClientPutResponse contains the response from method XMLModelWithRenamedWrappedModelArrayValueClient.Put.
@@ -236,7 +217,6 @@ type XMLModelWithRenamedWrappedModelArrayValueClientPutResponse struct {
 type XMLModelWithSimpleArraysValueClientGetResponse struct {
 	// §3.1 — Contains fields of arrays of primitive types.
 	ModelWithSimpleArrays
-	ContentType *string
 }
 
 // XMLModelWithSimpleArraysValueClientPutResponse contains the response from method XMLModelWithSimpleArraysValueClient.Put.
@@ -248,7 +228,6 @@ type XMLModelWithSimpleArraysValueClientPutResponse struct {
 type XMLModelWithTextValueClientGetResponse struct {
 	// §8.1 — Contains an attribute and text.
 	ModelWithText
-	ContentType *string
 }
 
 // XMLModelWithTextValueClientPutResponse contains the response from method XMLModelWithTextValueClient.Put.
@@ -260,7 +239,6 @@ type XMLModelWithTextValueClientPutResponse struct {
 type XMLModelWithUnwrappedArrayValueClientGetResponse struct {
 	// §3.2 — Contains fields of wrapped and unwrapped arrays of primitive types.
 	ModelWithUnwrappedArray
-	ContentType *string
 }
 
 // XMLModelWithUnwrappedArrayValueClientPutResponse contains the response from method XMLModelWithUnwrappedArrayValueClient.Put.
@@ -272,7 +250,6 @@ type XMLModelWithUnwrappedArrayValueClientPutResponse struct {
 type XMLModelWithUnwrappedModelArrayValueClientGetResponse struct {
 	// §4.2 — Contains an unwrapped array of models.
 	ModelWithUnwrappedModelArray
-	ContentType *string
 }
 
 // XMLModelWithUnwrappedModelArrayValueClientPutResponse contains the response from method XMLModelWithUnwrappedModelArrayValueClient.Put.
@@ -284,7 +261,6 @@ type XMLModelWithUnwrappedModelArrayValueClientPutResponse struct {
 type XMLModelWithWrappedPrimitiveCustomItemNamesValueClientGetResponse struct {
 	// §3.5 — Contains a wrapped primitive array with custom wrapper and item names.
 	ModelWithWrappedPrimitiveCustomItemNames
-	ContentType *string
 }
 
 // XMLModelWithWrappedPrimitiveCustomItemNamesValueClientPutResponse contains the response from method XMLModelWithWrappedPrimitiveCustomItemNamesValueClient.Put.
@@ -296,7 +272,6 @@ type XMLModelWithWrappedPrimitiveCustomItemNamesValueClientPutResponse struct {
 type XMLSimpleModelValueClientGetResponse struct {
 	// §1.1 — Contains fields of primitive types.
 	SimpleModel
-	ContentType *string
 }
 
 // XMLSimpleModelValueClientPutResponse contains the response from method XMLSimpleModelValueClient.Put.
@@ -308,5 +283,4 @@ type XMLSimpleModelValueClientPutResponse struct {
 type XMLXMLErrorValueClientGetResponse struct {
 	// §1.1 — Contains fields of primitive types.
 	SimpleModel
-	ContentType *string
 }

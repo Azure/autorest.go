@@ -58,9 +58,6 @@ func (client *ScalarStringClient) getCreateRequest(ctx context.Context, _ *Scala
 // getHandleResponse handles the Get response.
 func (client *ScalarStringClient) getHandleResponse(resp *http.Response) (ScalarStringClientGetResponse, error) {
 	result := ScalarStringClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ScalarStringClientGetResponse{}, err
 	}

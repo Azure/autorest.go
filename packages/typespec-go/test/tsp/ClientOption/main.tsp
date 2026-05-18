@@ -25,6 +25,16 @@ model Person {
 @route("/rename-monomorphic-field")
 op customFieldName(): Array<Person>;
 
+@get
+@route("/preserve-content-type-header")
+op preserveContentTypeHeader(): {
+  @header
+  contentType: "application/json";
+
+  @body
+  body: string;
+};
+
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "response has custom field name Users"
 @@clientOption(customFieldName, "monomorphicResponseFieldName", "Users", "go");
 
@@ -33,3 +43,6 @@ op customFieldName(): Array<Person>;
 
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "omit serde methods for this type"
 @@clientOption(Person, "omitSerdeMethods", "all", "go");
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "response envelope retains content-type header"
+@@clientOption(preserveContentTypeHeader, "preserveContentTypeHeader", true, "go");

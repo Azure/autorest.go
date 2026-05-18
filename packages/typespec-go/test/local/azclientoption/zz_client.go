@@ -86,3 +86,52 @@ func (client *Client) customFieldNameHandleResponse(resp *http.Response) (Rename
 	}
 	return result, nil
 }
+
+// PreserveContentTypeHeader -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientPreserveContentTypeHeaderOptions contains the optional parameters for the Client.PreserveContentTypeHeader
+//     method.
+func (client *Client) PreserveContentTypeHeader(ctx context.Context, options *ClientPreserveContentTypeHeaderOptions) (ClientPreserveContentTypeHeaderResponse, error) {
+	var err error
+	const operationName = "Client.PreserveContentTypeHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.preserveContentTypeHeaderCreateRequest(ctx, options)
+	if err != nil {
+		return ClientPreserveContentTypeHeaderResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientPreserveContentTypeHeaderResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientPreserveContentTypeHeaderResponse{}, err
+	}
+	resp, err := client.preserveContentTypeHeaderHandleResponse(httpResp)
+	return resp, err
+}
+
+// preserveContentTypeHeaderCreateRequest creates the PreserveContentTypeHeader request.
+func (client *Client) preserveContentTypeHeaderCreateRequest(ctx context.Context, _ *ClientPreserveContentTypeHeaderOptions) (*policy.Request, error) {
+	urlPath := "/preserve-content-type-header"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// preserveContentTypeHeaderHandleResponse handles the PreserveContentTypeHeader response.
+func (client *Client) preserveContentTypeHeaderHandleResponse(resp *http.Response) (ClientPreserveContentTypeHeaderResponse, error) {
+	result := ClientPreserveContentTypeHeaderResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+		return ClientPreserveContentTypeHeaderResponse{}, err
+	}
+	return result, nil
+}

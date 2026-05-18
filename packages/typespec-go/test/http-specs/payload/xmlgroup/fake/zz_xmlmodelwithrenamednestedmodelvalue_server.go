@@ -97,9 +97,6 @@ func (x *XMLModelWithRenamedNestedModelValueServerTransport) dispatchGet(req *ht
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("content-type", "application/xml")
-	}
 	return resp, nil
 }
 

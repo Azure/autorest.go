@@ -93,14 +93,12 @@ type BytesRequestBodyClientOctetStreamResponse struct {
 
 // BytesResponseBodyClientBase64Response contains the response from method BytesResponseBodyClient.Base64.
 type BytesResponseBodyClientBase64Response struct {
-	ContentType *string
-	Value       []byte
+	Value []byte
 }
 
 // BytesResponseBodyClientBase64URLResponse contains the response from method BytesResponseBodyClient.Base64URL.
 type BytesResponseBodyClientBase64URLResponse struct {
-	ContentType *string
-	Value       []byte
+	Value []byte
 }
 
 // BytesResponseBodyClientCustomContentTypeResponse contains the response from method BytesResponseBodyClient.CustomContentType.

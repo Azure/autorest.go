@@ -1272,7 +1272,7 @@ export class ClientAdapter {
     if (sdkMethod.access === 'internal') {
       respEnvName = uncapitalize(respEnvName);
     }
-    const customName = helpers.getClientOption('responseEnvelopeName', sdkMethod, this.ta.ctx.program);
+    const customName = helpers.getClientOption<string>('responseEnvelopeName', sdkMethod, this.ta.ctx.program);
     if (customName) {
       respEnvName = customName;
     }
@@ -1280,6 +1280,11 @@ export class ClientAdapter {
     this.ta.getPkg().responseEnvelopes.push(respEnv);
 
     const pageableRespHeadersMap: RespHeadersMapForPageable = new Map();
+
+    // we defer adding a literal content-type header to the response envelope
+    // until we know if the response is modeled or not. for modeled responses
+    // we elide the content-type header as it's not useful.
+    let literalContentTypeHeader: go.HeaderScalarResponse | undefined;
 
     // add any headers
     const addedHeaders = new Set<string>();
@@ -1289,6 +1294,7 @@ export class ClientAdapter {
           if (addedHeaders.has(httpHeader.serializedName)) {
             continue;
           }
+
           let headerResp: go.HeaderScalarResponse | go.HeaderMapResponse;
           if (httpHeader.serializedName === 'x-ms-meta' || httpHeader.serializedName === 'x-ms-or') {
             const type = this.ta.getWireType(httpHeader.type, true, false);
@@ -1310,7 +1316,13 @@ export class ClientAdapter {
 
           headerResp.docs.summary = httpHeader.summary;
           headerResp.docs.description = httpHeader.doc;
-          respEnv.headers.push(headerResp);
+
+          const preserveHeader = helpers.getClientOption<boolean>('preserveContentTypeHeader', sdkMethod, this.ta.ctx.program);
+          if (httpHeader.serializedName.match(/^content-type$/i) && headerResp.type.kind === 'literal' && preserveHeader !== true) {
+            literalContentTypeHeader = headerResp as go.HeaderScalarResponse;
+          } else {
+            respEnv.headers.push(headerResp);
+          }
           addedHeaders.add(httpHeader.serializedName);
         }
       }
@@ -1325,6 +1337,9 @@ export class ClientAdapter {
     }
 
     if (!sdkResponseType) {
+      if (literalContentTypeHeader) {
+        respEnv.headers.push(literalContentTypeHeader);
+      }
       // method doesn't return a type, so we're done
       return {
         respEnv: respEnv,
@@ -1380,6 +1395,9 @@ export class ClientAdapter {
     }
 
     if (contentType === 'binary') {
+      if (literalContentTypeHeader) {
+        respEnv.headers.push(literalContentTypeHeader);
+      }
       respEnv.result = new go.BinaryResult('Body');
       respEnv.result.docs.summary = 'Body contains the streaming response.';
       return {
@@ -1458,7 +1476,7 @@ export class ClientAdapter {
         }
 
         // the monomorphicResponseFieldName decorator always wins when present
-        const customName = helpers.getClientOption('monomorphicResponseFieldName', sdkMethod, this.ta.ctx.program);
+        const customName = helpers.getClientOption<string>('monomorphicResponseFieldName', sdkMethod, this.ta.ctx.program);
         if (customName) {
           fieldName = customName;
         }

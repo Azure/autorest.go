@@ -97,9 +97,6 @@ func (x *XMLModelWithEmptyArrayValueServerTransport) dispatchGet(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("content-type", "application/xml")
-	}
 	return resp, nil
 }
 

@@ -59,9 +59,6 @@ func (client *BytesResponseBodyClient) base64CreateRequest(ctx context.Context, 
 // base64HandleResponse handles the Base64 response.
 func (client *BytesResponseBodyClient) base64HandleResponse(resp *http.Response) (BytesResponseBodyClientBase64Response, error) {
 	result := BytesResponseBodyClientBase64Response{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
 		return BytesResponseBodyClientBase64Response{}, err
 	}
@@ -108,9 +105,6 @@ func (client *BytesResponseBodyClient) base64URLCreateRequest(ctx context.Contex
 // base64URLHandleResponse handles the Base64URL response.
 func (client *BytesResponseBodyClient) base64URLHandleResponse(resp *http.Response) (BytesResponseBodyClientBase64URLResponse, error) {
 	result := BytesResponseBodyClientBase64URLResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
 		return BytesResponseBodyClientBase64URLResponse{}, err
 	}

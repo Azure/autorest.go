@@ -115,9 +115,6 @@ func (b *BytesResponseBodyServerTransport) dispatchBase64(req *http.Request) (*h
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("content-type", "application/json")
-	}
 	return resp, nil
 }
 
@@ -136,9 +133,6 @@ func (b *BytesResponseBodyServerTransport) dispatchBase64URL(req *http.Request) 
 	resp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).Value, runtime.Base64URLFormat, req)
 	if err != nil {
 		return nil, err
-	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("content-type", "application/json")
 	}
 	return resp, nil
 }

@@ -72,9 +72,6 @@ func (client *PageableXMLPaginationClient) listWithContinuationCreateRequest(ctx
 // listWithContinuationHandleResponse handles the ListWithContinuation response.
 func (client *PageableXMLPaginationClient) listWithContinuationHandleResponse(resp *http.Response) (PageableXMLPaginationClientListWithContinuationResponse, error) {
 	result := PageableXMLPaginationClientListWithContinuationResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.XMLPetListResult); err != nil {
 		return PageableXMLPaginationClientListWithContinuationResponse{}, err
 	}
@@ -120,9 +117,6 @@ func (client *PageableXMLPaginationClient) listWithNextLinkCreateRequest(ctx con
 // listWithNextLinkHandleResponse handles the ListWithNextLink response.
 func (client *PageableXMLPaginationClient) listWithNextLinkHandleResponse(resp *http.Response) (PageableXMLPaginationClientListWithNextLinkResponse, error) {
 	result := PageableXMLPaginationClientListWithNextLinkResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.XMLPetListResultWithNextLink); err != nil {
 		return PageableXMLPaginationClientListWithNextLinkResponse{}, err
 	}
