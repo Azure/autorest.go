@@ -59,9 +59,6 @@ func (client *XMLModelWithRenamedArraysValueClient) getCreateRequest(ctx context
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithRenamedArraysValueClient) getHandleResponse(resp *http.Response) (XMLModelWithRenamedArraysValueClientGetResponse, error) {
 	result := XMLModelWithRenamedArraysValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithRenamedArrays); err != nil {
 		return XMLModelWithRenamedArraysValueClientGetResponse{}, err
 	}

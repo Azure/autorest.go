@@ -35,8 +35,7 @@ type ClientForceRequiredBodyPutResponse struct {
 
 // ClientGetBoolResponse contains the response from method Client.GetBool.
 type ClientGetBoolResponse struct {
-	ContentType *string
-	Value       *bool
+	Value *bool
 }
 
 // ClientGetDiscriminatedNoSubTypesResponse contains the response from method Client.GetDiscriminatedNoSubTypes.
@@ -47,32 +46,27 @@ type ClientGetDiscriminatedNoSubTypesResponse struct {
 
 // ClientGetFloatResponse contains the response from method Client.GetFloat.
 type ClientGetFloatResponse struct {
-	ContentType *string
-	Value       *float64
+	Value *float64
 }
 
 // ClientGetIntegerResponse contains the response from method Client.GetInteger.
 type ClientGetIntegerResponse struct {
-	ContentType *string
-	Value       *int64
+	Value *int64
 }
 
 // ClientGetQueueResponse contains the response from method Client.GetQueue.
 type ClientGetQueueResponse struct {
 	QueueItem
-	ContentType *string
 }
 
 // ClientGetXMLOneResponse contains the response from method Client.GetXMLOne.
 type ClientGetXMLOneResponse struct {
-	ContentType       *string
 	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 }
 
 // ClientGetXMLTwoResponse contains the response from method Client.GetXMLTwo.
 type ClientGetXMLTwoResponse struct {
-	ContentType *string
-	Messages    []*DequeuedMessage `xml:"QueueMessage"`
+	Messages []*DequeuedMessage `xml:"QueueMessage"`
 }
 
 // ClientOptionalBinaryBodyResponse contains the response from method Client.OptionalBinaryBody.

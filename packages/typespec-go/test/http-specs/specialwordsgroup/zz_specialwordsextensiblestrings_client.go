@@ -63,9 +63,6 @@ func (client *SpecialWordsExtensibleStringsClient) putExtensibleStringValueCreat
 // putExtensibleStringValueHandleResponse handles the PutExtensibleStringValue response.
 func (client *SpecialWordsExtensibleStringsClient) putExtensibleStringValueHandleResponse(resp *http.Response) (SpecialWordsExtensibleStringsClientPutExtensibleStringValueResponse, error) {
 	result := SpecialWordsExtensibleStringsClientPutExtensibleStringValueResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return SpecialWordsExtensibleStringsClientPutExtensibleStringValueResponse{}, err
 	}

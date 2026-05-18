@@ -59,9 +59,6 @@ func (client *XMLModelWithEnumValueClient) getCreateRequest(ctx context.Context,
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithEnumValueClient) getHandleResponse(resp *http.Response) (XMLModelWithEnumValueClientGetResponse, error) {
 	result := XMLModelWithEnumValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithEnum); err != nil {
 		return XMLModelWithEnumValueClientGetResponse{}, err
 	}

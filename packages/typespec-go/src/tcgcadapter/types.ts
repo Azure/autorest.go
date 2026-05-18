@@ -579,7 +579,7 @@ export class TypeAdapter {
     }
 
     let omitSerde = false;
-    const omitValue = helpers.getClientOption('omitSerdeMethods', model, this.ctx.program);
+    const omitValue = helpers.getClientOption<string>('omitSerdeMethods', model, this.ctx.program);
     if (omitValue) {
       switch (omitValue) {
         case 'all':

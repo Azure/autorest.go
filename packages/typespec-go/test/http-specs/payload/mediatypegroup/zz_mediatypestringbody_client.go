@@ -61,9 +61,6 @@ func (client *MediaTypeStringBodyClient) getAsJSONCreateRequest(ctx context.Cont
 // getAsJSONHandleResponse handles the GetAsJSON response.
 func (client *MediaTypeStringBodyClient) getAsJSONHandleResponse(resp *http.Response) (MediaTypeStringBodyClientGetAsJSONResponse, error) {
 	result := MediaTypeStringBodyClientGetAsJSONResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return MediaTypeStringBodyClientGetAsJSONResponse{}, err
 	}
@@ -110,9 +107,6 @@ func (client *MediaTypeStringBodyClient) getAsTextCreateRequest(ctx context.Cont
 // getAsTextHandleResponse handles the GetAsText response.
 func (client *MediaTypeStringBodyClient) getAsTextHandleResponse(resp *http.Response) (MediaTypeStringBodyClientGetAsTextResponse, error) {
 	result := MediaTypeStringBodyClientGetAsTextResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return MediaTypeStringBodyClientGetAsTextResponse{}, err

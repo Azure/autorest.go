@@ -59,9 +59,6 @@ func (client *XMLModelWithEncodedNamesValueClient) getCreateRequest(ctx context.
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithEncodedNamesValueClient) getHandleResponse(resp *http.Response) (XMLModelWithEncodedNamesValueClientGetResponse, error) {
 	result := XMLModelWithEncodedNamesValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithEncodedNames); err != nil {
 		return XMLModelWithEncodedNamesValueClientGetResponse{}, err
 	}

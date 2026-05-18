@@ -329,9 +329,6 @@ func (s *ServerTransport) dispatchGetBool(req *http.Request) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("content-type", "text/plain; charset=utf-8")
-	}
 	return resp, nil
 }
 
@@ -374,9 +371,6 @@ func (s *ServerTransport) dispatchGetFloat(req *http.Request) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("content-type", "text/plain; charset=utf-8")
-	}
 	return resp, nil
 }
 
@@ -400,9 +394,6 @@ func (s *ServerTransport) dispatchGetInteger(req *http.Request) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("content-type", "text/plain; charset=utf-8")
-	}
 	return resp, nil
 }
 
@@ -421,9 +412,6 @@ func (s *ServerTransport) dispatchGetQueue(req *http.Request) (*http.Response, e
 	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr).QueueItem, req)
 	if err != nil {
 		return nil, err
-	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("Content-Type", "application/xml")
 	}
 	return resp, nil
 }
@@ -444,9 +432,6 @@ func (s *ServerTransport) dispatchGetXMLOne(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("Content-Type", "application/xml")
-	}
 	return resp, nil
 }
 
@@ -465,9 +450,6 @@ func (s *ServerTransport) dispatchGetXMLTwo(req *http.Request) (*http.Response, 
 	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr), req)
 	if err != nil {
 		return nil, err
-	}
-	if val := server.GetResponse(respr).ContentType; val != nil {
-		resp.Header.Set("Content-Type", "application/xml")
 	}
 	return resp, nil
 }

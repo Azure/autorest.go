@@ -124,7 +124,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
 }
 
 /** contains the set of client options */
-const clientOptionKinds = ['monomorphicResponseFieldName', 'omitSerdeMethods', 'responseEnvelopeName'] as const;
+const clientOptionKinds = ['monomorphicResponseFieldName', 'omitSerdeMethods', 'preserveContentTypeHeader', 'responseEnvelopeName'] as const;
 export type ClientOptionKind = (typeof clientOptionKinds)[number];
 
 /**
@@ -136,7 +136,11 @@ export type ClientOptionKind = (typeof clientOptionKinds)[number];
  * @param program the tsp Program currently in scope, used to report warning diagnostics for unhandled key/value pairs
  * @returns the value of the client option if found, otherwise undefined
  */
-export function getClientOption(option: ClientOptionKind, src: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkModelType, program: tsp.Program): string | undefined {
+export function getClientOption<T extends boolean | string>(
+  option: ClientOptionKind,
+  src: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkModelType,
+  program: tsp.Program,
+): T | undefined {
   const clientOptions = src.decorators.filter((decorator) => decorator.name === 'Azure.ClientGenerator.Core.@clientOption');
   for (const clientOption of clientOptions) {
     const optionName = <string>clientOption.arguments['name'];
@@ -158,7 +162,7 @@ export function getClientOption(option: ClientOptionKind, src: tcgc.SdkServiceMe
         break;
       default:
         // this branch is currently all method types
-        valid = optionName === 'monomorphicResponseFieldName' || optionName === 'responseEnvelopeName';
+        valid = optionName === 'monomorphicResponseFieldName' || optionName === 'preserveContentTypeHeader' || optionName === 'responseEnvelopeName';
     }
 
     if (!valid) {
@@ -171,7 +175,7 @@ export function getClientOption(option: ClientOptionKind, src: tcgc.SdkServiceMe
       continue;
     }
 
-    const optionValue = <string>clientOption.arguments['value'];
+    const optionValue = <T>clientOption.arguments['value'];
     if (optionName === option) {
       return optionValue;
     }

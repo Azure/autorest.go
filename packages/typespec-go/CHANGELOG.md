@@ -1,5 +1,12 @@
 # Release History
 
+## 0.14.0 (2026-05-18)
+
+### Breaking Changes
+
+* Omit the literal `Content-Type` response header value for modeled responses.
+  * Added `preserveContentTypeHeader` as a supported `@clientOption` to override this behavior per method.
+
 ## 0.13.0 (2026-05-14)
 
 ### Breaking Changes

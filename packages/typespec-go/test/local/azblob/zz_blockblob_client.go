@@ -282,9 +282,6 @@ func (client *BlockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
-	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {

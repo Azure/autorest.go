@@ -8,3 +8,8 @@ package azclientoption
 type ClientCustomFieldNameOptions struct {
 	// placeholder for future optional parameters
 }
+
+// ClientPreserveContentTypeHeaderOptions contains the optional parameters for the Client.PreserveContentTypeHeader method.
+type ClientPreserveContentTypeHeaderOptions struct {
+	// placeholder for future optional parameters
+}

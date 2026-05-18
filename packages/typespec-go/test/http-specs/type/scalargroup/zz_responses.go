@@ -6,8 +6,7 @@ package scalargroup
 
 // ScalarBooleanClientGetResponse contains the response from method ScalarBooleanClient.Get.
 type ScalarBooleanClientGetResponse struct {
-	ContentType *string
-	Value       *bool
+	Value *bool
 }
 
 // ScalarBooleanClientPutResponse contains the response from method ScalarBooleanClient.Put.
@@ -27,8 +26,7 @@ type ScalarDecimal128TypeClientRequestParameterResponse struct {
 
 // ScalarDecimal128TypeClientResponseBodyResponse contains the response from method ScalarDecimal128TypeClient.ResponseBody.
 type ScalarDecimal128TypeClientResponseBodyResponse struct {
-	ContentType *string
-	Value       *float64
+	Value *float64
 }
 
 // ScalarDecimal128VerifyClientPrepareVerifyResponse contains the response from method ScalarDecimal128VerifyClient.PrepareVerify.
@@ -53,8 +51,7 @@ type ScalarDecimalTypeClientRequestParameterResponse struct {
 
 // ScalarDecimalTypeClientResponseBodyResponse contains the response from method ScalarDecimalTypeClient.ResponseBody.
 type ScalarDecimalTypeClientResponseBodyResponse struct {
-	ContentType *string
-	Value       *float64
+	Value *float64
 }
 
 // ScalarDecimalVerifyClientPrepareVerifyResponse contains the response from method ScalarDecimalVerifyClient.PrepareVerify.
@@ -69,8 +66,7 @@ type ScalarDecimalVerifyClientVerifyResponse struct {
 
 // ScalarStringClientGetResponse contains the response from method ScalarStringClient.Get.
 type ScalarStringClientGetResponse struct {
-	ContentType *string
-	Value       *string
+	Value *string
 }
 
 // ScalarStringClientPutResponse contains the response from method ScalarStringClient.Put.
@@ -80,8 +76,7 @@ type ScalarStringClientPutResponse struct {
 
 // ScalarUnknownClientGetResponse contains the response from method ScalarUnknownClient.Get.
 type ScalarUnknownClientGetResponse struct {
-	ContentType *string
-	Interface   any
+	Interface any
 }
 
 // ScalarUnknownClientPutResponse contains the response from method ScalarUnknownClient.Put.

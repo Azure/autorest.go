@@ -59,9 +59,6 @@ func (client *XMLModelWithNamespaceOnPropertiesValueClient) getCreateRequest(ctx
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithNamespaceOnPropertiesValueClient) getHandleResponse(resp *http.Response) (XMLModelWithNamespaceOnPropertiesValueClientGetResponse, error) {
 	result := XMLModelWithNamespaceOnPropertiesValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithNamespaceOnProperties); err != nil {
 		return XMLModelWithNamespaceOnPropertiesValueClientGetResponse{}, err
 	}

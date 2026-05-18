@@ -59,9 +59,6 @@ func (client *XMLModelWithDatetimeValueClient) getCreateRequest(ctx context.Cont
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithDatetimeValueClient) getHandleResponse(resp *http.Response) (XMLModelWithDatetimeValueClientGetResponse, error) {
 	result := XMLModelWithDatetimeValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
-		result.ContentType = &val
-	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithDatetime); err != nil {
 		return XMLModelWithDatetimeValueClientGetResponse{}, err
 	}
