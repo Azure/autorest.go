@@ -13,7 +13,7 @@ import (
 	"sync"
 )
 
-// ServerFactory is a fake server for instances of the armtest.ClientFactory type.
+// ServerFactory is a fake server for instances of the armtestcommonparams.ClientFactory type.
 type ServerFactory struct {
 	// BodyRootsServer contains the fakes for client BodyRootsClient
 	BodyRootsServer BodyRootsServer
@@ -38,7 +38,7 @@ type ServerFactory struct {
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
-// The returned ServerFactoryTransport instance is connected to an instance of armtest.ClientFactory via the
+// The returned ServerFactoryTransport instance is connected to an instance of armtestcommonparams.ClientFactory via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 	return &ServerFactoryTransport{
@@ -46,7 +46,7 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 	}
 }
 
-// ServerFactoryTransport connects instances of armtest.ClientFactory to instances of ServerFactory.
+// ServerFactoryTransport connects instances of armtestcommonparams.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
 	srv                              *ServerFactory

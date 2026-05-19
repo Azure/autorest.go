@@ -217,6 +217,8 @@ generate('azblob', azblob, 'test/local/azblob', ['generate-fakes=false', 'omit-c
 const armtest = pkgRoot + 'test/tsp/Test.Management';
 generate('armtest/v2', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);
 
+generate('armtestcommonparams/v2', armtest, 'test/local/armtestcommonparams', [`examples-directory=${armtest}/examples`, 'generate-samples=true', 'factory-gather-all-params=false']);
+
 const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
 generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
 
