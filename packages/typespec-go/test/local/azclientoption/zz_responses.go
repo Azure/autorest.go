@@ -4,6 +4,11 @@
 
 package azclientoption
 
+// ClientOmitContentTypeHeaderResponse contains the response from method Client.OmitContentTypeHeader.
+type ClientOmitContentTypeHeaderResponse struct {
+	Value *string
+}
+
 // ClientPreserveContentTypeHeaderResponse contains the response from method Client.PreserveContentTypeHeader.
 type ClientPreserveContentTypeHeaderResponse struct {
 	ContentType *string

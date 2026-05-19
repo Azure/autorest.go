@@ -22,6 +22,10 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	CustomFieldName func(ctx context.Context, options *azclientoption.ClientCustomFieldNameOptions) (resp azfake.Responder[azclientoption.RenamedResponse], errResp azfake.ErrorResponder)
 
+	// OmitContentTypeHeader is the fake for method Client.OmitContentTypeHeader
+	// HTTP status codes to indicate success: http.StatusOK
+	OmitContentTypeHeader func(ctx context.Context, options *azclientoption.ClientOmitContentTypeHeaderOptions) (resp azfake.Responder[azclientoption.ClientOmitContentTypeHeaderResponse], errResp azfake.ErrorResponder)
+
 	// PreserveContentTypeHeader is the fake for method Client.PreserveContentTypeHeader
 	// HTTP status codes to indicate success: http.StatusOK
 	PreserveContentTypeHeader func(ctx context.Context, options *azclientoption.ClientPreserveContentTypeHeaderOptions) (resp azfake.Responder[azclientoption.ClientPreserveContentTypeHeaderResponse], errResp azfake.ErrorResponder)
@@ -63,6 +67,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 			switch method {
 			case "Client.CustomFieldName":
 				res.resp, res.err = s.dispatchCustomFieldName(req)
+			case "Client.OmitContentTypeHeader":
+				res.resp, res.err = s.dispatchOmitContentTypeHeader(req)
 			case "Client.PreserveContentTypeHeader":
 				res.resp, res.err = s.dispatchPreserveContentTypeHeader(req)
 			default:
@@ -94,6 +100,25 @@ func (s *ServerTransport) dispatchCustomFieldName(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Users, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchOmitContentTypeHeader(req *http.Request) (*http.Response, error) {
+	if s.srv.OmitContentTypeHeader == nil {
+		return nil, &nonRetriableError{errors.New("fake for method OmitContentTypeHeader not implemented")}
+	}
+	respr, errRespr := s.srv.OmitContentTypeHeader(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
 	}

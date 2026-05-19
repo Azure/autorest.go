@@ -1,5 +1,11 @@
 # Release History
 
+## 0.14.1 (unreleased)
+
+### Bugs Fixed
+
+* Fixed `InternalError: can not find go header for example header content-type` thrown when an operation's example contained a literal `Content-Type` response header that was omitted from the response envelope.
+
 ## 0.14.0 (2026-05-18)
 
 ### Breaking Changes

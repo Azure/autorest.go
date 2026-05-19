@@ -87,6 +87,51 @@ func (client *Client) customFieldNameHandleResponse(resp *http.Response) (Rename
 	return result, nil
 }
 
+// OmitContentTypeHeader -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientOmitContentTypeHeaderOptions contains the optional parameters for the Client.OmitContentTypeHeader method.
+func (client *Client) OmitContentTypeHeader(ctx context.Context, options *ClientOmitContentTypeHeaderOptions) (ClientOmitContentTypeHeaderResponse, error) {
+	var err error
+	const operationName = "Client.OmitContentTypeHeader"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.omitContentTypeHeaderCreateRequest(ctx, options)
+	if err != nil {
+		return ClientOmitContentTypeHeaderResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientOmitContentTypeHeaderResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientOmitContentTypeHeaderResponse{}, err
+	}
+	resp, err := client.omitContentTypeHeaderHandleResponse(httpResp)
+	return resp, err
+}
+
+// omitContentTypeHeaderCreateRequest creates the OmitContentTypeHeader request.
+func (client *Client) omitContentTypeHeaderCreateRequest(ctx context.Context, _ *ClientOmitContentTypeHeaderOptions) (*policy.Request, error) {
+	urlPath := "/omit-content-type-header"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// omitContentTypeHeaderHandleResponse handles the OmitContentTypeHeader response.
+func (client *Client) omitContentTypeHeaderHandleResponse(resp *http.Response) (ClientOmitContentTypeHeaderResponse, error) {
+	result := ClientOmitContentTypeHeaderResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+		return ClientOmitContentTypeHeaderResponse{}, err
+	}
+	return result, nil
+}
+
 // PreserveContentTypeHeader -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientPreserveContentTypeHeaderOptions contains the optional parameters for the Client.PreserveContentTypeHeader

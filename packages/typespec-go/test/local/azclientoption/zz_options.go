@@ -9,6 +9,11 @@ type ClientCustomFieldNameOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientOmitContentTypeHeaderOptions contains the optional parameters for the Client.OmitContentTypeHeader method.
+type ClientOmitContentTypeHeaderOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientPreserveContentTypeHeaderOptions contains the optional parameters for the Client.PreserveContentTypeHeader method.
 type ClientPreserveContentTypeHeaderOptions struct {
 	// placeholder for future optional parameters
