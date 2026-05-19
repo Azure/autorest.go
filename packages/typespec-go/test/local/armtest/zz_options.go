@@ -30,8 +30,9 @@ type ConfigurationsClientGetStreamingContentOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ConfigurationsClientGetXMLContentOptions contains the optional parameters for the ConfigurationsClient.GetXMLContent method.
-type ConfigurationsClientGetXMLContentOptions struct {
+// ConfigurationsClientGetTextContentOptions contains the optional parameters for the ConfigurationsClient.GetTextContent
+// method.
+type ConfigurationsClientGetTextContentOptions struct {
 	// placeholder for future optional parameters
 }
 

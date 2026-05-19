@@ -34,11 +34,11 @@ interface Configurations {
   @doc("Get the content of the configuration.")
   getContent is ArmResourceRead<Configuration>;
 
-  @doc("Get the content of the configuration in XML form. Returns a literal content-type response header that gets omitted from the response envelope.")
-  @action("xmlContent")
-  getXmlContent(...ResourceInstanceParameters<Configuration>): {
+  @doc("Get the content of the configuration in text form. Returns a literal content-type response header that gets omitted from the response envelope.")
+  @action("textContent")
+  getTextContent(...ResourceInstanceParameters<Configuration>): {
     @header("Content-Type")
-    contentType: "application/xml";
+    contentType: "text/plain";
 
     @body
     body: string;

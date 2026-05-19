@@ -29,9 +29,9 @@ type ConfigurationsServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	GetStreamingContent func(ctx context.Context, resourceGroupName string, configurationName string, options *armtest.ConfigurationsClientGetStreamingContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientGetStreamingContentResponse], errResp azfake.ErrorResponder)
 
-	// GetXMLContent is the fake for method ConfigurationsClient.GetXMLContent
+	// GetTextContent is the fake for method ConfigurationsClient.GetTextContent
 	// HTTP status codes to indicate success: http.StatusOK
-	GetXMLContent func(ctx context.Context, resourceGroupName string, configurationName string, options *armtest.ConfigurationsClientGetXMLContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientGetXMLContentResponse], errResp azfake.ErrorResponder)
+	GetTextContent func(ctx context.Context, resourceGroupName string, configurationName string, options *armtest.ConfigurationsClientGetTextContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientGetTextContentResponse], errResp azfake.ErrorResponder)
 
 	// PutStreamingContent is the fake for method ConfigurationsClient.PutStreamingContent
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -76,8 +76,8 @@ func (c *ConfigurationsServerTransport) dispatchToMethodFake(req *http.Request, 
 				res.resp, res.err = c.dispatchGetContent(req)
 			case "ConfigurationsClient.GetStreamingContent":
 				res.resp, res.err = c.dispatchGetStreamingContent(req)
-			case "ConfigurationsClient.GetXMLContent":
-				res.resp, res.err = c.dispatchGetXMLContent(req)
+			case "ConfigurationsClient.GetTextContent":
+				res.resp, res.err = c.dispatchGetTextContent(req)
 			case "ConfigurationsClient.PutStreamingContent":
 				res.resp, res.err = c.dispatchPutStreamingContent(req)
 			default:
@@ -168,11 +168,11 @@ func (c *ConfigurationsServerTransport) dispatchGetStreamingContent(req *http.Re
 	return resp, nil
 }
 
-func (c *ConfigurationsServerTransport) dispatchGetXMLContent(req *http.Request) (*http.Response, error) {
-	if c.srv.GetXMLContent == nil {
-		return nil, &nonRetriableError{errors.New("fake for method GetXMLContent not implemented")}
+func (c *ConfigurationsServerTransport) dispatchGetTextContent(req *http.Request) (*http.Response, error) {
+	if c.srv.GetTextContent == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GetTextContent not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/configurations/(?P<configurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/xmlContent`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/configurations/(?P<configurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/textContent`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -186,7 +186,7 @@ func (c *ConfigurationsServerTransport) dispatchGetXMLContent(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetXMLContent(req.Context(), resourceGroupNameParam, configurationNameParam, nil)
+	respr, errRespr := c.srv.GetTextContent(req.Context(), resourceGroupNameParam, configurationNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -194,7 +194,7 @@ func (c *ConfigurationsServerTransport) dispatchGetXMLContent(req *http.Request)
 	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
 	}

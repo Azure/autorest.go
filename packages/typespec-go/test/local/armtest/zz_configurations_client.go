@@ -169,38 +169,38 @@ func (client *ConfigurationsClient) getStreamingContentHandleResponse(resp *http
 	return result, nil
 }
 
-// GetXMLContent - Get the content of the configuration in XML form. Returns a literal content-type response header that gets
-// omitted from the response envelope.
+// GetTextContent - Get the content of the configuration in text form. Returns a literal content-type response header that
+// gets omitted from the response envelope.
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - configurationName - The configuration name.
-//   - options - ConfigurationsClientGetXMLContentOptions contains the optional parameters for the ConfigurationsClient.GetXMLContent
+//   - options - ConfigurationsClientGetTextContentOptions contains the optional parameters for the ConfigurationsClient.GetTextContent
 //     method.
-func (client *ConfigurationsClient) GetXMLContent(ctx context.Context, resourceGroupName string, configurationName string, options *ConfigurationsClientGetXMLContentOptions) (ConfigurationsClientGetXMLContentResponse, error) {
+func (client *ConfigurationsClient) GetTextContent(ctx context.Context, resourceGroupName string, configurationName string, options *ConfigurationsClientGetTextContentOptions) (ConfigurationsClientGetTextContentResponse, error) {
 	var err error
-	const operationName = "ConfigurationsClient.GetXMLContent"
+	const operationName = "ConfigurationsClient.GetTextContent"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getXMLContentCreateRequest(ctx, resourceGroupName, configurationName, options)
+	req, err := client.getTextContentCreateRequest(ctx, resourceGroupName, configurationName, options)
 	if err != nil {
-		return ConfigurationsClientGetXMLContentResponse{}, err
+		return ConfigurationsClientGetTextContentResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ConfigurationsClientGetXMLContentResponse{}, err
+		return ConfigurationsClientGetTextContentResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ConfigurationsClientGetXMLContentResponse{}, err
+		return ConfigurationsClientGetTextContentResponse{}, err
 	}
-	resp, err := client.getXMLContentHandleResponse(httpResp)
+	resp, err := client.getTextContentHandleResponse(httpResp)
 	return resp, err
 }
 
-// getXMLContentCreateRequest creates the GetXMLContent request.
-func (client *ConfigurationsClient) getXMLContentCreateRequest(ctx context.Context, resourceGroupName string, configurationName string, _ *ConfigurationsClientGetXMLContentOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/configurations/{configurationName}/xmlContent"
+// getTextContentCreateRequest creates the GetTextContent request.
+func (client *ConfigurationsClient) getTextContentCreateRequest(ctx context.Context, resourceGroupName string, configurationName string, _ *ConfigurationsClientGetTextContentOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/configurations/{configurationName}/textContent"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -220,16 +220,19 @@ func (client *ConfigurationsClient) getXMLContentCreateRequest(ctx context.Conte
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", version20250101)
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
 	return req, nil
 }
 
-// getXMLContentHandleResponse handles the GetXMLContent response.
-func (client *ConfigurationsClient) getXMLContentHandleResponse(resp *http.Response) (ConfigurationsClientGetXMLContentResponse, error) {
-	result := ConfigurationsClientGetXMLContentResponse{}
-	if err := runtime.UnmarshalAsXML(resp, &result.Value); err != nil {
-		return ConfigurationsClientGetXMLContentResponse{}, err
+// getTextContentHandleResponse handles the GetTextContent response.
+func (client *ConfigurationsClient) getTextContentHandleResponse(resp *http.Response) (ConfigurationsClientGetTextContentResponse, error) {
+	result := ConfigurationsClientGetTextContentResponse{}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return ConfigurationsClientGetTextContentResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
