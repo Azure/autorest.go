@@ -18,11 +18,11 @@ func ExampleMixedScopeWidgetsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewMixedScopeWidgetsClient().Get(ctx, "myResourceGroup", "myWidget", nil)
+	res, err := clientFactory.NewMixedScopeWidgetsClient("00000000-0000-0000-0000-000000000000").Get(ctx, "myResourceGroup", "myWidget", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -50,11 +50,11 @@ func ExampleMixedScopeWidgetsClient_NewListAllPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("<subscriptionID>", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewMixedScopeWidgetsClient().NewListAllPager(nil)
+	pager := clientFactory.NewMixedScopeWidgetsClient("<subscriptionID>").NewListAllPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

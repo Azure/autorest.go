@@ -19,11 +19,11 @@ func ExampleLROClient_BeginOkResponseWithAsyncHeader() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLROClient().BeginOkResponseWithAsyncHeader(ctx, "myResourceGroup", "myLROModel", armtest.LROModel{
+	poller, err := clientFactory.NewLROClient("00000000-0000-0000-0000-000000000000").BeginOkResponseWithAsyncHeader(ctx, "myResourceGroup", "myLROModel", armtest.LROModel{
 		Location: to.Ptr("eastus"),
 		Properties: &armtest.BodyRootProperties{
 			Description: to.Ptr("test"),
