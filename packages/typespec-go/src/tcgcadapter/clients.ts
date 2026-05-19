@@ -1318,7 +1318,7 @@ export class ClientAdapter {
           headerResp.docs.description = httpHeader.doc;
 
           const isOmittedHeader = helpers.isOmittedResponseHeader(httpHeader, sdkMethod, this.ta.ctx.program);
-          if (isOmittedHeader && headerResp.type.kind === 'literal') {
+          if (isOmittedHeader) {
             literalContentTypeHeader = headerResp as go.HeaderScalarResponse;
           } else {
             respEnv.headers.push(headerResp);

@@ -35,16 +35,6 @@ op preserveContentTypeHeader(): {
   body: string;
 };
 
-@get
-@route("/omit-content-type-header")
-op omitContentTypeHeader(): {
-  @header
-  contentType: "application/json";
-
-  @body
-  body: string;
-};
-
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "response has custom field name Users"
 @@clientOption(customFieldName, "monomorphicResponseFieldName", "Users", "go");
 
