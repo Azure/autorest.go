@@ -1,5 +1,11 @@
 # Release History
 
+## 0.14.1 (unreleased)
+
+### Bugs Fixed
+
+* Generate a mock value for client parameters in examples when the operation doesn't use the parameter.
+
 ## 0.14.0 (2026-05-18)
 
 ### Breaking Changes

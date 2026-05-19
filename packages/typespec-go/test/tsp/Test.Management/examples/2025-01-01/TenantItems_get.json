@@ -1,0 +1,21 @@
+{
+  "operationId": "TenantItems_Get",
+  "title": "TenantItems_get",
+  "parameters": {
+    "api-version": "2025-01-01",
+    "tenantItemName": "myTenantItem"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "/providers/Microsoft.Test/tenantItems/myTenantItem",
+        "name": "myTenantItem",
+        "type": "Microsoft.Test/tenantItems",
+        "properties": {
+          "description": "my tenant item",
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  }
+}

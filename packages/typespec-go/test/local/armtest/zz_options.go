@@ -55,6 +55,23 @@ type ManagementRequestOptions struct {
 	ClientRequestID string
 }
 
+// MixedScopeWidgetsClientGetOptions contains the optional parameters for the MixedScopeWidgetsClient.Get method.
+type MixedScopeWidgetsClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MixedScopeWidgetsClientListAllOptions contains the optional parameters for the MixedScopeWidgetsClient.NewListAllPager
+// method.
+type MixedScopeWidgetsClientListAllOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MixedScopeWidgetsClientListBySubscriptionOptions contains the optional parameters for the MixedScopeWidgetsClient.NewListBySubscriptionPager
+// method.
+type MixedScopeWidgetsClientListBySubscriptionOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ParameterGroupOperationsClientNoParameterGroupOptions contains the optional parameters for the ParameterGroupOperationsClient.NoParameterGroup
 // method.
 type ParameterGroupOperationsClientNoParameterGroupOptions struct {
@@ -88,5 +105,15 @@ type PetsClientAdoptPetOptions struct {
 
 // PetsClientGetOptions contains the optional parameters for the PetsClient.Get method.
 type PetsClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// TenantItemsClientGetOptions contains the optional parameters for the TenantItemsClient.Get method.
+type TenantItemsClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// TenantItemsClientListOptions contains the optional parameters for the TenantItemsClient.NewListPager method.
+type TenantItemsClientListOptions struct {
 	// placeholder for future optional parameters
 }

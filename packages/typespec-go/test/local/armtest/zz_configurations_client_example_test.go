@@ -20,11 +20,11 @@ func ExampleConfigurationsClient_GetStreamingContent() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewConfigurationsClient().GetStreamingContent(ctx, "myResourceGroup", "myConfiguration", nil)
+	res, err := clientFactory.NewConfigurationsClient("00000000-0000-0000-0000-000000000000").GetStreamingContent(ctx, "myResourceGroup", "myConfiguration", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -44,11 +44,11 @@ func ExampleConfigurationsClient_PutStreamingContent() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = clientFactory.NewConfigurationsClient().PutStreamingContent(ctx, "myResourceGroup", "myConfiguration", streaming.NopCloser(bytes.NewReader([]byte("Configuration file content as a streaming request"))), nil)
+	_, err = clientFactory.NewConfigurationsClient("00000000-0000-0000-0000-000000000000").PutStreamingContent(ctx, "myResourceGroup", "myConfiguration", streaming.NopCloser(bytes.NewReader([]byte("Configuration file content as a streaming request"))), nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

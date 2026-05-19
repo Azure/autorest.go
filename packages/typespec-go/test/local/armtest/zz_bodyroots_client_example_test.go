@@ -19,11 +19,11 @@ func ExampleBodyRootsClient_Action() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = clientFactory.NewBodyRootsClient().Action(ctx, "myResourceGroup", "myBodyRoot", armtest.ActionRequest{
+	_, err = clientFactory.NewBodyRootsClient("00000000-0000-0000-0000-000000000000").Action(ctx, "myResourceGroup", "myBodyRoot", armtest.ActionRequest{
 		Prop: to.Ptr("myProp"),
 	}, nil)
 	if err != nil {
@@ -38,11 +38,11 @@ func ExampleBodyRootsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewBodyRootsClient().Get(ctx, "myResourceGroup", "myBodyRoot", nil)
+	res, err := clientFactory.NewBodyRootsClient("00000000-0000-0000-0000-000000000000").Get(ctx, "myResourceGroup", "myBodyRoot", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -74,11 +74,11 @@ func ExampleBodyRootsClient_Put() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewBodyRootsClient().Put(ctx, "myResourceGroup", "myBodyRoot", armtest.BodyRoot{
+	res, err := clientFactory.NewBodyRootsClient("00000000-0000-0000-0000-000000000000").Put(ctx, "myResourceGroup", "myBodyRoot", armtest.BodyRoot{
 		Location: to.Ptr("eastus"),
 		Properties: &armtest.BodyRootProperties{
 			Description: to.Ptr("my body root"),
