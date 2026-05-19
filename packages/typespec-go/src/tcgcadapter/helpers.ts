@@ -195,11 +195,7 @@ export function getClientOption<T extends boolean | string>(
  * @param sdkMethod the tcgc service method that owns the response
  * @param program the tsp Program currently in scope
  */
-export function isOmittedResponseHeader(
-  httpHeader: tcgc.SdkServiceResponseHeader,
-  sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>,
-  program: tsp.Program,
-): boolean {
+export function isOmittedResponseHeader(httpHeader: tcgc.SdkServiceResponseHeader, sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, program: tsp.Program): boolean {
   if (!httpHeader.serializedName.match(/^content-type$/i)) {
     return false;
   }
