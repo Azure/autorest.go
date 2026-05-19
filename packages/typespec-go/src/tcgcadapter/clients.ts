@@ -1663,7 +1663,7 @@ export class ClientAdapter {
               for (const goParam of goParams) {
                 const propertyValue = (<tcgc.SdkModelExampleValue>param.value).value[(<go.PartialBodyParameter>goParam).serializedName];
                 const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(propertyValue, goParam?.type));
-                if (goParam.group) {
+                if (goParam.group && goParam.group === method.optionalParamsGroup) {
                   goExample.optionalParamsGroup.push(paramExample);
                 } else {
                   goExample.parameters.push(paramExample);
@@ -1675,7 +1675,7 @@ export class ClientAdapter {
                 continue;
               }
               const paramExample = new go.ParameterExample(goParams[0], this.adaptExampleType(param.value, goParams[0]?.type));
-              if (goParams[0]?.group) {
+              if (goParams[0]?.group && goParams[0].group === method.optionalParamsGroup) {
                 goExample.optionalParamsGroup.push(paramExample);
               } else {
                 goExample.parameters.push(paramExample);

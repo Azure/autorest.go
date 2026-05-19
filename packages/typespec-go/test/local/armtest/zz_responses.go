@@ -58,6 +58,12 @@ type ParameterGroupOperationsClientNoParameterGroupResponse struct {
 	Widget
 }
 
+// ParameterGroupOperationsClientQueryParameterGroupResponse contains the response from method ParameterGroupOperationsClient.QueryParameterGroup.
+type ParameterGroupOperationsClientQueryParameterGroupResponse struct {
+	// Widget resource for testing parameter groups
+	Widget
+}
+
 // ParameterGroupOperationsClientSharedParameterGroup1Response contains the response from method ParameterGroupOperationsClient.SharedParameterGroup1.
 type ParameterGroupOperationsClientSharedParameterGroup1Response struct {
 	// Widget resource for testing parameter groups

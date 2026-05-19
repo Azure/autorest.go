@@ -1,5 +1,11 @@
 # Release History
 
+## 0.14.1 (2026-05-19)
+
+### Bugs Fixed
+
+* Fixed example generation incorrectly passing required parameter group members as optional parameters instead of rendering them as struct literals.
+
 ## 0.14.0 (2026-05-18)
 
 ### Breaking Changes

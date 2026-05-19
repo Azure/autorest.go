@@ -62,6 +62,13 @@ type ParameterGroupOperationsClientNoParameterGroupOptions struct {
 	CorrelationID *string
 }
 
+// ParameterGroupOperationsClientQueryParameterGroupOptions contains the optional parameters for the ParameterGroupOperationsClient.QueryParameterGroup
+// method.
+type ParameterGroupOperationsClientQueryParameterGroupOptions struct {
+	// Optional max count
+	MaxCount *int32
+}
+
 // ParameterGroupOperationsClientSharedParameterGroup1Options contains the optional parameters for the ParameterGroupOperationsClient.SharedParameterGroup1
 // method.
 type ParameterGroupOperationsClientSharedParameterGroup1Options struct {
@@ -89,4 +96,10 @@ type PetsClientAdoptPetOptions struct {
 // PetsClientGetOptions contains the optional parameters for the PetsClient.Get method.
 type PetsClientGetOptions struct {
 	// placeholder for future optional parameters
+}
+
+// Query parameter group with a required field
+type QueryParams struct {
+	// The filter name
+	FilterName string
 }
