@@ -29,10 +29,6 @@ type ConfigurationsServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	GetStreamingContent func(ctx context.Context, resourceGroupName string, configurationName string, options *armtest.ConfigurationsClientGetStreamingContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientGetStreamingContentResponse], errResp azfake.ErrorResponder)
 
-	// GetXMLContent is the fake for method ConfigurationsClient.GetXMLContent
-	// HTTP status codes to indicate success: http.StatusOK
-	GetXMLContent func(ctx context.Context, resourceGroupName string, configurationName string, options *armtest.ConfigurationsClientGetXMLContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientGetXMLContentResponse], errResp azfake.ErrorResponder)
-
 	// PutStreamingContent is the fake for method ConfigurationsClient.PutStreamingContent
 	// HTTP status codes to indicate success: http.StatusNoContent
 	PutStreamingContent func(ctx context.Context, resourceGroupName string, configurationName string, body io.ReadSeekCloser, options *armtest.ConfigurationsClientPutStreamingContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientPutStreamingContentResponse], errResp azfake.ErrorResponder)
@@ -76,8 +72,6 @@ func (c *ConfigurationsServerTransport) dispatchToMethodFake(req *http.Request, 
 				res.resp, res.err = c.dispatchGetContent(req)
 			case "ConfigurationsClient.GetStreamingContent":
 				res.resp, res.err = c.dispatchGetStreamingContent(req)
-			case "ConfigurationsClient.GetXMLContent":
-				res.resp, res.err = c.dispatchGetXMLContent(req)
 			case "ConfigurationsClient.PutStreamingContent":
 				res.resp, res.err = c.dispatchPutStreamingContent(req)
 			default:
@@ -164,39 +158,6 @@ func (c *ConfigurationsServerTransport) dispatchGetStreamingContent(req *http.Re
 	}
 	if val := server.GetResponse(respr).ContentType; val != nil {
 		resp.Header.Set("Content-Type", "text/powershell")
-	}
-	return resp, nil
-}
-
-func (c *ConfigurationsServerTransport) dispatchGetXMLContent(req *http.Request) (*http.Response, error) {
-	if c.srv.GetXMLContent == nil {
-		return nil, &nonRetriableError{errors.New("fake for method GetXMLContent not implemented")}
-	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/configurations/(?P<configurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/xmlContent`
-	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if len(matches) < 4 {
-		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-	}
-	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-	if err != nil {
-		return nil, err
-	}
-	configurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := c.srv.GetXMLContent(req.Context(), resourceGroupNameParam, configurationNameParam, nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
-	}
-	respContent := server.GetResponseContent(respr)
-	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
-	}
-	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr).Value, req)
-	if err != nil {
-		return nil, err
 	}
 	return resp, nil
 }

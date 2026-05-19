@@ -34,16 +34,6 @@ interface Configurations {
   @doc("Get the content of the configuration.")
   getContent is ArmResourceRead<Configuration>;
 
-  @doc("Get the content of the configuration in XML form. Returns a literal content-type response header that gets omitted from the response envelope.")
-  @action("xmlContent")
-  getXmlContent(...ResourceInstanceParameters<Configuration>): {
-    @header("Content-Type")
-    contentType: "application/xml";
-
-    @body
-    body: string;
-  };
-
   @doc("Get the content of the configuration identified by configuration name.")
   @action("content")
   getStreamingContent(...ResourceInstanceParameters<Configuration>): {

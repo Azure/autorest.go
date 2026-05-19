@@ -36,11 +36,6 @@ type ConfigurationsClientGetStreamingContentResponse struct {
 	ContentType *string
 }
 
-// ConfigurationsClientGetXMLContentResponse contains the response from method ConfigurationsClient.GetXMLContent.
-type ConfigurationsClientGetXMLContentResponse struct {
-	Value *string
-}
-
 // ConfigurationsClientPutStreamingContentResponse contains the response from method ConfigurationsClient.PutStreamingContent.
 type ConfigurationsClientPutStreamingContentResponse struct {
 	// placeholder for future response values

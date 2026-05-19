@@ -1317,8 +1317,7 @@ export class ClientAdapter {
           headerResp.docs.summary = httpHeader.summary;
           headerResp.docs.description = httpHeader.doc;
 
-          const isOmittedHeader = helpers.isOmittedResponseHeader(httpHeader, sdkMethod, this.ta.ctx.program);
-          if (isOmittedHeader) {
+          if (helpers.isOmittedResponseHeader(httpHeader, sdkMethod, this.ta.ctx.program)) {
             literalContentTypeHeader = headerResp as go.HeaderScalarResponse;
           } else {
             respEnv.headers.push(headerResp);
@@ -1691,14 +1690,15 @@ export class ClientAdapter {
             // skip adding headers for LROs as they aren't useful on the response envelope
             if (!go.isLROMethod(method)) {
               for (const header of response.headers) {
-                // headers that were intentionally omitted from the response envelope (for
-                // example literal content-type headers) won't have a matching go header.
-                // skip them here so example mapping stays in sync with envelope construction.
-                if (helpers.isOmittedResponseHeader(header.header, sdkMethod, this.ta.ctx.program)) {
-                  continue;
-                }
                 const goHeader = method.returns.headers.find((h) => h.headerName === header.header.serializedName);
                 if (!goHeader) {
+                  // headers that were intentionally omitted from the response envelope (for
+                  // example literal content-type headers on non-binary responses) won't have
+                  // a matching go header. skip them here so example mapping stays in sync
+                  // with envelope construction.
+                  if (helpers.isOmittedResponseHeader(header.header, sdkMethod, this.ta.ctx.program)) {
+                    continue;
+                  }
                   throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
                 }
                 goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
