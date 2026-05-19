@@ -115,7 +115,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           exampleText += `${indent.push().get()}log.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `${indent.pop().get()}}\n`;
           clientRef = `clientFactory.${client.instance.constructors[0].name}(`;
-          // since not all operations have all the client constructor required parameters, we need to fake for the missing ones
+          // since not all operations have all the client constructor required parameters, we need to generate fake values for the missing ones
           const clientPrivateParameters: go.ParameterExample[] = [];
           for (const ctorParam of client.instance.constructors[0].parameters) {
             if (clientFactoryParamsMap.has(ctorParam.name) || go.isAPIVersionParameter(ctorParam)) {
