@@ -19,11 +19,11 @@ func ExamplePetsClient_AdoptCat() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewPetsClient().AdoptCat(ctx, "myResourceGroup", "myPetResource", armtest.Cat{
+	res, err := clientFactory.NewPetsClient("00000000-0000-0000-0000-000000000000").AdoptCat(ctx, "myResourceGroup", "myPetResource", armtest.Cat{
 		Kind:  to.Ptr(armtest.PetKindCat),
 		Name:  to.Ptr("Whiskers"),
 		Purrs: to.Ptr(true),
@@ -50,11 +50,11 @@ func ExamplePetsClient_AdoptPet() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewPetsClient().AdoptPet(ctx, "myResourceGroup", "myPetResource", &armtest.Dog{
+	res, err := clientFactory.NewPetsClient("00000000-0000-0000-0000-000000000000").AdoptPet(ctx, "myResourceGroup", "myPetResource", &armtest.Dog{
 		Kind:  to.Ptr(armtest.PetKindDog),
 		Name:  to.Ptr("Buddy"),
 		Breed: to.Ptr("Labrador"),

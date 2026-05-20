@@ -57,6 +57,24 @@ type LROClientScalarResultResponse struct {
 	Value *string
 }
 
+// MixedScopeWidgetsClientGetResponse contains the response from method MixedScopeWidgetsClient.Get.
+type MixedScopeWidgetsClientGetResponse struct {
+	// A mixed scope resource that has operations at both subscription and tenant level.
+	MixedScopeWidget
+}
+
+// MixedScopeWidgetsClientListAllResponse contains the response from method MixedScopeWidgetsClient.NewListAllPager.
+type MixedScopeWidgetsClientListAllResponse struct {
+	// The response of a MixedScopeWidget list operation.
+	MixedScopeWidgetListResult
+}
+
+// MixedScopeWidgetsClientListBySubscriptionResponse contains the response from method MixedScopeWidgetsClient.NewListBySubscriptionPager.
+type MixedScopeWidgetsClientListBySubscriptionResponse struct {
+	// The response of a MixedScopeWidget list operation.
+	MixedScopeWidgetListResult
+}
+
 // ParameterGroupOperationsClientNoParameterGroupResponse contains the response from method ParameterGroupOperationsClient.NoParameterGroup.
 type ParameterGroupOperationsClientNoParameterGroupResponse struct {
 	// Widget resource for testing parameter groups
@@ -91,4 +109,16 @@ type PetsClientAdoptPetResponse struct {
 type PetsClientGetResponse struct {
 	// Pet resource.
 	PetResource
+}
+
+// TenantItemsClientGetResponse contains the response from method TenantItemsClient.Get.
+type TenantItemsClientGetResponse struct {
+	// A tenant-level resource.
+	TenantItem
+}
+
+// TenantItemsClientListResponse contains the response from method TenantItemsClient.NewListPager.
+type TenantItemsClientListResponse struct {
+	// The response of a TenantItem list operation.
+	TenantItemListResult
 }

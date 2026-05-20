@@ -165,6 +165,48 @@ type LROModel struct {
 	Type *string
 }
 
+// MixedScopeWidget - A mixed scope resource that has operations at both subscription and tenant level.
+type MixedScopeWidget struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// The resource-specific properties for this resource.
+	Properties *MixedScopeWidgetProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// MixedScopeWidgetListResult - The response of a MixedScopeWidget list operation.
+type MixedScopeWidgetListResult struct {
+	// REQUIRED; The MixedScopeWidget items on this page
+	Value []*MixedScopeWidget
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// MixedScopeWidgetProperties - Properties of a mixed scope widget.
+type MixedScopeWidgetProperties struct {
+	// The description.
+	Description *string
+
+	// READ-ONLY; The status.
+	ProvisioningState *ProvisioningState
+}
+
 // Pet - Base pet model.
 type Pet struct {
 	// REQUIRED; The kind of the pet.
@@ -226,6 +268,42 @@ type SystemData struct {
 
 	// The type of identity that last modified the resource.
 	LastModifiedByType *CreatedByType
+}
+
+// TenantItem - A tenant-level resource.
+type TenantItem struct {
+	// The resource-specific properties for this resource.
+	Properties *TenantItemProperties
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// TenantItemListResult - The response of a TenantItem list operation.
+type TenantItemListResult struct {
+	// REQUIRED; The TenantItem items on this page
+	Value []*TenantItem
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// TenantItemProperties - Properties of a tenant item.
+type TenantItemProperties struct {
+	// The description.
+	Description *string
+
+	// READ-ONLY; The status.
+	ProvisioningState *ProvisioningState
 }
 
 // Widget resource for testing parameter groups
