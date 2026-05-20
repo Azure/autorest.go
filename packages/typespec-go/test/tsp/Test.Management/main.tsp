@@ -7,6 +7,7 @@ import "./LRO.tsp";
 import "./ParameterGroups.tsp";
 import "./Polymorphic.tsp";
 import "./StreamingResponse.tsp";
+import "./TenantResource.tsp";
 
 using TypeSpec.Rest;
 using TypeSpec.Http;

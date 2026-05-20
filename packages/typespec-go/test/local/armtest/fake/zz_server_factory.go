@@ -24,11 +24,17 @@ type ServerFactory struct {
 	// LROServer contains the fakes for client LROClient
 	LROServer LROServer
 
+	// MixedScopeWidgetsServer contains the fakes for client MixedScopeWidgetsClient
+	MixedScopeWidgetsServer MixedScopeWidgetsServer
+
 	// ParameterGroupOperationsServer contains the fakes for client ParameterGroupOperationsClient
 	ParameterGroupOperationsServer ParameterGroupOperationsServer
 
 	// PetsServer contains the fakes for client PetsClient
 	PetsServer PetsServer
+
+	// TenantItemsServer contains the fakes for client TenantItemsClient
+	TenantItemsServer TenantItemsServer
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
@@ -48,8 +54,10 @@ type ServerFactoryTransport struct {
 	trBodyRootsServer                *BodyRootsServerTransport
 	trConfigurationsServer           *ConfigurationsServerTransport
 	trLROServer                      *LROServerTransport
+	trMixedScopeWidgetsServer        *MixedScopeWidgetsServerTransport
 	trParameterGroupOperationsServer *ParameterGroupOperationsServerTransport
 	trPetsServer                     *PetsServerTransport
+	trTenantItemsServer              *TenantItemsServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -76,6 +84,11 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	case "LROClient":
 		initServer(&s.trMu, &s.trLROServer, func() *LROServerTransport { return NewLROServerTransport(&s.srv.LROServer) })
 		resp, err = s.trLROServer.Do(req)
+	case "MixedScopeWidgetsClient":
+		initServer(&s.trMu, &s.trMixedScopeWidgetsServer, func() *MixedScopeWidgetsServerTransport {
+			return NewMixedScopeWidgetsServerTransport(&s.srv.MixedScopeWidgetsServer)
+		})
+		resp, err = s.trMixedScopeWidgetsServer.Do(req)
 	case "ParameterGroupOperationsClient":
 		initServer(&s.trMu, &s.trParameterGroupOperationsServer, func() *ParameterGroupOperationsServerTransport {
 			return NewParameterGroupOperationsServerTransport(&s.srv.ParameterGroupOperationsServer)
@@ -84,6 +97,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	case "PetsClient":
 		initServer(&s.trMu, &s.trPetsServer, func() *PetsServerTransport { return NewPetsServerTransport(&s.srv.PetsServer) })
 		resp, err = s.trPetsServer.Do(req)
+	case "TenantItemsClient":
+		initServer(&s.trMu, &s.trTenantItemsServer, func() *TenantItemsServerTransport { return NewTenantItemsServerTransport(&s.srv.TenantItemsServer) })
+		resp, err = s.trTenantItemsServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

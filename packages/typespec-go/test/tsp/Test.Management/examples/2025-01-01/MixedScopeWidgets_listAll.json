@@ -1,0 +1,25 @@
+{
+  "operationId": "MixedScopeWidgets_ListAll",
+  "title": "MixedScopeWidgets_listAll",
+  "parameters": {
+    "api-version": "2025-01-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "/providers/Microsoft.Test/mixedScopeWidgets/myWidget",
+            "name": "myWidget",
+            "type": "Microsoft.Test/mixedScopeWidgets",
+            "location": "eastus",
+            "properties": {
+              "description": "my widget",
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
