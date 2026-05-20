@@ -44,11 +44,11 @@ func ExampleConfigurationsClient_GetTextContent() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewConfigurationsClient().GetTextContent(ctx, "myResourceGroup", "myConfiguration", nil)
+	res, err := clientFactory.NewConfigurationsClient("00000000-0000-0000-0000-000000000000").GetTextContent(ctx, "myResourceGroup", "myConfiguration", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
