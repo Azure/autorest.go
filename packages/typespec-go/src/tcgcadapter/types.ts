@@ -442,7 +442,7 @@ export class TypeAdapter {
 
   // converts an SdkEnumType to a go.ConstantType
   private getConstantType(enumType: tcgc.SdkEnumType): go.Constant {
-    let constTypeName = naming.ensureNameCase(enumType.name);
+    let constTypeName = helpers.getEffectiveName(enumType);
     if (enumType.access === 'internal') {
       constTypeName = naming.getEscapedReservedName(naming.uncapitalize(constTypeName), 'Type');
     }
@@ -531,7 +531,7 @@ export class TypeAdapter {
     if (!helpers.isPolymorphicRoot(model)) {
       throw new AdapterError('InternalError', `type ${model.name} isn't a discriminator root`, model.__raw?.node);
     }
-    let ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
+    let ifaceName = naming.createPolymorphicInterfaceName(helpers.getEffectiveName(model));
     if (model.access === 'internal') {
       ifaceName = naming.uncapitalize(ifaceName);
     }
@@ -561,7 +561,7 @@ export class TypeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.Model | go.PolymorphicModel {
-    let modelName = naming.ensureNameCase(model.name);
+    let modelName = helpers.getEffectiveName(model);
     if (model.access === 'internal') {
       modelName = naming.getEscapedReservedName(naming.uncapitalize(modelName), 'Model');
     }
@@ -707,7 +707,8 @@ export class TypeAdapter {
       serializedName = prop.serializedName;
     }
 
-    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, serializedName, annotations);
+    const fieldName = prop.isExactName ? prop.name : naming.capitalize(naming.ensureNameCase(prop.name));
+    const field = new go.ModelField(fieldName, type, fieldByValue, serializedName, annotations);
     field.docs.summary = prop.summary;
     field.docs.description = prop.doc;
 

@@ -2,6 +2,10 @@
 
 ## 0.14.1 (unreleased)
 
+### Features Added
+
+* Honor the TCGC `exact()` function on `@clientName`: when a name is marked as exact, it is preserved verbatim and is not subjected to the built-in naming canonization (e.g. acronym capitalization or PascalCase). Applies to models, enums, model fields, parameters, and response headers.
+
 ### Bugs Fixed
 
 * Generate a mock value for client parameters in examples when the operation doesn't use the parameter.

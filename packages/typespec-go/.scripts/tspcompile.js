@@ -247,6 +247,9 @@ generate('azregressions', azregressions, 'test/local/azregressions');
 const azclientoption = pkgRoot + 'test/tsp/ClientOption';
 generate('azclientoption', azclientoption, 'test/local/azclientoption');
 
+const azexactname = pkgRoot + 'test/tsp/ExactName';
+generate('azexactname', azexactname, 'test/local/azexactname');
+
 const armpageablelros = pkgRoot + 'test/tsp/PageableLROs';
 generate('armpageablelros', armpageablelros, 'test/local/armpageablelros');
 

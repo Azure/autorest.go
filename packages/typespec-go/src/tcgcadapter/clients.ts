@@ -408,7 +408,7 @@ export class ClientAdapter {
       if (existsOnParent) {
         continue;
       }
-      const adaptedParam = new go.Parameter(getEscapedReservedName(uncapitalize(ensureNameCase(param.name)), 'Param'), this.ta.getWireType(param.type, true, true), true);
+      const adaptedParam = new go.Parameter(getEscapedReservedName(uncapitalize(helpers.getEffectiveName(param)), 'Param'), this.ta.getWireType(param.type, true, true), true);
       adaptedParam.docs.summary = param.summary;
       adaptedParam.docs.description = param.doc;
       clientAccessor.parameters.push(adaptedParam);
@@ -784,7 +784,7 @@ export class ClientAdapter {
       // spread parameter. we also need to check the usage flag to disambiguate these cases.
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type !== param.type && opParam.type.usage & tcgc.UsageFlags.Spread) {
         const paramStyle = this.adaptParameterStyle(param);
-        const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
+        const paramName = getEscapedReservedName(helpers.getEffectiveName(param, paramStyle === 'required'), 'Param');
         // if the param is required then it's always passed by value
         const byVal = go.isRequiredParameter(paramStyle) ? true : helpers.isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
@@ -858,7 +858,7 @@ export class ClientAdapter {
           // - If no required params remain, the param group "evaporates"
 
           // Use the same naming approach as regular parameters for consistency
-          const paramGroupName = ensureNameCase(param.type.name);
+          const paramGroupName = helpers.getEffectiveName(param.type);
 
           // Remove the model from codeModel.models if it is a parameter group
           const modelIndex = this.ta.getPkg().models.findIndex((m) => m.name === paramGroupName);
@@ -883,7 +883,7 @@ export class ClientAdapter {
               if (!paramGroup) {
                 const paramStyle = this.adaptParameterStyle(param);
                 const isRequired = go.isRequiredParameter(paramStyle);
-                const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
+                const paramName = getEscapedReservedName(helpers.getEffectiveName(param, isRequired), 'Param');
 
                 paramGroup = new go.ParameterGroup(
                   this.ta.getPkg(),
@@ -1106,7 +1106,7 @@ export class ClientAdapter {
       }
     }
 
-    const paramName = getEscapedReservedName(ensureNameCase(methodParam.name, paramStyle === 'required'), 'Param');
+    const paramName = getEscapedReservedName(helpers.getEffectiveName(methodParam, paramStyle === 'required'), 'Param');
     const byVal = go.isRequiredParameter(paramStyle) ? true : helpers.isTypePassedByValue(methodParam.type);
 
     let adaptedParam: go.MethodParameter;
@@ -1214,6 +1214,7 @@ export class ClientAdapter {
   private adaptMultipartFormParameter(paramName: string, paramType: tcgc.SdkModelType, paramStyle: go.ParameterStyle, byVal: boolean): go.MultipartFormBodyParameter {
     let paramAsSdkType: tcgc.SdkType = paramType;
     let multipartOptions: tcgc.MultipartOptions | undefined;
+    let isExactName = false;
     if (paramType.isGeneratedName) {
       // tcgc wraps inline multipart params in a generated model with a single property.
       // unwrap to the inner property to get the actual param name and type.
@@ -1222,6 +1223,7 @@ export class ClientAdapter {
       }
       const prop = paramType.properties[0];
       paramName = prop.name;
+      isExactName = prop.isExactName;
       multipartOptions = prop.serializationOptions.multipart;
       paramAsSdkType = prop.type;
     }
@@ -1238,7 +1240,7 @@ export class ClientAdapter {
       type = this.ta.getWireType(paramAsSdkType, true, true);
     }
 
-    paramName = getEscapedReservedName(ensureNameCase(paramName, paramStyle === 'required'), 'Param');
+    paramName = getEscapedReservedName(helpers.getEffectiveName({ name: paramName, isExactName }, paramStyle === 'required'), 'Param');
     return new go.MultipartFormBodyParameter(paramName, type, paramStyle, byVal);
   }
 
@@ -1301,10 +1303,10 @@ export class ClientAdapter {
             if (type.kind !== 'map') {
               throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderMapResponse ${httpHeader.name}`);
             }
-            headerResp = new go.HeaderMapResponse(ensureNameCase(httpHeader.name), type, `${httpHeader.serializedName}-`);
+            headerResp = new go.HeaderMapResponse(helpers.getEffectiveName(httpHeader), type, `${httpHeader.serializedName}-`);
           } else {
             headerResp = new go.HeaderScalarResponse(
-              ensureNameCase(httpHeader.name),
+              helpers.getEffectiveName(httpHeader),
               this.adaptHeaderScalarType(httpHeader.type, false),
               httpHeader.serializedName,
               helpers.isTypePassedByValue(httpHeader.type),
@@ -1405,7 +1407,7 @@ export class ClientAdapter {
       };
     } else if (sdkResponseType.kind === 'model') {
       let modelType: go.Model | go.PolymorphicModel | undefined;
-      const modelName = ensureNameCase(sdkResponseType.name).toUpperCase();
+      const modelName = helpers.getEffectiveName(sdkResponseType).toUpperCase();
       for (const model of this.ta.getPkg().models) {
         if (model.name.toUpperCase() === modelName) {
           modelType = model;
@@ -1527,7 +1529,7 @@ export class ClientAdapter {
         return 'ByteArray';
       case 'enum':
       case 'model':
-        return ensureNameCase(type.name);
+        return helpers.getEffectiveName(type);
       case 'utcDateTime':
       case 'offsetDateTime':
         return 'Time';
