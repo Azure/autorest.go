@@ -138,11 +138,18 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         for (const methodParam of helpers.getMethodParameters(method)) {
           if (methodParam.kind === 'paramGroup') {
             if (methodParam === method.optionalParamsGroup) continue;
-            const fieldTexts = methodParam.params.map((groupParam) => {
+            imports.addForPkg(methodParam.pkg);
+            const fieldTexts: string[] = [];
+            for (const groupParam of methodParam.params) {
+              if (go.isLiteralParameter(groupParam.style)) continue;
               const paramExample = example.parameters.find((ep) => ep.parameter.name === groupParam.name);
-              const exampleValue = paramExample ? paramExample.value : generateFakeExample(groupParam.type, groupParam.name);
-              return `${naming.capitalize(groupParam.name)}: ${getExampleValue(pkg, exampleValue, '\t', imports, groupParam.byValue).slice(1)}`;
-            });
+              if (paramExample) {
+                fieldTexts.push(`${naming.capitalize(groupParam.name)}: ${getExampleValue(pkg, paramExample.value, '\t', imports, groupParam.byValue).slice(1)}`);
+              } else if (go.isRequiredParameter(groupParam.style)) {
+                const fakeValue = generateFakeExample(groupParam.type, groupParam.name);
+                fieldTexts.push(`${naming.capitalize(groupParam.name)}: ${getExampleValue(pkg, fakeValue, '\t', imports, groupParam.byValue).slice(1)}`);
+              }
+            }
             renderedParams.push(`${go.getPackageName(methodParam.pkg)}.${methodParam.groupName}{${fieldTexts.join(', ')}}`);
           } else {
             if (go.isLiteralParameter(methodParam.style)) continue;
