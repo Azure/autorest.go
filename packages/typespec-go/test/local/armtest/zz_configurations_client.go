@@ -169,6 +169,73 @@ func (client *ConfigurationsClient) getStreamingContentHandleResponse(resp *http
 	return result, nil
 }
 
+// GetTextContent - Get the content of the configuration in text form. Returns a literal content-type response header that
+// gets omitted from the response envelope.
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - configurationName - The configuration name.
+//   - options - ConfigurationsClientGetTextContentOptions contains the optional parameters for the ConfigurationsClient.GetTextContent
+//     method.
+func (client *ConfigurationsClient) GetTextContent(ctx context.Context, resourceGroupName string, configurationName string, options *ConfigurationsClientGetTextContentOptions) (ConfigurationsClientGetTextContentResponse, error) {
+	var err error
+	const operationName = "ConfigurationsClient.GetTextContent"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getTextContentCreateRequest(ctx, resourceGroupName, configurationName, options)
+	if err != nil {
+		return ConfigurationsClientGetTextContentResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ConfigurationsClientGetTextContentResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ConfigurationsClientGetTextContentResponse{}, err
+	}
+	resp, err := client.getTextContentHandleResponse(httpResp)
+	return resp, err
+}
+
+// getTextContentCreateRequest creates the GetTextContent request.
+func (client *ConfigurationsClient) getTextContentCreateRequest(ctx context.Context, resourceGroupName string, configurationName string, _ *ConfigurationsClientGetTextContentOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/configurations/{configurationName}/textContent"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if configurationName == "" {
+		return nil, errors.New("parameter configurationName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{configurationName}", url.PathEscape(configurationName))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", version20250101)
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
+	req.Raw().Header["Accept"] = []string{"text/plain"}
+	return req, nil
+}
+
+// getTextContentHandleResponse handles the GetTextContent response.
+func (client *ConfigurationsClient) getTextContentHandleResponse(resp *http.Response) (ConfigurationsClientGetTextContentResponse, error) {
+	result := ConfigurationsClientGetTextContentResponse{}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return ConfigurationsClientGetTextContentResponse{}, err
+	}
+	txt := string(body)
+	result.Value = &txt
+	return result, nil
+}
+
 // PutStreamingContent - Put the content of the configuration identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.

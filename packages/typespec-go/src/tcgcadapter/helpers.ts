@@ -184,6 +184,31 @@ export function getClientOption<T extends boolean | string>(
 }
 
 /**
+ * returns true if the response header should be omitted from the response envelope.
+ *
+ * currently, this is the case for `Content-Type` response headers whose value is
+ * a literal/constant, unless the method opts in via the `preserveContentTypeHeader`
+ * client option. callers (response envelope construction and example mapping)
+ * must keep the two sites in sync; use this helper from both.
+ *
+ * @param httpHeader the tcgc response header to inspect
+ * @param sdkMethod the tcgc service method that owns the response
+ * @param program the tsp Program currently in scope
+ */
+export function isOmittedResponseHeader(httpHeader: tcgc.SdkServiceResponseHeader, sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, program: tsp.Program): boolean {
+  if (!httpHeader.serializedName.match(/^content-type$/i)) {
+    return false;
+  }
+  // literal/constant header values are folded into the request/response shape and
+  // are therefore not surfaced as fields on the response envelope.
+  if (httpHeader.type.kind !== 'constant' && httpHeader.type.kind !== 'enumvalue') {
+    return false;
+  }
+  const preserveHeader = getClientOption<boolean>('preserveContentTypeHeader', sdkMethod, program);
+  return preserveHeader !== true;
+}
+
+/**
  * returns the record for the specified decorator's arguments if it exists
  *
  * @param name the name of the decorator to find

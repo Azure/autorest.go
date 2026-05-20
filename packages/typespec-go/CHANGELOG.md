@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Generate a mock value for client parameters in examples when the operation doesn't use the parameter.
+* Fixed error when an operation's example contained a literal `Content-Type` response header that was omitted from the response envelope.
 
 ## 0.14.0 (2026-05-18)
 

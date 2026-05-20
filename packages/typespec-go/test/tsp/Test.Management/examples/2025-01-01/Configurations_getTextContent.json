@@ -1,0 +1,18 @@
+{
+    "operationId": "Configurations_getTextContent",
+    "title": "Configurations_getTextContent",
+    "parameters": {
+        "api-version": "2025-01-01",
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "resourceGroupName": "myResourceGroup",
+        "configurationName": "myConfiguration"
+    },
+    "responses": {
+        "200": {
+            "headers": {
+                "Content-Type": "text/plain"
+            },
+            "body": "config text"
+        }
+    }
+}
