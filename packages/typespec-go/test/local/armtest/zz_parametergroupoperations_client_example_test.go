@@ -18,11 +18,11 @@ func ExampleParameterGroupOperationsClient_NoParameterGroup() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewParameterGroupOperationsClient().NoParameterGroup(ctx, "myResourceGroup", "myWidget", nil)
+	res, err := clientFactory.NewParameterGroupOperationsClient("00000000-0000-0000-0000-000000000000").NoParameterGroup(ctx, "myResourceGroup", "myWidget", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -50,11 +50,11 @@ func ExampleParameterGroupOperationsClient_QueryParameterGroup() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewParameterGroupOperationsClient().QueryParameterGroup(ctx, "myResourceGroup", "myWidget", armtest.QueryParams{FilterName: "myFilter"}, nil)
+	res, err := clientFactory.NewParameterGroupOperationsClient("00000000-0000-0000-0000-000000000000").QueryParameterGroup(ctx, "myResourceGroup", "myWidget", armtest.QueryParams{FilterName: "myFilter"}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -82,11 +82,11 @@ func ExampleParameterGroupOperationsClient_SharedParameterGroup1() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewParameterGroupOperationsClient().SharedParameterGroup1(ctx, "myResourceGroup", "myWidget", armtest.ManagementRequestOptions{ClientRequestID: "client-req-001"}, nil)
+	res, err := clientFactory.NewParameterGroupOperationsClient("00000000-0000-0000-0000-000000000000").SharedParameterGroup1(ctx, "myResourceGroup", "myWidget", armtest.ManagementRequestOptions{ClientRequestID: "client-req-001"}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -114,11 +114,11 @@ func ExampleParameterGroupOperationsClient_SharedParameterGroup2() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armtest.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewParameterGroupOperationsClient().SharedParameterGroup2(ctx, "myResourceGroup", "myWidget", armtest.ManagementRequestOptions{ClientRequestID: "client-req-002"}, nil)
+	res, err := clientFactory.NewParameterGroupOperationsClient("00000000-0000-0000-0000-000000000000").SharedParameterGroup2(ctx, "myResourceGroup", "myWidget", armtest.ManagementRequestOptions{ClientRequestID: "client-req-002"}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
