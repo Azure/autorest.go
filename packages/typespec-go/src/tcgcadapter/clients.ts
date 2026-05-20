@@ -408,7 +408,7 @@ export class ClientAdapter {
       if (existsOnParent) {
         continue;
       }
-      const adaptedParam = new go.Parameter(getEscapedReservedName(uncapitalize(helpers.getEffectiveName(param)), 'Param'), this.ta.getWireType(param.type, true, true), true);
+      const adaptedParam = new go.Parameter(getEscapedReservedName(helpers.getEffectiveName(param, true), 'Param'), this.ta.getWireType(param.type, true, true), true);
       adaptedParam.docs.summary = param.summary;
       adaptedParam.docs.description = param.doc;
       clientAccessor.parameters.push(adaptedParam);
