@@ -37,8 +37,8 @@ type PageBlobClient struct {
 //   - contentLength - The length of the request.
 //   - options - PageBlobClientClearPagesOptions contains the optional parameters for the PageBlobClient.ClearPages method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
 //   - SequenceNumberAccessConditions - SequenceNumberAccessConditions contains a group of parameters for the PageBlobClient.UploadPages
 //     method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
@@ -314,10 +314,10 @@ func (client *PageBlobClient) copyIncrementalHandleResponse(resp *http.Response)
 //   - blobContentLength - This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned
 //     to a 512-byte boundary.
 //   - options - PageBlobClientCreateOptions contains the optional parameters for the PageBlobClient.Create method.
-//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Client.SetHTTPHeaders method.
+//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the BlobClient.SetHTTPHeaders method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) Create(ctx context.Context, containerName string, blob string, contentLength int64, blobContentLength int64, options *PageBlobClientCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientCreateResponse, error) {
 	var err error
@@ -777,8 +777,8 @@ func (client *PageBlobClient) getPageRangesDiffHandleResponse(resp *http.Respons
 //     to a 512-byte boundary.
 //   - options - PageBlobClientResizeOptions contains the optional parameters for the PageBlobClient.Resize method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *PageBlobClient) Resize(ctx context.Context, containerName string, blob string, comp Enum1, blobContentLength int64, options *PageBlobClientResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobClientResizeResponse, error) {
 	var err error
@@ -1029,8 +1029,8 @@ func (client *PageBlobClient) updateSequenceNumberHandleResponse(resp *http.Resp
 //   - body - Initial data
 //   - options - PageBlobClientUploadPagesOptions contains the optional parameters for the PageBlobClient.UploadPages method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
 //   - SequenceNumberAccessConditions - SequenceNumberAccessConditions contains a group of parameters for the PageBlobClient.UploadPages
 //     method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
@@ -1216,13 +1216,13 @@ func (client *PageBlobClient) uploadPagesHandleResponse(resp *http.Response) (Pa
 //     is required.
 //   - options - PageBlobClientUploadPagesFromURLOptions contains the optional parameters for the PageBlobClient.UploadPagesFromURL
 //     method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the Client.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Client.SetMetadata method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 //   - SequenceNumberAccessConditions - SequenceNumberAccessConditions contains a group of parameters for the PageBlobClient.UploadPages
 //     method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Client.StartCopyFromURL
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the BlobClient.StartCopyFromURL
 //     method.
 func (client *PageBlobClient) UploadPagesFromURL(ctx context.Context, containerName string, blob string, comp Enum32, sourceURL string, sourceRange string, contentLength int64, rangeParam string, options *PageBlobClientUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (PageBlobClientUploadPagesFromURLResponse, error) {
 	var err error

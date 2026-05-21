@@ -34,6 +34,129 @@ type ArrowField struct {
 	Scale     *int32  `xml:"Scale"`
 }
 
+type BlobFlatListSegment struct {
+	// REQUIRED
+	BlobItems []*BlobItemInternal `xml:"Blob"`
+}
+
+type BlobHierarchyListSegment struct {
+	// REQUIRED
+	BlobItems    []*BlobItemInternal `xml:"Blob"`
+	BlobPrefixes []*BlobPrefix       `xml:"BlobPrefix"`
+}
+
+// BlobItemInternal - An Azure Storage blob
+type BlobItemInternal struct {
+	// REQUIRED
+	Deleted *bool `xml:"Deleted"`
+
+	// REQUIRED
+	Name *BlobName `xml:"Name"`
+
+	// REQUIRED; Properties of a blob
+	Properties *BlobPropertiesInternal `xml:"Properties"`
+
+	// REQUIRED
+	Snapshot *string `xml:"Snapshot"`
+
+	// Blob tags
+	BlobTags         *BlobTags     `xml:"Tags"`
+	HasVersionsOnly  *bool         `xml:"HasVersionsOnly"`
+	IsCurrentVersion *bool         `xml:"IsCurrentVersion"`
+	Metadata         *BlobMetadata `xml:"Metadata"`
+
+	// Dictionary of
+	ObjectReplicationMetadata map[string]*string `xml:"OrMetadata"`
+	VersionID                 *string            `xml:"VersionId"`
+}
+
+type BlobMetadata struct {
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]*string
+	Encrypted            *string `xml:"Encrypted,attr"`
+}
+
+type BlobName struct {
+	// The name of the blob.
+	Content *string `xml:",chardata"`
+
+	// Indicates if the blob name is encoded.
+	Encoded *bool `xml:"Encoded,attr"`
+}
+
+type BlobPrefix struct {
+	// REQUIRED
+	Name *BlobName `xml:"Name"`
+}
+
+// BlobPropertiesInternal - Properties of a blob
+type BlobPropertiesInternal struct {
+	// REQUIRED
+	Etag *string `xml:"Etag"`
+
+	// REQUIRED
+	LastModified         *time.Time     `xml:"Last-Modified"`
+	AccessTier           *AccessTier    `xml:"AccessTier"`
+	AccessTierChangeTime *time.Time     `xml:"AccessTierChangeTime"`
+	AccessTierInferred   *bool          `xml:"AccessTierInferred"`
+	ArchiveStatus        *ArchiveStatus `xml:"ArchiveStatus"`
+	BlobSequenceNumber   *int64         `xml:"x-ms-blob-sequence-number"`
+	BlobType             *BlobType      `xml:"BlobType"`
+	CacheControl         *string        `xml:"Cache-Control"`
+	ContentDisposition   *string        `xml:"Content-Disposition"`
+	ContentEncoding      *string        `xml:"Content-Encoding"`
+	ContentLanguage      *string        `xml:"Content-Language"`
+
+	// Size in bytes
+	ContentLength             *int64          `xml:"Content-Length"`
+	ContentMD5                []byte          `xml:"Content-MD5"`
+	ContentType               *string         `xml:"Content-Type"`
+	CopyCompletionTime        *time.Time      `xml:"CopyCompletionTime"`
+	CopyID                    *string         `xml:"CopyId"`
+	CopyProgress              *string         `xml:"CopyProgress"`
+	CopySource                *string         `xml:"CopySource"`
+	CopyStatus                *CopyStatusType `xml:"CopyStatus"`
+	CopyStatusDescription     *string         `xml:"CopyStatusDescription"`
+	CreationTime              *time.Time      `xml:"Creation-Time"`
+	CustomerProvidedKeySHA256 *string         `xml:"CustomerProvidedKeySha256"`
+	DeletedTime               *time.Time      `xml:"DeletedTime"`
+	DestinationSnapshot       *string         `xml:"DestinationSnapshot"`
+
+	// The name of the encryption scope under which the blob is encrypted.
+	EncryptionScope             *string                     `xml:"EncryptionScope"`
+	ExpiresOn                   *time.Time                  `xml:"Expiry-Time"`
+	ImmutabilityPolicyExpiresOn *time.Time                  `xml:"ImmutabilityPolicyUntilDate"`
+	ImmutabilityPolicyMode      *BlobImmutabilityPolicyMode `xml:"ImmutabilityPolicyMode"`
+	IncrementalCopy             *bool                       `xml:"IncrementalCopy"`
+	IsSealed                    *bool                       `xml:"Sealed"`
+	LastAccessedOn              *time.Time                  `xml:"LastAccessTime"`
+	LeaseDuration               *LeaseDurationType          `xml:"LeaseDuration"`
+	LeaseState                  *LeaseStateType             `xml:"LeaseState"`
+	LeaseStatus                 *LeaseStatusType            `xml:"LeaseStatus"`
+	LegalHold                   *bool                       `xml:"LegalHold"`
+
+	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High
+	// and Standard.
+	RehydratePriority      *RehydratePriority `xml:"RehydratePriority"`
+	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
+	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
+	TagCount               *int32             `xml:"TagCount"`
+}
+
+type BlobTag struct {
+	// REQUIRED
+	Key *string `xml:"Key"`
+
+	// REQUIRED
+	Value *string `xml:"Value"`
+}
+
+// BlobTags - Blob tags
+type BlobTags struct {
+	// REQUIRED
+	BlobTagSet []*BlobTag `xml:"TagSet>Tag"`
+}
+
 // Block - Represents a single block in a block blob. It describes the block's ID and size.
 type Block struct {
 	// REQUIRED; The base64 encoded block ID.
@@ -151,8 +274,8 @@ type FilterBlobItem struct {
 	IsCurrentVersion *bool   `xml:"IsCurrentVersion"`
 
 	// Blob tags
-	Tags      *Tags   `xml:"Tags"`
-	VersionID *string `xml:"VersionId"`
+	Tags      *BlobTags `xml:"Tags"`
+	VersionID *string   `xml:"VersionId"`
 }
 
 // FilterBlobSegment - The result of a Filter Blobs API call
@@ -168,11 +291,6 @@ type FilterBlobSegment struct {
 	NextMarker *string `xml:"NextMarker"`
 }
 
-type FlatListSegment struct {
-	// REQUIRED
-	BlobItems []*ItemInternal `xml:"Blob"`
-}
-
 // GeoReplication - Geo-Replication information for the Secondary Storage Service
 type GeoReplication struct {
 	// REQUIRED; A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available
@@ -182,37 +300,6 @@ type GeoReplication struct {
 
 	// REQUIRED; The status of the secondary location
 	Status *GeoReplicationStatusType `xml:"Status"`
-}
-
-type HierarchyListSegment struct {
-	// REQUIRED
-	BlobItems    []*ItemInternal `xml:"Blob"`
-	BlobPrefixes []*Prefix       `xml:"BlobPrefix"`
-}
-
-// ItemInternal - An Azure Storage blob
-type ItemInternal struct {
-	// REQUIRED
-	Deleted *bool `xml:"Deleted"`
-
-	// REQUIRED
-	Name *Name `xml:"Name"`
-
-	// REQUIRED; Properties of a blob
-	Properties *PropertiesInternal `xml:"Properties"`
-
-	// REQUIRED
-	Snapshot *string `xml:"Snapshot"`
-
-	// Blob tags
-	BlobTags         *Tags     `xml:"Tags"`
-	HasVersionsOnly  *bool     `xml:"HasVersionsOnly"`
-	IsCurrentVersion *bool     `xml:"IsCurrentVersion"`
-	Metadata         *Metadata `xml:"Metadata"`
-
-	// Dictionary of
-	ObjectReplicationMetadata map[string]*string `xml:"OrMetadata"`
-	VersionID                 *string            `xml:"VersionId"`
 }
 
 // JSONTextConfiguration - json text configuration
@@ -236,7 +323,7 @@ type ListBlobsFlatSegmentResponse struct {
 	ContainerName *string `xml:"ContainerName,attr"`
 
 	// REQUIRED
-	Segment *FlatListSegment `xml:"Blobs"`
+	Segment *BlobFlatListSegment `xml:"Blobs"`
 
 	// REQUIRED
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
@@ -252,7 +339,7 @@ type ListBlobsHierarchySegmentResponse struct {
 	ContainerName *string `xml:"ContainerName,attr"`
 
 	// REQUIRED
-	Segment *HierarchyListSegment `xml:"Blobs"`
+	Segment *BlobHierarchyListSegment `xml:"Blobs"`
 
 	// REQUIRED
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
@@ -294,12 +381,6 @@ type Logging struct {
 	Write *bool `xml:"Write"`
 }
 
-type Metadata struct {
-	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]*string
-	Encrypted            *string `xml:"Encrypted,attr"`
-}
-
 // Metrics - a summary of request statistics grouped by API in hour or minute aggregates for blobs
 type Metrics struct {
 	// REQUIRED; Indicates whether metrics are enabled for the Blob service.
@@ -315,14 +396,6 @@ type Metrics struct {
 	Version *string `xml:"Version"`
 }
 
-type Name struct {
-	// The name of the blob.
-	Content *string `xml:",chardata"`
-
-	// Indicates if the blob name is encoded.
-	Encoded *bool `xml:"Encoded,attr"`
-}
-
 // PageList - the list of pages
 type PageList struct {
 	ClearRange []*ClearRange `xml:"ClearRange"`
@@ -336,65 +409,6 @@ type PageRange struct {
 
 	// REQUIRED
 	Start *int64 `xml:"Start"`
-}
-
-type Prefix struct {
-	// REQUIRED
-	Name *Name `xml:"Name"`
-}
-
-// PropertiesInternal - Properties of a blob
-type PropertiesInternal struct {
-	// REQUIRED
-	Etag *string `xml:"Etag"`
-
-	// REQUIRED
-	LastModified         *time.Time     `xml:"Last-Modified"`
-	AccessTier           *AccessTier    `xml:"AccessTier"`
-	AccessTierChangeTime *time.Time     `xml:"AccessTierChangeTime"`
-	AccessTierInferred   *bool          `xml:"AccessTierInferred"`
-	ArchiveStatus        *ArchiveStatus `xml:"ArchiveStatus"`
-	BlobSequenceNumber   *int64         `xml:"x-ms-blob-sequence-number"`
-	BlobType             *BlobType      `xml:"BlobType"`
-	CacheControl         *string        `xml:"Cache-Control"`
-	ContentDisposition   *string        `xml:"Content-Disposition"`
-	ContentEncoding      *string        `xml:"Content-Encoding"`
-	ContentLanguage      *string        `xml:"Content-Language"`
-
-	// Size in bytes
-	ContentLength             *int64          `xml:"Content-Length"`
-	ContentMD5                []byte          `xml:"Content-MD5"`
-	ContentType               *string         `xml:"Content-Type"`
-	CopyCompletionTime        *time.Time      `xml:"CopyCompletionTime"`
-	CopyID                    *string         `xml:"CopyId"`
-	CopyProgress              *string         `xml:"CopyProgress"`
-	CopySource                *string         `xml:"CopySource"`
-	CopyStatus                *CopyStatusType `xml:"CopyStatus"`
-	CopyStatusDescription     *string         `xml:"CopyStatusDescription"`
-	CreationTime              *time.Time      `xml:"Creation-Time"`
-	CustomerProvidedKeySHA256 *string         `xml:"CustomerProvidedKeySha256"`
-	DeletedTime               *time.Time      `xml:"DeletedTime"`
-	DestinationSnapshot       *string         `xml:"DestinationSnapshot"`
-
-	// The name of the encryption scope under which the blob is encrypted.
-	EncryptionScope             *string                     `xml:"EncryptionScope"`
-	ExpiresOn                   *time.Time                  `xml:"Expiry-Time"`
-	ImmutabilityPolicyExpiresOn *time.Time                  `xml:"ImmutabilityPolicyUntilDate"`
-	ImmutabilityPolicyMode      *BlobImmutabilityPolicyMode `xml:"ImmutabilityPolicyMode"`
-	IncrementalCopy             *bool                       `xml:"IncrementalCopy"`
-	IsSealed                    *bool                       `xml:"Sealed"`
-	LastAccessedOn              *time.Time                  `xml:"LastAccessTime"`
-	LeaseDuration               *LeaseDurationType          `xml:"LeaseDuration"`
-	LeaseState                  *LeaseStateType             `xml:"LeaseState"`
-	LeaseStatus                 *LeaseStatusType            `xml:"LeaseStatus"`
-	LegalHold                   *bool                       `xml:"LegalHold"`
-
-	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High
-	// and Standard.
-	RehydratePriority      *RehydratePriority `xml:"RehydratePriority"`
-	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
-	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
-	TagCount               *int32             `xml:"TagCount"`
 }
 
 type QueryFormat struct {
@@ -500,20 +514,6 @@ type StorageServiceProperties struct {
 type StorageServiceStats struct {
 	// Geo-Replication information for the Secondary Storage Service
 	GeoReplication *GeoReplication `xml:"GeoReplication"`
-}
-
-type Tag struct {
-	// REQUIRED
-	Key *string `xml:"Key"`
-
-	// REQUIRED
-	Value *string `xml:"Value"`
-}
-
-// Tags - Blob tags
-type Tags struct {
-	// REQUIRED
-	BlobTagSet []*Tag `xml:"TagSet>Tag"`
 }
 
 // UserDelegationKey - A user delegation key

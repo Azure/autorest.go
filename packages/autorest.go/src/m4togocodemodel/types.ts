@@ -237,12 +237,12 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema, pkg: go
     }
   }
 
-  field.xml = adaptXMLInfo(prop.schema);
+  field.xml = adaptXMLInfo(prop.schema, prop.serializedName);
 
   return field;
 }
 
-export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
+export function adaptXMLInfo(obj: m4.Schema, serializedName?: string): go.XMLInfo | undefined {
   const xmlInfo = new go.XMLInfo();
   let includeXMLField = false;
   if (obj.serialization?.xml?.name && obj.serialization.xml.name !== obj.language.go!.name) {
@@ -271,6 +271,12 @@ export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
       includeXMLField = true;
     } else if (asArray.elementType.language.default.name !== asArray.elementType.language.go!.name) {
       // we can land here if the Go-specific type name was renamed to remove stuttering
+      xmlInfo.name = asArray.elementType.language.default.name;
+      includeXMLField = true;
+    } else if (serializedName && serializedName !== asArray.elementType.language.default.name) {
+      // the serializedName defaults to the property name in swagger which
+      // might not match the XML element type name. for XML arrays in Go,
+      // we need to use the element type name in the XML tag.
       xmlInfo.name = asArray.elementType.language.default.name;
       includeXMLField = true;
     }
