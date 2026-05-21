@@ -567,12 +567,7 @@ function shouldRenderParam(param: go.MethodParameter, example: go.MethodExample)
  * Uses the example value if available, otherwise generates a fake value.
  * Callers should check shouldRenderParam before calling this.
  */
-function getParamExampleValue(
-  pkg: go.TestPackage,
-  param: go.MethodParameter,
-  example: go.MethodExample,
-  imports: ImportManager,
-): string {
+function getParamExampleValue(pkg: go.TestPackage, param: go.MethodParameter, example: go.MethodExample, imports: ImportManager): string {
   const paramExample = example.parameters.find((p) => p.parameter.name === param.name);
   if (paramExample) {
     return getExampleValue(pkg, paramExample.value, '\t', imports, isParamByValue(paramExample)).slice(1);
