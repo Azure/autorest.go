@@ -148,25 +148,13 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             imports.addForPkg(methodParam.pkg);
             const fieldTexts: string[] = [];
             for (const groupParam of methodParam.params) {
-              if (go.isLiteralParameter(groupParam.style)) continue;
-              const paramExample = example.parameters.find((ep) => ep.parameter.name === groupParam.name);
-              if (paramExample) {
-                fieldTexts.push(`${naming.capitalize(groupParam.name)}: ${getExampleValue(pkg, paramExample.value, '\t', imports, groupParam.byValue).slice(1)}`);
-              } else if (go.isRequiredParameter(groupParam.style)) {
-                const fakeValue = generateFakeExample(groupParam.type, groupParam.name);
-                fieldTexts.push(`${naming.capitalize(groupParam.name)}: ${getExampleValue(pkg, fakeValue, '\t', imports, groupParam.byValue).slice(1)}`);
-              }
+              if (!shouldRenderParam(groupParam, example)) continue;
+              fieldTexts.push(`${naming.capitalize(groupParam.name)}: ${getParamExampleValue(pkg, groupParam, example, imports)}`);
             }
             renderedParams.push(`${go.getPackageName(methodParam.pkg)}.${methodParam.groupName}{${fieldTexts.join(', ')}}`);
           } else {
-            if (go.isLiteralParameter(methodParam.style)) continue;
-            const paramExample = example.parameters.find((p) => p.parameter.name === methodParam.name);
-            if (paramExample) {
-              renderedParams.push(getExampleValue(pkg, paramExample.value, '\t', imports, isParamByValue(paramExample)).slice(1));
-            } else if (go.isRequiredParameter(methodParam.style)) {
-              const fakeValue = generateFakeExample(methodParam.type, methodParam.name);
-              renderedParams.push(getExampleValue(pkg, fakeValue, '\t', imports, methodParam.byValue).slice(1));
-            }
+            if (!shouldRenderParam(methodParam, example)) continue;
+            renderedParams.push(getParamExampleValue(pkg, methodParam, example, imports));
           }
         }
 
@@ -562,4 +550,33 @@ function isParamByValue(p: go.ParameterExample): boolean {
     default:
       return p.parameter.byValue;
   }
+}
+
+/**
+ * Returns true if the parameter should be rendered in the example output.
+ * Skips literal parameters and optional parameters without an example value.
+ */
+function shouldRenderParam(param: go.MethodParameter, example: go.MethodExample): boolean {
+  if (go.isLiteralParameter(param.style)) return false;
+  if (example.parameters.find((p) => p.parameter.name === param.name)) return true;
+  return go.isRequiredParameter(param.style);
+}
+
+/**
+ * Gets the example value text for a parameter.
+ * Uses the example value if available, otherwise generates a fake value.
+ * Callers should check shouldRenderParam before calling this.
+ */
+function getParamExampleValue(
+  pkg: go.TestPackage,
+  param: go.MethodParameter,
+  example: go.MethodExample,
+  imports: ImportManager,
+): string {
+  const paramExample = example.parameters.find((p) => p.parameter.name === param.name);
+  if (paramExample) {
+    return getExampleValue(pkg, paramExample.value, '\t', imports, isParamByValue(paramExample)).slice(1);
+  }
+  const fakeValue = generateFakeExample(param.type, param.name);
+  return getExampleValue(pkg, fakeValue, '\t', imports, param.byValue).slice(1);
 }
