@@ -265,14 +265,14 @@ export function isExtensibleEnum(type: tcgc.SdkType): boolean {
 /**
  * returns the effective Go name for a tcgc item that may carry an isExactName marker.
  * when isExactName is true (set by the tsp exact() function on @clientName), the name
- * is returned without built-in naming canonization. otherwise the name is
- * canonicalized via naming.ensureNameCase(). when lowerFirst is true, the first
- * character is lowercased to remain consistent with the Go-language requirement
- * for unexported/parameter identifiers.
+ * is returned verbatim without built-in naming canonization or first-character
+ * casing changes - exact names are honored as-authored. otherwise the name is
+ * canonicalized via naming.ensureNameCase(), with lowerFirst optionally lowercasing
+ * the first character for unexported/parameter identifiers.
  */
 export function getEffectiveName(src: { name: string; isExactName?: boolean }, lowerFirst?: boolean): string {
   if (src.isExactName) {
-    return lowerFirst ? naming.uncapitalize(src.name) : src.name;
+    return src.name;
   }
   return naming.ensureNameCase(src.name, lowerFirst);
 }

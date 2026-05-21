@@ -93,13 +93,13 @@ func (client *Client) getRenamedHandleResponse(resp *http.Response) (ClientGetRe
 // GetWidget -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientGetWidgetOptions contains the optional parameters for the Client.GetWidget method.
-func (client *Client) GetWidget(ctx context.Context, widget_ID string, options *ClientGetWidgetOptions) (ClientGetWidgetResponse, error) {
+func (client *Client) GetWidget(ctx context.Context, Widget_ID string, options *ClientGetWidgetOptions) (ClientGetWidgetResponse, error) {
 	var err error
 	const operationName = "Client.GetWidget"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getWidgetCreateRequest(ctx, widget_ID, options)
+	req, err := client.getWidgetCreateRequest(ctx, Widget_ID, options)
 	if err != nil {
 		return ClientGetWidgetResponse{}, err
 	}
@@ -116,12 +116,12 @@ func (client *Client) GetWidget(ctx context.Context, widget_ID string, options *
 }
 
 // getWidgetCreateRequest creates the GetWidget request.
-func (client *Client) getWidgetCreateRequest(ctx context.Context, widget_ID string, _ *ClientGetWidgetOptions) (*policy.Request, error) {
+func (client *Client) getWidgetCreateRequest(ctx context.Context, Widget_ID string, _ *ClientGetWidgetOptions) (*policy.Request, error) {
 	urlPath := "/get-widget/{widgetId}"
-	if widget_ID == "" {
-		return nil, errors.New("parameter widget_ID cannot be empty")
+	if Widget_ID == "" {
+		return nil, errors.New("parameter Widget_ID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{widgetId}", url.PathEscape(widget_ID))
+	urlPath = strings.ReplaceAll(urlPath, "{widgetId}", url.PathEscape(Widget_ID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

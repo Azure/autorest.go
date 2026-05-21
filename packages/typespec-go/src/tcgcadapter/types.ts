@@ -750,7 +750,7 @@ export class TypeAdapter {
   private getConstantValues(type: go.Constant, valueTypes: Array<tcgc.SdkEnumValueType>): Array<go.ConstantValue> {
     const values = new Array<go.ConstantValue>();
     for (const valueType of valueTypes) {
-      let valueTypeName = `${type.name}${naming.ensureNameCase(valueType.name)}`;
+      let valueTypeName = `${type.name}${helpers.getEffectiveName(valueType)}`;
       if (valueType.enumType.access === 'internal') {
         valueTypeName = naming.getEscapedReservedName(naming.uncapitalize(valueTypeName), 'Type');
       }

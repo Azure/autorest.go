@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* Honor the TCGC `exact()` function on `@clientName`: when a name is marked as exact, it is preserved verbatim and is not subjected to the built-in naming canonization (e.g. acronym capitalization or PascalCase). Applies to models, enums, model fields, parameters, and response headers.
+* Honor the TCGC `exact()` function on `@clientName`: when a name is marked as exact, it is preserved verbatim and is not subjected to the built-in naming canonization (e.g. acronym capitalization or PascalCase). Applies to models, enums, model fields, parameters, and response headers. Exact parameter names are also kept as-authored in the method signature (no first-character lowercasing), e.g. `IOContent` stays `IOContent`.
 
 ### Bugs Fixed
 

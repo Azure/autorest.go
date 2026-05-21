@@ -1851,7 +1851,9 @@ function getAPIParametersSig(method: go.ClientAccessor | go.MethodType, imports:
       if (methodParam.kind !== 'paramGroup') {
         imports.addForType(methodParam.type);
       }
-      params.push(`${naming.uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
+      // honor exact() names: emit verbatim instead of uncapitalizing.
+      const name = methodParam.kind !== 'paramGroup' && methodParam.isExactName ? methodParam.name : naming.uncapitalize(methodParam.name);
+      params.push(`${name} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
     }
   }
   return params.join(', ');
