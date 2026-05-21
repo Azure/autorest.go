@@ -28,6 +28,17 @@ model `test-management-request-options-only-optional` {
   correlationId?: string;
 }
 
+@doc("Query parameter group with a required field")
+model `test-query-params` {
+  @doc("The filter name")
+  @query
+  filterName: string;
+
+  @doc("Optional max count")
+  @query
+  maxCount?: int32;
+}
+
 @doc("Widget resource for testing parameter groups")
 model Widget is TrackedResource<WidgetProperties> {
   @doc("The name of the widget")
@@ -64,5 +75,14 @@ interface ParameterGroupOperations {
     ...ResourceInstanceParameters<Widget>,
     @doc("Parameter group options")
     params: `test-management-request-options-only-optional`,
+  ): ArmResponse<Widget> | ErrorResponse;
+
+  @doc("This operation uses a required query parameter group")
+  @post
+  @armResourceAction(Widget)
+  queryParameterGroup(
+    ...ResourceInstanceParameters<Widget>,
+    @doc("Query parameters")
+    params: `test-query-params`,
   ): ArmResponse<Widget> | ErrorResponse;
 }

@@ -140,20 +140,21 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           clientRef = 'client';
         }
 
-        // call method
-        const methodParameters: go.ParameterExample[] = [];
-        for (const param of method.parameters) {
-          if (param.location === 'method') {
-            if (go.isLiteralParameter(param.style)) {
-              continue;
+        // call method, using getMethodParameters for correct ordering (including required param groups)
+        const renderedParams: string[] = [];
+        for (const methodParam of helpers.getMethodParameters(method)) {
+          if (methodParam.kind === 'paramGroup') {
+            if (methodParam === method.optionalParamsGroup) continue;
+            imports.addForPkg(methodParam.pkg);
+            const fieldTexts: string[] = [];
+            for (const groupParam of methodParam.params) {
+              if (!shouldRenderParam(groupParam, example)) continue;
+              fieldTexts.push(`${naming.capitalize(groupParam.name)}: ${getParamExampleValue(pkg, groupParam, example, imports)}`);
             }
-            const methodParam = example.parameters.find((p) => p.parameter.name === param.name);
-            if (methodParam) {
-              methodParameters.push(methodParam);
-            } else if (go.isRequiredParameter(param.style)) {
-              // if the parameter is required but lacks example value, generate a fake example
-              methodParameters.push({ parameter: param, value: generateFakeExample(param.type, param.name) });
-            }
+            renderedParams.push(`${go.getPackageName(methodParam.pkg)}.${methodParam.groupName}{${fieldTexts.join(', ')}}`);
+          } else {
+            if (!shouldRenderParam(methodParam, example)) continue;
+            renderedParams.push(getParamExampleValue(pkg, methodParam, example, imports));
           }
         }
 
@@ -172,7 +173,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
-            exampleText += `${indent.get()}poller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, isParamByValue(p)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}poller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${renderedParams.join(', ')}${renderedParams.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
             exampleText += `${indent.get()}if err != nil {\n`;
             exampleText += `${indent.push().get()}log.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `${indent.pop().get()}}\n`;
@@ -183,13 +184,13 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             exampleText += `${indent.pop().get()}}\n`;
             break;
           case 'method':
-            exampleText += `${indent.get()}${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, isParamByValue(p)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${renderedParams.join(', ')}${renderedParams.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
             exampleText += `${indent.get()}if err != nil {\n`;
             exampleText += `${indent.push().get()}log.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `${indent.pop().get()}}\n`;
             break;
           case 'pageableMethod':
-            exampleText += `${indent.get()}pager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, isParamByValue(p)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}pager := ${clientRef}.${fixUpMethodName(method)}(${renderedParams.join(', ')}${renderedParams.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
             break;
           default:
             method satisfies never;
@@ -549,4 +550,28 @@ function isParamByValue(p: go.ParameterExample): boolean {
     default:
       return p.parameter.byValue;
   }
+}
+
+/**
+ * Returns true if the parameter should be rendered in the example output.
+ * Skips literal parameters and optional parameters without an example value.
+ */
+function shouldRenderParam(param: go.MethodParameter, example: go.MethodExample): boolean {
+  if (go.isLiteralParameter(param.style)) return false;
+  if (example.parameters.find((p) => p.parameter.name === param.name)) return true;
+  return go.isRequiredParameter(param.style);
+}
+
+/**
+ * Gets the example value text for a parameter.
+ * Uses the example value if available, otherwise generates a fake value.
+ * Callers should check shouldRenderParam before calling this.
+ */
+function getParamExampleValue(pkg: go.TestPackage, param: go.MethodParameter, example: go.MethodExample, imports: ImportManager): string {
+  const paramExample = example.parameters.find((p) => p.parameter.name === param.name);
+  if (paramExample) {
+    return getExampleValue(pkg, paramExample.value, '\t', imports, isParamByValue(paramExample)).slice(1);
+  }
+  const fakeValue = generateFakeExample(param.type, param.name);
+  return getExampleValue(pkg, fakeValue, '\t', imports, param.byValue).slice(1);
 }

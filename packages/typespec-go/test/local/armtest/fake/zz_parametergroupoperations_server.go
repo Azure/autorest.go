@@ -16,6 +16,7 @@ import (
 	"net/url"
 	"regexp"
 	"slices"
+	"strconv"
 )
 
 // ParameterGroupOperationsServer is a fake server for instances of the armtest.ParameterGroupOperationsClient type.
@@ -23,6 +24,10 @@ type ParameterGroupOperationsServer struct {
 	// NoParameterGroup is the fake for method ParameterGroupOperationsClient.NoParameterGroup
 	// HTTP status codes to indicate success: http.StatusOK
 	NoParameterGroup func(ctx context.Context, resourceGroupName string, widgetName string, options *armtest.ParameterGroupOperationsClientNoParameterGroupOptions) (resp azfake.Responder[armtest.ParameterGroupOperationsClientNoParameterGroupResponse], errResp azfake.ErrorResponder)
+
+	// QueryParameterGroup is the fake for method ParameterGroupOperationsClient.QueryParameterGroup
+	// HTTP status codes to indicate success: http.StatusOK
+	QueryParameterGroup func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.QueryParams, options *armtest.ParameterGroupOperationsClientQueryParameterGroupOptions) (resp azfake.Responder[armtest.ParameterGroupOperationsClientQueryParameterGroupResponse], errResp azfake.ErrorResponder)
 
 	// SharedParameterGroup1 is the fake for method ParameterGroupOperationsClient.SharedParameterGroup1
 	// HTTP status codes to indicate success: http.StatusOK
@@ -69,6 +74,8 @@ func (p *ParameterGroupOperationsServerTransport) dispatchToMethodFake(req *http
 			switch method {
 			case "ParameterGroupOperationsClient.NoParameterGroup":
 				res.resp, res.err = p.dispatchNoParameterGroup(req)
+			case "ParameterGroupOperationsClient.QueryParameterGroup":
+				res.resp, res.err = p.dispatchQueryParameterGroup(req)
 			case "ParameterGroupOperationsClient.SharedParameterGroup1":
 				res.resp, res.err = p.dispatchSharedParameterGroup1(req)
 			case "ParameterGroupOperationsClient.SharedParameterGroup2":
@@ -115,6 +122,59 @@ func (p *ParameterGroupOperationsServerTransport) dispatchNoParameterGroup(req *
 		}
 	}
 	respr, errRespr := p.srv.NoParameterGroup(req.Context(), resourceGroupNameParam, widgetNameParam, options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Widget, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (p *ParameterGroupOperationsServerTransport) dispatchQueryParameterGroup(req *http.Request) (*http.Response, error) {
+	if p.srv.QueryParameterGroup == nil {
+		return nil, &nonRetriableError{errors.New("fake for method QueryParameterGroup not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/queryParameterGroup`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	widgetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("widgetName")])
+	if err != nil {
+		return nil, err
+	}
+	maxCountParam, err := parseOptional(qp.Get("maxCount"), func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
+		}
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	params := armtest.QueryParams{
+		FilterName: qp.Get("filterName"),
+	}
+	var options *armtest.ParameterGroupOperationsClientQueryParameterGroupOptions
+	if maxCountParam != nil {
+		options = &armtest.ParameterGroupOperationsClientQueryParameterGroupOptions{
+			MaxCount: maxCountParam,
+		}
+	}
+	respr, errRespr := p.srv.QueryParameterGroup(req.Context(), resourceGroupNameParam, widgetNameParam, params, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
