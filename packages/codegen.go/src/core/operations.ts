@@ -1851,9 +1851,7 @@ function getAPIParametersSig(method: go.ClientAccessor | go.MethodType, imports:
       if (methodParam.kind !== 'paramGroup') {
         imports.addForType(methodParam.type);
       }
-      // paramGroup names may be PascalCase upstream; lower-case for the sig variable name.
-      const name = methodParam.kind === 'paramGroup' ? naming.uncapitalize(methodParam.name) : methodParam.name;
-      params.push(`${name} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
+      params.push(`${methodParam.name} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
     }
   }
   return params.join(', ');

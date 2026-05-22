@@ -13,7 +13,7 @@ import { values } from '@azure-tools/linq';
 import { adaptXMLInfo } from './types.js';
 import { adaptWireType, hasDescription } from './types.js';
 import * as go from '../../../codemodel.go/src/index.js';
-import { ensureNameCase } from '../../../naming.go/src/index.js';
+import { ensureNameCase, uncapitalize } from '../../../naming.go/src/index.js';
 import * as helpers from '../transform/helpers.js';
 import { OperationNaming } from '../transform/namer.js';
 
@@ -664,7 +664,11 @@ function findOrAdaptParamsGroup(param: m4.Parameter, pkg: go.PackageContent): go
 }
 
 function adaptParameterGroup(groupProp: m4.GroupProperty, pkg: go.PackageContent, location: go.ParameterLocation): go.ParameterGroup {
-  const paramGroup = new go.ParameterGroup(pkg, groupProp.language.go!.name, groupProp.schema.language.go!.name, groupProp.required === true, location);
+  // the group's variable name (first arg) is used directly as the local variable identifier
+  // in generated method signatures, so uncapitalize it to follow Go's naming conventions.
+  // the upstream m4 adapter stores the group name as PascalCase. the type name (second arg)
+  // remains PascalCase as it is the exported struct type.
+  const paramGroup = new go.ParameterGroup(pkg, uncapitalize(groupProp.language.go!.name), groupProp.schema.language.go!.name, groupProp.required === true, location);
   paramGroup.docs.description = groupProp.language.go!.description;
   return paramGroup;
 }

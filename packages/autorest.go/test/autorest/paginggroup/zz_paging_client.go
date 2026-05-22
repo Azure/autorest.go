@@ -429,7 +429,7 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp 
 
 // NewGetMultiplePagesFragmentWithGroupingNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
 // with parameters grouped
-//   - CustomParameterGroup - CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
+//   - customParameterGroup - CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 //     method.
 //   - options - PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFragmentWithGroupingNextLinkPager
 //     method.

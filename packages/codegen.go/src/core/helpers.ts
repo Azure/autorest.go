@@ -155,10 +155,7 @@ export function getCreateRequestParametersSig(method: go.MethodType | go.NextPag
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of methodParams) {
-    // paramGroup names may be stored as PascalCase by upstream adapters (e.g. autorest m4);
-    // uncapitalize them so they conform to Go's local-variable naming convention.
-    // non-paramGroup params arrive in their final form from the adapter.
-    let paramName = methodParam.kind === 'paramGroup' ? naming.uncapitalize(methodParam.name) : methodParam.name;
+    let paramName = methodParam.name;
     // when creating the method sig for fooCreateRequest, if the options type is empty
     // or only contains the ResumeToken param use _ for the param name to quiet the linter
     if (methodParam.kind === 'paramGroup' && (methodParam.params.length === 0 || (methodParam.params.length === 1 && methodParam.params[0].kind === 'resumeTokenParam'))) {
@@ -187,10 +184,6 @@ export function getCreateRequestParameters(method: go.MethodType, optionsParam?:
     // the options param is always the last one
     if (optionsParam && i === methodParams.length - 1) {
       params.push(optionsParam);
-    } else if (methodParam.kind === 'paramGroup') {
-      // paramGroup names may be PascalCase upstream; lower-case here so the call-site
-      // identifier matches the corresponding parameter name in the sig.
-      params.push(naming.uncapitalize(methodParam.name));
     } else {
       params.push(methodParam.name);
     }
