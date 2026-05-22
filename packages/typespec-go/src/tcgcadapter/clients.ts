@@ -411,9 +411,6 @@ export class ClientAdapter {
       const adaptedParam = new go.Parameter(getEscapedReservedName(helpers.getEffectiveName(param, true), 'Param'), this.ta.getWireType(param.type, true, true), true);
       adaptedParam.docs.summary = param.summary;
       adaptedParam.docs.description = param.doc;
-      if (param.isExactName) {
-        adaptedParam.isExactName = true;
-      }
       clientAccessor.parameters.push(adaptedParam);
     }
     goClient.clientAccessors.push(clientAccessor);
@@ -831,9 +828,6 @@ export class ClientAdapter {
           default:
             throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node);
         }
-        if (param.isExactName) {
-          adaptedParam.isExactName = true;
-        }
       } else if (param.type.kind === 'model' && opParam.kind !== 'body') {
         // Attempt to handle as a parameter group for non-body parameter
         // TODO: Leverage body parameter as a part of parameter group
@@ -1208,11 +1202,6 @@ export class ClientAdapter {
       this.clientParams.set(getClientParamsKey(opParam), adaptedParam);
     }
 
-    // propagate the exact() marker so downstream emitters skip naming canonization (e.g. uncapitalize on signature).
-    if (methodParam.isExactName) {
-      adaptedParam.isExactName = true;
-    }
-
     return adaptedParam;
   }
 
@@ -1252,11 +1241,7 @@ export class ClientAdapter {
     }
 
     paramName = getEscapedReservedName(helpers.getEffectiveName({ name: paramName, isExactName }, paramStyle === 'required'), 'Param');
-    const result = new go.MultipartFormBodyParameter(paramName, type, paramStyle, byVal);
-    if (isExactName) {
-      result.isExactName = true;
-    }
-    return result;
+    return new go.MultipartFormBodyParameter(paramName, type, paramStyle, byVal);
   }
 
   private getMethodNameForDocComment(method: go.MethodType): string {

@@ -36,10 +36,6 @@ export interface Parameter {
 
   /** indicates if the param is pointer-to-type or not */
   byValue: boolean;
-
-  /** when true, the parameter name was provided via the tsp exact() function and
-   * must not be transformed (uncapitalized/canonicalized) by the emitter. */
-  isExactName?: boolean;
 }
 
 /** a method's receiver parameter */
