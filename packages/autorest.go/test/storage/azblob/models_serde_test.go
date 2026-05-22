@@ -762,7 +762,7 @@ func TestTagsRoundTrip(t *testing.T) {
   </TagSet>
 </Tags>`
 
-	var tags Tags
+	var tags BlobTags
 	if err := xml.Unmarshal([]byte(xmlData), &tags); err != nil {
 		t.Fatal(err)
 	}
@@ -780,7 +780,7 @@ func TestTagsRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var tags2 Tags
+	var tags2 BlobTags
 	if err := xml.Unmarshal(out, &tags2); err != nil {
 		t.Fatal(err)
 	}
@@ -928,7 +928,7 @@ func TestPropertiesInternalTimeFieldsRoundTrip(t *testing.T) {
   <LeaseState>available</LeaseState>
 </Properties>`
 
-	var props PropertiesInternal
+	var props BlobPropertiesInternal
 	if err := xml.Unmarshal([]byte(xmlData), &props); err != nil {
 		t.Fatal(err)
 	}
@@ -955,7 +955,7 @@ func TestPropertiesInternalTimeFieldsRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var props2 PropertiesInternal
+	var props2 BlobPropertiesInternal
 	if err := xml.Unmarshal(out, &props2); err != nil {
 		t.Fatal(err)
 	}

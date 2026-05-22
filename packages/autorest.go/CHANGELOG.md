@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.80 (2026-05-21)
+
+### Bugs Fixed
+
+* Fixed an issue where the wrong XML tag was emitted for certain types of arrays.
+
 ## 4.0.0-preview.79 (2026-05-14)
 
 ### Bugs Fixed

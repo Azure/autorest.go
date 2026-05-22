@@ -151,6 +151,858 @@ type AppendBlobClientSealResponse struct {
 	Version *string
 }
 
+// BlobClientAbortCopyFromURLResponse contains the response from method BlobClient.AbortCopyFromURL.
+type BlobClientAbortCopyFromURLResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientAcquireLeaseResponse contains the response from method BlobClient.AcquireLease.
+type BlobClientAcquireLeaseResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseID contains the information returned from the x-ms-lease-id header response.
+	LeaseID *string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientBreakLeaseResponse contains the response from method BlobClient.BreakLease.
+type BlobClientBreakLeaseResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseTime contains the information returned from the x-ms-lease-time header response.
+	LeaseTime *int32
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientChangeLeaseResponse contains the response from method BlobClient.ChangeLease.
+type BlobClientChangeLeaseResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseID contains the information returned from the x-ms-lease-id header response.
+	LeaseID *string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientCopyFromURLResponse contains the response from method BlobClient.CopyFromURL.
+type BlobClientCopyFromURLResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// ContentMD5 contains the information returned from the Content-MD5 header response.
+	ContentMD5 []byte
+
+	// CopyID contains the information returned from the x-ms-copy-id header response.
+	CopyID *string
+
+	// CopyStatus contains the information returned from the x-ms-copy-status header response.
+	CopyStatus *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+
+	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
+	XMSContentCRC64 []byte
+}
+
+// BlobClientCreateSnapshotResponse contains the response from method BlobClient.CreateSnapshot.
+type BlobClientCreateSnapshotResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// IsServerEncrypted contains the information returned from the x-ms-request-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Snapshot contains the information returned from the x-ms-snapshot header response.
+	Snapshot *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobClientDeleteImmutabilityPolicyResponse contains the response from method BlobClient.DeleteImmutabilityPolicy.
+type BlobClientDeleteImmutabilityPolicyResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientDeleteResponse contains the response from method BlobClient.Delete.
+type BlobClientDeleteResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientDownloadResponse contains the response from method BlobClient.Download.
+type BlobClientDownloadResponse struct {
+	// AcceptRanges contains the information returned from the Accept-Ranges header response.
+	AcceptRanges *string
+
+	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
+	BlobCommittedBlockCount *int32
+
+	// BlobContentMD5 contains the information returned from the x-ms-blob-content-md5 header response.
+	BlobContentMD5 []byte
+
+	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
+	BlobSequenceNumber *int64
+
+	// BlobType contains the information returned from the x-ms-blob-type header response.
+	BlobType *BlobType
+
+	// Body contains the streaming response.
+	Body io.ReadCloser
+
+	// CacheControl contains the information returned from the Cache-Control header response.
+	CacheControl *string
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// ContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
+	ContentCRC64 []byte
+
+	// ContentDisposition contains the information returned from the Content-Disposition header response.
+	ContentDisposition *string
+
+	// ContentEncoding contains the information returned from the Content-Encoding header response.
+	ContentEncoding *string
+
+	// ContentLanguage contains the information returned from the Content-Language header response.
+	ContentLanguage *string
+
+	// ContentLength contains the information returned from the Content-Length header response.
+	ContentLength *int64
+
+	// ContentMD5 contains the information returned from the Content-MD5 header response.
+	ContentMD5 []byte
+
+	// ContentRange contains the information returned from the Content-Range header response.
+	ContentRange *string
+
+	// ContentType contains the information returned from the Content-Type header response.
+	ContentType *string
+
+	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
+	CopyCompletionTime *time.Time
+
+	// CopyID contains the information returned from the x-ms-copy-id header response.
+	CopyID *string
+
+	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
+	CopyProgress *string
+
+	// CopySource contains the information returned from the x-ms-copy-source header response.
+	CopySource *string
+
+	// CopyStatus contains the information returned from the x-ms-copy-status header response.
+	CopyStatus *CopyStatusType
+
+	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
+	CopyStatusDescription *string
+
+	// CreationTime contains the information returned from the x-ms-creation-time header response.
+	CreationTime *time.Time
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
+	EncryptionKeySHA256 *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// ImmutabilityPolicyExpiresOn contains the information returned from the x-ms-immutability-policy-until-date header response.
+	ImmutabilityPolicyExpiresOn *time.Time
+
+	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+
+	// IsCurrentVersion contains the information returned from the x-ms-is-current-version header response.
+	IsCurrentVersion *bool
+
+	// IsSealed contains the information returned from the x-ms-blob-sealed header response.
+	IsSealed *bool
+
+	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastAccessed contains the information returned from the x-ms-last-access-time header response.
+	LastAccessed *time.Time
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
+	LeaseDuration *LeaseDurationType
+
+	// LeaseState contains the information returned from the x-ms-lease-state header response.
+	LeaseState *LeaseStateType
+
+	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
+	LeaseStatus *LeaseStatusType
+
+	// LegalHold contains the information returned from the x-ms-legal-hold header response.
+	LegalHold *bool
+
+	// Metadata contains the information returned from the x-ms-meta header response.
+	Metadata map[string]*string
+
+	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
+	ObjectReplicationPolicyID *string
+
+	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
+	ObjectReplicationRules map[string]*string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// TagCount contains the information returned from the x-ms-tag-count header response.
+	TagCount *int64
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobClientGetAccountInfoResponse contains the response from method BlobClient.GetAccountInfo.
+type BlobClientGetAccountInfoResponse struct {
+	// AccountKind contains the information returned from the x-ms-account-kind header response.
+	AccountKind *AccountKind
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// SKUName contains the information returned from the x-ms-sku-name header response.
+	SKUName *SKUName
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientGetPropertiesResponse contains the response from method BlobClient.GetProperties.
+type BlobClientGetPropertiesResponse struct {
+	// AcceptRanges contains the information returned from the Accept-Ranges header response.
+	AcceptRanges *string
+
+	// AccessTier contains the information returned from the x-ms-access-tier header response.
+	AccessTier *string
+
+	// AccessTierChangeTime contains the information returned from the x-ms-access-tier-change-time header response.
+	AccessTierChangeTime *time.Time
+
+	// AccessTierInferred contains the information returned from the x-ms-access-tier-inferred header response.
+	AccessTierInferred *bool
+
+	// ArchiveStatus contains the information returned from the x-ms-archive-status header response.
+	ArchiveStatus *string
+
+	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
+	BlobCommittedBlockCount *int32
+
+	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
+	BlobSequenceNumber *int64
+
+	// BlobType contains the information returned from the x-ms-blob-type header response.
+	BlobType *BlobType
+
+	// CacheControl contains the information returned from the Cache-Control header response.
+	CacheControl *string
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// ContentDisposition contains the information returned from the Content-Disposition header response.
+	ContentDisposition *string
+
+	// ContentEncoding contains the information returned from the Content-Encoding header response.
+	ContentEncoding *string
+
+	// ContentLanguage contains the information returned from the Content-Language header response.
+	ContentLanguage *string
+
+	// ContentLength contains the information returned from the Content-Length header response.
+	ContentLength *int64
+
+	// ContentMD5 contains the information returned from the Content-MD5 header response.
+	ContentMD5 []byte
+
+	// ContentType contains the information returned from the Content-Type header response.
+	ContentType *string
+
+	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
+	CopyCompletionTime *time.Time
+
+	// CopyID contains the information returned from the x-ms-copy-id header response.
+	CopyID *string
+
+	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
+	CopyProgress *string
+
+	// CopySource contains the information returned from the x-ms-copy-source header response.
+	CopySource *string
+
+	// CopyStatus contains the information returned from the x-ms-copy-status header response.
+	CopyStatus *CopyStatusType
+
+	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
+	CopyStatusDescription *string
+
+	// CreationTime contains the information returned from the x-ms-creation-time header response.
+	CreationTime *time.Time
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// DestinationSnapshot contains the information returned from the x-ms-copy-destination-snapshot header response.
+	DestinationSnapshot *string
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
+	EncryptionKeySHA256 *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// ExpiresOn contains the information returned from the x-ms-expiry-time header response.
+	ExpiresOn *time.Time
+
+	// ImmutabilityPolicyExpiresOn contains the information returned from the x-ms-immutability-policy-until-date header response.
+	ImmutabilityPolicyExpiresOn *time.Time
+
+	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+
+	// IsCurrentVersion contains the information returned from the x-ms-is-current-version header response.
+	IsCurrentVersion *bool
+
+	// IsIncrementalCopy contains the information returned from the x-ms-incremental-copy header response.
+	IsIncrementalCopy *bool
+
+	// IsSealed contains the information returned from the x-ms-blob-sealed header response.
+	IsSealed *bool
+
+	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastAccessed contains the information returned from the x-ms-last-access-time header response.
+	LastAccessed *time.Time
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
+	LeaseDuration *LeaseDurationType
+
+	// LeaseState contains the information returned from the x-ms-lease-state header response.
+	LeaseState *LeaseStateType
+
+	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
+	LeaseStatus *LeaseStatusType
+
+	// LegalHold contains the information returned from the x-ms-legal-hold header response.
+	LegalHold *bool
+
+	// Metadata contains the information returned from the x-ms-meta header response.
+	Metadata map[string]*string
+
+	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
+	ObjectReplicationPolicyID *string
+
+	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
+	ObjectReplicationRules map[string]*string
+
+	// RehydratePriority contains the information returned from the x-ms-rehydrate-priority header response.
+	RehydratePriority *string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// TagCount contains the information returned from the x-ms-tag-count header response.
+	TagCount *int64
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobClientGetTagsResponse contains the response from method BlobClient.GetTags.
+type BlobClientGetTagsResponse struct {
+	// Blob tags
+	BlobTags
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientQueryResponse contains the response from method BlobClient.Query.
+type BlobClientQueryResponse struct {
+	// AcceptRanges contains the information returned from the Accept-Ranges header response.
+	AcceptRanges *string
+
+	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
+	BlobCommittedBlockCount *int32
+
+	// BlobContentMD5 contains the information returned from the x-ms-blob-content-md5 header response.
+	BlobContentMD5 []byte
+
+	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
+	BlobSequenceNumber *int64
+
+	// BlobType contains the information returned from the x-ms-blob-type header response.
+	BlobType *BlobType
+
+	// Body contains the streaming response.
+	Body io.ReadCloser
+
+	// CacheControl contains the information returned from the Cache-Control header response.
+	CacheControl *string
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// ContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
+	ContentCRC64 []byte
+
+	// ContentDisposition contains the information returned from the Content-Disposition header response.
+	ContentDisposition *string
+
+	// ContentEncoding contains the information returned from the Content-Encoding header response.
+	ContentEncoding *string
+
+	// ContentLanguage contains the information returned from the Content-Language header response.
+	ContentLanguage *string
+
+	// ContentLength contains the information returned from the Content-Length header response.
+	ContentLength *int64
+
+	// ContentMD5 contains the information returned from the Content-MD5 header response.
+	ContentMD5 []byte
+
+	// ContentRange contains the information returned from the Content-Range header response.
+	ContentRange *string
+
+	// ContentType contains the information returned from the Content-Type header response.
+	ContentType *string
+
+	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
+	CopyCompletionTime *time.Time
+
+	// CopyID contains the information returned from the x-ms-copy-id header response.
+	CopyID *string
+
+	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
+	CopyProgress *string
+
+	// CopySource contains the information returned from the x-ms-copy-source header response.
+	CopySource *string
+
+	// CopyStatus contains the information returned from the x-ms-copy-status header response.
+	CopyStatus *CopyStatusType
+
+	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
+	CopyStatusDescription *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
+	EncryptionKeySHA256 *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
+	LeaseDuration *LeaseDurationType
+
+	// LeaseState contains the information returned from the x-ms-lease-state header response.
+	LeaseState *LeaseStateType
+
+	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
+	LeaseStatus *LeaseStatusType
+
+	// Metadata contains the information returned from the x-ms-meta header response.
+	Metadata map[string]*string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientReleaseLeaseResponse contains the response from method BlobClient.ReleaseLease.
+type BlobClientReleaseLeaseResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientRenewLeaseResponse contains the response from method BlobClient.RenewLease.
+type BlobClientRenewLeaseResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// LeaseID contains the information returned from the x-ms-lease-id header response.
+	LeaseID *string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientSetExpiryResponse contains the response from method BlobClient.SetExpiry.
+type BlobClientSetExpiryResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientSetHTTPHeadersResponse contains the response from method BlobClient.SetHTTPHeaders.
+type BlobClientSetHTTPHeadersResponse struct {
+	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
+	BlobSequenceNumber *int64
+
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientSetImmutabilityPolicyResponse contains the response from method BlobClient.SetImmutabilityPolicy.
+type BlobClientSetImmutabilityPolicyResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ImmutabilityPolicyExpiry contains the information returned from the x-ms-immutability-policy-until-date header response.
+	ImmutabilityPolicyExpiry *time.Time
+
+	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
+	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientSetLegalHoldResponse contains the response from method BlobClient.SetLegalHold.
+type BlobClientSetLegalHoldResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// LegalHold contains the information returned from the x-ms-legal-hold header response.
+	LegalHold *bool
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientSetMetadataResponse contains the response from method BlobClient.SetMetadata.
+type BlobClientSetMetadataResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
+	EncryptionKeySHA256 *string
+
+	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
+	EncryptionScope *string
+
+	// IsServerEncrypted contains the information returned from the x-ms-request-server-encrypted header response.
+	IsServerEncrypted *bool
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobClientSetTagsResponse contains the response from method BlobClient.SetTags.
+type BlobClientSetTagsResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientSetTierResponse contains the response from method BlobClient.SetTier.
+type BlobClientSetTierResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
+// BlobClientStartCopyFromURLResponse contains the response from method BlobClient.StartCopyFromURL.
+type BlobClientStartCopyFromURLResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// CopyID contains the information returned from the x-ms-copy-id header response.
+	CopyID *string
+
+	// CopyStatus contains the information returned from the x-ms-copy-status header response.
+	CopyStatus *CopyStatusType
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// ETag contains the information returned from the ETag header response.
+	ETag *string
+
+	// LastModified contains the information returned from the Last-Modified header response.
+	LastModified *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+
+	// VersionID contains the information returned from the x-ms-version-id header response.
+	VersionID *string
+}
+
+// BlobClientUndeleteResponse contains the response from method BlobClient.Undelete.
+type BlobClientUndeleteResponse struct {
+	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
+	ClientRequestID *string
+
+	// Date contains the information returned from the Date header response.
+	Date *time.Time
+
+	// RequestID contains the information returned from the x-ms-request-id header response.
+	RequestID *string
+
+	// Version contains the information returned from the x-ms-version header response.
+	Version *string
+}
+
 // BlockBlobClientCommitBlockListResponse contains the response from method BlockBlobClient.CommitBlockList.
 type BlockBlobClientCommitBlockListResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
@@ -349,858 +1201,6 @@ type BlockBlobClientUploadResponse struct {
 
 	// VersionID contains the information returned from the x-ms-version-id header response.
 	VersionID *string
-}
-
-// ClientAbortCopyFromURLResponse contains the response from method Client.AbortCopyFromURL.
-type ClientAbortCopyFromURLResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientAcquireLeaseResponse contains the response from method Client.AcquireLease.
-type ClientAcquireLeaseResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseID contains the information returned from the x-ms-lease-id header response.
-	LeaseID *string
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientBreakLeaseResponse contains the response from method Client.BreakLease.
-type ClientBreakLeaseResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseTime contains the information returned from the x-ms-lease-time header response.
-	LeaseTime *int32
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientChangeLeaseResponse contains the response from method Client.ChangeLease.
-type ClientChangeLeaseResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseID contains the information returned from the x-ms-lease-id header response.
-	LeaseID *string
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientCopyFromURLResponse contains the response from method Client.CopyFromURL.
-type ClientCopyFromURLResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 []byte
-
-	// CopyID contains the information returned from the x-ms-copy-id header response.
-	CopyID *string
-
-	// CopyStatus contains the information returned from the x-ms-copy-status header response.
-	CopyStatus *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
-	EncryptionScope *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-
-	// VersionID contains the information returned from the x-ms-version-id header response.
-	VersionID *string
-
-	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 []byte
-}
-
-// ClientCreateSnapshotResponse contains the response from method Client.CreateSnapshot.
-type ClientCreateSnapshotResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// IsServerEncrypted contains the information returned from the x-ms-request-server-encrypted header response.
-	IsServerEncrypted *bool
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Snapshot contains the information returned from the x-ms-snapshot header response.
-	Snapshot *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-
-	// VersionID contains the information returned from the x-ms-version-id header response.
-	VersionID *string
-}
-
-// ClientDeleteImmutabilityPolicyResponse contains the response from method Client.DeleteImmutabilityPolicy.
-type ClientDeleteImmutabilityPolicyResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientDeleteResponse contains the response from method Client.Delete.
-type ClientDeleteResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientDownloadResponse contains the response from method Client.Download.
-type ClientDownloadResponse struct {
-	// AcceptRanges contains the information returned from the Accept-Ranges header response.
-	AcceptRanges *string
-
-	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
-	BlobCommittedBlockCount *int32
-
-	// BlobContentMD5 contains the information returned from the x-ms-blob-content-md5 header response.
-	BlobContentMD5 []byte
-
-	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
-	BlobSequenceNumber *int64
-
-	// BlobType contains the information returned from the x-ms-blob-type header response.
-	BlobType *BlobType
-
-	// Body contains the streaming response.
-	Body io.ReadCloser
-
-	// CacheControl contains the information returned from the Cache-Control header response.
-	CacheControl *string
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// ContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	ContentCRC64 []byte
-
-	// ContentDisposition contains the information returned from the Content-Disposition header response.
-	ContentDisposition *string
-
-	// ContentEncoding contains the information returned from the Content-Encoding header response.
-	ContentEncoding *string
-
-	// ContentLanguage contains the information returned from the Content-Language header response.
-	ContentLanguage *string
-
-	// ContentLength contains the information returned from the Content-Length header response.
-	ContentLength *int64
-
-	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 []byte
-
-	// ContentRange contains the information returned from the Content-Range header response.
-	ContentRange *string
-
-	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string
-
-	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
-	CopyCompletionTime *time.Time
-
-	// CopyID contains the information returned from the x-ms-copy-id header response.
-	CopyID *string
-
-	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
-	CopyProgress *string
-
-	// CopySource contains the information returned from the x-ms-copy-source header response.
-	CopySource *string
-
-	// CopyStatus contains the information returned from the x-ms-copy-status header response.
-	CopyStatus *CopyStatusType
-
-	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
-	CopyStatusDescription *string
-
-	// CreationTime contains the information returned from the x-ms-creation-time header response.
-	CreationTime *time.Time
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
-	EncryptionKeySHA256 *string
-
-	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
-	EncryptionScope *string
-
-	// ImmutabilityPolicyExpiresOn contains the information returned from the x-ms-immutability-policy-until-date header response.
-	ImmutabilityPolicyExpiresOn *time.Time
-
-	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
-	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
-
-	// IsCurrentVersion contains the information returned from the x-ms-is-current-version header response.
-	IsCurrentVersion *bool
-
-	// IsSealed contains the information returned from the x-ms-blob-sealed header response.
-	IsSealed *bool
-
-	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
-	IsServerEncrypted *bool
-
-	// LastAccessed contains the information returned from the x-ms-last-access-time header response.
-	LastAccessed *time.Time
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
-	LeaseDuration *LeaseDurationType
-
-	// LeaseState contains the information returned from the x-ms-lease-state header response.
-	LeaseState *LeaseStateType
-
-	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
-	LeaseStatus *LeaseStatusType
-
-	// LegalHold contains the information returned from the x-ms-legal-hold header response.
-	LegalHold *bool
-
-	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]*string
-
-	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
-	ObjectReplicationPolicyID *string
-
-	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
-	ObjectReplicationRules map[string]*string
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// TagCount contains the information returned from the x-ms-tag-count header response.
-	TagCount *int64
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-
-	// VersionID contains the information returned from the x-ms-version-id header response.
-	VersionID *string
-}
-
-// ClientGetAccountInfoResponse contains the response from method Client.GetAccountInfo.
-type ClientGetAccountInfoResponse struct {
-	// AccountKind contains the information returned from the x-ms-account-kind header response.
-	AccountKind *AccountKind
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// SKUName contains the information returned from the x-ms-sku-name header response.
-	SKUName *SKUName
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientGetPropertiesResponse contains the response from method Client.GetProperties.
-type ClientGetPropertiesResponse struct {
-	// AcceptRanges contains the information returned from the Accept-Ranges header response.
-	AcceptRanges *string
-
-	// AccessTier contains the information returned from the x-ms-access-tier header response.
-	AccessTier *string
-
-	// AccessTierChangeTime contains the information returned from the x-ms-access-tier-change-time header response.
-	AccessTierChangeTime *time.Time
-
-	// AccessTierInferred contains the information returned from the x-ms-access-tier-inferred header response.
-	AccessTierInferred *bool
-
-	// ArchiveStatus contains the information returned from the x-ms-archive-status header response.
-	ArchiveStatus *string
-
-	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
-	BlobCommittedBlockCount *int32
-
-	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
-	BlobSequenceNumber *int64
-
-	// BlobType contains the information returned from the x-ms-blob-type header response.
-	BlobType *BlobType
-
-	// CacheControl contains the information returned from the Cache-Control header response.
-	CacheControl *string
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// ContentDisposition contains the information returned from the Content-Disposition header response.
-	ContentDisposition *string
-
-	// ContentEncoding contains the information returned from the Content-Encoding header response.
-	ContentEncoding *string
-
-	// ContentLanguage contains the information returned from the Content-Language header response.
-	ContentLanguage *string
-
-	// ContentLength contains the information returned from the Content-Length header response.
-	ContentLength *int64
-
-	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 []byte
-
-	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string
-
-	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
-	CopyCompletionTime *time.Time
-
-	// CopyID contains the information returned from the x-ms-copy-id header response.
-	CopyID *string
-
-	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
-	CopyProgress *string
-
-	// CopySource contains the information returned from the x-ms-copy-source header response.
-	CopySource *string
-
-	// CopyStatus contains the information returned from the x-ms-copy-status header response.
-	CopyStatus *CopyStatusType
-
-	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
-	CopyStatusDescription *string
-
-	// CreationTime contains the information returned from the x-ms-creation-time header response.
-	CreationTime *time.Time
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// DestinationSnapshot contains the information returned from the x-ms-copy-destination-snapshot header response.
-	DestinationSnapshot *string
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
-	EncryptionKeySHA256 *string
-
-	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
-	EncryptionScope *string
-
-	// ExpiresOn contains the information returned from the x-ms-expiry-time header response.
-	ExpiresOn *time.Time
-
-	// ImmutabilityPolicyExpiresOn contains the information returned from the x-ms-immutability-policy-until-date header response.
-	ImmutabilityPolicyExpiresOn *time.Time
-
-	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
-	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
-
-	// IsCurrentVersion contains the information returned from the x-ms-is-current-version header response.
-	IsCurrentVersion *bool
-
-	// IsIncrementalCopy contains the information returned from the x-ms-incremental-copy header response.
-	IsIncrementalCopy *bool
-
-	// IsSealed contains the information returned from the x-ms-blob-sealed header response.
-	IsSealed *bool
-
-	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
-	IsServerEncrypted *bool
-
-	// LastAccessed contains the information returned from the x-ms-last-access-time header response.
-	LastAccessed *time.Time
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
-	LeaseDuration *LeaseDurationType
-
-	// LeaseState contains the information returned from the x-ms-lease-state header response.
-	LeaseState *LeaseStateType
-
-	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
-	LeaseStatus *LeaseStatusType
-
-	// LegalHold contains the information returned from the x-ms-legal-hold header response.
-	LegalHold *bool
-
-	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]*string
-
-	// ObjectReplicationPolicyID contains the information returned from the x-ms-or-policy-id header response.
-	ObjectReplicationPolicyID *string
-
-	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
-	ObjectReplicationRules map[string]*string
-
-	// RehydratePriority contains the information returned from the x-ms-rehydrate-priority header response.
-	RehydratePriority *string
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// TagCount contains the information returned from the x-ms-tag-count header response.
-	TagCount *int64
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-
-	// VersionID contains the information returned from the x-ms-version-id header response.
-	VersionID *string
-}
-
-// ClientGetTagsResponse contains the response from method Client.GetTags.
-type ClientGetTagsResponse struct {
-	// Blob tags
-	Tags
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientQueryResponse contains the response from method Client.Query.
-type ClientQueryResponse struct {
-	// AcceptRanges contains the information returned from the Accept-Ranges header response.
-	AcceptRanges *string
-
-	// BlobCommittedBlockCount contains the information returned from the x-ms-blob-committed-block-count header response.
-	BlobCommittedBlockCount *int32
-
-	// BlobContentMD5 contains the information returned from the x-ms-blob-content-md5 header response.
-	BlobContentMD5 []byte
-
-	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
-	BlobSequenceNumber *int64
-
-	// BlobType contains the information returned from the x-ms-blob-type header response.
-	BlobType *BlobType
-
-	// Body contains the streaming response.
-	Body io.ReadCloser
-
-	// CacheControl contains the information returned from the Cache-Control header response.
-	CacheControl *string
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// ContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	ContentCRC64 []byte
-
-	// ContentDisposition contains the information returned from the Content-Disposition header response.
-	ContentDisposition *string
-
-	// ContentEncoding contains the information returned from the Content-Encoding header response.
-	ContentEncoding *string
-
-	// ContentLanguage contains the information returned from the Content-Language header response.
-	ContentLanguage *string
-
-	// ContentLength contains the information returned from the Content-Length header response.
-	ContentLength *int64
-
-	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 []byte
-
-	// ContentRange contains the information returned from the Content-Range header response.
-	ContentRange *string
-
-	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string
-
-	// CopyCompletionTime contains the information returned from the x-ms-copy-completion-time header response.
-	CopyCompletionTime *time.Time
-
-	// CopyID contains the information returned from the x-ms-copy-id header response.
-	CopyID *string
-
-	// CopyProgress contains the information returned from the x-ms-copy-progress header response.
-	CopyProgress *string
-
-	// CopySource contains the information returned from the x-ms-copy-source header response.
-	CopySource *string
-
-	// CopyStatus contains the information returned from the x-ms-copy-status header response.
-	CopyStatus *CopyStatusType
-
-	// CopyStatusDescription contains the information returned from the x-ms-copy-status-description header response.
-	CopyStatusDescription *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
-	EncryptionKeySHA256 *string
-
-	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
-	EncryptionScope *string
-
-	// IsServerEncrypted contains the information returned from the x-ms-server-encrypted header response.
-	IsServerEncrypted *bool
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseDuration contains the information returned from the x-ms-lease-duration header response.
-	LeaseDuration *LeaseDurationType
-
-	// LeaseState contains the information returned from the x-ms-lease-state header response.
-	LeaseState *LeaseStateType
-
-	// LeaseStatus contains the information returned from the x-ms-lease-status header response.
-	LeaseStatus *LeaseStatusType
-
-	// Metadata contains the information returned from the x-ms-meta header response.
-	Metadata map[string]*string
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientReleaseLeaseResponse contains the response from method Client.ReleaseLease.
-type ClientReleaseLeaseResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientRenewLeaseResponse contains the response from method Client.RenewLease.
-type ClientRenewLeaseResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// LeaseID contains the information returned from the x-ms-lease-id header response.
-	LeaseID *string
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientSetExpiryResponse contains the response from method Client.SetExpiry.
-type ClientSetExpiryResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientSetHTTPHeadersResponse contains the response from method Client.SetHTTPHeaders.
-type ClientSetHTTPHeadersResponse struct {
-	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
-	BlobSequenceNumber *int64
-
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientSetImmutabilityPolicyResponse contains the response from method Client.SetImmutabilityPolicy.
-type ClientSetImmutabilityPolicyResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ImmutabilityPolicyExpiry contains the information returned from the x-ms-immutability-policy-until-date header response.
-	ImmutabilityPolicyExpiry *time.Time
-
-	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
-	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientSetLegalHoldResponse contains the response from method Client.SetLegalHold.
-type ClientSetLegalHoldResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// LegalHold contains the information returned from the x-ms-legal-hold header response.
-	LegalHold *bool
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientSetMetadataResponse contains the response from method Client.SetMetadata.
-type ClientSetMetadataResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// EncryptionKeySHA256 contains the information returned from the x-ms-encryption-key-sha256 header response.
-	EncryptionKeySHA256 *string
-
-	// EncryptionScope contains the information returned from the x-ms-encryption-scope header response.
-	EncryptionScope *string
-
-	// IsServerEncrypted contains the information returned from the x-ms-request-server-encrypted header response.
-	IsServerEncrypted *bool
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-
-	// VersionID contains the information returned from the x-ms-version-id header response.
-	VersionID *string
-}
-
-// ClientSetTagsResponse contains the response from method Client.SetTags.
-type ClientSetTagsResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientSetTierResponse contains the response from method Client.SetTier.
-type ClientSetTierResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-}
-
-// ClientStartCopyFromURLResponse contains the response from method Client.StartCopyFromURL.
-type ClientStartCopyFromURLResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// CopyID contains the information returned from the x-ms-copy-id header response.
-	CopyID *string
-
-	// CopyStatus contains the information returned from the x-ms-copy-status header response.
-	CopyStatus *CopyStatusType
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// ETag contains the information returned from the ETag header response.
-	ETag *string
-
-	// LastModified contains the information returned from the Last-Modified header response.
-	LastModified *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
-
-	// VersionID contains the information returned from the x-ms-version-id header response.
-	VersionID *string
-}
-
-// ClientUndeleteResponse contains the response from method Client.Undelete.
-type ClientUndeleteResponse struct {
-	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
-	ClientRequestID *string
-
-	// Date contains the information returned from the Date header response.
-	Date *time.Time
-
-	// RequestID contains the information returned from the x-ms-request-id header response.
-	RequestID *string
-
-	// Version contains the information returned from the x-ms-version header response.
-	Version *string
 }
 
 // ContainerClientAcquireLeaseResponse contains the response from method ContainerClient.AcquireLease.
