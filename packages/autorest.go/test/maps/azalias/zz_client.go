@@ -127,8 +127,8 @@ func (client *Client) createHandleResponse(resp *http.Response) (CreateResponse,
 
 // GetScript - Retrieve the configuration script identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - SomeGroup - SomeGroup contains a group of parameters for the Client.GetScript method.
-//   - ExplodedGroup - ExplodedGroup contains a group of parameters for the Client.GetScript method.
+//   - someGroup - SomeGroup contains a group of parameters for the Client.GetScript method.
+//   - explodedGroup - ExplodedGroup contains a group of parameters for the Client.GetScript method.
 //   - options - GetScriptOptions contains the optional parameters for the Client.GetScript method.
 func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props GeoJSONObjectNamedCollection, someGroup SomeGroup, explodedGroup ExplodedGroup, options *GetScriptOptions) (GetScriptResponse, error) {
 	var err error
