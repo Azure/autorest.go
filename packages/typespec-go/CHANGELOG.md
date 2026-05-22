@@ -1,6 +1,6 @@
 # Release History
 
-## 0.14.1 (unreleased)
+## 0.14.1 (2026-05-20)
 
 ### Features Added
 
@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 
+* Fixed example generation incorrectly passing required parameter group members as optional parameters instead of rendering them as struct literals.
 * Generate a mock value for client parameters in examples when the operation doesn't use the parameter.
 * Fixed error when an operation's example contained a literal `Content-Type` response header that was omitted from the response envelope.
 

@@ -1,0 +1,24 @@
+{
+  "operationId": "ParameterGroupOperations_noParameterGroup",
+  "title": "ParameterGroupOperations_noParameterGroup",
+  "parameters": {
+    "api-version": "2025-01-01",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "resourceGroupName": "myResourceGroup",
+    "widgetName": "myWidget"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Test/widgets/myWidget",
+        "name": "myWidget",
+        "type": "Microsoft.Test/widgets",
+        "location": "eastus",
+        "properties": {
+          "name": "myWidget",
+          "description": "A test widget"
+        }
+      }
+    }
+  }
+}

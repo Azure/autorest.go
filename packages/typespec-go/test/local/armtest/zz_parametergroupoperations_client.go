@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -103,6 +104,74 @@ func (client *ParameterGroupOperationsClient) noParameterGroupHandleResponse(res
 	result := ParameterGroupOperationsClientNoParameterGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Widget); err != nil {
 		return ParameterGroupOperationsClientNoParameterGroupResponse{}, err
+	}
+	return result, nil
+}
+
+// QueryParameterGroup - This operation uses a required query parameter group
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - widgetName - The name of the widget
+//   - params - Query parameter group with a required field
+//   - options - ParameterGroupOperationsClientQueryParameterGroupOptions contains the optional parameters for the ParameterGroupOperationsClient.QueryParameterGroup
+//     method.
+func (client *ParameterGroupOperationsClient) QueryParameterGroup(ctx context.Context, resourceGroupName string, widgetName string, params QueryParams, options *ParameterGroupOperationsClientQueryParameterGroupOptions) (ParameterGroupOperationsClientQueryParameterGroupResponse, error) {
+	var err error
+	const operationName = "ParameterGroupOperationsClient.QueryParameterGroup"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.queryParameterGroupCreateRequest(ctx, resourceGroupName, widgetName, params, options)
+	if err != nil {
+		return ParameterGroupOperationsClientQueryParameterGroupResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ParameterGroupOperationsClientQueryParameterGroupResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ParameterGroupOperationsClientQueryParameterGroupResponse{}, err
+	}
+	resp, err := client.queryParameterGroupHandleResponse(httpResp)
+	return resp, err
+}
+
+// queryParameterGroupCreateRequest creates the QueryParameterGroup request.
+func (client *ParameterGroupOperationsClient) queryParameterGroupCreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params QueryParams, options *ParameterGroupOperationsClientQueryParameterGroupOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/queryParameterGroup"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if widgetName == "" {
+		return nil, errors.New("parameter widgetName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{widgetName}", url.PathEscape(widgetName))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", version20250101)
+	reqQP.Set("filterName", params.FilterName)
+	if options != nil && options.MaxCount != nil {
+		reqQP.Set("maxCount", strconv.FormatInt(int64(*options.MaxCount), 10))
+	}
+	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// queryParameterGroupHandleResponse handles the QueryParameterGroup response.
+func (client *ParameterGroupOperationsClient) queryParameterGroupHandleResponse(resp *http.Response) (ParameterGroupOperationsClientQueryParameterGroupResponse, error) {
+	result := ParameterGroupOperationsClientQueryParameterGroupResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Widget); err != nil {
+		return ParameterGroupOperationsClientQueryParameterGroupResponse{}, err
 	}
 	return result, nil
 }

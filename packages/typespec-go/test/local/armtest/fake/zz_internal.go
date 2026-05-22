@@ -48,6 +48,17 @@ func initServer[T any](mu *sync.Mutex, dst **T, src func() *T) {
 	mu.Unlock()
 }
 
+func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {
+	if v == "" {
+		return nil, nil
+	}
+	t, err := parse(v)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
 func readRequestBody(req *http.Request) ([]byte, error) {
 	if req.Body == nil {
 		return nil, nil

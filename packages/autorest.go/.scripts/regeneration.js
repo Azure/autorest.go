@@ -108,7 +108,7 @@ for (const namespace in goMappings) {
 }
 
 const blobStorage = repoRoot + 'swagger/specification/storage/data-plane/Microsoft.BlobStorage/readme.md';
-generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--inject-spans');
+generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--inject-spans --stutter=dont');
 
 const network = repoRoot + 'swagger/specification/network/resource-manager/readme.md';
 generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types');
