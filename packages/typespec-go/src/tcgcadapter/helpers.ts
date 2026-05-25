@@ -265,16 +265,18 @@ export function isExtensibleEnum(type: tcgc.SdkType): boolean {
 /**
  * returns the effective Go name for a tcgc item that may carry an isExactName marker.
  * when isExactName is true (set by the tsp exact() function on @clientName), the name
- * is returned verbatim without built-in naming canonization or first-character
- * casing changes - exact names are honored as-authored. otherwise the name is
- * canonicalized via naming.ensureNameCase(), with lowerFirst optionally lowercasing
- * the first character for unexported/parameter identifiers.
+ * (with any provided suffix appended verbatim) is returned without built-in naming
+ * canonization or first-character casing changes - exact names are honored as-authored.
+ * otherwise the name (with any provided suffix appended) is canonicalized via
+ * naming.ensureNameCase(), with lowerFirst optionally lowercasing the first character
+ * for unexported/parameter identifiers.
  */
-export function getEffectiveName(src: { name: string; isExactName?: boolean }, lowerFirst?: boolean): string {
+export function getEffectiveName(src: { name: string; isExactName?: boolean }, lowerFirst?: boolean, suffix?: string): string {
+  const name = suffix ? `${src.name}${suffix}` : src.name;
   if (src.isExactName) {
-    return src.name;
+    return name;
   }
-  return naming.ensureNameCase(src.name, lowerFirst);
+  return naming.ensureNameCase(name, lowerFirst);
 }
 
 /** returns true if model is a TypeSpec.Http.File type */

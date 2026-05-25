@@ -447,8 +447,8 @@ export class ClientAdapter {
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client): void {
     const opName = helpers.getEffectiveName(sdkMethod, true);
-    const createReqName = sdkMethod.isExactName ? `${sdkMethod.name}CreateRequest` : ensureNameCase(`${sdkMethod.name}CreateRequest`, true);
-    const handleRespName = sdkMethod.isExactName ? `${sdkMethod.name}HandleResponse` : ensureNameCase(`${sdkMethod.name}HandleResponse`, true);
+    const createReqName = helpers.getEffectiveName(sdkMethod, true, 'CreateRequest');
+    const handleRespName = helpers.getEffectiveName(sdkMethod, true, 'HandleResponse');
     const naming = new go.MethodNaming(getEscapedReservedName(opName, 'Operation'), createReqName, handleRespName);
 
     const getStatusCodes = function (httpOp: tcgc.SdkHttpOperation): Array<number> {
@@ -466,7 +466,7 @@ export class ClientAdapter {
       return statusCodes;
     };
 
-    let methodName = sdkMethod.isExactName ? sdkMethod.name : capitalize(ensureNameCase(sdkMethod.name));
+    let methodName = helpers.getEffectiveName(sdkMethod);
     if (sdkMethod.access === 'internal') {
       methodName = uncapitalize(methodName);
       if (sdkMethod.kind === 'basic') {
