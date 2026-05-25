@@ -1,5 +1,11 @@
 # Release History
 
+## 0.14.2 (unreleased)
+
+### Features Added
+
+* Updated to TCGC 0.68.2. Honor `exact()` on additional `@clientName` targets that became available in TCGC 0.68.2: client names, service method names, and individual enum value names. As before, when a name is marked as exact, it is preserved verbatim and not subjected to built-in naming canonization.
+
 ## 0.14.1 (2026-05-20)
 
 ### Features Added

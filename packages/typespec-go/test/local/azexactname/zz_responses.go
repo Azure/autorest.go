@@ -9,8 +9,8 @@ type ClientGetRenamedResponse struct {
 	My_Exact_Model
 }
 
-// ClientGetWidgetResponse contains the response from method Client.GetWidget.
-type ClientGetWidgetResponse struct {
+// ClientGet_WidgetResponse contains the response from method Client.Get_Widget.
+type ClientGet_WidgetResponse struct {
 	Widget
 	X_Request_ID *string
 }

@@ -90,33 +90,33 @@ func (client *Client) getRenamedHandleResponse(resp *http.Response) (ClientGetRe
 	return result, nil
 }
 
-// GetWidget -
+// Get_Widget -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - ClientGetWidgetOptions contains the optional parameters for the Client.GetWidget method.
-func (client *Client) GetWidget(ctx context.Context, Widget_ID string, options *ClientGetWidgetOptions) (ClientGetWidgetResponse, error) {
+//   - options - ClientGet_WidgetOptions contains the optional parameters for the Client.Get_Widget method.
+func (client *Client) Get_Widget(ctx context.Context, Widget_ID string, options *ClientGet_WidgetOptions) (ClientGet_WidgetResponse, error) {
 	var err error
-	const operationName = "Client.GetWidget"
+	const operationName = "Client.Get_Widget"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getWidgetCreateRequest(ctx, Widget_ID, options)
+	req, err := client.Get_WidgetCreateRequest(ctx, Widget_ID, options)
 	if err != nil {
-		return ClientGetWidgetResponse{}, err
+		return ClientGet_WidgetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientGetWidgetResponse{}, err
+		return ClientGet_WidgetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ClientGetWidgetResponse{}, err
+		return ClientGet_WidgetResponse{}, err
 	}
-	resp, err := client.getWidgetHandleResponse(httpResp)
+	resp, err := client.Get_WidgetHandleResponse(httpResp)
 	return resp, err
 }
 
-// getWidgetCreateRequest creates the GetWidget request.
-func (client *Client) getWidgetCreateRequest(ctx context.Context, Widget_ID string, _ *ClientGetWidgetOptions) (*policy.Request, error) {
+// Get_WidgetCreateRequest creates the Get_Widget request.
+func (client *Client) Get_WidgetCreateRequest(ctx context.Context, Widget_ID string, _ *ClientGet_WidgetOptions) (*policy.Request, error) {
 	urlPath := "/get-widget/{widgetId}"
 	if Widget_ID == "" {
 		return nil, errors.New("parameter Widget_ID cannot be empty")
@@ -130,14 +130,14 @@ func (client *Client) getWidgetCreateRequest(ctx context.Context, Widget_ID stri
 	return req, nil
 }
 
-// getWidgetHandleResponse handles the GetWidget response.
-func (client *Client) getWidgetHandleResponse(resp *http.Response) (ClientGetWidgetResponse, error) {
-	result := ClientGetWidgetResponse{}
+// Get_WidgetHandleResponse handles the Get_Widget response.
+func (client *Client) Get_WidgetHandleResponse(resp *http.Response) (ClientGet_WidgetResponse, error) {
+	result := ClientGet_WidgetResponse{}
 	if val := resp.Header.Get("x-request-id"); val != "" {
 		result.X_Request_ID = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Widget); err != nil {
-		return ClientGetWidgetResponse{}, err
+		return ClientGet_WidgetResponse{}, err
 	}
 	return result, nil
 }

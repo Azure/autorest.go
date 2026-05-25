@@ -7,14 +7,14 @@ package azexactname
 type My_HTTP_Status string
 
 const (
-	My_HTTP_StatusOne My_HTTP_Status = "one"
-	My_HTTP_StatusTwo My_HTTP_Status = "two"
+	My_HTTP_StatusOne_Value My_HTTP_Status = "one"
+	My_HTTP_StatusTwo       My_HTTP_Status = "two"
 )
 
 // PossibleMy_HTTP_StatusValues returns the possible values for the My_HTTP_Status const type.
 func PossibleMy_HTTP_StatusValues() []My_HTTP_Status {
 	return []My_HTTP_Status{
-		My_HTTP_StatusOne,
+		My_HTTP_StatusOne_Value,
 		My_HTTP_StatusTwo,
 	}
 }

@@ -24,9 +24,9 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	GetRenamed func(ctx context.Context, options *azexactname.ClientGetRenamedOptions) (resp azfake.Responder[azexactname.ClientGetRenamedResponse], errResp azfake.ErrorResponder)
 
-	// GetWidget is the fake for method Client.GetWidget
+	// Get_Widget is the fake for method Client.Get_Widget
 	// HTTP status codes to indicate success: http.StatusOK
-	GetWidget func(ctx context.Context, widget_ID string, options *azexactname.ClientGetWidgetOptions) (resp azfake.Responder[azexactname.ClientGetWidgetResponse], errResp azfake.ErrorResponder)
+	Get_Widget func(ctx context.Context, widget_ID string, options *azexactname.ClientGet_WidgetOptions) (resp azfake.Responder[azexactname.ClientGet_WidgetResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServerTransport creates a new instance of ServerTransport with the provided implementation.
@@ -65,8 +65,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 			switch method {
 			case "Client.GetRenamed":
 				res.resp, res.err = s.dispatchGetRenamed(req)
-			case "Client.GetWidget":
-				res.resp, res.err = s.dispatchGetWidget(req)
+			case "Client.Get_Widget":
+				res.resp, res.err = s.dispatchGet_Widget(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -102,9 +102,9 @@ func (s *ServerTransport) dispatchGetRenamed(req *http.Request) (*http.Response,
 	return resp, nil
 }
 
-func (s *ServerTransport) dispatchGetWidget(req *http.Request) (*http.Response, error) {
-	if s.srv.GetWidget == nil {
-		return nil, &nonRetriableError{errors.New("fake for method GetWidget not implemented")}
+func (s *ServerTransport) dispatchGet_Widget(req *http.Request) (*http.Response, error) {
+	if s.srv.Get_Widget == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Get_Widget not implemented")}
 	}
 	const regexStr = `/get-widget/(?P<widgetId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
@@ -116,7 +116,7 @@ func (s *ServerTransport) dispatchGetWidget(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetWidget(req.Context(), widget_IDParam, nil)
+	respr, errRespr := s.srv.Get_Widget(req.Context(), widget_IDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

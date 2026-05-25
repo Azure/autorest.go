@@ -797,7 +797,7 @@ export class TypeAdapter {
 
   private getLiteralValue(constType: tcgc.SdkConstantType | tcgc.SdkEnumValueType): go.Literal {
     if (constType.kind === 'enumvalue') {
-      const valueName = `${naming.ensureNameCase(constType.enumType.name)}${naming.ensureNameCase(constType.name)}`;
+      const valueName = `${helpers.getEffectiveName(constType.enumType)}${helpers.getEffectiveName(constType)}`;
       const keyName = `literal-${valueName}`;
       let literalConst = this.types.get(keyName);
       if (literalConst) {

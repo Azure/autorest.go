@@ -69,7 +69,7 @@ export class ClientAdapter {
       return undefined;
     }
 
-    let clientName = ensureNameCase(sdkClient.name);
+    let clientName = helpers.getEffectiveName(sdkClient);
 
     // to keep compat with existing ARM packages, don't use hierarchically named clients
     if (parent && this.ta.codeModel.type !== 'azure-arm') {
@@ -446,11 +446,10 @@ export class ClientAdapter {
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client): void {
-    const naming = new go.MethodNaming(
-      getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'),
-      ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
-      ensureNameCase(`${sdkMethod.name}HandleResponse`, true),
-    );
+    const opName = helpers.getEffectiveName(sdkMethod, true);
+    const createReqName = sdkMethod.isExactName ? `${sdkMethod.name}CreateRequest` : ensureNameCase(`${sdkMethod.name}CreateRequest`, true);
+    const handleRespName = sdkMethod.isExactName ? `${sdkMethod.name}HandleResponse` : ensureNameCase(`${sdkMethod.name}HandleResponse`, true);
+    const naming = new go.MethodNaming(getEscapedReservedName(opName, 'Operation'), createReqName, handleRespName);
 
     const getStatusCodes = function (httpOp: tcgc.SdkHttpOperation): Array<number> {
       const statusCodes = new Array<number>();
@@ -467,7 +466,7 @@ export class ClientAdapter {
       return statusCodes;
     };
 
-    let methodName = capitalize(ensureNameCase(sdkMethod.name));
+    let methodName = sdkMethod.isExactName ? sdkMethod.name : capitalize(ensureNameCase(sdkMethod.name));
     if (sdkMethod.access === 'internal') {
       methodName = uncapitalize(methodName);
       if (sdkMethod.kind === 'basic') {

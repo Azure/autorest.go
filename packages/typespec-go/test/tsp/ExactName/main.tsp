@@ -25,9 +25,11 @@ model Widget {
   normalField: int32;
 }
 
-// enum with exact() - constant type name should remain "My_HTTP_Status" verbatim (no underscore stripping)
+// enum with exact() on the type and on individual values
 @clientName(exact("My_HTTP_Status"))
 enum MyEnum {
+  // enum value name with exact() — should remain "One_Value" verbatim
+  @clientName(exact("One_Value"))
   one: "one",
   two: "two",
 }
@@ -41,6 +43,7 @@ model RenamedModel {
 
 @get
 @route("/get-widget")
+@clientName(exact("Get_Widget"))
 op getWidget(
   // path parameter with exact()
   @path

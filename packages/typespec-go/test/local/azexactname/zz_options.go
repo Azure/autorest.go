@@ -9,7 +9,7 @@ type ClientGetRenamedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientGetWidgetOptions contains the optional parameters for the Client.GetWidget method.
-type ClientGetWidgetOptions struct {
+// ClientGet_WidgetOptions contains the optional parameters for the Client.Get_Widget method.
+type ClientGet_WidgetOptions struct {
 	// placeholder for future optional parameters
 }
