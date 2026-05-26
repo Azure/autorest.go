@@ -15,6 +15,12 @@ import (
 
 // ServerFactory is a fake server for instances of the armtest.ClientFactory type.
 type ServerFactory struct {
+	// AuthorizationServer contains the fakes for client AuthorizationClient
+	AuthorizationServer AuthorizationServer
+
+	// AuthorizationServerServer contains the fakes for client AuthorizationServerClient
+	AuthorizationServerServer AuthorizationServerServer
+
 	// BodyRootsServer contains the fakes for client BodyRootsClient
 	BodyRootsServer BodyRootsServer
 
@@ -51,6 +57,8 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 type ServerFactoryTransport struct {
 	srv                              *ServerFactory
 	trMu                             sync.Mutex
+	trAuthorizationServer            *AuthorizationServerTransport
+	trAuthorizationServerServer      *AuthorizationServerServerTransport
 	trBodyRootsServer                *BodyRootsServerTransport
 	trConfigurationsServer           *ConfigurationsServerTransport
 	trLROServer                      *LROServerTransport
@@ -73,6 +81,16 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
+	case "AuthorizationClient":
+		initServer(&s.trMu, &s.trAuthorizationServer, func() *AuthorizationServerTransport {
+			return NewAuthorizationServerTransport(&s.srv.AuthorizationServer)
+		})
+		resp, err = s.trAuthorizationServer.Do(req)
+	case "AuthorizationServerClient":
+		initServer(&s.trMu, &s.trAuthorizationServerServer, func() *AuthorizationServerServerTransport {
+			return NewAuthorizationServerServerTransport(&s.srv.AuthorizationServerServer)
+		})
+		resp, err = s.trAuthorizationServerServer.Do(req)
 	case "BodyRootsClient":
 		initServer(&s.trMu, &s.trBodyRootsServer, func() *BodyRootsServerTransport { return NewBodyRootsServerTransport(&s.srv.BodyRootsServer) })
 		resp, err = s.trBodyRootsServer.Do(req)
