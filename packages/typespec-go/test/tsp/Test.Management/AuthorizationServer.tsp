@@ -8,12 +8,6 @@ using Azure.ResourceManager;
 using TypeSpec.Http;
 using TypeSpec.OpenAPI;
 
-// Regression test for https://github.com/Azure/autorest.go/issues/<duplicate-interceptor>
-// Two clients whose fake server names differ only by a trailing duplicate word
-// ("AuthorizationServer" vs. "AuthorizationServerServer") must not collide on
-// the generated `*TransportInterceptor` variable in the fake package.
-// This mirrors the pattern observed in armapimanagement.
-
 @armProviderNamespace
 namespace Microsoft.Test;
 
