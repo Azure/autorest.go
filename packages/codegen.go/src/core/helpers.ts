@@ -1248,9 +1248,9 @@ function removeSequentialDuplicates(identifier: Iterable<string>) {
   return ids;
 }
 
-export function camelCase(identifier: string | Array<string>): string {
+export function camelCase(identifier: string | Array<string>, removeDuplicates = true): string {
   if (typeof identifier === 'string') {
-    return camelCase(fixLeadingNumber(deconstruct(identifier)));
+    return camelCase(fixLeadingNumber(deconstruct(identifier)), removeDuplicates);
   }
   switch (identifier.length) {
     case 0:
@@ -1258,7 +1258,7 @@ export function camelCase(identifier: string | Array<string>): string {
     case 1:
       return naming.uncapitalize(identifier[0]);
   }
-  return `${naming.uncapitalize(identifier[0])}${pascalCase(identifier.slice(1))}`;
+  return `${naming.uncapitalize(identifier[0])}${pascalCase(identifier.slice(1), removeDuplicates)}`;
 }
 
 export function pascalCase(identifier: string | Array<string>, removeDuplicates = true): string {

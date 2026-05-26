@@ -254,7 +254,11 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
 }
 
 function getTransportInterceptorVarName(client: go.Client): string {
-  return `${helpers.camelCase(getServerName(client))}TransportInterceptor`;
+  // pass removeDuplicates=false so distinct server types with sequential
+  // duplicate words (e.g. AuthorizationServerServer, generated from client
+  // AuthorizationServerClient) don't collide with AuthorizationServer
+  // (generated from AuthorizationClient) on the interceptor variable name.
+  return `${helpers.camelCase(getServerName(client), false)}TransportInterceptor`;
 }
 
 // method names for fakes dispatching
