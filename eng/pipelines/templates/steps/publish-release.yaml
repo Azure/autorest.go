@@ -14,6 +14,7 @@ steps:
     parameters:
       PackagePath: ${{ parameters.PackagePath }}
       VersionString: $(currentVersion)
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml
   - pwsh: |
       $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
       $releaseNotes = "${{ parameters.ReleaseNotes }}"
@@ -29,7 +30,7 @@ steps:
         exit $LASTEXITCODE
       }
       npx publish-release `
-        --token $(azuresdk-github-pat) `
+        --token $(GH_TOKEN) `
         --repo autorest.go `
         --owner azure `
         --name "${{ parameters.ReleaseName }}" `
