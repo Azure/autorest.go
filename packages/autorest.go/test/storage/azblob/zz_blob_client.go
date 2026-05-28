@@ -38,7 +38,7 @@ type BlobClient struct {
 //   - copyActionAbortConstant - Copy action.
 //   - copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
 //   - options - BlobClientAbortCopyFromURLOptions contains the optional parameters for the BlobClient.AbortCopyFromURL method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *BlobClient) AbortCopyFromURL(ctx context.Context, containerName string, blob string, comp Enum27, copyActionAbortConstant Enum28, copyID string, options *BlobClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (BlobClientAbortCopyFromURLResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.AbortCopyFromURL", client.internal.Tracer(), nil)
@@ -121,7 +121,7 @@ func (client *BlobClient) abortCopyFromURLHandleResponse(resp *http.Response) (B
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientAcquireLeaseOptions contains the optional parameters for the BlobClient.AcquireLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) AcquireLease(ctx context.Context, containerName string, blob string, comp Enum16, options *BlobClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientAcquireLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.AcquireLease", client.internal.Tracer(), nil)
@@ -234,7 +234,7 @@ func (client *BlobClient) acquireLeaseHandleResponse(resp *http.Response) (BlobC
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientBreakLeaseOptions contains the optional parameters for the BlobClient.BreakLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) BreakLease(ctx context.Context, containerName string, blob string, comp Enum16, options *BlobClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientBreakLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.BreakLease", client.internal.Tracer(), nil)
@@ -353,7 +353,7 @@ func (client *BlobClient) breakLeaseHandleResponse(resp *http.Response) (BlobCli
 //     lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
 //     string formats.
 //   - options - BlobClientChangeLeaseOptions contains the optional parameters for the BlobClient.ChangeLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) ChangeLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, proposedLeaseID string, options *BlobClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientChangeLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.ChangeLease", client.internal.Tracer(), nil)
@@ -466,11 +466,11 @@ func (client *BlobClient) changeLeaseHandleResponse(resp *http.Response) (BlobCl
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request
 //     URI. The source blob must either be public or must be authenticated via a shared access signature.
 //   - options - BlobClientCopyFromURLOptions contains the optional parameters for the BlobClient.CopyFromURL method.
-//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the BlobClient.StartCopyFromURL
+//   - sourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the BlobClient.StartCopyFromURL
 //     method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - cpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
 func (client *BlobClient) CopyFromURL(ctx context.Context, containerName string, blob string, xmsRequiresSync Enum26, copySource string, options *BlobClientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions, cpkScopeInfo *CpkScopeInfo) (BlobClientCopyFromURLResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.CopyFromURL", client.internal.Tracer(), nil)
@@ -649,10 +649,10 @@ func (client *BlobClient) copyFromURLHandleResponse(resp *http.Response) (BlobCl
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientCreateSnapshotOptions contains the optional parameters for the BlobClient.CreateSnapshot method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - cpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - cpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *BlobClient) CreateSnapshot(ctx context.Context, containerName string, blob string, comp Enum25, options *BlobClientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobClientCreateSnapshotResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.CreateSnapshot", client.internal.Tracer(), nil)
@@ -799,8 +799,8 @@ func (client *BlobClient) createSnapshotHandleResponse(resp *http.Response) (Blo
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - options - BlobClientDeleteOptions contains the optional parameters for the BlobClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) Delete(ctx context.Context, containerName string, blob string, options *BlobClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientDeleteResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.Delete", client.internal.Tracer(), nil)
@@ -985,9 +985,9 @@ func (client *BlobClient) deleteImmutabilityPolicyHandleResponse(resp *http.Resp
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - options - BlobClientDownloadOptions contains the optional parameters for the BlobClient.Download method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - cpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) Download(ctx context.Context, containerName string, blob string, options *BlobClientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientDownloadResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.Download", client.internal.Tracer(), nil)
@@ -1381,9 +1381,9 @@ func (client *BlobClient) getAccountInfoHandleResponse(resp *http.Response) (Blo
 //   - containerName - The container name.
 //   - blob - The blob name.
 //   - options - BlobClientGetPropertiesOptions contains the optional parameters for the BlobClient.GetProperties method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - cpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) GetProperties(ctx context.Context, containerName string, blob string, options *BlobClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientGetPropertiesResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.GetProperties", client.internal.Tracer(), nil)
@@ -1711,8 +1711,8 @@ func (client *BlobClient) getPropertiesHandleResponse(resp *http.Response) (Blob
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientGetTagsOptions contains the optional parameters for the BlobClient.GetTags method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *BlobClient) GetTags(ctx context.Context, containerName string, blob string, comp Enum39, options *BlobClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobClientGetTagsResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.GetTags", client.internal.Tracer(), nil)
@@ -1805,9 +1805,9 @@ func (client *BlobClient) getTagsHandleResponse(resp *http.Response) (BlobClient
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientQueryOptions contains the optional parameters for the BlobClient.Query method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - cpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) Query(ctx context.Context, containerName string, blob string, comp Enum37, options *BlobClientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientQueryResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.Query", client.internal.Tracer(), nil)
@@ -2052,7 +2052,7 @@ func (client *BlobClient) queryHandleResponse(resp *http.Response) (BlobClientQu
 //   - comp - comp
 //   - leaseID - Specifies the current lease ID on the resource.
 //   - options - BlobClientReleaseLeaseOptions contains the optional parameters for the BlobClient.ReleaseLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) ReleaseLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, options *BlobClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientReleaseLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.ReleaseLease", client.internal.Tracer(), nil)
@@ -2158,7 +2158,7 @@ func (client *BlobClient) releaseLeaseHandleResponse(resp *http.Response) (BlobC
 //   - comp - comp
 //   - leaseID - Specifies the current lease ID on the resource.
 //   - options - BlobClientRenewLeaseOptions contains the optional parameters for the BlobClient.RenewLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) RenewLease(ctx context.Context, containerName string, blob string, comp Enum16, leaseID string, options *BlobClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientRenewLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.RenewLease", client.internal.Tracer(), nil)
@@ -2358,9 +2358,9 @@ func (client *BlobClient) setExpiryHandleResponse(resp *http.Response) (BlobClie
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientSetHTTPHeadersOptions contains the optional parameters for the BlobClient.SetHTTPHeaders method.
-//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the BlobClient.SetHTTPHeaders method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - blobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the BlobClient.SetHTTPHeaders method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) SetHTTPHeaders(ctx context.Context, containerName string, blob string, comp Enum1, options *BlobClientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientSetHTTPHeadersResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.SetHTTPHeaders", client.internal.Tracer(), nil)
@@ -2492,7 +2492,7 @@ func (client *BlobClient) setHTTPHeadersHandleResponse(resp *http.Response) (Blo
 //   - comp - comp
 //   - options - BlobClientSetImmutabilityPolicyOptions contains the optional parameters for the BlobClient.SetImmutabilityPolicy
 //     method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) SetImmutabilityPolicy(ctx context.Context, containerName string, blob string, comp Enum23, options *BlobClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientSetImmutabilityPolicyResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.SetImmutabilityPolicy", client.internal.Tracer(), nil)
@@ -2676,10 +2676,10 @@ func (client *BlobClient) setLegalHoldHandleResponse(resp *http.Response) (BlobC
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientSetMetadataOptions contains the optional parameters for the BlobClient.SetMetadata method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - CpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
-//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - cpkInfo - CpkInfo contains a group of parameters for the BlobClient.Download method.
+//   - cpkScopeInfo - CpkScopeInfo contains a group of parameters for the BlobClient.SetMetadata method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) SetMetadata(ctx context.Context, containerName string, blob string, comp Enum12, options *BlobClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientSetMetadataResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.SetMetadata", client.internal.Tracer(), nil)
@@ -2820,8 +2820,8 @@ func (client *BlobClient) setMetadataHandleResponse(resp *http.Response) (BlobCl
 //   - blob - The blob name.
 //   - comp - comp
 //   - options - BlobClientSetTagsOptions contains the optional parameters for the BlobClient.SetTags method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *BlobClient) SetTags(ctx context.Context, containerName string, blob string, comp Enum39, options *BlobClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobClientSetTagsResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.SetTags", client.internal.Tracer(), nil)
@@ -2924,8 +2924,8 @@ func (client *BlobClient) setTagsHandleResponse(resp *http.Response) (BlobClient
 //   - comp - comp
 //   - tier - Indicates the tier to be set on the blob.
 //   - options - BlobClientSetTierOptions contains the optional parameters for the BlobClient.SetTier method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *BlobClient) SetTier(ctx context.Context, containerName string, blob string, comp Enum29, tier AccessTier, options *BlobClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobClientSetTierResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.SetTier", client.internal.Tracer(), nil)
@@ -3014,10 +3014,10 @@ func (client *BlobClient) setTierHandleResponse(resp *http.Response) (BlobClient
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request
 //     URI. The source blob must either be public or must be authenticated via a shared access signature.
 //   - options - BlobClientStartCopyFromURLOptions contains the optional parameters for the BlobClient.StartCopyFromURL method.
-//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the BlobClient.StartCopyFromURL
+//   - sourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the BlobClient.StartCopyFromURL
 //     method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *BlobClient) StartCopyFromURL(ctx context.Context, containerName string, blob string, copySource string, options *BlobClientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobClientStartCopyFromURLResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "BlobClient.StartCopyFromURL", client.internal.Tracer(), nil)

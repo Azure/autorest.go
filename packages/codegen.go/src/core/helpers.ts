@@ -155,7 +155,7 @@ export function getCreateRequestParametersSig(method: go.MethodType | go.NextPag
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of methodParams) {
-    let paramName = naming.uncapitalize(methodParam.name);
+    let paramName = methodParam.name;
     // when creating the method sig for fooCreateRequest, if the options type is empty
     // or only contains the ResumeToken param use _ for the param name to quiet the linter
     if (methodParam.kind === 'paramGroup' && (methodParam.params.length === 0 || (methodParam.params.length === 1 && methodParam.params[0].kind === 'resumeTokenParam'))) {
@@ -185,7 +185,7 @@ export function getCreateRequestParameters(method: go.MethodType, optionsParam?:
     if (optionsParam && i === methodParams.length - 1) {
       params.push(optionsParam);
     } else {
-      params.push(naming.uncapitalize(methodParam.name));
+      params.push(methodParam.name);
     }
   }
   return params.join(', ');

@@ -1851,7 +1851,7 @@ function getAPIParametersSig(method: go.ClientAccessor | go.MethodType, imports:
       if (methodParam.kind !== 'paramGroup') {
         imports.addForType(methodParam.type);
       }
-      params.push(`${naming.uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
+      params.push(`${methodParam.name} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
     }
   }
   return params.join(', ');

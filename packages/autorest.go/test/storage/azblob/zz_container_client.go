@@ -38,7 +38,7 @@ type ContainerClient struct {
 //   - comp - comp
 //   - restype - restype
 //   - options - ContainerClientAcquireLeaseOptions contains the optional parameters for the ContainerClient.AcquireLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) AcquireLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, options *ContainerClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientAcquireLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.AcquireLease", client.internal.Tracer(), nil)
@@ -140,7 +140,7 @@ func (client *ContainerClient) acquireLeaseHandleResponse(resp *http.Response) (
 //   - comp - comp
 //   - restype - restype
 //   - options - ContainerClientBreakLeaseOptions contains the optional parameters for the ContainerClient.BreakLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) BreakLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, options *ContainerClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientBreakLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.BreakLease", client.internal.Tracer(), nil)
@@ -248,7 +248,7 @@ func (client *ContainerClient) breakLeaseHandleResponse(resp *http.Response) (Co
 //     lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
 //     string formats.
 //   - options - ContainerClientChangeLeaseOptions contains the optional parameters for the ContainerClient.ChangeLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) ChangeLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, options *ContainerClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientChangeLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.ChangeLease", client.internal.Tracer(), nil)
@@ -345,7 +345,7 @@ func (client *ContainerClient) changeLeaseHandleResponse(resp *http.Response) (C
 //   - containerName - The container name.
 //   - restype - restype
 //   - options - ContainerClientCreateOptions contains the optional parameters for the ContainerClient.Create method.
-//   - ContainerCpkScopeInfo - ContainerCpkScopeInfo contains a group of parameters for the ContainerClient.Create method.
+//   - containerCpkScopeInfo - ContainerCpkScopeInfo contains a group of parameters for the ContainerClient.Create method.
 func (client *ContainerClient) Create(ctx context.Context, containerName string, restype Enum11, options *ContainerClientCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (ContainerClientCreateResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Create", client.internal.Tracer(), nil)
@@ -445,8 +445,8 @@ func (client *ContainerClient) createHandleResponse(resp *http.Response) (Contai
 //   - containerName - The container name.
 //   - restype - restype
 //   - options - ContainerClientDeleteOptions contains the optional parameters for the ContainerClient.Delete method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) Delete(ctx context.Context, containerName string, restype Enum11, options *ContainerClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientDeleteResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Delete", client.internal.Tracer(), nil)
@@ -621,7 +621,7 @@ func (client *ContainerClient) filterBlobsHandleResponse(resp *http.Response) (C
 //   - comp - comp
 //   - options - ContainerClientGetAccessPolicyOptions contains the optional parameters for the ContainerClient.GetAccessPolicy
 //     method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *ContainerClient) GetAccessPolicy(ctx context.Context, containerName string, restype Enum11, comp Enum13, options *ContainerClientGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (ContainerClientGetAccessPolicyResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetAccessPolicy", client.internal.Tracer(), nil)
@@ -790,7 +790,7 @@ func (client *ContainerClient) getAccountInfoHandleResponse(resp *http.Response)
 //   - containerName - The container name.
 //   - restype - restype
 //   - options - ContainerClientGetPropertiesOptions contains the optional parameters for the ContainerClient.GetProperties method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
 func (client *ContainerClient) GetProperties(ctx context.Context, containerName string, restype Enum11, options *ContainerClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (ContainerClientGetPropertiesResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetProperties", client.internal.Tracer(), nil)
@@ -1122,7 +1122,7 @@ func (client *ContainerClient) listBlobHierarchySegmentHandleResponse(resp *http
 //   - restype - restype
 //   - leaseID - Specifies the current lease ID on the resource.
 //   - options - ContainerClientReleaseLeaseOptions contains the optional parameters for the ContainerClient.ReleaseLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) ReleaseLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, leaseID string, options *ContainerClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientReleaseLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.ReleaseLease", client.internal.Tracer(), nil)
@@ -1296,7 +1296,7 @@ func (client *ContainerClient) renameHandleResponse(resp *http.Response) (Contai
 //   - restype - restype
 //   - leaseID - Specifies the current lease ID on the resource.
 //   - options - ContainerClientRenewLeaseOptions contains the optional parameters for the ContainerClient.RenewLease method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) RenewLease(ctx context.Context, containerName string, comp Enum16, restype Enum11, leaseID string, options *ContainerClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientRenewLeaseResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.RenewLease", client.internal.Tracer(), nil)
@@ -1474,8 +1474,8 @@ func (client *ContainerClient) restoreHandleResponse(resp *http.Response) (Conta
 //   - comp - comp
 //   - options - ContainerClientSetAccessPolicyOptions contains the optional parameters for the ContainerClient.SetAccessPolicy
 //     method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerName string, restype Enum11, comp Enum13, options *ContainerClientSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientSetAccessPolicyResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SetAccessPolicy", client.internal.Tracer(), nil)
@@ -1582,8 +1582,8 @@ func (client *ContainerClient) setAccessPolicyHandleResponse(resp *http.Response
 //   - restype - restype
 //   - comp - comp
 //   - options - ContainerClientSetMetadataOptions contains the optional parameters for the ContainerClient.SetMetadata method.
-//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
-//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
+//   - leaseAccessConditions - LeaseAccessConditions contains a group of parameters for the ContainerClient.GetProperties method.
+//   - modifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) SetMetadata(ctx context.Context, containerName string, restype Enum11, comp Enum12, options *ContainerClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientSetMetadataResponse, error) {
 	var err error
 	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SetMetadata", client.internal.Tracer(), nil)
