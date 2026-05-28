@@ -17,6 +17,60 @@ type ActionRequest struct {
 	Prop *string
 }
 
+// AuthorizationProperties - Properties of an authorization.
+type AuthorizationProperties struct {
+	// The description.
+	Description *string
+
+	// READ-ONLY; The provisioning state.
+	ProvisioningState *ProvisioningState
+}
+
+// AuthorizationResource - A tenant-level authorization resource.
+type AuthorizationResource struct {
+	// The resource-specific properties for this resource.
+	Properties *AuthorizationProperties
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// AuthorizationServerProperties - Properties of an authorization server.
+type AuthorizationServerProperties struct {
+	// The description.
+	Description *string
+
+	// READ-ONLY; The provisioning state.
+	ProvisioningState *ProvisioningState
+}
+
+// AuthorizationServerResource - A tenant-level authorization server resource.
+type AuthorizationServerResource struct {
+	// The resource-specific properties for this resource.
+	Properties *AuthorizationServerProperties
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
 // AvailabilityProperties - Properties of the availability resource.
 type AvailabilityProperties struct {
 	// Indicates if the resource is in preview.

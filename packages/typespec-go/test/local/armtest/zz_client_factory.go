@@ -29,6 +29,20 @@ func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOpti
 	}, nil
 }
 
+// NewAuthorizationClient creates a new instance of AuthorizationClient.
+func (c *ClientFactory) NewAuthorizationClient() *AuthorizationClient {
+	return &AuthorizationClient{
+		internal: c.internal,
+	}
+}
+
+// NewAuthorizationServerClient creates a new instance of AuthorizationServerClient.
+func (c *ClientFactory) NewAuthorizationServerClient() *AuthorizationServerClient {
+	return &AuthorizationServerClient{
+		internal: c.internal,
+	}
+}
+
 // NewBodyRootsClient creates a new instance of BodyRootsClient.
 func (c *ClientFactory) NewBodyRootsClient(subscriptionID string) *BodyRootsClient {
 	return &BodyRootsClient{

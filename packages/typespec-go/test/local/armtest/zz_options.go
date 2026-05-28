@@ -4,6 +4,16 @@
 
 package armtest
 
+// AuthorizationClientGetOptions contains the optional parameters for the AuthorizationClient.Get method.
+type AuthorizationClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AuthorizationServerClientGetOptions contains the optional parameters for the AuthorizationServerClient.Get method.
+type AuthorizationServerClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
 // BodyRootsClientActionOptions contains the optional parameters for the BodyRootsClient.Action method.
 type BodyRootsClientActionOptions struct {
 	// placeholder for future optional parameters
