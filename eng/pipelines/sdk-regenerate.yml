@@ -82,6 +82,7 @@ jobs:
       WorkingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
       ScriptDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go/eng/common/scripts
       RepoName: azure-sdk-for-go
+      PROwner: Azure
       BaseBranchName: 'refs/heads/main'
       PRBranchName: typespec-go-regenerate-$(Build.SourceBranchName)
       CommitMsg: 'Regenerate SDK based on typespec-go branch $(Build.SourceBranchName)'
