@@ -43,7 +43,9 @@ extends:
             runOnce:
               deploy:
                 steps:
-                
+                  - checkout: self
+                    path: s
+  
                   - template: /eng/pipelines/templates/steps/set-env.yaml
                     parameters:
                       GoVersion: $(GoVersionLatest)
