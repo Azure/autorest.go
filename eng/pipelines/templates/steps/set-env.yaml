@@ -15,6 +15,10 @@ steps:
       version: "${{ parameters.GoVersion }}"
     displayName: "Select Go Version"
 
+  - pwsh: |
+      New-Item -ItemType Directory -Force -Path "${{ parameters.pnpmStorePath }}" | Out-Null
+    displayName: Ensure pnpm store path exists
+
   - task: Cache@2
     inputs:
       key: 'pnpm | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/pnpm-lock.yaml'

@@ -23,9 +23,9 @@ extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
     stages:
-    - stage: Release
+    - stage: Build
 
-      variables: 
+      variables:
         - template: /eng/pipelines/templates/variables/globals.yml
 
       jobs:
@@ -88,8 +88,14 @@ extends:
                   Operation: "pack"
                   InputType: "source"
 
+    - stage: Release
+      dependsOn: Build
+
+      variables:
+        - template: /eng/pipelines/templates/variables/globals.yml
+
+      jobs:
         - deployment: Release
-          dependsOn: Build
           pool:
             image: ubuntu-24.04
             name: azsdk-pool
