@@ -29,7 +29,67 @@ extends:
         - template: /eng/pipelines/templates/variables/globals.yml
 
       jobs:
+        - job: Build
+          pool:
+            image: ubuntu-24.04
+            name: azsdk-pool
+            os: linux
+          templateContext:
+            outputs:
+              - output: pipelineArtifact
+                displayName: "Publish release tarballs"
+                targetPath: "$(Build.ArtifactStagingDirectory)/release-assets"
+                artifactName: "release_assets"
+          steps:
+            - checkout: self
+              path: s
+
+            - template: /eng/pipelines/templates/steps/set-env.yaml
+              parameters:
+                GoVersion: $(GoVersionLatest)
+
+            - pwsh: |
+                New-Item -ItemType Directory -Force -Path "$(Build.ArtifactStagingDirectory)/release-assets" | Out-Null
+              displayName: "Create release artifacts directory"
+
+            - ${{ if eq(parameters.release_autorestgo, true) }}:
+              - template: /eng/pipelines/templates/steps/build-test-go.yaml
+              - template: /eng/pipelines/templates/steps/publish-release.yaml
+                parameters:
+                  PackagePath: "autorest.go"
+                  PackageFileName: "autorest-go"
+                  ReleaseName: "Autorest for Go v$(currentVersion)"
+                  ReleaseNotes: "Autorest for Go track 2"
+                  PublishDevVersion: ${{ parameters.publish_dev }}
+                  Operation: "pack"
+                  InputType: "source"
+
+            - ${{ if eq(parameters.release_autorestgotest, true) }}:
+              - template: /eng/pipelines/templates/steps/build-test-gotest.yaml
+              - template: /eng/pipelines/templates/steps/publish-release.yaml
+                parameters:
+                  PackagePath: "autorest.gotest"
+                  PackageFileName: "autorest-gotest"
+                  ReleaseName: "@autorest/gotest_v$(currentVersion)"
+                  ReleaseNotes: "Go test generation"
+                  PublishDevVersion: ${{ parameters.publish_dev }}
+                  Operation: "pack"
+                  InputType: "source"
+
+            - ${{ if eq(parameters.release_typespecgo, true) }}:
+              - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
+              - template: /eng/pipelines/templates/steps/publish-release.yaml
+                parameters:
+                  PackagePath: "typespec-go"
+                  PackageFileName: "azure-tools-typespec-go"
+                  ReleaseName: "TypeSpec emitter for Go SDKs v$(currentVersion)"
+                  ReleaseNotes: "TypeSpec emitter for Go SDKs"
+                  PublishDevVersion: ${{ parameters.publish_dev }}
+                  Operation: "pack"
+                  InputType: "source"
+
         - deployment: Release
+          dependsOn: Build
           pool:
             image: ubuntu-24.04
             name: azsdk-pool
@@ -38,44 +98,54 @@ extends:
           templateContext:
             type: releaseJob
             isProduction: true
+            inputs:
+              - input: pipelineArtifact
+                artifactName: release_assets
+                targetPath: $(Pipeline.Workspace)/release-assets
 
           strategy:
             runOnce:
               deploy:
                 steps:
-                  - checkout: self
-                    path: s
-  
-                  - template: /eng/pipelines/templates/steps/set-env.yaml
-                    parameters:
-                      GoVersion: $(GoVersionLatest)
+                  - task: NodeTool@0
+                    displayName: "Install Node.js $(NodeVersion)"
+                    inputs:
+                      versionSpec: "$(NodeVersion)"
+
+                  - ${{ if ne(parameters.publish_dev, true) }}:
+                    - pwsh: |
+                        "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" | Out-File -FilePath "$HOME/.npmrc" -Encoding ascii
+                      displayName: "Configure npm auth"
 
                   - ${{ if eq(parameters.release_autorestgo, true) }}:
-                    - template: /eng/pipelines/templates/steps/build-test-go.yaml
                     - template: /eng/pipelines/templates/steps/publish-release.yaml
                       parameters:
                         PackagePath: "autorest.go"
                         PackageFileName: "autorest-go"
-                        ReleaseName: "Autorest for Go v$currentVersion"
+                        ReleaseName: "Autorest for Go v$(currentVersion)"
                         ReleaseNotes: "Autorest for Go track 2"
                         PublishDevVersion: ${{ parameters.publish_dev }}
+                        Operation: "publish"
+                        InputType: "artifact"
 
                   - ${{ if eq(parameters.release_autorestgotest, true) }}:
-                    - template: /eng/pipelines/templates/steps/build-test-gotest.yaml
                     - template: /eng/pipelines/templates/steps/publish-release.yaml
                       parameters:
                         PackagePath: "autorest.gotest"
                         PackageFileName: "autorest-gotest"
-                        ReleaseName: "@autorest/gotest_v$currentVersion"
+                        ReleaseName: "@autorest/gotest_v$(currentVersion)"
                         ReleaseNotes: "Go test generation"
                         PublishDevVersion: ${{ parameters.publish_dev }}
+                        Operation: "publish"
+                        InputType: "artifact"
 
                   - ${{ if eq(parameters.release_typespecgo, true) }}:
-                    - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
                     - template: /eng/pipelines/templates/steps/publish-release.yaml
                       parameters:
                         PackagePath: "typespec-go"
                         PackageFileName: "azure-tools-typespec-go"
-                        ReleaseName: "TypeSpec emitter for Go SDKs v$currentVersion"
+                        ReleaseName: "TypeSpec emitter for Go SDKs v$(currentVersion)"
                         ReleaseNotes: "TypeSpec emitter for Go SDKs"
                         PublishDevVersion: ${{ parameters.publish_dev }}
+                        Operation: "publish"
+                        InputType: "artifact"
