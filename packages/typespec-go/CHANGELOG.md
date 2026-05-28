@@ -1,15 +1,18 @@
 # Release History
 
-## 0.14.2 (unreleased)
+## 0.14.2 (2026-05-28)
 
 ### Features Added
 
-* Updated to TCGC 0.68.2.
 * Honor `exact()` on `@clientName` targets: models, enums, model fields, parameters, response headers, client names, service method names, and individual enum value names. As before, when a name is marked as exact, it is preserved verbatim and not subjected to built-in naming canonization.
 
 ### Bugs Fixed
 
 * Fixed an issue where two fake server types whose names differed only by a trailing duplicate word (e.g. `AuthorizationServer` and `AuthorizationServerServer`) generated the same `TransportInterceptor` variable name, producing a duplicate declaration in the `fake` package.
+
+### Other Changes
+
+* Updated to the latest TCGC.
 
 ## 0.14.1 (2026-05-20)
 
