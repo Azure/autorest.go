@@ -1228,26 +1228,6 @@ function fixLeadingNumber(identifier: Array<string>): Array<string> {
   return identifier;
 }
 
-function isEqual(s1: string, s2: string): boolean {
-  // when s2 is undefined and s1 is the string 'undefined', it returns 0, making this true.
-  // To prevent that, first we need to check if s2 is undefined.
-  return s2 !== undefined && !!s1 && !s1.localeCompare(s2, undefined, { sensitivity: 'base' });
-}
-
-function removeSequentialDuplicates(identifier: Iterable<string>) {
-  const ids = [...identifier].filter((each) => !!each);
-  for (let i = 0; i < ids.length; i++) {
-    while (isEqual(ids[i], ids[i - 1])) {
-      ids.splice(i, 1);
-    }
-    while (isEqual(ids[i], ids[i - 2]) && isEqual(ids[i + 1], ids[i - 1])) {
-      ids.splice(i, 2);
-    }
-  }
-
-  return ids;
-}
-
 export function camelCase(identifier: string | Array<string>): string {
   if (typeof identifier === 'string') {
     return camelCase(fixLeadingNumber(deconstruct(identifier)));
@@ -1261,12 +1241,12 @@ export function camelCase(identifier: string | Array<string>): string {
   return `${naming.uncapitalize(identifier[0])}${pascalCase(identifier.slice(1))}`;
 }
 
-export function pascalCase(identifier: string | Array<string>, removeDuplicates = true): string {
+export function pascalCase(identifier: string | Array<string>): string {
   return identifier === undefined
     ? ''
     : typeof identifier === 'string'
-      ? pascalCase(fixLeadingNumber(deconstruct(identifier)), removeDuplicates)
-      : (removeDuplicates ? [...removeSequentialDuplicates(identifier)] : identifier).map((each) => naming.capitalize(each)).join('');
+      ? pascalCase(fixLeadingNumber(deconstruct(identifier)))
+      : identifier.map((each) => naming.capitalize(each)).join('');
 }
 
 function indent(content: string, factor = 1): string {

@@ -1,5 +1,11 @@
 # Release History
 
+## 0.14.2 (unreleased)
+
+### Bugs Fixed
+
+* Fixed an issue where two fake server types whose names differed only by a trailing duplicate word (e.g. `AuthorizationServer` and `AuthorizationServerServer`) generated the same `TransportInterceptor` variable name, producing a duplicate declaration in the `fake` package.
+
 ## 0.14.1 (2026-05-20)
 
 ### Bugs Fixed

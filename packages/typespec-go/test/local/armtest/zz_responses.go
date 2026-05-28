@@ -6,6 +6,18 @@ package armtest
 
 import "io"
 
+// AuthorizationClientGetResponse contains the response from method AuthorizationClient.Get.
+type AuthorizationClientGetResponse struct {
+	// A tenant-level authorization resource.
+	AuthorizationResource
+}
+
+// AuthorizationServerClientGetResponse contains the response from method AuthorizationServerClient.Get.
+type AuthorizationServerClientGetResponse struct {
+	// A tenant-level authorization server resource.
+	AuthorizationServerResource
+}
+
 // BodyRootsClientActionResponse contains the response from method BodyRootsClient.Action.
 type BodyRootsClientActionResponse struct {
 	// placeholder for future response values
