@@ -32,17 +32,25 @@ parameters:
 - name: ArtifactRoot
   type: string
   default: "$(Pipeline.Workspace)/release-assets"
+- name: npmrcPath
+  type: string
+  default: "$(Agent.TempDirectory)/publish-release/.npmrc"
 
 steps:
   - pwsh: |
       $releaseNotes = "${{ parameters.ReleaseNotes }}"
 
       if ('${{ parameters.InputType }}' -eq 'source') {
-        $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
+        $baseVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
         if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
-          $currentVersion = "$currentVersion-$(Build.BuildNumber)"
+          $currentVersion = "$baseVersion-$(Build.BuildNumber)"
           $releaseNotes = "Preview version of $releaseNotes"
         }
+        else {
+          $currentVersion = $baseVersion
+        }
+
+        $changelogVersion = $baseVersion
         $packageAssetPath = "${{ parameters.PackRoot }}/${{ parameters.PackagePath }}/${{ parameters.PackageFileName }}-$currentVersion.tgz"
       }
       else {
@@ -55,19 +63,25 @@ steps:
         if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
           $releaseNotes = "Preview version of $releaseNotes"
         }
+        $changelogVersion = $currentVersion
         $packageAssetPath = $asset.FullName
       }
 
       Write-Host "##vso[task.setvariable variable=currentVersion]$currentVersion"
+      Write-Host "##vso[task.setvariable variable=changelogVersion]$changelogVersion"
       Write-Host "##vso[task.setvariable variable=releaseNotes]$releaseNotes"
       Write-Host "##vso[task.setvariable variable=packageAssetPath]$packageAssetPath"
     displayName: "Resolve Release Metadata ${{ parameters.PackagePath }}"
 
   - ${{ if and(eq(parameters.Operation, 'pack'), eq(parameters.InputType, 'source')) }}:
+    - template: /eng/pipelines/templates/steps/create-authenticated-npmrc.yml
+      parameters:
+        npmrcPath: ${{ parameters.npmrcPath }}
+
     - template: /eng/pipelines/templates/steps/verify-changelog.yml
       parameters:
         PackagePath: ${{ parameters.PackagePath }}
-        VersionString: $(currentVersion)
+        VersionString: $(changelogVersion)
 
     - pwsh: |
         cd packages/${{ parameters.PackagePath }}
@@ -76,6 +90,8 @@ steps:
         New-Item -ItemType Directory -Force -Path "${{ parameters.PackRoot }}/${{ parameters.PackagePath }}" | Out-Null
         Copy-Item "./${{ parameters.PackageFileName }}-$(currentVersion).tgz" "${{ parameters.PackRoot }}/${{ parameters.PackagePath }}/"
       displayName: "Pack ${{ parameters.PackagePath }}"
+      env:
+        npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - ${{ if eq(parameters.Operation, 'publish') }}:
     - pwsh: |

@@ -3,6 +3,7 @@ parameters:
   GoVersion: "$(GoVersion)"
   GoLintCLIVersion: "$(GoLintCLIVersion)"
   pnpmStorePath: $(Pipeline.Workspace)/.pnpm-store
+  npmrcPath: $(Agent.TempDirectory)/set-env/.npmrc
 
 steps:
   - task: NodeTool@0
@@ -19,6 +20,10 @@ steps:
       New-Item -ItemType Directory -Force -Path "${{ parameters.pnpmStorePath }}" | Out-Null
     displayName: Ensure pnpm store path exists
 
+  - template: /eng/pipelines/templates/steps/create-authenticated-npmrc.yml
+    parameters:
+      npmrcPath: ${{ parameters.npmrcPath }}
+
   - task: Cache@2
     inputs:
       key: 'pnpm | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/pnpm-lock.yaml'
@@ -30,9 +35,13 @@ steps:
       corepack enable
       corepack prepare pnpm@latest-10 --activate
     displayName: Install pnpm
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: pnpm config set store-dir ${{ parameters.pnpmStorePath }}
     displayName: Setup pnpm cache dir
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       echo "Node:"
@@ -44,3 +53,5 @@ steps:
   - script: |
       npm install -g autorest
     displayName: "Install Latest Autorest"
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
