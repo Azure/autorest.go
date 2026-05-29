@@ -26,13 +26,14 @@ extends:
     - stage: Release
 
       variables: 
+        - template: /eng/pipelines/templates/variables/image.yml
         - template: /eng/pipelines/templates/variables/globals.yml
 
       jobs:
         - deployment: Release
           pool:
-            image: ubuntu-24.04
-            name: azsdk-pool
+            name: $(LINUXPOOL)
+            image: $(LINUXVMIMAGE)
             os: linux
           environment: package-publish
           templateContext:
