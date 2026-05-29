@@ -1,20 +1,29 @@
+parameters:
+  npmrcPath: "$(Agent.TempDirectory)/set-env/.npmrc"
+
 steps:
   - script: |
       pnpm install
       pnpm build
     displayName: "Build Generator Sources"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       pnpm -w format:check
     displayName: "Formatting and Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       export PATH=$PATH:$HOME/go/bin
       pnpm test
     displayName: "Run Tests - go$(GoVersion)"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - task: PublishTestResults@2
     inputs:

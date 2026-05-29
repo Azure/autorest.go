@@ -31,9 +31,7 @@ steps:
     displayName: Cache pnpm store
 
   - script: |
-      npm i -g corepack@latest
-      corepack enable
-      corepack prepare pnpm@latest-10 --activate
+      npm i -g pnpm@latest-10
     displayName: Install pnpm
     env:
       npm_config_userconfig: ${{ parameters.npmrcPath }}

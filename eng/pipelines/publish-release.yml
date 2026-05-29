@@ -19,6 +19,9 @@ parameters:
   type: boolean
   default: false
 
+variables:
+  BuildNpmrcPath: "$(Agent.TempDirectory)/publish-release/.npmrc"
+
 extends: 
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -47,6 +50,7 @@ extends:
             - template: /eng/pipelines/templates/steps/set-env.yaml
               parameters:
                 GoVersion: $(GoVersionLatest)
+                npmrcPath: $(BuildNpmrcPath)
 
             - pwsh: |
                 New-Item -ItemType Directory -Force -Path "$(Build.ArtifactStagingDirectory)/release-assets" | Out-Null
@@ -54,6 +58,8 @@ extends:
 
             - ${{ if eq(parameters.release_autorestgo, true) }}:
               - template: /eng/pipelines/templates/steps/build-test-go.yaml
+                parameters:
+                  npmrcPath: $(BuildNpmrcPath)
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "autorest.go"
@@ -63,9 +69,12 @@ extends:
                   PublishDevVersion: ${{ parameters.publish_dev }}
                   Operation: "pack"
                   InputType: "source"
+                  npmrcPath: $(BuildNpmrcPath)
 
             - ${{ if eq(parameters.release_autorestgotest, true) }}:
               - template: /eng/pipelines/templates/steps/build-test-gotest.yaml
+                parameters:
+                  npmrcPath: $(BuildNpmrcPath)
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "autorest.gotest"
@@ -75,9 +84,12 @@ extends:
                   PublishDevVersion: ${{ parameters.publish_dev }}
                   Operation: "pack"
                   InputType: "source"
+                  npmrcPath: $(BuildNpmrcPath)
 
             - ${{ if eq(parameters.release_typespecgo, true) }}:
               - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
+                parameters:
+                  npmrcPath: $(BuildNpmrcPath)
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "typespec-go"
@@ -87,6 +99,7 @@ extends:
                   PublishDevVersion: ${{ parameters.publish_dev }}
                   Operation: "pack"
                   InputType: "source"
+                  npmrcPath: $(BuildNpmrcPath)
 
     - stage: Release
       dependsOn: Build
