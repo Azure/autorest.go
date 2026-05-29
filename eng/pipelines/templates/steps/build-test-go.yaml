@@ -1,6 +1,5 @@
 parameters:
   GoTestPath: "$(System.DefaultWorkingDirectory)/packages/autorest.go/test"
-  npmrcPath: "$(Agent.TempDirectory)/set-env/.npmrc"
 
 steps:
   - script: |
@@ -8,15 +7,11 @@ steps:
       pnpm build
     displayName: "Build Generator Sources"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
-    env:
-      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       pnpm -w format:check
     displayName: "Formatting and Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)
-    env:
-      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
@@ -24,8 +19,6 @@ steps:
       npm install -g autorest-go-$currentVersion.tgz
     displayName: "Create and install npm tarball"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
-    env:
-      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
@@ -39,8 +32,6 @@ steps:
       fi
     displayName: "Regenerate Autorest Tests"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
-    env:
-      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       set -e
@@ -133,14 +124,10 @@ steps:
       popd
     displayName: "Run Acceptance Tests - go$(GoVersion)"
     timeoutInMinutes: 10
-    env:
-      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - pwsh: pnpm test
     displayName: "Run Unit Tests - go$(GoVersion)"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
-    env:
-      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - task: PublishTestResults@2
     inputs:
