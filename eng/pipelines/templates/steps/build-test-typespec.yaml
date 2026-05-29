@@ -1,6 +1,7 @@
 parameters:
   GoTestPath: "$(System.DefaultWorkingDirectory)/packages/typespec-go/test"
   Nightly: false
+  npmrcPath: "$(Agent.TempDirectory)/set-env/.npmrc"
 
 steps:
   - script: |
@@ -12,16 +13,22 @@ steps:
       pnpm build
     displayName: "Build Emitter Sources"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       pnpm test
     displayName: "Run Unit Tests"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       pnpm -w format:check
     displayName: "Formatting and Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
@@ -33,6 +40,8 @@ steps:
       fi
     displayName: "Create and install npm tarball"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       pnpm tspcompile --emitter-installed --verbose
@@ -44,6 +53,8 @@ steps:
     displayName: "Regenerate TypeSpec Tests"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/test
     failOnStderr: true
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - script: |
       set -e
@@ -87,6 +98,8 @@ steps:
     displayName: "Run All Tests - go$(GoVersion)"
     timeoutInMinutes: 10
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+    env:
+      npm_config_userconfig: ${{ parameters.npmrcPath }}
 
   - task: PublishTestResults@2
     inputs:

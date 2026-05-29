@@ -1,49 +1,114 @@
 parameters:
-  PackagePath: "not-specified"
-  PackageFileName: "not-specfied"
-  ReleaseName: "not-specified"
-  ReleaseNotes: "not-specfied"
-  PublishDevVersion: true
+- name: PackagePath
+  type: string
+  default: "not-specified"
+- name: PackageFileName
+  type: string
+  default: "not-specfied"
+- name: ReleaseName
+  type: string
+  default: "not-specified"
+- name: ReleaseNotes
+  type: string
+  default: "not-specfied"
+- name: PublishDevVersion
+  type: boolean
+  default: true
+- name: Operation
+  type: string
+  default: "publish"
+  values:
+  - "pack"
+  - "publish"
+- name: InputType
+  type: string
+  default: "source"
+  values:
+  - "source"
+  - "artifact"
+- name: PackRoot
+  type: string
+  default: "$(Build.ArtifactStagingDirectory)/release-assets"
+- name: ArtifactRoot
+  type: string
+  default: "$(Pipeline.Workspace)/release-assets"
+- name: npmrcPath
+  type: string
+  default: "$(Agent.TempDirectory)/publish-release/.npmrc"
 
 steps:
   - pwsh: |
-      $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
-      Write-Host "##vso[task.setvariable variable=currentVersion]$currentVersion"
-    displayName: "Get Current Version"
-  - template: /eng/pipelines/templates/steps/verify-changelog.yml
-    parameters:
-      PackagePath: ${{ parameters.PackagePath }}
-      VersionString: $(currentVersion)
-  - pwsh: |
-      $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
       $releaseNotes = "${{ parameters.ReleaseNotes }}"
-      if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
-        $currentVersion="$currentVersion-$(Build.BuildNumber)"
-        $releaseNotes = "Preview version of ${{ parameters.ReleaseNotes }}"
-      }
-      cd packages/${{ parameters.PackagePath }}
-      npm version --no-git-tag-version $currentVersion
-      pnpm pack
-      npm install -g ${{ parameters.PackageFileName }}-$currentVersion.tgz
-      if ($LASTEXITCODE) {
-        exit $LASTEXITCODE
-      }
-      npx publish-release `
-        --token $(azuresdk-github-pat) `
-        --repo autorest.go `
-        --owner azure `
-        --name "${{ parameters.ReleaseName }}" `
-        --tag v$currentVersion `
-        --notes="$releaseNotes" `
-        --prerelease `
-        --editRelease false `
-        --assets ${{ parameters.PackageFileName }}-$currentVersion.tgz `
-        --target_commitish $(Build.SourceBranchName);
-    displayName: "Publish GitHub Release ${{ parameters.PackagePath }}"
 
-  - ${{ if ne(parameters.PublishDevVersion, true) }}:
-    - script: |
+      if ('${{ parameters.InputType }}' -eq 'source') {
+        $baseVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
+        if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
+          $currentVersion = "$baseVersion-$(Build.BuildNumber)"
+          $releaseNotes = "Preview version of $releaseNotes"
+        }
+        else {
+          $currentVersion = $baseVersion
+        }
+
+        $changelogVersion = $baseVersion
+        $packageAssetPath = "${{ parameters.PackRoot }}/${{ parameters.PackagePath }}/${{ parameters.PackageFileName }}-$currentVersion.tgz"
+      }
+      else {
+        $asset = Get-ChildItem "${{ parameters.ArtifactRoot }}/${{ parameters.PackagePath }}" -Filter "${{ parameters.PackageFileName }}-*.tgz" | Select-Object -First 1
+        if (-not $asset) {
+          throw "Unable to find artifact for ${{ parameters.PackagePath }}"
+        }
+
+        $currentVersion = $asset.BaseName -replace '^${{ parameters.PackageFileName }}-', ''
+        if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
+          $releaseNotes = "Preview version of $releaseNotes"
+        }
+        $changelogVersion = $currentVersion
+        $packageAssetPath = $asset.FullName
+      }
+
+      Write-Host "##vso[task.setvariable variable=currentVersion]$currentVersion"
+      Write-Host "##vso[task.setvariable variable=changelogVersion]$changelogVersion"
+      Write-Host "##vso[task.setvariable variable=releaseNotes]$releaseNotes"
+      Write-Host "##vso[task.setvariable variable=packageAssetPath]$packageAssetPath"
+    displayName: "Resolve Release Metadata ${{ parameters.PackagePath }}"
+
+  - ${{ if and(eq(parameters.Operation, 'pack'), eq(parameters.InputType, 'source')) }}:
+    - template: /eng/pipelines/templates/steps/create-authenticated-npmrc.yml
+      parameters:
+        npmrcPath: ${{ parameters.npmrcPath }}
+
+    - template: /eng/pipelines/templates/steps/verify-changelog.yml
+      parameters:
+        PackagePath: ${{ parameters.PackagePath }}
+        VersionString: $(changelogVersion)
+
+    - pwsh: |
         cd packages/${{ parameters.PackagePath }}
-        echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
-        pnpm publish --access public --no-git-checks --tag latest
+        npm version --no-git-tag-version $(currentVersion)
+        pnpm pack
+        New-Item -ItemType Directory -Force -Path "${{ parameters.PackRoot }}/${{ parameters.PackagePath }}" | Out-Null
+        Copy-Item "./${{ parameters.PackageFileName }}-$(currentVersion).tgz" "${{ parameters.PackRoot }}/${{ parameters.PackagePath }}/"
+      displayName: "Pack ${{ parameters.PackagePath }}"
+      env:
+        npm_config_userconfig: ${{ parameters.npmrcPath }}
+
+  - ${{ if eq(parameters.Operation, 'publish') }}:
+    - pwsh: |
+        npx publish-release `
+          --token $(azuresdk-github-pat) `
+          --repo autorest.go `
+          --owner azure `
+          --name "${{ parameters.ReleaseName }}" `
+          --tag v$(currentVersion) `
+          --notes="$(releaseNotes)" `
+          --prerelease `
+          --editRelease false `
+          --assets "$(packageAssetPath)" `
+          --target_commitish $(Build.SourceBranchName)
+      displayName: "Publish GitHub Release ${{ parameters.PackagePath }}"
+
+  - ${{ if and(eq(parameters.Operation, 'publish'), ne(parameters.PublishDevVersion, true)) }}:
+    - script: |
+        npm publish "$(packageAssetPath)" --access public --tag latest
       displayName: "Publish to npm ${{ parameters.PackagePath }}"
