@@ -21,7 +21,7 @@ export function generateGoModFile(module: go.Module, options: go.Options, existi
 
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
-  let version = '1.21.0';
+  let version = '1.22.0';
   if (options.azcoreVersion) {
     // when matching versions, we need to handle beta, non-beta, and pseudo versions
     // 1.2.3-beta.1, 1.2.3, 0.22.1-0.20220315231014-ed309e73db6b
@@ -60,7 +60,7 @@ export function generateGoModFile(module: go.Module, options: go.Options, existi
     }
     const existingVer = toSemver(match[1]);
     const specifiedVer = toSemver(version);
-    if (lt(existingVer, specifiedVer)) {
+    if (semver.lt(existingVer, specifiedVer)) {
       // the existing version of azcore is less than the specified version so update it
       existingGoMod = existingGoMod.replace(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?/, azcore);
     }
@@ -68,27 +68,16 @@ export function generateGoModFile(module: go.Module, options: go.Options, existi
   return existingGoMod;
 }
 
-// the following was copied from @azure-tools/codegen as it's being deprecated
-function toSemver(apiversion: string) {
-  // strip off leading "v" or "=" character
-  apiversion = apiversion.replace(/^v|^=/gi, '');
-  // eslint-disable-next-line no-useless-escape
-  const versionedDateRegex = new RegExp(/(^\d{4}\-\d{2}\-\d{2})(\.\d+\.\d+$)/gi);
-  if (apiversion.match(versionedDateRegex)) {
-    // convert yyyy-mm-dd.x1.x2      --->     (miliseconds since 1970-01-01).x1.x2
-    const date = apiversion.replace(versionedDateRegex, '$1');
-    const miliseconds = new Date(date).getTime();
-    const lastNumbers = apiversion.replace(versionedDateRegex, '$2');
-    return `${miliseconds}${lastNumbers}`;
+/**
+ * Converts a version string to a semver.SemVer object.
+ *
+ * @param version the version string to convert
+ * @returns the semver.SemVer object
+ */
+function toSemver(version: string): semver.SemVer {
+  const asSemVer = semver.parse(version);
+  if (!asSemVer) {
+    throw new CodegenError('InternalError', `failed to parse version: ${version}`);
   }
-  const [major, minor, revision, tag] =
-    /^(\d+)-(\d+)(?:-(\d+))?(.*)/.exec(apiversion) || /(\d*)\.(\d*)\.(\d*)(.*)/.exec(apiversion) || /(\d*)\.(\d*)()(.*)/.exec(apiversion) || /(\d*)()()(.*)/.exec(apiversion) || [];
-  return `${Number.parseInt(major || '0') || 0}.${Number.parseInt(minor || '0') || 0}.${Number.parseInt(revision || '0') || 0}${tag?.startsWith('-') ? tag : ''}`;
+  return asSemVer;
 }
-
-function lt(apiVersion1: string, apiVersion2: string) {
-  const v1 = toSemver(apiVersion1);
-  const v2 = toSemver(apiVersion2);
-  return semver.lt(v1, v2);
-}
-// end ports from @azure-tools/codegen

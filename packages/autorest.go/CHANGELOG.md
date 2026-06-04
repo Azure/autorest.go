@@ -6,6 +6,10 @@
 
 * Fixed an issue where two fake server types whose names differed only by a trailing duplicate word (e.g. `AuthorizationServer` and `AuthorizationServerServer`) generated the same `TransportInterceptor` variable name, producing a duplicate declaration in the `fake` package.
 
+### Other Changes
+
+* Updated the minimum version of `azcore` to `v1.22.0`.
+
 ## 4.0.0-preview.80 (2026-05-21)
 
 ### Bugs Fixed

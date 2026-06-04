@@ -1,6 +1,6 @@
 # Release History
 
-## 0.14.2 (2026-05-28)
+## 0.14.2 (unreleased)
 
 ### Features Added
 
@@ -13,6 +13,7 @@
 ### Other Changes
 
 * Updated to the latest TCGC.
+* Updated the minimum version of `azcore` to `v1.22.0`.
 
 ## 0.14.1 (2026-05-20)
 
