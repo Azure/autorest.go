@@ -84,6 +84,10 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	OptionalBodyPost func(ctx context.Context, options *azregressions.ClientOptionalBodyPostOptions) (resp azfake.Responder[azregressions.ClientOptionalBodyPostResponse], errResp azfake.ErrorResponder)
 
+	// PayloadWithExplicitContentType is the fake for method Client.PayloadWithExplicitContentType
+	// HTTP status codes to indicate success: http.StatusNoContent
+	PayloadWithExplicitContentType func(ctx context.Context, contentType azregressions.PayloadWithExplicitContentTypeRequestContentType, thing azregressions.SomeModel, options *azregressions.ClientPayloadWithExplicitContentTypeOptions) (resp azfake.Responder[azregressions.ClientPayloadWithExplicitContentTypeResponse], errResp azfake.ErrorResponder)
+
 	// SpreadWithModel is the fake for method Client.SpreadWithModel
 	// HTTP status codes to indicate success: http.StatusNoContent
 	SpreadWithModel func(ctx context.Context, name string, options *azregressions.ClientSpreadWithModelOptions) (resp azfake.Responder[azregressions.ClientSpreadWithModelResponse], errResp azfake.ErrorResponder)
@@ -165,6 +169,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 				res.resp, res.err = s.dispatchOptionalBinaryBodyWithContentType(req)
 			case "Client.OptionalBodyPost":
 				res.resp, res.err = s.dispatchOptionalBodyPost(req)
+			case "Client.PayloadWithExplicitContentType":
+				res.resp, res.err = s.dispatchPayloadWithExplicitContentType(req)
 			case "Client.SpreadWithModel":
 				res.resp, res.err = s.dispatchSpreadWithModel(req)
 			case "Client.WithClientDefaultModelField":
@@ -521,6 +527,29 @@ func (s *ServerTransport) dispatchOptionalBodyPost(req *http.Request) (*http.Res
 		}
 	}
 	respr, errRespr := s.srv.OptionalBodyPost(req.Context(), options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchPayloadWithExplicitContentType(req *http.Request) (*http.Response, error) {
+	if s.srv.PayloadWithExplicitContentType == nil {
+		return nil, &nonRetriableError{errors.New("fake for method PayloadWithExplicitContentType not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[azregressions.SomeModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.PayloadWithExplicitContentType(req.Context(), azregressions.PayloadWithExplicitContentTypeRequestContentType(getHeaderValue(req.Header, "Content-Type")), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

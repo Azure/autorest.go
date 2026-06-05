@@ -84,6 +84,12 @@ type ClientOptionalBodyPostOptions struct {
 	Body *SomeModel
 }
 
+// ClientPayloadWithExplicitContentTypeOptions contains the optional parameters for the Client.PayloadWithExplicitContentType
+// method.
+type ClientPayloadWithExplicitContentTypeOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientSpreadWithModelOptions contains the optional parameters for the Client.SpreadWithModel method.
 type ClientSpreadWithModelOptions struct {
 	Color *string

@@ -84,6 +84,11 @@ type ClientOptionalBodyPostResponse struct {
 	// placeholder for future response values
 }
 
+// ClientPayloadWithExplicitContentTypeResponse contains the response from method Client.PayloadWithExplicitContentType.
+type ClientPayloadWithExplicitContentTypeResponse struct {
+	// placeholder for future response values
+}
+
 // ClientSpreadWithModelResponse contains the response from method Client.SpreadWithModel.
 type ClientSpreadWithModelResponse struct {
 	// placeholder for future response values

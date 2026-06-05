@@ -39,3 +39,18 @@ func PossibleNetworkVersionValues() []NetworkVersion {
 		NetworkVersionV2,
 	}
 }
+
+type PayloadWithExplicitContentTypeRequestContentType string
+
+const (
+	PayloadWithExplicitContentTypeRequestContentTypeApplicationJSON         PayloadWithExplicitContentTypeRequestContentType = "application/json"
+	PayloadWithExplicitContentTypeRequestContentTypeApplicationSnapshotJSON PayloadWithExplicitContentTypeRequestContentType = "application/snapshot+json"
+)
+
+// PossiblePayloadWithExplicitContentTypeRequestContentTypeValues returns the possible values for the PayloadWithExplicitContentTypeRequestContentType const type.
+func PossiblePayloadWithExplicitContentTypeRequestContentTypeValues() []PayloadWithExplicitContentTypeRequestContentType {
+	return []PayloadWithExplicitContentTypeRequestContentType{
+		PayloadWithExplicitContentTypeRequestContentTypeApplicationJSON,
+		PayloadWithExplicitContentTypeRequestContentTypeApplicationSnapshotJSON,
+	}
+}

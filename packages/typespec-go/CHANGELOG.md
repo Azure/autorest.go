@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 * Fixed an issue where two fake server types whose names differed only by a trailing duplicate word (e.g. `AuthorizationServer` and `AuthorizationServerServer`) generated the same `TransportInterceptor` variable name, producing a duplicate declaration in the `fake` package.
+* Fixed setting the `Content-Type` header from an explicit parameter for modeled body parameters.
 
 ### Other Changes
 
