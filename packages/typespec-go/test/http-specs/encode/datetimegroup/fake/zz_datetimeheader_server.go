@@ -105,13 +105,7 @@ func (d *DatetimeHeaderServerTransport) dispatchDefault(req *http.Request) (*htt
 	if d.srv.Default == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Default not implemented")}
 	}
-	valueParam, err := parseWithCast(getHeaderValue(req.Header, "value"), func(v string) (time.Time, error) {
-		p, parseErr := strconv.ParseInt(v, 10, 64)
-		if parseErr != nil {
-			return time.Time{}, parseErr
-		}
-		return time.Unix(p, 0).UTC(), nil
-	})
+	valueParam, err := time.Parse(time.RFC1123, getHeaderValue(req.Header, "value"))
 	if err != nil {
 		return nil, err
 	}
@@ -157,13 +151,7 @@ func (d *DatetimeHeaderServerTransport) dispatchRFC7231(req *http.Request) (*htt
 	if d.srv.RFC7231 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RFC7231 not implemented")}
 	}
-	valueParam, err := parseWithCast(getHeaderValue(req.Header, "value"), func(v string) (time.Time, error) {
-		p, parseErr := strconv.ParseInt(v, 10, 64)
-		if parseErr != nil {
-			return time.Time{}, parseErr
-		}
-		return time.Unix(p, 0).UTC(), nil
-	})
+	valueParam, err := time.Parse(time.RFC1123, getHeaderValue(req.Header, "value"))
 	if err != nil {
 		return nil, err
 	}

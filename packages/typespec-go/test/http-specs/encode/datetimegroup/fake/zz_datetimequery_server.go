@@ -154,13 +154,7 @@ func (d *DatetimeQueryServerTransport) dispatchRFC7231(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method RFC7231 not implemented")}
 	}
 	qp := req.URL.Query()
-	valueParam, err := parseWithCast(qp.Get("value"), func(v string) (time.Time, error) {
-		p, parseErr := strconv.ParseInt(v, 10, 64)
-		if parseErr != nil {
-			return time.Time{}, parseErr
-		}
-		return time.Unix(p, 0).UTC(), nil
-	})
+	valueParam, err := time.Parse(time.RFC1123, qp.Get("value"))
 	if err != nil {
 		return nil, err
 	}
