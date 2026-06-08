@@ -189,19 +189,18 @@ export function generateModels(pkg: go.PackageContent, options: go.Options, emit
     serdeTextBody += '}\n\n';
   }
   if (needsJSONUnpopulateTime || needsJSONPopulateTime) {
+    const formats = new Array<string>('datetime.PlainDate', 'datetime.PlainTime', 'datetime.RFC3339', 'datetime.Unix');
     serdeTextBody += `type dateTimeConstraints interface {\n`;
     // rfc1123 and rfc7231 are mutually exclusive based on the emitter
-    let rfc1123 = '';
-    let rfc7231 = '';
     switch (emitter) {
       case 'openapi':
-        rfc1123 = ' | datetime.RFC1123';
+        formats.push('datetime.RFC1123');
         break;
       case 'tsp':
-        rfc7231 = ' | datetime.RFC7231';
+        formats.push('datetime.RFC7231');
         break;
     }
-    serdeTextBody += `${indent.get()}datetime.PlainDate | datetime.PlainTime${rfc1123} | datetime.RFC3339${rfc7231} | datetime.Unix\n`;
+    serdeTextBody += `${indent.get()}${formats.sort().join(' | ')}\n`;
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';
