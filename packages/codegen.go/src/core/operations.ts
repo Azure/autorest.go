@@ -1267,9 +1267,11 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
 
       // there's a corner case where we have a content-type param with no body
       // param. for this case we still need to set the header inline.
-      if (methodParamGroups.bodyParam) {
+      const bodyParam = methodParamGroups.bodyParam;
+      if (bodyParam?.bodyFormat === 'binary' || bodyParam?.bodyFormat === 'Text') {
         // if the content-type is from a param, then the param will be passed
-        // explicitly to runtime.SetBody() so don't emit code to set it inline
+        // explicitly to runtime.SetBody() so don't emit code to set it inline.
+        // NOTE: only binary/text payloads call runtime.SetBody().
         if (go.isClientSideDefault(param.style)) {
           text += emitClientSideDefault(param as go.HeaderScalarParameter, param.style, () => '', imports, indent);
           continue;

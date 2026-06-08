@@ -712,6 +712,45 @@ func (client *Client) optionalBodyPostCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
+// PayloadWithExplicitContentType - explicit content-type param is set when creating the request
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientPayloadWithExplicitContentTypeOptions contains the optional parameters for the Client.PayloadWithExplicitContentType
+//     method.
+func (client *Client) PayloadWithExplicitContentType(ctx context.Context, contentType PayloadWithExplicitContentTypeRequestContentType, thing SomeModel, options *ClientPayloadWithExplicitContentTypeOptions) (ClientPayloadWithExplicitContentTypeResponse, error) {
+	var err error
+	const operationName = "Client.PayloadWithExplicitContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.payloadWithExplicitContentTypeCreateRequest(ctx, contentType, thing, options)
+	if err != nil {
+		return ClientPayloadWithExplicitContentTypeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientPayloadWithExplicitContentTypeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientPayloadWithExplicitContentTypeResponse{}, err
+	}
+	return ClientPayloadWithExplicitContentTypeResponse{}, nil
+}
+
+// payloadWithExplicitContentTypeCreateRequest creates the PayloadWithExplicitContentType request.
+func (client *Client) payloadWithExplicitContentTypeCreateRequest(ctx context.Context, contentType PayloadWithExplicitContentTypeRequestContentType, thing SomeModel, _ *ClientPayloadWithExplicitContentTypeOptions) (*policy.Request, error) {
+	urlPath := "/payload-with-explicit-content-type"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{string(contentType)}
+	if err := runtime.MarshalAsJSON(req, thing); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // SpreadWithModel -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientSpreadWithModelOptions contains the optional parameters for the Client.SpreadWithModel method.

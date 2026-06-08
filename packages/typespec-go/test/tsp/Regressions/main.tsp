@@ -229,3 +229,17 @@ op optionalBinaryBodyWithContentType(@body payload?: bytes, @header("content-typ
  */
 @route("/binary-payload-with-content-type")
 op binaryBodyWithContentType(@body payload: bytes, @header("content-type") contentType: string): void;
+
+/**
+ * explicit content-type param is set when creating the request
+ */
+@route("/payload-with-explicit-content-type")
+op payloadWithExplicitContentType(
+  @header("Content-Type")
+  contentType:
+    | "application/snapshot+json"
+    | "application/json";
+
+  @body
+  thing: SomeModel
+): void;
