@@ -924,7 +924,7 @@ function getDateTimeEncoding(encoding: string): go.TimeFormat {
     case 'rfc3339':
       return 'RFC3339';
     case 'rfc7231':
-      return 'RFC1123';
+      return 'RFC7231';
     case 'unixTimestamp':
       return 'Unix';
     default:

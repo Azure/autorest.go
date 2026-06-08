@@ -72,7 +72,7 @@ export class Emitter {
    * writes the core code model content.
    * this content is common to both emitters.
    */
-  async emit(): Promise<void> {
+  async emit(emitter: 'openapi' | 'tsp'): Promise<void> {
     if (this.codeModel.root.kind === 'module') {
       // don't overwrite an existing go.mod file, update it if required
       const goModFile = 'go.mod';
@@ -107,7 +107,7 @@ export class Emitter {
         await write(`${snakeClientFileName(op.name)}.go`, op.content);
       }
 
-      const models = generateModels(pkg, this.codeModel.options);
+      const models = generateModels(pkg, this.codeModel.options, emitter);
       if (models.models.length > 0) {
         await write('models.go', models.models);
       }

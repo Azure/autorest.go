@@ -75,7 +75,7 @@ func (client *ConditionalRequestClient) headIfModifiedSinceCreateRequest(ctx con
 		return nil, err
 	}
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC7231(*options.IfModifiedSince).String()}
 	}
 	return req, nil
 }
@@ -189,7 +189,7 @@ func (client *ConditionalRequestClient) postIfUnmodifiedSinceCreateRequest(ctx c
 		return nil, err
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC7231(*options.IfUnmodifiedSince).String()}
 	}
 	return req, nil
 }

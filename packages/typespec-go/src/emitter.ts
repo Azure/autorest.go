@@ -49,7 +49,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       },
       { filePrefix },
     );
-    await emitter.emit();
+    await emitter.emit('tsp');
     await emitter.emitCloudConfig();
     await emitter.emitExamples();
     await emitter.emitLicenseFile();

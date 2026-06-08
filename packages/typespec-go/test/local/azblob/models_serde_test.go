@@ -9,7 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 )
 
-func timeRFC1123(s string) *time.Time {
+func timeRFC7231(s string) *time.Time {
 	t, err := time.Parse(time.RFC1123, s)
 	if err != nil {
 		panic(err)
@@ -196,7 +196,7 @@ func TestListContainersSegmentResponseRoundTrip(t *testing.T) {
 	assertEqual(t, "Container[2].Name", *resp.ContainerItems[2].Name, "textfiles")
 
 	// Verify time parsing
-	expectedTime := timeRFC1123("Wed, 26 Oct 2016 20:39:39 GMT")
+	expectedTime := timeRFC7231("Wed, 26 Oct 2016 20:39:39 GMT")
 	if !resp.ContainerItems[0].Properties.LastModified.Equal(*expectedTime) {
 		t.Fatalf("expected Last-Modified %v, got %v", expectedTime, resp.ContainerItems[0].Properties.LastModified)
 	}
@@ -679,7 +679,7 @@ func TestGeoReplicationRoundTrip(t *testing.T) {
 	}
 
 	assertEqual(t, "Status", string(*geo.Status), "live")
-	expectedTime := timeRFC1123("Wed, 26 Oct 2016 20:39:39 GMT")
+	expectedTime := timeRFC7231("Wed, 26 Oct 2016 20:39:39 GMT")
 	if !geo.LastSyncTime.Equal(*expectedTime) {
 		t.Fatalf("expected LastSyncTime %v, got %v", expectedTime, geo.LastSyncTime)
 	}
@@ -923,11 +923,11 @@ func TestPropertiesInternalTimeFieldsRoundTrip(t *testing.T) {
 	assertEqual(t, "AccessTierInferred", *props.AccessTierInferred, true)
 	assertEqual(t, "ServerEncrypted", *props.ServerEncrypted, true)
 
-	expectedCreation := timeRFC1123("Wed, 26 Oct 2016 20:39:39 GMT")
+	expectedCreation := timeRFC7231("Wed, 26 Oct 2016 20:39:39 GMT")
 	if !props.CreationTime.Equal(*expectedCreation) {
 		t.Fatalf("expected CreationTime %v, got %v", expectedCreation, props.CreationTime)
 	}
-	expectedModified := timeRFC1123("Thu, 27 Oct 2016 10:00:00 GMT")
+	expectedModified := timeRFC7231("Thu, 27 Oct 2016 10:00:00 GMT")
 	if !props.LastModified.Equal(*expectedModified) {
 		t.Fatalf("expected LastModified %v, got %v", expectedModified, props.LastModified)
 	}

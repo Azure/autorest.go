@@ -16,9 +16,7 @@ import (
 func TestConditionalRequestClient_HeadIfModifiedSince(t *testing.T) {
 	client, err := condreqgroup.NewConditionalRequestClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	locale, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	since := time.Date(2022, time.August, 26, 14, 38, 0, 0, locale)
+	since := time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC)
 	resp, err := client.HeadIfModifiedSince(context.Background(), &condreqgroup.ConditionalRequestClientHeadIfModifiedSinceOptions{
 		IfModifiedSince: &since,
 	})
@@ -49,9 +47,7 @@ func TestConditionalRequestClient_PostIfNoneMatch(t *testing.T) {
 func TestConditionalRequestClient_PostIfUnmodifiedSince(t *testing.T) {
 	client, err := condreqgroup.NewConditionalRequestClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	locale, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	since := time.Date(2022, time.August, 26, 14, 38, 0, 0, locale)
+	since := time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC)
 	resp, err := client.PostIfUnmodifiedSince(context.Background(), &condreqgroup.ConditionalRequestClientPostIfUnmodifiedSinceOptions{
 		IfUnmodifiedSince: &since,
 	})

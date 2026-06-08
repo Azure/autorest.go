@@ -16,9 +16,7 @@ import (
 func TestHeaderClientDefault(t *testing.T) {
 	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	gmt, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	resp, err := client.NewDatetimeHeaderClient().Default(context.Background(), time.Date(2022, time.August, 26, 14, 38, 0, 0, gmt), nil)
+	resp, err := client.NewDatetimeHeaderClient().Default(context.Background(), time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -34,9 +32,7 @@ func TestHeaderClientRFC3339(t *testing.T) {
 func TestHeaderClientRFC7231(t *testing.T) {
 	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	gmt, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	resp, err := client.NewDatetimeHeaderClient().RFC7231(context.Background(), time.Date(2022, time.August, 26, 14, 38, 0, 0, gmt), nil)
+	resp, err := client.NewDatetimeHeaderClient().RFC7231(context.Background(), time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -87,9 +83,7 @@ func TestPropertyClientRFC3339(t *testing.T) {
 func TestPropertyClientRFC7231(t *testing.T) {
 	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	gmt, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	v := time.Date(2022, time.August, 26, 14, 38, 0, 0, gmt)
+	v := time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC)
 	resp, err := client.NewDatetimePropertyClient().RFC7231(context.Background(), datetimegroup.RFC7231DatetimeProperty{
 		Value: to.Ptr(v),
 	}, nil)
@@ -130,9 +124,7 @@ func TestPropertyClientUnixTimestampArray(t *testing.T) {
 func TestQueryClientDefault(t *testing.T) {
 	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	gmt, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	resp, err := client.NewDatetimeQueryClient().Default(context.Background(), time.Date(2022, time.August, 26, 18, 38, 0, 0, gmt), nil)
+	resp, err := client.NewDatetimeQueryClient().Default(context.Background(), time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -148,9 +140,7 @@ func TestQueryClientRFC3339(t *testing.T) {
 func TestQueryClientRFC7231(t *testing.T) {
 	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	gmt, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	resp, err := client.NewDatetimeQueryClient().RFC7231(context.Background(), time.Date(2022, time.August, 26, 14, 38, 0, 0, gmt), nil)
+	resp, err := client.NewDatetimeQueryClient().RFC7231(context.Background(), time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -198,9 +188,7 @@ func TestResponseHeaderClientRFC7231(t *testing.T) {
 	resp, err := client.NewDatetimeResponseHeaderClient().RFC7231(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
-	gmt, err := time.LoadLocation("GMT")
-	require.NoError(t, err)
-	require.WithinDuration(t, time.Date(2022, time.August, 26, 14, 38, 0, 0, gmt), *resp.Value, 0)
+	require.WithinDuration(t, time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC), *resp.Value, 0)
 }
 
 func TestResponseHeaderClientUnixTimestamp(t *testing.T) {

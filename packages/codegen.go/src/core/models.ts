@@ -17,9 +17,10 @@ export interface ModelsSerDe {
  *
  * @param pkg contains the package content
  * @param options the emitter options
+ * @param emitter the emitter type
  * @returns the text for the files or the empty string
  */
-export function generateModels(pkg: go.PackageContent, options: go.Options): ModelsSerDe {
+export function generateModels(pkg: go.PackageContent, options: go.Options, emitter: 'openapi' | 'tsp'): ModelsSerDe {
   if (pkg.models.length === 0) {
     return {
       models: '',
@@ -189,7 +190,18 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   }
   if (needsJSONUnpopulateTime || needsJSONPopulateTime) {
     serdeTextBody += `type dateTimeConstraints interface {\n`;
-    serdeTextBody += `${indent.get()}datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix\n`;
+    // rfc1123 and rfc7231 are mutually exclusive based on the emitter
+    let rfc1123 = '';
+    let rfc7231 = '';
+    switch (emitter) {
+      case 'openapi':
+        rfc1123 = ' | datetime.RFC1123';
+        break;
+      case 'tsp':
+        rfc7231 = ' | datetime.RFC7231';
+        break;
+    }
+    serdeTextBody += `${indent.get()}datetime.PlainDate | datetime.PlainTime${rfc1123} | datetime.RFC3339${rfc7231} | datetime.Unix\n`;
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';

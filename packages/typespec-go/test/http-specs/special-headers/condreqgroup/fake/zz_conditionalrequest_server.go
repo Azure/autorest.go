@@ -14,6 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"slices"
+	"strconv"
 	"time"
 )
 
@@ -98,7 +99,13 @@ func (c *ConditionalRequestServerTransport) dispatchHeadIfModifiedSince(req *htt
 	if c.srv.HeadIfModifiedSince == nil {
 		return nil, &nonRetriableError{errors.New("fake for method HeadIfModifiedSince not implemented")}
 	}
-	ifModifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Modified-Since"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
+	ifModifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Modified-Since"), func(v string) (time.Time, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +186,13 @@ func (c *ConditionalRequestServerTransport) dispatchPostIfUnmodifiedSince(req *h
 	if c.srv.PostIfUnmodifiedSince == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PostIfUnmodifiedSince not implemented")}
 	}
-	ifUnmodifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Unmodified-Since"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
+	ifUnmodifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Unmodified-Since"), func(v string) (time.Time, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
 	if err != nil {
 		return nil, err
 	}

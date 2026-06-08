@@ -17,15 +17,10 @@ func TestTraitsClient_RepeatableAction(t *testing.T) {
 	client, err := traitsgroup.NewTraitsClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
-	id := int32(1)
-	rfc7231 := "Mon, 27 Nov 2023 11:58:00 GMT"
-	layout := time.RFC1123
-	tt, err := time.Parse(layout, rfc7231)
-	require.NoError(t, err)
-	resp, err := client.RepeatableAction(context.Background(), id, traitsgroup.UserActionParam{
+	resp, err := client.RepeatableAction(context.Background(), 1, traitsgroup.UserActionParam{
 		UserActionValue: to.Ptr("test"),
 	}, &traitsgroup.TraitsClientRepeatableActionOptions{
-		RepeatabilityFirstSent: to.Ptr(tt),
+		RepeatabilityFirstSent: to.Ptr(time.Date(2023, time.November, 27, 11, 58, 0, 0, time.UTC)),
 		RepeatabilityRequestID: to.Ptr("86aede1f-96fa-4e7f-b1e1-bf8a947cb804"),
 	})
 	require.NoError(t, err)
@@ -38,20 +33,12 @@ func TestTraitsClient_SmokeTest(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	require.NoError(t, err)
-	id := int32(1)
-	foo := "123"
-	rfc7231_01 := "Thu, 26 Aug 2021 14:38:00 GMT"
-	rfc7231_02 := "Fri, 26 Aug 2022 14:38:00 GMT"
-	layout := time.RFC1123
-	t1, err := time.Parse(layout, rfc7231_01)
-	require.NoError(t, err)
-	t2, err := time.Parse(layout, rfc7231_02)
-	require.NoError(t, err)
-	resp, err := client.SmokeTest(context.Background(), id, foo, &traitsgroup.TraitsClientSmokeTestOptions{
+	const id = int32(1)
+	resp, err := client.SmokeTest(context.Background(), id, "123", &traitsgroup.TraitsClientSmokeTestOptions{
 		IfMatch:           to.Ptr("\"valid\""),
 		IfNoneMatch:       to.Ptr("\"invalid\""),
-		IfModifiedSince:   to.Ptr(t1),
-		IfUnmodifiedSince: to.Ptr(t2),
+		IfModifiedSince:   to.Ptr(time.Date(2021, time.August, 26, 14, 38, 0, 0, time.UTC)),
+		IfUnmodifiedSince: to.Ptr(time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC)),
 		ClientRequestID:   to.Ptr("86aede1f-96fa-4e7f-b1e1-bf8a947cb804"),
 	})
 	require.NoError(t, err)

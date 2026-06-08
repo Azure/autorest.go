@@ -114,7 +114,13 @@ func (t *TraitsServerTransport) dispatchRepeatableAction(req *http.Request) (*ht
 		return nil, err
 	}
 	repeatabilityRequestIDParam := getOptional(getHeaderValue(req.Header, "Repeatability-Request-ID"))
-	repeatabilityFirstSentParam, err := parseOptional(getHeaderValue(req.Header, "Repeatability-First-Sent"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
+	repeatabilityFirstSentParam, err := parseOptional(getHeaderValue(req.Header, "Repeatability-First-Sent"), func(v string) (time.Time, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -169,11 +175,23 @@ func (t *TraitsServerTransport) dispatchSmokeTest(req *http.Request) (*http.Resp
 	}
 	ifMatchParam := getOptional(getHeaderValue(req.Header, "If-Match"))
 	ifNoneMatchParam := getOptional(getHeaderValue(req.Header, "If-None-Match"))
-	ifUnmodifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Unmodified-Since"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
+	ifUnmodifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Unmodified-Since"), func(v string) (time.Time, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
 	if err != nil {
 		return nil, err
 	}
-	ifModifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Modified-Since"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
+	ifModifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Modified-Since"), func(v string) (time.Time, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
 	if err != nil {
 		return nil, err
 	}
