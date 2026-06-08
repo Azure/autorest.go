@@ -53,7 +53,7 @@ func (client *DatetimeHeaderClient) defaultCreateRequest(ctx context.Context, va
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["value"] = []string{datetime.RFC1123(value).String()}
+	req.Raw().Header["value"] = []string{datetime.RFC7231(value).String()}
 	return req, nil
 }
 
@@ -123,7 +123,7 @@ func (client *DatetimeHeaderClient) rfc7231CreateRequest(ctx context.Context, va
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["value"] = []string{datetime.RFC1123(value).String()}
+	req.Raw().Header["value"] = []string{datetime.RFC7231(value).String()}
 	return req, nil
 }
 

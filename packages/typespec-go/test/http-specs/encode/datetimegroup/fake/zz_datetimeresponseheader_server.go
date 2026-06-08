@@ -111,7 +111,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchDefault(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", datetime.RFC1123(*val).String())
+		resp.Header.Set("value", datetime.RFC7231(*val).String())
 	}
 	return resp, nil
 }
@@ -155,7 +155,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchRFC7231(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", datetime.RFC1123(*val).String())
+		resp.Header.Set("value", datetime.RFC7231(*val).String())
 	}
 	return resp, nil
 }

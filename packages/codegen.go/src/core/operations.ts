@@ -519,7 +519,8 @@ function formatHeaderResponseValue(
       switch (headerResp.type.format) {
         case 'RFC1123':
         case 'RFC3339':
-          text += `${indent.get()}${name}, err := time.Parse(${headerResp.type.format === 'RFC1123' ? helpers.RFC1123Format : helpers.RFC3339Format}, val)\n`;
+        case 'RFC7231':
+          text += `${indent.get()}${name}, err := time.Parse(${headerResp.type.format === 'RFC3339' ? helpers.RFC3339Format : helpers.RFC1123Format}, val)\n`;
           break;
         case 'PlainDate':
           text += `${indent.get()}${name}, err := time.Parse(${helpers.plainDateFormat}, val)\n`;
@@ -534,6 +535,8 @@ function formatHeaderResponseValue(
           name = 'to.Ptr(time.Unix(sec, 0))';
           byRef = '';
           break;
+        default:
+          headerResp.type.format satisfies never;
       }
   }
 
@@ -1616,6 +1619,7 @@ function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.T
   switch (paramType.elementType.format) {
     case 'PlainDate':
     case 'RFC1123':
+    case 'RFC7231':
     case 'PlainTime':
     case 'Unix':
       return {

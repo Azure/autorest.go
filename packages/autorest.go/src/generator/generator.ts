@@ -53,7 +53,7 @@ export async function generateCode(host: AutorestExtensionHost) {
       },
       { filePrefix },
     );
-    await emitter.emit();
+    await emitter.emit('openapi');
   } catch (E) {
     if (debug) {
       console.error(`${fileURLToPath(import.meta.url)} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);

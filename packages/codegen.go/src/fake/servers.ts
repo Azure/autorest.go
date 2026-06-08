@@ -1155,7 +1155,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
           fromVar = `parsed${naming.capitalize(elementFormat)}`;
           content += `${indent.get()}${fromVar}, parseErr := base64.${elementFormat}Encoding.DecodeString(${paramValue}[i])\n`;
           content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return nil, parseErr\n${indent.pop().get()}}\n`;
-        } else if (elementFormat === 'RFC1123' || elementFormat === 'RFC3339' || elementFormat === 'Unix') {
+        } else if (elementFormat === 'RFC1123' || elementFormat === 'RFC3339' || elementFormat === 'RFC7231' || elementFormat === 'Unix') {
           imports.add('time');
           fromVar = `parsed${naming.capitalize(elementFormat)}`;
           if (elementFormat === 'Unix') {
@@ -1165,7 +1165,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
             content += `${indent.get()}${fromVar} := time.Unix(p, 0).UTC()\n`;
           } else {
             let format = 'time.RFC3339Nano';
-            if (elementFormat === 'RFC1123') {
+            if (elementFormat === 'RFC1123' || elementFormat === 'RFC7231') {
               format = 'time.RFC1123';
             }
             content += `${indent.get()}${fromVar}, parseErr := time.Parse(${format}, ${paramValue}[i])\n`;
@@ -1202,6 +1202,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         PlainTime: helpers.plainTimeFormat,
         RFC1123: helpers.RFC1123Format,
         RFC3339: helpers.RFC3339Format,
+        RFC7231: helpers.RFC1123Format,
       };
       imports.add('time');
       if (param.type.format in formatMap) {

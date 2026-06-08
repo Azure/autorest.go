@@ -70,7 +70,7 @@ func (r *RFC3339DatetimeProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type RFC7231DatetimeProperty.
 func (r RFC7231DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTime[datetime.RFC1123](objectMap, "value", r.Value)
+	populateTime[datetime.RFC7231](objectMap, "value", r.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -84,7 +84,7 @@ func (r *RFC7231DatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = unpopulateTime[datetime.RFC1123](val, "Value", &r.Value)
+			err = unpopulateTime[datetime.RFC7231](val, "Value", &r.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -201,5 +201,5 @@ func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **
 }
 
 type dateTimeConstraints interface {
-	datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix
+	datetime.PlainDate | datetime.PlainTime | datetime.RFC3339 | datetime.RFC7231 | datetime.Unix
 }

@@ -93,7 +93,7 @@ func (client *TraitsClient) repeatableActionCreateRequest(ctx context.Context, i
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.RepeatabilityFirstSent != nil {
-		req.Raw().Header["Repeatability-First-Sent"] = []string{datetime.RFC1123(*options.RepeatabilityFirstSent).String()}
+		req.Raw().Header["Repeatability-First-Sent"] = []string{datetime.RFC7231(*options.RepeatabilityFirstSent).String()}
 	}
 	if options != nil && options.RepeatabilityRequestID != nil {
 		req.Raw().Header["Repeatability-Request-ID"] = []string{*options.RepeatabilityRequestID}
@@ -160,13 +160,13 @@ func (client *TraitsClient) smokeTestCreateRequest(ctx context.Context, id int32
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC7231(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfNoneMatch != nil {
 		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC7231(*options.IfUnmodifiedSince).String()}
 	}
 	req.Raw().Header["foo"] = []string{foo}
 	if options != nil && options.ClientRequestID != nil {

@@ -1,10 +1,11 @@
 # Release History
 
-## 0.14.2 (unreleased)
+## 0.14.2 (2026-06-08)
 
 ### Features Added
 
 * Honor `exact()` on `@clientName` targets: models, enums, model fields, parameters, response headers, client names, service method names, and individual enum value names. As before, when a name is marked as exact, it is preserved verbatim and not subjected to built-in naming canonization.
+* Time in `RFC7231` format now uses the `datetime.RFC7231` type in `azcore/runtime`.
 
 ### Bugs Fixed
 

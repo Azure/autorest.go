@@ -59,11 +59,11 @@ func (m ModelWithDatetime) MarshalXML(enc *xml.Encoder, start xml.StartElement) 
 	aux := &struct {
 		*alias
 		RFC3339 *datetime.RFC3339 `xml:"rfc3339"`
-		RFC7231 *datetime.RFC1123 `xml:"rfc7231"`
+		RFC7231 *datetime.RFC7231 `xml:"rfc7231"`
 	}{
 		alias:   (*alias)(&m),
 		RFC3339: (*datetime.RFC3339)(m.RFC3339),
-		RFC7231: (*datetime.RFC1123)(m.RFC7231),
+		RFC7231: (*datetime.RFC7231)(m.RFC7231),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -74,7 +74,7 @@ func (m *ModelWithDatetime) UnmarshalXML(dec *xml.Decoder, start xml.StartElemen
 	aux := &struct {
 		*alias
 		RFC3339 *datetime.RFC3339 `xml:"rfc3339"`
-		RFC7231 *datetime.RFC1123 `xml:"rfc7231"`
+		RFC7231 *datetime.RFC7231 `xml:"rfc7231"`
 	}{
 		alias: (*alias)(m),
 	}

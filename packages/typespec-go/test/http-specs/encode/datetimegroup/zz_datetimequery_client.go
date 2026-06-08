@@ -128,7 +128,7 @@ func (client *DatetimeQueryClient) rfc7231CreateRequest(ctx context.Context, val
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("value", datetime.RFC1123(value).String())
+	reqQP.Set("value", datetime.RFC7231(value).String())
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
