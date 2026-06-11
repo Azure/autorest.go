@@ -6,6 +6,49 @@ package commonpropsgroup
 
 import "time"
 
+// ArmResourceIdentifierResource - Concrete tracked resource types can be created by aliasing this type using a specific property
+// type.
+type ArmResourceIdentifierResource struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// The resource-specific properties for this resource.
+	Properties *ArmResourceIdentifierResourceProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// ArmResourceIdentifierResourceProperties - ArmResourceIdentifier Resource Properties.
+type ArmResourceIdentifierResourceProperties struct {
+	// REQUIRED; An ARM resource identifier with all scopes.
+	ArmIDWithAllScopes *string
+
+	// REQUIRED; An ARM resource identifier with type only.
+	ArmIDWithType *string
+
+	// REQUIRED; An ARM resource identifier with type and scopes.
+	ArmIDWithTypeAndScope *string
+
+	// REQUIRED; A basic ARM resource identifier without type or scopes.
+	SimpleArmID *string
+
+	// READ-ONLY; The status of the last operation.
+	ProvisioningState *ResourceProvisioningState
+}
+
 // ConfidentialResource - Concrete tracked resource types can be created by aliasing this type using a specific property type.
 type ConfidentialResource struct {
 	// REQUIRED; The geo-location where the resource lives

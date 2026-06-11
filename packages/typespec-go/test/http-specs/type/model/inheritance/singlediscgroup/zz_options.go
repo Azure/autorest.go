@@ -21,6 +21,12 @@ type SingleDiscriminatorClientGetModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SingleDiscriminatorClientGetNoSubtypesModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetNoSubtypesModel
+// method.
+type SingleDiscriminatorClientGetNoSubtypesModelOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SingleDiscriminatorClientGetRecursiveModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetRecursiveModel
 // method.
 type SingleDiscriminatorClientGetRecursiveModelOptions struct {
@@ -35,6 +41,12 @@ type SingleDiscriminatorClientGetWrongDiscriminatorOptions struct {
 
 // SingleDiscriminatorClientPutModelOptions contains the optional parameters for the SingleDiscriminatorClient.PutModel method.
 type SingleDiscriminatorClientPutModelOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SingleDiscriminatorClientPutNoSubtypesModelOptions contains the optional parameters for the SingleDiscriminatorClient.PutNoSubtypesModel
+// method.
+type SingleDiscriminatorClientPutNoSubtypesModelOptions struct {
 	// placeholder for future optional parameters
 }
 

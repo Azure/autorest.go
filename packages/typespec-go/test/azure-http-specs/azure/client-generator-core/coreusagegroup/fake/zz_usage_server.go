@@ -17,6 +17,9 @@ import (
 type UsageServer struct {
 	// UsageModelInOperationServer contains the fakes for client UsageModelInOperationClient
 	UsageModelInOperationServer UsageModelInOperationServer
+
+	// UsageNamespaceUsageServer contains the fakes for client UsageNamespaceUsageClient
+	UsageNamespaceUsageServer UsageNamespaceUsageServer
 }
 
 // NewUsageServerTransport creates a new instance of UsageServerTransport with the provided implementation.
@@ -32,6 +35,7 @@ type UsageServerTransport struct {
 	srv                           *UsageServer
 	trMu                          sync.Mutex
 	trUsageModelInOperationServer *UsageModelInOperationServerTransport
+	trUsageNamespaceUsageServer   *UsageNamespaceUsageServerTransport
 }
 
 // Do implements the policy.Transporter interface for UsageServerTransport.
@@ -55,6 +59,11 @@ func (u *UsageServerTransport) dispatchToClientFake(req *http.Request, client st
 			return NewUsageModelInOperationServerTransport(&u.srv.UsageModelInOperationServer)
 		})
 		resp, err = u.trUsageModelInOperationServer.Do(req)
+	case "UsageNamespaceUsageClient":
+		initServer(&u.trMu, &u.trUsageNamespaceUsageServer, func() *UsageNamespaceUsageServerTransport {
+			return NewUsageNamespaceUsageServerTransport(&u.srv.UsageNamespaceUsageServer)
+		})
+		resp, err = u.trUsageNamespaceUsageServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

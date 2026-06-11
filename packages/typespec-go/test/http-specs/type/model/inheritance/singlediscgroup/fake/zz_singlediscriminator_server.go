@@ -30,6 +30,10 @@ type SingleDiscriminatorServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	GetModel func(ctx context.Context, options *singlediscgroup.SingleDiscriminatorClientGetModelOptions) (resp azfake.Responder[singlediscgroup.SingleDiscriminatorClientGetModelResponse], errResp azfake.ErrorResponder)
 
+	// GetNoSubtypesModel is the fake for method SingleDiscriminatorClient.GetNoSubtypesModel
+	// HTTP status codes to indicate success: http.StatusOK
+	GetNoSubtypesModel func(ctx context.Context, options *singlediscgroup.SingleDiscriminatorClientGetNoSubtypesModelOptions) (resp azfake.Responder[singlediscgroup.SingleDiscriminatorClientGetNoSubtypesModelResponse], errResp azfake.ErrorResponder)
+
 	// GetRecursiveModel is the fake for method SingleDiscriminatorClient.GetRecursiveModel
 	// HTTP status codes to indicate success: http.StatusOK
 	GetRecursiveModel func(ctx context.Context, options *singlediscgroup.SingleDiscriminatorClientGetRecursiveModelOptions) (resp azfake.Responder[singlediscgroup.SingleDiscriminatorClientGetRecursiveModelResponse], errResp azfake.ErrorResponder)
@@ -41,6 +45,10 @@ type SingleDiscriminatorServer struct {
 	// PutModel is the fake for method SingleDiscriminatorClient.PutModel
 	// HTTP status codes to indicate success: http.StatusNoContent
 	PutModel func(ctx context.Context, input singlediscgroup.BirdClassification, options *singlediscgroup.SingleDiscriminatorClientPutModelOptions) (resp azfake.Responder[singlediscgroup.SingleDiscriminatorClientPutModelResponse], errResp azfake.ErrorResponder)
+
+	// PutNoSubtypesModel is the fake for method SingleDiscriminatorClient.PutNoSubtypesModel
+	// HTTP status codes to indicate success: http.StatusNoContent
+	PutNoSubtypesModel func(ctx context.Context, input singlediscgroup.FishClassification, options *singlediscgroup.SingleDiscriminatorClientPutNoSubtypesModelOptions) (resp azfake.Responder[singlediscgroup.SingleDiscriminatorClientPutNoSubtypesModelResponse], errResp azfake.ErrorResponder)
 
 	// PutRecursiveModel is the fake for method SingleDiscriminatorClient.PutRecursiveModel
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -87,12 +95,16 @@ func (s *SingleDiscriminatorServerTransport) dispatchToMethodFake(req *http.Requ
 				res.resp, res.err = s.dispatchGetMissingDiscriminator(req)
 			case "SingleDiscriminatorClient.GetModel":
 				res.resp, res.err = s.dispatchGetModel(req)
+			case "SingleDiscriminatorClient.GetNoSubtypesModel":
+				res.resp, res.err = s.dispatchGetNoSubtypesModel(req)
 			case "SingleDiscriminatorClient.GetRecursiveModel":
 				res.resp, res.err = s.dispatchGetRecursiveModel(req)
 			case "SingleDiscriminatorClient.GetWrongDiscriminator":
 				res.resp, res.err = s.dispatchGetWrongDiscriminator(req)
 			case "SingleDiscriminatorClient.PutModel":
 				res.resp, res.err = s.dispatchPutModel(req)
+			case "SingleDiscriminatorClient.PutNoSubtypesModel":
+				res.resp, res.err = s.dispatchPutNoSubtypesModel(req)
 			case "SingleDiscriminatorClient.PutRecursiveModel":
 				res.resp, res.err = s.dispatchPutRecursiveModel(req)
 			default:
@@ -168,6 +180,25 @@ func (s *SingleDiscriminatorServerTransport) dispatchGetModel(req *http.Request)
 	return resp, nil
 }
 
+func (s *SingleDiscriminatorServerTransport) dispatchGetNoSubtypesModel(req *http.Request) (*http.Response, error) {
+	if s.srv.GetNoSubtypesModel == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GetNoSubtypesModel not implemented")}
+	}
+	respr, errRespr := s.srv.GetNoSubtypesModel(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).FishClassification, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (s *SingleDiscriminatorServerTransport) dispatchGetRecursiveModel(req *http.Request) (*http.Response, error) {
 	if s.srv.GetRecursiveModel == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetRecursiveModel not implemented")}
@@ -219,6 +250,33 @@ func (s *SingleDiscriminatorServerTransport) dispatchPutModel(req *http.Request)
 		return nil, err
 	}
 	respr, errRespr := s.srv.PutModel(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *SingleDiscriminatorServerTransport) dispatchPutNoSubtypesModel(req *http.Request) (*http.Response, error) {
+	if s.srv.PutNoSubtypesModel == nil {
+		return nil, &nonRetriableError{errors.New("fake for method PutNoSubtypesModel not implemented")}
+	}
+	raw, err := readRequestBody(req)
+	if err != nil {
+		return nil, err
+	}
+	body, err := unmarshalFishClassification(raw)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.PutNoSubtypesModel(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

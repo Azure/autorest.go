@@ -4,6 +4,18 @@
 
 package commonpropsgroup
 
+// ArmResourceIdentifiersClientCreateOrReplaceResponse contains the response from method ArmResourceIdentifiersClient.CreateOrReplace.
+type ArmResourceIdentifiersClientCreateOrReplaceResponse struct {
+	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+	ArmResourceIdentifierResource
+}
+
+// ArmResourceIdentifiersClientGetResponse contains the response from method ArmResourceIdentifiersClient.Get.
+type ArmResourceIdentifiersClientGetResponse struct {
+	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+	ArmResourceIdentifierResource
+}
+
 // ErrorClientCreateForUserDefinedErrorResponse contains the response from method ErrorClient.CreateForUserDefinedError.
 type ErrorClientCreateForUserDefinedErrorResponse struct {
 	// Concrete tracked resource types can be created by aliasing this type using a specific property type.

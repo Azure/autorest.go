@@ -17,6 +17,9 @@ import (
 type QueryServer struct {
 	// QueryConstantServer contains the fakes for client QueryConstantClient
 	QueryConstantServer QueryConstantServer
+
+	// QuerySpecialCharServer contains the fakes for client QuerySpecialCharClient
+	QuerySpecialCharServer QuerySpecialCharServer
 }
 
 // NewQueryServerTransport creates a new instance of QueryServerTransport with the provided implementation.
@@ -29,9 +32,10 @@ func NewQueryServerTransport(srv *QueryServer) *QueryServerTransport {
 // QueryServerTransport connects instances of querygroup.QueryClient to instances of QueryServer.
 // Don't use this type directly, use NewQueryServerTransport instead.
 type QueryServerTransport struct {
-	srv                   *QueryServer
-	trMu                  sync.Mutex
-	trQueryConstantServer *QueryConstantServerTransport
+	srv                      *QueryServer
+	trMu                     sync.Mutex
+	trQueryConstantServer    *QueryConstantServerTransport
+	trQuerySpecialCharServer *QuerySpecialCharServerTransport
 }
 
 // Do implements the policy.Transporter interface for QueryServerTransport.
@@ -55,6 +59,11 @@ func (q *QueryServerTransport) dispatchToClientFake(req *http.Request, client st
 			return NewQueryConstantServerTransport(&q.srv.QueryConstantServer)
 		})
 		resp, err = q.trQueryConstantServer.Do(req)
+	case "QuerySpecialCharClient":
+		initServer(&q.trMu, &q.trQuerySpecialCharServer, func() *QuerySpecialCharServerTransport {
+			return NewQuerySpecialCharServerTransport(&q.srv.QuerySpecialCharServer)
+		})
+		resp, err = q.trQuerySpecialCharServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

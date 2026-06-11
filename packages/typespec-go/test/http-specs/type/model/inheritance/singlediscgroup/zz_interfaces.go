@@ -21,3 +21,12 @@ type DinosaurClassification interface {
 	// GetDinosaur returns the Dinosaur content of the underlying type.
 	GetDinosaur() *Dinosaur
 }
+
+// FishClassification provides polymorphic access to related types.
+// Call the interface's GetFish() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *Fish
+type FishClassification interface {
+	// GetFish returns the Fish content of the underlying type.
+	GetFish() *Fish
+}

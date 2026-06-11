@@ -27,3 +27,9 @@ type UsageModelInOperationClientOrphanModelSerializableOptions struct {
 type UsageModelInOperationClientOutputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }
+
+// UsageNamespaceUsageClientNamespaceModelSerializableOptions contains the optional parameters for the UsageNamespaceUsageClient.NamespaceModelSerializable
+// method.
+type UsageNamespaceUsageClientNamespaceModelSerializableOptions struct {
+	// placeholder for future optional parameters
+}
