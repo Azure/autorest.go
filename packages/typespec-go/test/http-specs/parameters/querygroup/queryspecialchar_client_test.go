@@ -12,6 +12,7 @@ import (
 )
 
 func TestQuerySpecialCharClient_DollarSign(t *testing.T) {
+	t.Skip("waiting for fix https://github.com/microsoft/typespec/pull/10962")
 	client, err := querygroup.NewQueryClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewQuerySpecialCharClient().DollarSign(context.Background(), "status eq 'active'", nil)
