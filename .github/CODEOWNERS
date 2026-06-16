@@ -19,4 +19,4 @@
 /eng/config.json              @jhendrixMSFT @RickWinter @xirzec
 /.config/1espt/               @benbp @weshaggard
 /.github/workflows/           @Azure/azure-sdk-eng
-/.github/CODEOWNERS           @rickwinter @xirzec @sandeep-sen @Azure/azure-sdk-eng
+/.github/CODEOWNERS           @RickWinter @xirzec @sandeep-sen @Azure/azure-sdk-eng
