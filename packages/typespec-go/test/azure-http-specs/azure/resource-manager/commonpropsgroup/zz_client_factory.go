@@ -32,6 +32,14 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
+// NewArmResourceIdentifiersClient creates a new instance of ArmResourceIdentifiersClient.
+func (c *ClientFactory) NewArmResourceIdentifiersClient() *ArmResourceIdentifiersClient {
+	return &ArmResourceIdentifiersClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}
+
 // NewErrorClient creates a new instance of ErrorClient.
 func (c *ClientFactory) NewErrorClient() *ErrorClient {
 	return &ErrorClient{

@@ -91,3 +91,22 @@ func unmarshalDinosaurClassification(rawMsg json.RawMessage) (DinosaurClassifica
 	}
 	return b, nil
 }
+
+func unmarshalFishClassification(rawMsg json.RawMessage) (FishClassification, error) {
+	if rawMsg == nil || string(rawMsg) == "null" {
+		return nil, nil
+	}
+	var m map[string]any
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
+		return nil, err
+	}
+	var b FishClassification
+	switch m["kind"] {
+	default:
+		b = &Fish{}
+	}
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
+}

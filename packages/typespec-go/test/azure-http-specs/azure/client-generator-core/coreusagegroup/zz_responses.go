@@ -24,3 +24,8 @@ type UsageModelInOperationClientOutputToInputOutputResponse struct {
 	// Usage additive to roundtrip.
 	OutputModel
 }
+
+// UsageNamespaceUsageClientNamespaceModelSerializableResponse contains the response from method UsageNamespaceUsageClient.NamespaceModelSerializable.
+type UsageNamespaceUsageClientNamespaceModelSerializableResponse struct {
+	// placeholder for future response values
+}

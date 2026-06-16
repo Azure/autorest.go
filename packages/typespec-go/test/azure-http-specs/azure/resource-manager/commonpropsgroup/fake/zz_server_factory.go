@@ -15,6 +15,9 @@ import (
 
 // ServerFactory is a fake server for instances of the commonpropsgroup.ClientFactory type.
 type ServerFactory struct {
+	// ArmResourceIdentifiersServer contains the fakes for client ArmResourceIdentifiersClient
+	ArmResourceIdentifiersServer ArmResourceIdentifiersServer
+
 	// ErrorServer contains the fakes for client ErrorClient
 	ErrorServer ErrorServer
 
@@ -34,10 +37,11 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 // ServerFactoryTransport connects instances of commonpropsgroup.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
-	srv                     *ServerFactory
-	trMu                    sync.Mutex
-	trErrorServer           *ErrorServerTransport
-	trManagedIdentityServer *ManagedIdentityServerTransport
+	srv                            *ServerFactory
+	trMu                           sync.Mutex
+	trArmResourceIdentifiersServer *ArmResourceIdentifiersServerTransport
+	trErrorServer                  *ErrorServerTransport
+	trManagedIdentityServer        *ManagedIdentityServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -53,6 +57,11 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
+	case "ArmResourceIdentifiersClient":
+		initServer(&s.trMu, &s.trArmResourceIdentifiersServer, func() *ArmResourceIdentifiersServerTransport {
+			return NewArmResourceIdentifiersServerTransport(&s.srv.ArmResourceIdentifiersServer)
+		})
+		resp, err = s.trArmResourceIdentifiersServer.Do(req)
 	case "ErrorClient":
 		initServer(&s.trMu, &s.trErrorServer, func() *ErrorServerTransport { return NewErrorServerTransport(&s.srv.ErrorServer) })
 		resp, err = s.trErrorServer.Do(req)

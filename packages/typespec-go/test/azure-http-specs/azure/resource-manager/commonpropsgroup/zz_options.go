@@ -4,6 +4,17 @@
 
 package commonpropsgroup
 
+// ArmResourceIdentifiersClientCreateOrReplaceOptions contains the optional parameters for the ArmResourceIdentifiersClient.CreateOrReplace
+// method.
+type ArmResourceIdentifiersClientCreateOrReplaceOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArmResourceIdentifiersClientGetOptions contains the optional parameters for the ArmResourceIdentifiersClient.Get method.
+type ArmResourceIdentifiersClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ErrorClientCreateForUserDefinedErrorOptions contains the optional parameters for the ErrorClient.CreateForUserDefinedError
 // method.
 type ErrorClientCreateForUserDefinedErrorOptions struct {

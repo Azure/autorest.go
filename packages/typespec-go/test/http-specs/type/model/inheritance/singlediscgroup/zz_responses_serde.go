@@ -34,6 +34,16 @@ func (s *SingleDiscriminatorClientGetModelResponse) UnmarshalJSON(data []byte) e
 	return nil
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type SingleDiscriminatorClientGetNoSubtypesModelResponse.
+func (s *SingleDiscriminatorClientGetNoSubtypesModelResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalFishClassification(data)
+	if err != nil {
+		return err
+	}
+	s.FishClassification = res
+	return nil
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type SingleDiscriminatorClientGetRecursiveModelResponse.
 func (s *SingleDiscriminatorClientGetRecursiveModelResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalBirdClassification(data)

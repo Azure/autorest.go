@@ -8,3 +8,8 @@ package querygroup
 type QueryConstantClientPostResponse struct {
 	// placeholder for future response values
 }
+
+// QuerySpecialCharClientDollarSignResponse contains the response from method QuerySpecialCharClient.DollarSign.
+type QuerySpecialCharClientDollarSignResponse struct {
+	// placeholder for future response values
+}

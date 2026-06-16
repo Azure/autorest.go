@@ -22,6 +22,12 @@ type SingleDiscriminatorClientGetModelResponse struct {
 	BirdClassification
 }
 
+// SingleDiscriminatorClientGetNoSubtypesModelResponse contains the response from method SingleDiscriminatorClient.GetNoSubtypesModel.
+type SingleDiscriminatorClientGetNoSubtypesModelResponse struct {
+	// A discriminated model with no defined subtypes. The discriminator is declared but no models extend it.
+	FishClassification
+}
+
 // SingleDiscriminatorClientGetRecursiveModelResponse contains the response from method SingleDiscriminatorClient.GetRecursiveModel.
 type SingleDiscriminatorClientGetRecursiveModelResponse struct {
 	// This is base model for polymorphic single level inheritance with a discriminator.
@@ -36,6 +42,11 @@ type SingleDiscriminatorClientGetWrongDiscriminatorResponse struct {
 
 // SingleDiscriminatorClientPutModelResponse contains the response from method SingleDiscriminatorClient.PutModel.
 type SingleDiscriminatorClientPutModelResponse struct {
+	// placeholder for future response values
+}
+
+// SingleDiscriminatorClientPutNoSubtypesModelResponse contains the response from method SingleDiscriminatorClient.PutNoSubtypesModel.
+type SingleDiscriminatorClientPutNoSubtypesModelResponse struct {
 	// placeholder for future response values
 }
 

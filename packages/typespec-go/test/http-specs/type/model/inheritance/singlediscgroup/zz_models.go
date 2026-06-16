@@ -49,6 +49,18 @@ func (e *Eagle) GetBird() *Bird {
 	}
 }
 
+// Fish - A discriminated model with no defined subtypes. The discriminator is declared but no models extend it.
+type Fish struct {
+	// REQUIRED
+	Kind *string
+
+	// REQUIRED
+	Size *int32
+}
+
+// GetFish implements the FishClassification interface for type Fish.
+func (f *Fish) GetFish() *Fish { return f }
+
 // Goose - The second level model in polymorphic single level inheritance.
 type Goose struct {
 	// CONSTANT; Field has constant value "goose", any specified value is ignored.

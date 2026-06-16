@@ -46,3 +46,11 @@ func (client *QueryClient) NewQueryConstantClient() *QueryConstantClient {
 		internal: client.internal,
 	}
 }
+
+// NewQuerySpecialCharClient creates a new instance of [QuerySpecialCharClient].
+func (client *QueryClient) NewQuerySpecialCharClient() *QuerySpecialCharClient {
+	return &QuerySpecialCharClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
