@@ -797,13 +797,24 @@ export class TypeAdapter {
 
   private getLiteralValue(constType: tcgc.SdkConstantType | tcgc.SdkEnumValueType): go.Literal {
     if (constType.kind === 'enumvalue') {
-      const valueName = `${helpers.getEffectiveName(constType.enumType)}${helpers.getEffectiveName(constType)}`;
-      const keyName = `literal-${valueName}`;
+      const goConstType = this.getConstantType(constType.enumType);
+      // find the matching enum value
+      let goConstValue: go.ConstantValue | undefined;
+      for (const value of goConstType.values) {
+        if (value.value === constType.value) {
+          goConstValue = value;
+          break;
+        }
+      }
+      if (!goConstValue) {
+        throw new AdapterError('InternalError', `failed to find const value for ${constType.value} in const ${goConstType.name}`, constType.__raw?.node);
+      }
+      const keyName = `literal-${goConstValue.name}`;
       let literalConst = this.types.get(keyName);
       if (literalConst) {
         return <go.Literal>literalConst;
       }
-      const constValue = this.constValues.get(valueName);
+      const constValue = this.constValues.get(goConstValue.name);
       if (!constValue) {
         throw new AdapterError('InternalError', `failed to find const value for ${constType.name} in enum ${constType.enumType.name}`, constType.__raw?.node);
       }

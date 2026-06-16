@@ -925,3 +925,48 @@ func (client *Client) withExpandParamCreateRequest(ctx context.Context, expand s
 	req.Raw().URL.RawQuery = strings.ReplaceAll(reqQP.Encode(), "+", "%20")
 	return req, nil
 }
+
+// getCallerIdentity - gets a polymorphic type when the operation is internal (makes the dependent type graph internal)
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - clientgetCallerIdentityOptions contains the optional parameters for the Client.getCallerIdentity method.
+func (client *Client) getCallerIdentity(ctx context.Context, options *clientgetCallerIdentityOptions) (clientgetCallerIdentityResponse, error) {
+	var err error
+	const operationName = "Client.getCallerIdentity"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getCallerIdentityCreateRequest(ctx, options)
+	if err != nil {
+		return clientgetCallerIdentityResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return clientgetCallerIdentityResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return clientgetCallerIdentityResponse{}, err
+	}
+	resp, err := client.getCallerIdentityHandleResponse(httpResp)
+	return resp, err
+}
+
+// getCallerIdentityCreateRequest creates the getCallerIdentity request.
+func (client *Client) getCallerIdentityCreateRequest(ctx context.Context, _ *clientgetCallerIdentityOptions) (*policy.Request, error) {
+	urlPath := "/get-caller-identity"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// getCallerIdentityHandleResponse handles the getCallerIdentity response.
+func (client *Client) getCallerIdentityHandleResponse(resp *http.Response) (clientgetCallerIdentityResponse, error) {
+	result := clientgetCallerIdentityResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
+		return clientgetCallerIdentityResponse{}, err
+	}
+	return result, nil
+}

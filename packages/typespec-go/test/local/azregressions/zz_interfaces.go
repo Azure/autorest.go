@@ -12,3 +12,12 @@ type DiscriminatedBaseNoSubTypesClassification interface {
 	// GetDiscriminatedBaseNoSubTypes returns the DiscriminatedBaseNoSubTypes content of the underlying type.
 	GetDiscriminatedBaseNoSubTypes() *DiscriminatedBaseNoSubTypes
 }
+
+// inboundCallerIdentityClassification provides polymorphic access to related types.
+// Call the interface's GetinboundCallerIdentity() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *inboundCallerIdentity, *systemAssignedInboundCallerIdentity, *userAssignedInboundCallerIdentity
+type inboundCallerIdentityClassification interface {
+	// GetinboundCallerIdentity returns the inboundCallerIdentity content of the underlying type.
+	GetinboundCallerIdentity() *inboundCallerIdentity
+}

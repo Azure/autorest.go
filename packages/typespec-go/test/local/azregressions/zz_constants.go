@@ -54,3 +54,18 @@ func PossiblePayloadWithExplicitContentTypeRequestContentTypeValues() []PayloadW
 		PayloadWithExplicitContentTypeRequestContentTypeApplicationSnapshotJSON,
 	}
 }
+
+type inboundCallerIdentityType string
+
+const (
+	inboundCallerIdentityTypeSystemAssigned inboundCallerIdentityType = "SystemAssigned"
+	inboundCallerIdentityTypeUserAssigned   inboundCallerIdentityType = "UserAssigned"
+)
+
+// possibleinboundCallerIdentityTypeValues returns the possible values for the inboundCallerIdentityType const type.
+func possibleinboundCallerIdentityTypeValues() []inboundCallerIdentityType {
+	return []inboundCallerIdentityType{
+		inboundCallerIdentityTypeSystemAssigned,
+		inboundCallerIdentityTypeUserAssigned,
+	}
+}

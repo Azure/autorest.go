@@ -243,3 +243,30 @@ op payloadWithExplicitContentType(
   @body
   thing: SomeModel
 ): void;
+
+union InboundCallerIdentityType {
+  SystemAssigned: "SystemAssigned",
+  UserAssigned: "UserAssigned",
+  string,
+}
+
+@discriminator("type")
+model InboundCallerIdentity {
+  type: InboundCallerIdentityType;
+}
+
+model SystemAssignedInboundCallerIdentity extends InboundCallerIdentity {
+  type: InboundCallerIdentityType.SystemAssigned;
+}
+
+model UserAssignedInboundCallerIdentity extends InboundCallerIdentity {
+  type: InboundCallerIdentityType.UserAssigned;
+  userAssignedIdentity: string;
+}
+
+/**
+ * gets a polymorphic type when the operation is internal (makes the dependent type graph internal)
+ */
+@access(Access.internal)
+@route("/get-caller-identity")
+op getCallerIdentity(): InboundCallerIdentity;
