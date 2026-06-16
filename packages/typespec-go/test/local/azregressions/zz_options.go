@@ -114,3 +114,8 @@ type ClientWithClientDefaultValuesOptions struct {
 type ClientWithExpandParamOptions struct {
 	Top *int32
 }
+
+// clientgetCallerIdentityOptions contains the optional parameters for the Client.getCallerIdentity method.
+type clientgetCallerIdentityOptions struct {
+	// placeholder for future optional parameters
+}

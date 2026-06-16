@@ -24,3 +24,26 @@ func unmarshalDiscriminatedBaseNoSubTypesClassification(rawMsg json.RawMessage) 
 	}
 	return b, nil
 }
+
+func unmarshalinboundCallerIdentityClassification(rawMsg json.RawMessage) (inboundCallerIdentityClassification, error) {
+	if rawMsg == nil || string(rawMsg) == "null" {
+		return nil, nil
+	}
+	var m map[string]any
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
+		return nil, err
+	}
+	var b inboundCallerIdentityClassification
+	switch m["type"] {
+	case string(inboundCallerIdentityTypeSystemAssigned):
+		b = &systemAssignedInboundCallerIdentity{}
+	case string(inboundCallerIdentityTypeUserAssigned):
+		b = &userAssignedInboundCallerIdentity{}
+	default:
+		b = &inboundCallerIdentity{}
+	}
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
+}

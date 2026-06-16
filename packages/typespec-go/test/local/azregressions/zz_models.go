@@ -59,3 +59,38 @@ type Widget struct {
 	// The default value is NetworkVersion("2026-04-15-preview").
 	NetworkVersion *NetworkVersion
 }
+
+type inboundCallerIdentity struct {
+	// REQUIRED
+	Type *inboundCallerIdentityType
+}
+
+// GetinboundCallerIdentity implements the inboundCallerIdentityClassification interface for type inboundCallerIdentity.
+func (i *inboundCallerIdentity) GetinboundCallerIdentity() *inboundCallerIdentity { return i }
+
+type systemAssignedInboundCallerIdentity struct {
+	// REQUIRED
+	Type *inboundCallerIdentityType
+}
+
+// GetinboundCallerIdentity implements the inboundCallerIdentityClassification interface for type systemAssignedInboundCallerIdentity.
+func (s *systemAssignedInboundCallerIdentity) GetinboundCallerIdentity() *inboundCallerIdentity {
+	return &inboundCallerIdentity{
+		Type: s.Type,
+	}
+}
+
+type userAssignedInboundCallerIdentity struct {
+	// REQUIRED
+	Type *inboundCallerIdentityType
+
+	// REQUIRED
+	UserAssignedIdentity *string
+}
+
+// GetinboundCallerIdentity implements the inboundCallerIdentityClassification interface for type userAssignedInboundCallerIdentity.
+func (u *userAssignedInboundCallerIdentity) GetinboundCallerIdentity() *inboundCallerIdentity {
+	return &inboundCallerIdentity{
+		Type: u.Type,
+	}
+}
