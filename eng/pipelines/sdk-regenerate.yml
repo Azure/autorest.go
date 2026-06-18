@@ -77,6 +77,10 @@ jobs:
     displayName: 'Generate SDK'
     workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
 
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml@azure-sdk-for-go
+    parameters:
+      ScriptDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go/eng/common/scripts
+
   - template: /eng/common/pipelines/templates/steps//create-pull-request.yml@azure-sdk-for-go
     parameters:
       WorkingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
@@ -89,4 +93,4 @@ jobs:
       PRTitle: '[Automation] Regenerate SDK based on typespec-go branch $(Build.SourceBranchName)'
       OpenAsDraft: 'true'
       PushArgs: '--force'
-      AuthToken: $(azuresdk-github-pat)
+      AuthToken: $(GH_TOKEN)
