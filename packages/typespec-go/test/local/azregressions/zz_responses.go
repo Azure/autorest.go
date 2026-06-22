@@ -108,3 +108,8 @@ type ClientWithClientDefaultValuesResponse struct {
 type ClientWithExpandParamResponse struct {
 	// placeholder for future response values
 }
+
+// clientgetCallerIdentityResponse contains the response from method Client.getCallerIdentity.
+type clientgetCallerIdentityResponse struct {
+	inboundCallerIdentityClassification
+}

@@ -1,5 +1,15 @@
 # Release History
 
+## 0.14.3 (unreleased)
+
+### Bugs Fixed
+
+* Fixed adapting `Access.internal` operations that return a polymorphic type.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.14.2 (2026-06-08)
 
 ### Features Added

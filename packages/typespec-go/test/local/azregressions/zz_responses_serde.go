@@ -13,3 +13,13 @@ func (c *ClientGetDiscriminatedNoSubTypesResponse) UnmarshalJSON(data []byte) er
 	c.DiscriminatedBaseNoSubTypesClassification = res
 	return nil
 }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type clientgetCallerIdentityResponse.
+func (c *clientgetCallerIdentityResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalinboundCallerIdentityClassification(data)
+	if err != nil {
+		return err
+	}
+	c.inboundCallerIdentityClassification = res
+	return nil
+}

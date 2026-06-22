@@ -35,3 +35,22 @@ func unmarshalBirdClassification(rawMsg json.RawMessage) (singlediscgroup.BirdCl
 	}
 	return b, nil
 }
+
+func unmarshalFishClassification(rawMsg json.RawMessage) (singlediscgroup.FishClassification, error) {
+	if rawMsg == nil || string(rawMsg) == "null" {
+		return nil, nil
+	}
+	var m map[string]any
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
+		return nil, err
+	}
+	var b singlediscgroup.FishClassification
+	switch m["kind"] {
+	default:
+		b = &singlediscgroup.Fish{}
+	}
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
+}

@@ -180,6 +180,52 @@ func (client *SingleDiscriminatorClient) getModelHandleResponse(resp *http.Respo
 	return result, nil
 }
 
+// GetNoSubtypesModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - SingleDiscriminatorClientGetNoSubtypesModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetNoSubtypesModel
+//     method.
+func (client *SingleDiscriminatorClient) GetNoSubtypesModel(ctx context.Context, options *SingleDiscriminatorClientGetNoSubtypesModelOptions) (SingleDiscriminatorClientGetNoSubtypesModelResponse, error) {
+	var err error
+	const operationName = "SingleDiscriminatorClient.GetNoSubtypesModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getNoSubtypesModelCreateRequest(ctx, options)
+	if err != nil {
+		return SingleDiscriminatorClientGetNoSubtypesModelResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return SingleDiscriminatorClientGetNoSubtypesModelResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return SingleDiscriminatorClientGetNoSubtypesModelResponse{}, err
+	}
+	resp, err := client.getNoSubtypesModelHandleResponse(httpResp)
+	return resp, err
+}
+
+// getNoSubtypesModelCreateRequest creates the GetNoSubtypesModel request.
+func (client *SingleDiscriminatorClient) getNoSubtypesModelCreateRequest(ctx context.Context, _ *SingleDiscriminatorClientGetNoSubtypesModelOptions) (*policy.Request, error) {
+	urlPath := "/type/model/inheritance/single-discriminator/no-subtypes/model"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// getNoSubtypesModelHandleResponse handles the GetNoSubtypesModel response.
+func (client *SingleDiscriminatorClient) getNoSubtypesModelHandleResponse(resp *http.Response) (SingleDiscriminatorClientGetNoSubtypesModelResponse, error) {
+	result := SingleDiscriminatorClientGetNoSubtypesModelResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
+		return SingleDiscriminatorClientGetNoSubtypesModelResponse{}, err
+	}
+	return result, nil
+}
+
 // GetRecursiveModel -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SingleDiscriminatorClientGetRecursiveModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetRecursiveModel
@@ -300,6 +346,45 @@ func (client *SingleDiscriminatorClient) PutModel(ctx context.Context, input Bir
 // putModelCreateRequest creates the PutModel request.
 func (client *SingleDiscriminatorClient) putModelCreateRequest(ctx context.Context, input BirdClassification, _ *SingleDiscriminatorClientPutModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/model"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, input); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// PutNoSubtypesModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - SingleDiscriminatorClientPutNoSubtypesModelOptions contains the optional parameters for the SingleDiscriminatorClient.PutNoSubtypesModel
+//     method.
+func (client *SingleDiscriminatorClient) PutNoSubtypesModel(ctx context.Context, input FishClassification, options *SingleDiscriminatorClientPutNoSubtypesModelOptions) (SingleDiscriminatorClientPutNoSubtypesModelResponse, error) {
+	var err error
+	const operationName = "SingleDiscriminatorClient.PutNoSubtypesModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.putNoSubtypesModelCreateRequest(ctx, input, options)
+	if err != nil {
+		return SingleDiscriminatorClientPutNoSubtypesModelResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return SingleDiscriminatorClientPutNoSubtypesModelResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return SingleDiscriminatorClientPutNoSubtypesModelResponse{}, err
+	}
+	return SingleDiscriminatorClientPutNoSubtypesModelResponse{}, nil
+}
+
+// putNoSubtypesModelCreateRequest creates the PutNoSubtypesModel request.
+func (client *SingleDiscriminatorClient) putNoSubtypesModelCreateRequest(ctx context.Context, input FishClassification, _ *SingleDiscriminatorClientPutNoSubtypesModelOptions) (*policy.Request, error) {
+	urlPath := "/type/model/inheritance/single-discriminator/no-subtypes/model"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

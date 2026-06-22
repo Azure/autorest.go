@@ -46,3 +46,11 @@ func (client *UsageClient) NewUsageModelInOperationClient() *UsageModelInOperati
 		internal: client.internal,
 	}
 }
+
+// NewUsageNamespaceUsageClient creates a new instance of [UsageNamespaceUsageClient].
+func (client *UsageClient) NewUsageNamespaceUsageClient() *UsageNamespaceUsageClient {
+	return &UsageNamespaceUsageClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}

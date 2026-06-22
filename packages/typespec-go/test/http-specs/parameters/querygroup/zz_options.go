@@ -8,3 +8,8 @@ package querygroup
 type QueryConstantClientPostOptions struct {
 	// placeholder for future optional parameters
 }
+
+// QuerySpecialCharClientDollarSignOptions contains the optional parameters for the QuerySpecialCharClient.DollarSign method.
+type QuerySpecialCharClientDollarSignOptions struct {
+	// placeholder for future optional parameters
+}

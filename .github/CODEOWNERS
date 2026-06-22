@@ -1,11 +1,11 @@
 # Default
-*                             @jhendrixMSFT @RickWinter @ArcturusZhang @lirenhe @tadelesh
+*                             @jhendrixMSFT @RickWinter @xirzec @ArcturusZhang @lirenhe @tadelesh
 
 # codegen (autorest and typespec)
-/packages/autorest.go         @jhendrixMSFT @RickWinter @lirenhe
-/packages/codegen.go          @jhendrixMSFT @RickWinter @lirenhe
-/packages/codemodel.go        @jhendrixMSFT @RickWinter @lirenhe
-/packages/typespec-go         @jhendrixMSFT @RickWinter @lirenhe
+/packages/autorest.go         @jhendrixMSFT @RickWinter @xirzec @lirenhe
+/packages/codegen.go          @jhendrixMSFT @RickWinter @xirzec @lirenhe
+/packages/codemodel.go        @jhendrixMSFT @RickWinter @xirzec @lirenhe
+/packages/typespec-go         @jhendrixMSFT @RickWinter @xirzec @lirenhe
 
 # autorest.gotest
 /packages/autorest.gotest     @ArcturusZhang @lirenhe @tadelesh
@@ -16,7 +16,7 @@
 ###########
 /eng/                         @benbp
 /eng/common/                  @Azure/azure-sdk-eng
-/eng/config.json              @jhendrixMSFT @RickWinter
+/eng/config.json              @jhendrixMSFT @RickWinter @xirzec
 /.config/1espt/               @benbp
 /.github/workflows/           @Azure/azure-sdk-eng
-/.github/CODEOWNERS           @rickwinter @sandeep-sen @Azure/azure-sdk-eng
+/.github/CODEOWNERS           @RickWinter @xirzec @sandeep-sen @Azure/azure-sdk-eng
