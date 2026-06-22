@@ -14,9 +14,9 @@
 ###########
 # Eng Sys
 ###########
-/eng/                         @benbp @weshaggard
+/eng/                         @benbp
 /eng/common/                  @Azure/azure-sdk-eng
 /eng/config.json              @jhendrixMSFT @RickWinter @xirzec
-/.config/1espt/               @benbp @weshaggard
+/.config/1espt/               @benbp
 /.github/workflows/           @Azure/azure-sdk-eng
 /.github/CODEOWNERS           @RickWinter @xirzec @sandeep-sen @Azure/azure-sdk-eng
