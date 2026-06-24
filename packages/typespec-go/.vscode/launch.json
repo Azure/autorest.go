@@ -9,6 +9,6 @@
             "port": 9229,
             "smartStep" : true,
             "skipFiles": ["<node_internals/**/*.js"]
-        },
+        }
     ]
 }
