@@ -22,3 +22,8 @@ catalog:
   typescript: ^5.9.3
   typescript-eslint: ^8.59.1
   vitest: ^4.1.5
+
+overrides:
+  "@babel/core": 7.29.6
+  "@babel/core@7.27.1": 7.29.6
+  "@babel/core@7.27.7": 7.29.6
