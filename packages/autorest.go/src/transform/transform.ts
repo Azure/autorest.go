@@ -15,9 +15,8 @@ import { createOptionsTypeDescription, createResponseEnvelopeDescription } from 
 import * as helpers from './helpers.js';
 import { namer, protocolMethods } from './namer.js';
 import { fromString } from 'html-to-text';
-import showdown from 'showdown';
+import { marked } from 'marked';
 import { fileURLToPath } from 'url';
-const { Converter } = showdown;
 
 // The transformer adds Go-specific information to the code model.
 export async function transformM4(host: AutorestExtensionHost) {
@@ -1143,9 +1142,7 @@ function getEnumForDiscriminatorValue(discValue: string, enums: Array<m4.ChoiceV
 
 // convert comments that are in Markdown to html and then to plain text
 function parseComments(comment: string): string {
-  const converter = new Converter();
-  converter.setOption('tables', true);
-  const html = converter.makeHtml(comment);
+  const html = marked.parse(comment) as string;
   return fromString(html, {
     wordwrap: 200,
     tables: true,
