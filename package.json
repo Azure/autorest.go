@@ -26,7 +26,8 @@
       "picomatch@2": ">=2.3.2 <3",
       "picomatch@4": ">=4.0.4 <5",
       "brace-expansion@2": ">=2.0.3 <3",
-      "underscore": ">=1.13.8 <2"
+      "underscore": ">=1.13.8 <2",
+      "@tootallnate/once": ">=2.0.1"
     }
   }
 }
