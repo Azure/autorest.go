@@ -73,10 +73,9 @@
     "@azure-tools/linq": "catalog:",
     "@azure-tools/tasks": "~3.0.255",
     "@types/html-to-text": "^5.1.2",
-    "@types/showdown": "^1.9.4",
     "html-to-text": "^5.1.1",
+    "marked": "^18.0.5",
     "semver": "catalog:",
-    "showdown": "^1.9.1",
     "source-map-support": "0.5.21"
   }
 }
