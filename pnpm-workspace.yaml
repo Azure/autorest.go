@@ -6,6 +6,9 @@ packages:
   - packages/naming.go
   - packages/typespec-go
 
+overrides:
+  uuid: ">=11.1.1 <12"
+
 catalog:
   "@autorest/codemodel": ~4.19.3
   "@azure-tools/codegen": ^2.10.0
