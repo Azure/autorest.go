@@ -22,3 +22,6 @@ catalog:
   typescript: ^5.9.3
   typescript-eslint: ^8.59.1
   vitest: ^4.1.5
+
+overrides:
+  markdown-it: 14.2.0
