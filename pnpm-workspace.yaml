@@ -1,3 +1,6 @@
+overrides:
+  webpack: ">=5.104.1"
+
 packages:
   - packages/autorest.go
   - packages/autorest.gotest
