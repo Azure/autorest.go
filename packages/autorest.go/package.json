@@ -60,9 +60,10 @@
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
     "eslint": "catalog:",
-    "vite": "catalog:",
+    "minimatch": "5.1.7",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "dependencies": {
