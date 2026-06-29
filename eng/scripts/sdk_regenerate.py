@@ -4,7 +4,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 from pathlib import Path
 import subprocess
 from datetime import datetime
@@ -289,12 +289,14 @@ def get_spec_directory(package_folder: Path) -> Optional[str]:
 
 
 
-def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, typespec_go_root: str) -> Dict[str, List[str]]:
+def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, typespec_go_root: str) -> Dict[str, Any]:
     result = {
-        "succeed_to_regenerate": [], 
-        "fail_to_regenerate": [], 
-        "not_found_api_version": [],         "module_version_changed": {},        "time_to_regenerate": str(datetime.now()),
-        "typespec_go_commit_hash": get_typespec_go_commit_hash(typespec_go_root)
+        "succeed_to_regenerate": [],
+        "fail_to_regenerate": [],
+        "not_found_api_version": [],
+        "module_version_changed": {},
+        "time_to_regenerate": str(datetime.now()),
+        "typespec_go_commit_hash": get_typespec_go_commit_hash(typespec_go_root),
     }
     # get all tsp-location.yaml
     commit_id = get_latest_commit_id()
