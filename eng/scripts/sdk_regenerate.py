@@ -12,6 +12,7 @@ from subprocess import check_call, check_output, call
 import argparse
 import logging
 import json
+import os
 import re
 import glob
 import urllib.request
@@ -223,12 +224,76 @@ def get_api_version(package_folder: Path) -> Optional[str]:
     
     return api_version
 
+
+def get_module_name(package_folder: Path) -> Optional[str]:
+    """Read the module name from go.mod in the package folder."""
+    go_mod_path = package_folder / "go.mod"
+    if not go_mod_path.exists():
+        return None
+    try:
+        with open(go_mod_path, "r", encoding="utf-8") as f:
+            for line in f:
+                stripped = line.strip()
+                if stripped.startswith("module "):
+                    return stripped[len("module "):].strip()
+    except FileNotFoundError as e:
+        logging.warning(f"Failed to read go.mod for {package_folder.name}: {e}")
+    return None
+
+
+def restore_module_name(package_folder: Path, original_module: str) -> Optional[str]:
+    """Restore the original module path everywhere in the package after regeneration.
+
+    Regeneration may bump the module version (e.g. .../armadvisor -> .../armadvisor/v2),
+    which changes both go.mod and import paths across all package files. Replace any new
+    module path with the original to keep the module version unchanged.
+
+    Returns the bumped module path if a change was detected, otherwise None.
+    """
+    go_mod_path = package_folder / "go.mod"
+    if not go_mod_path.exists():
+        return None
+    current_module = get_module_name(package_folder)
+    if not current_module or current_module == original_module:
+        return None
+    logging.info(
+        f"Restoring module path from {current_module} to {original_module} for {package_folder.name}"
+    )
+    for file_path in package_folder.rglob("*"):
+        if not file_path.is_file():
+            continue
+        try:
+            content = file_path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, FileNotFoundError):
+            continue
+        if current_module not in content:
+            continue
+        file_path.write_text(content.replace(current_module, original_module), encoding="utf-8")
+    return current_module
+
+
+def get_spec_directory(package_folder: Path) -> Optional[str]:
+    """Read the spec repo directory (containing tspconfig.yaml) from tsp-location.yaml."""
+    tsp_location = package_folder / "tsp-location.yaml"
+    if not tsp_location.exists():
+        return None
+    try:
+        with open(tsp_location, "r", encoding="utf-8") as f:
+            for line in f:
+                stripped = line.strip()
+                if stripped.startswith("directory:"):
+                    return stripped[len("directory:"):].strip().strip('"')
+    except FileNotFoundError as e:
+        logging.warning(f"Failed to read tsp-location.yaml for {package_folder.name}: {e}")
+    return None
+
+
+
 def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, typespec_go_root: str) -> Dict[str, List[str]]:
     result = {
         "succeed_to_regenerate": [], 
         "fail_to_regenerate": [], 
-        "not_found_api_version": [], 
-        "time_to_regenerate": str(datetime.now()),
+        "not_found_api_version": [],         "module_version_changed": {},        "time_to_regenerate": str(datetime.now()),
         "typespec_go_commit_hash": get_typespec_go_commit_hash(typespec_go_root)
     }
     # get all tsp-location.yaml
@@ -242,6 +307,8 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, ty
         if use_latest_spec:
             logging.info("Using latest spec")
             update_commit_id(item, commit_id)
+        # Record the original module name so it is not changed by regeneration
+        original_module = get_module_name(package_folder)
         try:
             # Get API version for this package
             api_version = get_api_version(package_folder)
@@ -299,9 +366,14 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, ty
         else:
             logging.info(f"Successfully regenerated {package_folder.name}")
             result["succeed_to_regenerate"].append(package_folder.name)
-            
-    result["succeed_to_regenerate"].sort()
-    result["fail_to_regenerate"].sort()
+        finally:
+            # Keep the original module name; do not bump the module version
+            if original_module:
+                bumped_module = restore_module_name(package_folder, original_module)
+                if bumped_module:
+                    spec_directory = get_spec_directory(package_folder)
+                    if spec_directory:
+                        result["module_version_changed"][spec_directory] = bumped_module
     result["not_found_api_version"].sort()
     return result
 
@@ -329,7 +401,71 @@ def git_add():
     check_call("git add .", shell=True)
 
 
-def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool, service_filter: str, use_dev_package: bool):
+def bump_tspconfig_module(spec_root: str, spec_directory: str, bumped_module: str) -> bool:
+    """Update the go module suffix in tspconfig.yaml to the bumped module path.
+
+    Returns True if the file was changed.
+    """
+    tspconfig_path = Path(spec_root) / spec_directory / "tspconfig.yaml"
+    if not tspconfig_path.exists():
+        logging.warning(f"tspconfig.yaml not found at {tspconfig_path}")
+        return False
+    with open(tspconfig_path, "r", encoding="utf-8") as f:
+        content = f.readlines()
+    changed = False
+    for idx in range(len(content)):
+        match = re.match(r"^(\s*module:\s*\"?)(github.com/[^\"\s]+)(\"?\s*)$", content[idx])
+        if match:
+            if match.group(2) != bumped_module:
+                content[idx] = f"{match.group(1)}{bumped_module}{match.group(3)}"
+                changed = True
+                logging.info(f"Updated module in {tspconfig_path} to {bumped_module}")
+            break
+    if changed:
+        with open(tspconfig_path, "w", encoding="utf-8") as f:
+            f.writelines(content)
+    return changed
+
+
+def create_spec_pr(spec_root: str, module_version_changed: dict, typespec_go_branch: str):
+    """Create a PR in the spec repo to bump go module suffixes in tspconfig.yaml."""
+    if not module_version_changed:
+        logging.info("No module version changes; skipping spec PR")
+        return
+    if not spec_root or not Path(spec_root).exists():
+        logging.warning("spec-root not provided or does not exist; skipping spec PR")
+        return
+
+    changed_any = False
+    for spec_directory, bumped_module in module_version_changed.items():
+        if bump_tspconfig_module(spec_root, spec_directory, bumped_module):
+            changed_any = True
+    if not changed_any:
+        logging.info("No tspconfig.yaml changes; skipping spec PR")
+        return
+
+    branch = f"typespec-go-module-suffix-{typespec_go_branch}"
+    check_call("git add .", shell=True, cwd=spec_root)
+    check_call(
+        ['git', 'commit', '-m', 'Bump go module suffix in tspconfig.yaml'],
+        cwd=spec_root,
+    )
+    check_call(f"git checkout -b {branch}", shell=True, cwd=spec_root)
+    check_call(f"git push --force origin {branch}", shell=True, cwd=spec_root)
+    check_call(
+        [
+            'gh', 'pr', 'create',
+            '--repo', 'Azure/azure-rest-api-specs',
+            '--base', 'main',
+            '--head', branch,
+            '--title', '[Automation] Bump go module suffix in tspconfig.yaml',
+            '--body', 'Automatically bump go module suffix for packages whose module version changed during regeneration.',
+        ],
+        cwd=spec_root,
+    )
+
+
+def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool, service_filter: str, use_dev_package: bool, create_spec_pr_flag: bool, spec_root: str):
     # Configure logging for better pipeline visibility
     logging.basicConfig(
         level=logging.INFO,
@@ -342,9 +478,23 @@ def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_late
     prepare_branch(typespec_go_branch)
     update_emitter_package(sdk_root, typespec_go_root, use_dev_package)
     result = regenerate_sdk(use_latest_spec, service_filter, sdk_root, typespec_go_root)
-    with open("regenerate-sdk-result.json", "w") as f:
-        json.dump(result, f, indent=2)
+
+    # Print the result instead of committing it to the repo
+    result_json = json.dumps(result, indent=2)
+    logging.info("Regenerate SDK result:\n%s", result_json)
+
+    # Write the result to the artifact staging directory so it can be published as a pipeline artifact
+    staging_dir = os.environ.get("BUILD_ARTIFACTSTAGINGDIRECTORY")
+    if staging_dir:
+        result_path = Path(staging_dir) / "regenerate-sdk-result.json"
+        with open(result_path, "w") as f:
+            f.write(result_json)
+        logging.info(f"Wrote regenerate-sdk-result.json to {result_path}")
+
     git_add()
+
+    if create_spec_pr_flag:
+        create_spec_pr(spec_root, result.get("module_version_changed", {}), typespec_go_branch)
 
 
 if __name__ == "__main__":
@@ -388,6 +538,20 @@ if __name__ == "__main__":
         default=False,
     )
 
+    parser.add_argument(
+        "--create-spec-pr",
+        help="Whether to create a PR in the spec repo to bump go module suffixes in tspconfig.yaml",
+        type=lambda x: x.lower() == 'true',
+        default=False,
+    )
+
+    parser.add_argument(
+        "--spec-root",
+        help="azure-rest-api-specs repo root folder (required when --create-spec-pr is true)",
+        type=str,
+        default="",
+    )
+
     args = parser.parse_args()
 
-    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch, args.use_latest_spec, args.service_filter, args.use_dev_package)
+    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch, args.use_latest_spec, args.service_filter, args.use_dev_package, args.create_spec_pr, args.spec_root)
