@@ -107,3 +107,18 @@ jobs:
       OpenAsDraft: 'true'
       PushArgs: '--force'
       AuthToken: $(GH_TOKEN)
+
+  - ${{ if parameters.CreateSpecPR }}:
+    - template: /eng/common/pipelines/templates/steps//create-pull-request.yml@azure-sdk-for-go
+      parameters:
+        WorkingDirectory: $(Build.SourcesDirectory)/azure-rest-api-specs
+        ScriptDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go/eng/common/scripts
+        RepoName: azure-rest-api-specs
+        PROwner: Azure
+        BaseBranchName: 'refs/heads/main'
+        PRBranchName: typespec-go-module-suffix-$(Build.SourceBranchName)
+        CommitMsg: 'Bump go module suffix in tspconfig.yaml'
+        PRTitle: '[Automation] Bump go module suffix in tspconfig.yaml'
+        OpenAsDraft: 'true'
+        PushArgs: '--force'
+        AuthToken: $(GH_TOKEN)

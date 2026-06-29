@@ -427,42 +427,24 @@ def bump_tspconfig_module(spec_root: str, spec_directory: str, bumped_module: st
     return changed
 
 
-def create_spec_pr(spec_root: str, module_version_changed: dict, typespec_go_branch: str):
-    """Create a PR in the spec repo to bump go module suffixes in tspconfig.yaml."""
+def apply_tspconfig_module_bumps(spec_root: str, module_version_changed: dict) -> bool:
+    """Bump go module suffixes in tspconfig.yaml for changed packages.
+
+    Returns True if any tspconfig.yaml was modified. The pipeline is responsible for
+    committing and opening the PR against the spec repo.
+    """
     if not module_version_changed:
-        logging.info("No module version changes; skipping spec PR")
-        return
+        logging.info("No module version changes; nothing to update in spec repo")
+        return False
     if not spec_root or not Path(spec_root).exists():
-        logging.warning("spec-root not provided or does not exist; skipping spec PR")
-        return
+        logging.warning("spec-root not provided or does not exist; skipping tspconfig update")
+        return False
 
     changed_any = False
     for spec_directory, bumped_module in module_version_changed.items():
         if bump_tspconfig_module(spec_root, spec_directory, bumped_module):
             changed_any = True
-    if not changed_any:
-        logging.info("No tspconfig.yaml changes; skipping spec PR")
-        return
-
-    branch = f"typespec-go-module-suffix-{typespec_go_branch}"
-    check_call("git add .", shell=True, cwd=spec_root)
-    check_call(
-        ['git', 'commit', '-m', 'Bump go module suffix in tspconfig.yaml'],
-        cwd=spec_root,
-    )
-    check_call(f"git checkout -b {branch}", shell=True, cwd=spec_root)
-    check_call(f"git push --force origin {branch}", shell=True, cwd=spec_root)
-    check_call(
-        [
-            'gh', 'pr', 'create',
-            '--repo', 'Azure/azure-rest-api-specs',
-            '--base', 'main',
-            '--head', branch,
-            '--title', '[Automation] Bump go module suffix in tspconfig.yaml',
-            '--body', 'Automatically bump go module suffix for packages whose module version changed during regeneration.',
-        ],
-        cwd=spec_root,
-    )
+    return changed_any
 
 
 def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool, service_filter: str, use_dev_package: bool, create_spec_pr_flag: bool, spec_root: str):
@@ -494,7 +476,7 @@ def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_late
     git_add()
 
     if create_spec_pr_flag:
-        create_spec_pr(spec_root, result.get("module_version_changed", {}), typespec_go_branch)
+        apply_tspconfig_module_bumps(spec_root, result.get("module_version_changed", {}))
 
 
 if __name__ == "__main__":
