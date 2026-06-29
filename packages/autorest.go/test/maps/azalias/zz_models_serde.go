@@ -29,7 +29,7 @@ func (a AliasesCreateResponse) MarshalJSON() ([]byte, error) {
 func (a *AliasesCreateResponse) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", a, err)
+		return fmt.Errorf("unmarshalling type %T: %w", a, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -50,7 +50,7 @@ func (a *AliasesCreateResponse) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", a, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", a, err)
+			return fmt.Errorf("unmarshalling type %T: %w", a, err)
 		}
 	}
 	return nil
@@ -68,7 +68,7 @@ func (e ErrorResponse) MarshalJSON() ([]byte, error) {
 func (e *ErrorResponse) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", e, err)
+		return fmt.Errorf("unmarshalling type %T: %w", e, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -83,7 +83,7 @@ func (e *ErrorResponse) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", e, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", e, err)
+			return fmt.Errorf("unmarshalling type %T: %w", e, err)
 		}
 	}
 	return nil
@@ -110,7 +110,7 @@ func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", g, err)
+		return fmt.Errorf("unmarshalling type %T: %w", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -134,7 +134,7 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", g, err)
+			return fmt.Errorf("unmarshalling type %T: %w", g, err)
 		}
 	}
 	return nil
@@ -160,7 +160,7 @@ func (g GeoJSONFeatureData) MarshalJSON() ([]byte, error) {
 func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", g, err)
+		return fmt.Errorf("unmarshalling type %T: %w", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -181,7 +181,7 @@ func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", g, err)
+			return fmt.Errorf("unmarshalling type %T: %w", g, err)
 		}
 	}
 	return nil
@@ -199,7 +199,7 @@ func (g GeoJSONObject) MarshalJSON() ([]byte, error) {
 func (g *GeoJSONObject) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", g, err)
+		return fmt.Errorf("unmarshalling type %T: %w", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -214,7 +214,7 @@ func (g *GeoJSONObject) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", g, err)
+			return fmt.Errorf("unmarshalling type %T: %w", g, err)
 		}
 	}
 	return nil
@@ -232,7 +232,7 @@ func (g GeoJSONObjectNamedCollection) MarshalJSON() ([]byte, error) {
 func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", g, err)
+		return fmt.Errorf("unmarshalling type %T: %w", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -247,7 +247,7 @@ func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", g, err)
+			return fmt.Errorf("unmarshalling type %T: %w", g, err)
 		}
 	}
 	return nil
@@ -268,7 +268,7 @@ func (g GeoJSONRecursiveDisciminators) MarshalJSON() ([]byte, error) {
 func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", g, err)
+		return fmt.Errorf("unmarshalling type %T: %w", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -284,7 +284,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 				for k2, v2 := range combinedOneRaw[i1] {
 					combinedOne[i1][k2], err = unmarshalGeoJSONObjectClassificationMap(v2)
 					if err != nil {
-						return fmt.Errorf("unmarshalling type %T: %v", g, err)
+						return fmt.Errorf("unmarshalling type %T: %w", g, err)
 					}
 				}
 			}
@@ -301,7 +301,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 				for i2 := range v1 {
 					combinedThree[k1][i2], err = unmarshalGeoJSONObjectClassificationMap(v1[i2])
 					if err != nil {
-						return fmt.Errorf("unmarshalling type %T: %v", g, err)
+						return fmt.Errorf("unmarshalling type %T: %w", g, err)
 					}
 				}
 			}
@@ -318,7 +318,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 				for k2, v2 := range v1 {
 					combinedTwo[k1][k2], err = unmarshalGeoJSONObjectClassificationArray(v2)
 					if err != nil {
-						return fmt.Errorf("unmarshalling type %T: %v", g, err)
+						return fmt.Errorf("unmarshalling type %T: %w", g, err)
 					}
 				}
 			}
@@ -333,7 +333,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			for i1 := range itemsRaw {
 				items[i1], err = unmarshalGeoJSONObjectClassificationArray(itemsRaw[i1])
 				if err != nil {
-					return fmt.Errorf("unmarshalling type %T: %v", g, err)
+					return fmt.Errorf("unmarshalling type %T: %w", g, err)
 				}
 			}
 			g.Items = items
@@ -347,7 +347,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			for k1, v1 := range objectsRaw {
 				objects[k1], err = unmarshalGeoJSONObjectClassificationMap(v1)
 				if err != nil {
-					return fmt.Errorf("unmarshalling type %T: %v", g, err)
+					return fmt.Errorf("unmarshalling type %T: %w", g, err)
 				}
 			}
 			g.Objects = objects
@@ -356,7 +356,7 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", g, err)
+			return fmt.Errorf("unmarshalling type %T: %w", g, err)
 		}
 	}
 	return nil
@@ -374,7 +374,7 @@ func (l ListResponse) MarshalJSON() ([]byte, error) {
 func (l *ListResponse) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", l, err)
+		return fmt.Errorf("unmarshalling type %T: %w", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -389,7 +389,7 @@ func (l *ListResponse) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", l, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", l, err)
+			return fmt.Errorf("unmarshalling type %T: %w", l, err)
 		}
 	}
 	return nil
@@ -407,7 +407,7 @@ func (p PagesOfThings) MarshalJSON() ([]byte, error) {
 func (p *PagesOfThings) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %w", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -422,7 +422,7 @@ func (p *PagesOfThings) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %w", p, err)
 		}
 	}
 	return nil
@@ -439,7 +439,7 @@ func (p ParameterMetadataValue) MarshalJSON() ([]byte, error) {
 func (p *ParameterMetadataValue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %w", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -451,7 +451,7 @@ func (p *ParameterMetadataValue) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %w", p, err)
 		}
 	}
 	return nil
@@ -468,7 +468,7 @@ func (p ParameterValuesValue) MarshalJSON() ([]byte, error) {
 func (p *ParameterValuesValue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %w", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -480,7 +480,7 @@ func (p *ParameterValuesValue) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %w", p, err)
 		}
 	}
 	return nil
@@ -499,7 +499,7 @@ func (p PolicyAssignmentProperties) MarshalJSON() ([]byte, error) {
 func (p *PolicyAssignmentProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %w", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -517,7 +517,7 @@ func (p *PolicyAssignmentProperties) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %w", p, err)
 		}
 	}
 	return nil
@@ -537,7 +537,7 @@ func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", s, err)
+		return fmt.Errorf("unmarshalling type %T: %w", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -558,7 +558,7 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", s, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", s, err)
+			return fmt.Errorf("unmarshalling type %T: %w", s, err)
 		}
 	}
 	return nil
@@ -580,7 +580,7 @@ func (s SomeFormData) MarshalJSON() ([]byte, error) {
 func (s *SomeFormData) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", s, err)
+		return fmt.Errorf("unmarshalling type %T: %w", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -607,7 +607,7 @@ func (s *SomeFormData) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", s, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", s, err)
+			return fmt.Errorf("unmarshalling type %T: %w", s, err)
 		}
 	}
 	return nil
@@ -625,7 +625,7 @@ func (t TypeWithRawJSON) MarshalJSON() ([]byte, error) {
 func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", t, err)
+		return fmt.Errorf("unmarshalling type %T: %w", t, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -640,7 +640,7 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", t, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", t, err)
+			return fmt.Errorf("unmarshalling type %T: %w", t, err)
 		}
 	}
 	return nil
@@ -662,7 +662,7 @@ func (t TypeWithSliceOfTimes) MarshalJSON() ([]byte, error) {
 func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", t, err)
+		return fmt.Errorf("unmarshalling type %T: %w", t, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -681,7 +681,7 @@ func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", t, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", t, err)
+			return fmt.Errorf("unmarshalling type %T: %w", t, err)
 		}
 	}
 	return nil
