@@ -242,14 +242,7 @@ def get_module_name(package_folder: Path) -> Optional[str]:
 
 
 def restore_module_name(package_folder: Path, original_module: str) -> Optional[str]:
-    """Restore the original module path everywhere in the package after regeneration.
-
-    Regeneration may bump the module version (e.g. .../armadvisor -> .../armadvisor/v2),
-    which changes both go.mod and import paths across all package files. Replace any new
-    module path with the original to keep the module version unchanged.
-
-    Returns the bumped module path if a change was detected, otherwise None.
-    """
+    """Restore the original module path across the package; return the bumped path if changed."""
     go_mod_path = package_folder / "go.mod"
     if not go_mod_path.exists():
         return None
@@ -259,6 +252,8 @@ def restore_module_name(package_folder: Path, original_module: str) -> Optional[
     logging.info(
         f"Restoring module path from {current_module} to {original_module} for {package_folder.name}"
     )
+    base_module = re.sub(r"/v\d+$", "", current_module)
+    pattern = re.compile(re.escape(base_module) + r"(?:/v\d+)?")
     for file_path in package_folder.rglob("*"):
         if not file_path.is_file():
             continue
@@ -266,9 +261,9 @@ def restore_module_name(package_folder: Path, original_module: str) -> Optional[
             content = file_path.read_text(encoding="utf-8")
         except (UnicodeDecodeError, FileNotFoundError):
             continue
-        if current_module not in content:
+        if base_module not in content:
             continue
-        file_path.write_text(content.replace(current_module, original_module), encoding="utf-8")
+        file_path.write_text(pattern.sub(original_module, content), encoding="utf-8")
     return current_module
 
 
@@ -406,7 +401,7 @@ def git_add():
 
 
 def bump_tspconfig_module(spec_root: str, spec_directory: str, bumped_module: str) -> bool:
-    """Update the go module suffix in tspconfig.yaml to the bumped module path.
+    """Update only the go module version suffix in tspconfig.yaml.
 
     Returns True if the file was changed.
     """
@@ -414,16 +409,19 @@ def bump_tspconfig_module(spec_root: str, spec_directory: str, bumped_module: st
     if not tspconfig_path.exists():
         logging.warning(f"tspconfig.yaml not found at {tspconfig_path}")
         return False
+    suffix_match = re.search(r"/(v\d+)$", bumped_module)
+    new_suffix = f"/{suffix_match.group(1)}" if suffix_match else ""
     with open(tspconfig_path, "r", encoding="utf-8") as f:
         content = f.readlines()
     changed = False
     for idx in range(len(content)):
-        match = re.match(r"^(\s*module:\s*\"?)(github.com/[^\"\s]+)(\"?\s*)$", content[idx])
+        match = re.match(r"^(\s*module:\s*\"?)(\S+?)(/v\d+)?(\"?\s*)$", content[idx])
         if match:
-            if match.group(2) != bumped_module:
-                content[idx] = f"{match.group(1)}{bumped_module}{match.group(3)}"
+            updated = f"{match.group(1)}{match.group(2)}{new_suffix}{match.group(4)}"
+            if updated != content[idx]:
+                content[idx] = updated
                 changed = True
-                logging.info(f"Updated module in {tspconfig_path} to {bumped_module}")
+                logging.info(f"Updated module suffix in {tspconfig_path} to '{new_suffix}'")
             break
     if changed:
         with open(tspconfig_path, "w", encoding="utf-8") as f:
