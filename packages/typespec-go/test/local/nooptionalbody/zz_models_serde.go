@@ -22,7 +22,7 @@ func (w Widget) MarshalJSON() ([]byte, error) {
 func (w *Widget) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", w, err)
+		return fmt.Errorf("unmarshalling type %T: %w", w, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -32,7 +32,7 @@ func (w *Widget) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", w, err)
+			return fmt.Errorf("unmarshalling type %T: %w", w, err)
 		}
 	}
 	return nil

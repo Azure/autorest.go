@@ -22,7 +22,7 @@ func (n NoDecoratorModelInPublic) MarshalJSON() ([]byte, error) {
 func (n *NoDecoratorModelInPublic) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", n, err)
+		return fmt.Errorf("unmarshalling type %T: %w", n, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -32,7 +32,7 @@ func (n *NoDecoratorModelInPublic) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", n, err)
+			return fmt.Errorf("unmarshalling type %T: %w", n, err)
 		}
 	}
 	return nil
@@ -49,7 +49,7 @@ func (p PublicDecoratorModelInInternal) MarshalJSON() ([]byte, error) {
 func (p *PublicDecoratorModelInInternal) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %w", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -59,7 +59,7 @@ func (p *PublicDecoratorModelInInternal) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %w", p, err)
 		}
 	}
 	return nil
@@ -76,7 +76,7 @@ func (p PublicDecoratorModelInPublic) MarshalJSON() ([]byte, error) {
 func (p *PublicDecoratorModelInPublic) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %w", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -86,7 +86,7 @@ func (p *PublicDecoratorModelInPublic) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %w", p, err)
 		}
 	}
 	return nil
@@ -103,7 +103,7 @@ func (s SharedModel) MarshalJSON() ([]byte, error) {
 func (s *SharedModel) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", s, err)
+		return fmt.Errorf("unmarshalling type %T: %w", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -113,7 +113,7 @@ func (s *SharedModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", s, err)
+			return fmt.Errorf("unmarshalling type %T: %w", s, err)
 		}
 	}
 	return nil
@@ -131,7 +131,7 @@ func (a abstractModel) MarshalJSON() ([]byte, error) {
 func (a *abstractModel) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", a, err)
+		return fmt.Errorf("unmarshalling type %T: %w", a, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -144,7 +144,7 @@ func (a *abstractModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", a, err)
+			return fmt.Errorf("unmarshalling type %T: %w", a, err)
 		}
 	}
 	return nil
@@ -161,7 +161,7 @@ func (i innerModel) MarshalJSON() ([]byte, error) {
 func (i *innerModel) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		return fmt.Errorf("unmarshalling type %T: %w", i, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -171,7 +171,7 @@ func (i *innerModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+			return fmt.Errorf("unmarshalling type %T: %w", i, err)
 		}
 	}
 	return nil
@@ -188,7 +188,7 @@ func (i internalDecoratorModelInInternal) MarshalJSON() ([]byte, error) {
 func (i *internalDecoratorModelInInternal) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		return fmt.Errorf("unmarshalling type %T: %w", i, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -198,7 +198,7 @@ func (i *internalDecoratorModelInInternal) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+			return fmt.Errorf("unmarshalling type %T: %w", i, err)
 		}
 	}
 	return nil
@@ -215,7 +215,7 @@ func (n noDecoratorModelInInternal) MarshalJSON() ([]byte, error) {
 func (n *noDecoratorModelInInternal) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", n, err)
+		return fmt.Errorf("unmarshalling type %T: %w", n, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -225,7 +225,7 @@ func (n *noDecoratorModelInInternal) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", n, err)
+			return fmt.Errorf("unmarshalling type %T: %w", n, err)
 		}
 	}
 	return nil
@@ -243,7 +243,7 @@ func (o outerModel) MarshalJSON() ([]byte, error) {
 func (o *outerModel) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", o, err)
+		return fmt.Errorf("unmarshalling type %T: %w", o, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -256,7 +256,7 @@ func (o *outerModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", o, err)
+			return fmt.Errorf("unmarshalling type %T: %w", o, err)
 		}
 	}
 	return nil
@@ -274,7 +274,7 @@ func (r realModel) MarshalJSON() ([]byte, error) {
 func (r *realModel) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
+		return fmt.Errorf("unmarshalling type %T: %w", r, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -287,7 +287,7 @@ func (r *realModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
+			return fmt.Errorf("unmarshalling type %T: %w", r, err)
 		}
 	}
 	return nil

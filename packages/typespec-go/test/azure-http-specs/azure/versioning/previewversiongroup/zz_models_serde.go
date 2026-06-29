@@ -22,7 +22,7 @@ func (l ListWidgetsResponse) MarshalJSON() ([]byte, error) {
 func (l *ListWidgetsResponse) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", l, err)
+		return fmt.Errorf("unmarshalling type %T: %w", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -32,7 +32,7 @@ func (l *ListWidgetsResponse) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", l, err)
+			return fmt.Errorf("unmarshalling type %T: %w", l, err)
 		}
 	}
 	return nil
@@ -49,7 +49,7 @@ func (u UpdateWidgetColorRequest) MarshalJSON() ([]byte, error) {
 func (u *UpdateWidgetColorRequest) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", u, err)
+		return fmt.Errorf("unmarshalling type %T: %w", u, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -59,7 +59,7 @@ func (u *UpdateWidgetColorRequest) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", u, err)
+			return fmt.Errorf("unmarshalling type %T: %w", u, err)
 		}
 	}
 	return nil
@@ -78,7 +78,7 @@ func (w Widget) MarshalJSON() ([]byte, error) {
 func (w *Widget) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", w, err)
+		return fmt.Errorf("unmarshalling type %T: %w", w, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -94,7 +94,7 @@ func (w *Widget) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", w, err)
+			return fmt.Errorf("unmarshalling type %T: %w", w, err)
 		}
 	}
 	return nil

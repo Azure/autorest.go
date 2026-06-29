@@ -22,7 +22,7 @@ func (d DefaultDurationProperty) MarshalJSON() ([]byte, error) {
 func (d *DefaultDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", d, err)
+		return fmt.Errorf("unmarshalling type %T: %w", d, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -32,7 +32,7 @@ func (d *DefaultDurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", d, err)
+			return fmt.Errorf("unmarshalling type %T: %w", d, err)
 		}
 	}
 	return nil
@@ -49,7 +49,7 @@ func (f Float64MillisecondsDurationProperty) MarshalJSON() ([]byte, error) {
 func (f *Float64MillisecondsDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -59,7 +59,7 @@ func (f *Float64MillisecondsDurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -76,7 +76,7 @@ func (f Float64SecondsDurationProperty) MarshalJSON() ([]byte, error) {
 func (f *Float64SecondsDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -86,7 +86,7 @@ func (f *Float64SecondsDurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -103,7 +103,7 @@ func (f FloatMillisecondsDurationArrayProperty) MarshalJSON() ([]byte, error) {
 func (f *FloatMillisecondsDurationArrayProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -113,7 +113,7 @@ func (f *FloatMillisecondsDurationArrayProperty) UnmarshalJSON(data []byte) erro
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -130,7 +130,7 @@ func (f FloatMillisecondsDurationProperty) MarshalJSON() ([]byte, error) {
 func (f *FloatMillisecondsDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -140,7 +140,7 @@ func (f *FloatMillisecondsDurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -157,7 +157,7 @@ func (f FloatMillisecondsLargerUnitDurationProperty) MarshalJSON() ([]byte, erro
 func (f *FloatMillisecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -167,7 +167,7 @@ func (f *FloatMillisecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -184,7 +184,7 @@ func (f FloatSecondsDurationArrayProperty) MarshalJSON() ([]byte, error) {
 func (f *FloatSecondsDurationArrayProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -194,7 +194,7 @@ func (f *FloatSecondsDurationArrayProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -211,7 +211,7 @@ func (f FloatSecondsDurationProperty) MarshalJSON() ([]byte, error) {
 func (f *FloatSecondsDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -221,7 +221,7 @@ func (f *FloatSecondsDurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -238,7 +238,7 @@ func (f FloatSecondsLargerUnitDurationProperty) MarshalJSON() ([]byte, error) {
 func (f *FloatSecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		return fmt.Errorf("unmarshalling type %T: %w", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -248,7 +248,7 @@ func (f *FloatSecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte) erro
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+			return fmt.Errorf("unmarshalling type %T: %w", f, err)
 		}
 	}
 	return nil
@@ -265,7 +265,7 @@ func (i ISO8601DurationProperty) MarshalJSON() ([]byte, error) {
 func (i *ISO8601DurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		return fmt.Errorf("unmarshalling type %T: %w", i, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -275,7 +275,7 @@ func (i *ISO8601DurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+			return fmt.Errorf("unmarshalling type %T: %w", i, err)
 		}
 	}
 	return nil
@@ -292,7 +292,7 @@ func (i Int32MillisecondsDurationProperty) MarshalJSON() ([]byte, error) {
 func (i *Int32MillisecondsDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		return fmt.Errorf("unmarshalling type %T: %w", i, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -302,7 +302,7 @@ func (i *Int32MillisecondsDurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+			return fmt.Errorf("unmarshalling type %T: %w", i, err)
 		}
 	}
 	return nil
@@ -319,7 +319,7 @@ func (i Int32MillisecondsLargerUnitDurationProperty) MarshalJSON() ([]byte, erro
 func (i *Int32MillisecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		return fmt.Errorf("unmarshalling type %T: %w", i, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -329,7 +329,7 @@ func (i *Int32MillisecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+			return fmt.Errorf("unmarshalling type %T: %w", i, err)
 		}
 	}
 	return nil
@@ -346,7 +346,7 @@ func (i Int32SecondsDurationProperty) MarshalJSON() ([]byte, error) {
 func (i *Int32SecondsDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		return fmt.Errorf("unmarshalling type %T: %w", i, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -356,7 +356,7 @@ func (i *Int32SecondsDurationProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+			return fmt.Errorf("unmarshalling type %T: %w", i, err)
 		}
 	}
 	return nil
@@ -373,7 +373,7 @@ func (i Int32SecondsLargerUnitDurationProperty) MarshalJSON() ([]byte, error) {
 func (i *Int32SecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		return fmt.Errorf("unmarshalling type %T: %w", i, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -383,7 +383,7 @@ func (i *Int32SecondsLargerUnitDurationProperty) UnmarshalJSON(data []byte) erro
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+			return fmt.Errorf("unmarshalling type %T: %w", i, err)
 		}
 	}
 	return nil

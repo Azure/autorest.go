@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Fixed adapting `Access.internal` operations that return a polymorphic type.
+* Generated JSON unmarshalling errors now wrap the underlying error with `%w` instead of `%v`.
 
 ### Other Changes
 
