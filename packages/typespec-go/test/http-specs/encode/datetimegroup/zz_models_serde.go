@@ -24,7 +24,7 @@ func (d DefaultDatetimeProperty) MarshalJSON() ([]byte, error) {
 func (d *DefaultDatetimeProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", d, err)
+		return fmt.Errorf("unmarshalling type %T: %s", d, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -34,7 +34,7 @@ func (d *DefaultDatetimeProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", d, err)
+			return fmt.Errorf("unmarshalling type %T: %s", d, err.Error())
 		}
 	}
 	return nil
@@ -51,7 +51,7 @@ func (r RFC3339DatetimeProperty) MarshalJSON() ([]byte, error) {
 func (r *RFC3339DatetimeProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
+		return fmt.Errorf("unmarshalling type %T: %s", r, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -61,7 +61,7 @@ func (r *RFC3339DatetimeProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
+			return fmt.Errorf("unmarshalling type %T: %s", r, err.Error())
 		}
 	}
 	return nil
@@ -78,7 +78,7 @@ func (r RFC7231DatetimeProperty) MarshalJSON() ([]byte, error) {
 func (r *RFC7231DatetimeProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
+		return fmt.Errorf("unmarshalling type %T: %s", r, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -88,7 +88,7 @@ func (r *RFC7231DatetimeProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
+			return fmt.Errorf("unmarshalling type %T: %s", r, err.Error())
 		}
 	}
 	return nil
@@ -109,7 +109,7 @@ func (u UnixTimestampArrayDatetimeProperty) MarshalJSON() ([]byte, error) {
 func (u *UnixTimestampArrayDatetimeProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", u, err)
+		return fmt.Errorf("unmarshalling type %T: %s", u, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -123,7 +123,7 @@ func (u *UnixTimestampArrayDatetimeProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", u, err)
+			return fmt.Errorf("unmarshalling type %T: %s", u, err.Error())
 		}
 	}
 	return nil
@@ -140,7 +140,7 @@ func (u UnixTimestampDatetimeProperty) MarshalJSON() ([]byte, error) {
 func (u *UnixTimestampDatetimeProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", u, err)
+		return fmt.Errorf("unmarshalling type %T: %s", u, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -150,7 +150,7 @@ func (u *UnixTimestampDatetimeProperty) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", u, err)
+			return fmt.Errorf("unmarshalling type %T: %s", u, err.Error())
 		}
 	}
 	return nil

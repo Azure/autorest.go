@@ -23,7 +23,7 @@ func (r ReadOnlyModel) MarshalJSON() ([]byte, error) {
 func (r *ReadOnlyModel) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
+		return fmt.Errorf("unmarshalling type %T: %s", r, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -36,7 +36,7 @@ func (r *ReadOnlyModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
+			return fmt.Errorf("unmarshalling type %T: %s", r, err.Error())
 		}
 	}
 	return nil
@@ -56,7 +56,7 @@ func (v VisibilityModel) MarshalJSON() ([]byte, error) {
 func (v *VisibilityModel) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", v, err)
+		return fmt.Errorf("unmarshalling type %T: %s", v, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -75,7 +75,7 @@ func (v *VisibilityModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", v, err)
+			return fmt.Errorf("unmarshalling type %T: %s", v, err.Error())
 		}
 	}
 	return nil

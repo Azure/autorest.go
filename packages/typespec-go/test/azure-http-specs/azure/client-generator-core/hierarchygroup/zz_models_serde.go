@@ -23,7 +23,7 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 func (a *Animal) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", a, err)
+		return fmt.Errorf("unmarshalling type %T: %s", a, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -36,7 +36,7 @@ func (a *Animal) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", a, err)
+			return fmt.Errorf("unmarshalling type %T: %s", a, err.Error())
 		}
 	}
 	return nil
@@ -56,7 +56,7 @@ func (d Dog) MarshalJSON() ([]byte, error) {
 func (d *Dog) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", d, err)
+		return fmt.Errorf("unmarshalling type %T: %s", d, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -75,7 +75,7 @@ func (d *Dog) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", d, err)
+			return fmt.Errorf("unmarshalling type %T: %s", d, err.Error())
 		}
 	}
 	return nil
@@ -94,7 +94,7 @@ func (p Pet) MarshalJSON() ([]byte, error) {
 func (p *Pet) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %s", p, err.Error())
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -110,7 +110,7 @@ func (p *Pet) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %s", p, err.Error())
 		}
 	}
 	return nil

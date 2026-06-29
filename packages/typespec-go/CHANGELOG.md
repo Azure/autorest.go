@@ -1,6 +1,6 @@
 # Release History
 
-## 0.14.3 (unreleased)
+## 0.14.3 (2026-07-08)
 
 ### Bugs Fixed
 
@@ -9,6 +9,7 @@
 ### Other Changes
 
 * Updated to the latest tsp toolset.
+* Generated JSON unmarshalling errors now use `%s` with `err.Error()` instead of `%v` to avoid linters such as `errorlint` from flagging the format string.
 
 ## 0.14.2 (2026-06-08)
 

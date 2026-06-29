@@ -9,6 +9,7 @@
 ### Other Changes
 
 * Updated the minimum version of `azcore` to `v1.22.0`.
+* Generated JSON unmarshalling errors now use `%s` with `err.Error()` instead of `%v` to avoid linters such as `errorlint` from flagging the format string.
 
 ## 4.0.0-preview.80 (2026-05-21)
 
