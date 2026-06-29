@@ -242,7 +242,7 @@ def get_module_name(package_folder: Path) -> Optional[str]:
 
 
 def restore_module_name(package_folder: Path, original_module: str) -> Optional[str]:
-    """Restore the original module path across the package; return the bumped path if changed."""
+    """Restore the original module path across the package; return the preserved path if changed."""
     go_mod_path = package_folder / "go.mod"
     if not go_mod_path.exists():
         return None
@@ -273,7 +273,7 @@ def restore_module_name(package_folder: Path, original_module: str) -> Optional[
         if base_module not in content:
             continue
         file_path.write_text(import_pattern.sub('"' + original_module, content), encoding="utf-8")
-    return current_module
+    return original_module
 
 
 def get_spec_directory(package_folder: Path) -> Optional[str]:
