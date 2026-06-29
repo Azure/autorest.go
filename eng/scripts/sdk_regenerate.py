@@ -254,7 +254,8 @@ def restore_module_name(package_folder: Path, original_module: str) -> Optional[
     )
     base_module = re.sub(r"/v\d+$", "", current_module)
     pattern = re.compile(re.escape(base_module) + r"(?:/v\d+)?")
-    for file_path in package_folder.rglob("*"):
+    import_pattern = re.compile(r"\"" + re.escape(base_module) + r"(?:/v\d+)?")
+    for file_path in [package_folder / "go.mod", package_folder / "README.md"]:
         if not file_path.is_file():
             continue
         try:
@@ -264,6 +265,14 @@ def restore_module_name(package_folder: Path, original_module: str) -> Optional[
         if base_module not in content:
             continue
         file_path.write_text(pattern.sub(original_module, content), encoding="utf-8")
+    for file_path in package_folder.rglob("*.go"):
+        try:
+            content = file_path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, FileNotFoundError):
+            continue
+        if base_module not in content:
+            continue
+        file_path.write_text(import_pattern.sub('"' + original_module, content), encoding="utf-8")
     return current_module
 
 
