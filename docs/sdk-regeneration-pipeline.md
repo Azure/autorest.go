@@ -37,6 +37,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 #### 4. Results & PR Creation
 - Generates results report (`regenerate-sdk-result.json`)
 - Creates draft PR in azure-sdk-for-go with all changes, PR title: `[Automation] Regenerate SDK based on typespec-go branch {branch-name}`
+- If `CreateSpecPR` is enabled and module suffixes were restored, creates a draft PR in azure-rest-api-specs to bump the go module suffix in `tspconfig.yaml`
 
 ### Pipeline Parameters
 
@@ -47,6 +48,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 | `UseLatestSpec` | boolean | `false` | Whether to use the latest API specifications from [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or the original commit of `tsp-location.yml` |
 | `ServiceFilter` | string | `.*` | Regex pattern to filter which services to regenerate. Matches against the service package name (e.g., `armcompute`, `armstorage`) |
 | `UseDevPackage` | boolean | `false` | Whether to use dev package (.tgz) from current branch or the recent released package from npm registry |
+| `CreateSpecPR` | boolean | `false` | Whether to create a PR in azure-rest-api-specs to bump go module suffixes in `tspconfig.yaml` when module versions are detected |
 
 #### Usage Examples
 
@@ -126,6 +128,9 @@ You can find the generated SDK pull request link from pipeline logs
   "succeed_to_regenerate": ["package1", "package2"],
   "fail_to_regenerate": ["package3"],
   "not_found_api_version": ["package4"],
+  "module_version_changed": {
+    "specification/advisor/Advisor.Management": "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/advisor/armadvisor/v2"
+  },
   "time_to_regenerate": "2025-09-25 10:30:45.123456",
   "typespec_go_commit_hash": "abc123def456789..."
 }
@@ -161,7 +166,7 @@ After each TypeSpec or Go emitter version release:
 3. **Merge Regeneration PR**: Merge the refresh PR to keep SDK up-to-date
 
 ### Quality Gates
-- All pipelines must be pass
+- All pipelines must pass
 - All SDK code changes are made by either TypeSpec changes or Go emitter changes
 - Module versions must not be changed
 - API versions must not be changed
