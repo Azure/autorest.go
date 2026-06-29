@@ -23,7 +23,7 @@ func (c ContainsRawJSON) MarshalJSON() ([]byte, error) {
 func (c *ContainsRawJSON) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", c, err)
+		return fmt.Errorf("unmarshalling type %T: %w", c, err)
 	}
 	for key, val := range rawMsg {
 		switch key {
