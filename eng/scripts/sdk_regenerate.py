@@ -242,38 +242,38 @@ def get_module_name(package_folder: Path) -> Optional[str]:
 
 
 def restore_module_name(package_folder: Path, original_module: str) -> Optional[str]:
-    """Restore the original module path across the package; return the preserved path if changed."""
-    go_mod_path = package_folder / "go.mod"
-    if not go_mod_path.exists():
+    """Regen drops the module suffix; restore the original suffixed path. Return it if restored."""
+    if not original_module:
         return None
-    current_module = get_module_name(package_folder)
-    if not current_module or current_module == original_module:
-        return None
-    logging.info(
-        f"Restoring module path from {current_module} to {original_module} for {package_folder.name}"
-    )
-    base_module = re.sub(r"/v\d+$", "", current_module)
-    pattern = re.compile(re.escape(base_module) + r"(?:/v\d+)?")
-    import_pattern = re.compile(r"\"" + re.escape(base_module) + r"(?:/v\d+)?")
-    for file_path in [package_folder / "go.mod", package_folder / "README.md"]:
+    base_module = re.sub(r"/v\d+$", "", original_module)
+    suffix = re.compile(r"(" + re.escape(base_module) + r")/v\d+")
+    bumped_module = None
+    changed_files = check_output(
+        ["git", "diff", "--name-only", "--", str(package_folder)], text=True
+    ).splitlines()
+    for rel in changed_files:
+        file_path = Path(rel)
         if not file_path.is_file():
             continue
         try:
-            content = file_path.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, FileNotFoundError):
+            old = check_output(["git", "show", f"HEAD:{rel}"], text=True)
+            new = file_path.read_text(encoding="utf-8")
+        except Exception:
             continue
-        if base_module not in content:
+        old_lines = old.splitlines(keepends=True)
+        new_lines = new.splitlines(keepends=True)
+        if len(old_lines) != len(new_lines):
             continue
-        file_path.write_text(pattern.sub(original_module, content), encoding="utf-8")
-    for file_path in package_folder.rglob("*.go"):
-        try:
-            content = file_path.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, FileNotFoundError):
-            continue
-        if base_module not in content:
-            continue
-        file_path.write_text(import_pattern.sub('"' + original_module, content), encoding="utf-8")
-    return original_module
+        for idx, new_line in enumerate(new_lines):
+            if new_line == old_lines[idx]:
+                continue
+            if suffix.sub(r"\1", old_lines[idx]) == new_line:
+                match = suffix.search(old_lines[idx])
+                if match:
+                    bumped_module = match.group(0)
+                new_lines[idx] = old_lines[idx]
+        file_path.write_text("".join(new_lines), encoding="utf-8")
+    return bumped_module
 
 
 def get_spec_directory(package_folder: Path) -> Optional[str]:
