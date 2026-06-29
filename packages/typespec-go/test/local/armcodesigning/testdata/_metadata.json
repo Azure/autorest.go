@@ -2,5 +2,5 @@
   "apiVersions": {
     "Microsoft.CodeSigning": "2024-09-30-preview"
   },
-  "emitterVersion": "0.0.0"
+  "emitterVersion": "0.14.3"
 }

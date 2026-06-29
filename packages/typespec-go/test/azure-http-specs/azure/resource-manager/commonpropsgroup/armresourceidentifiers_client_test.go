@@ -18,9 +18,9 @@ var (
 		Name:     to.Ptr("armId"),
 		Type:     to.Ptr("Azure.ResourceManager.CommonProperties/armResourceIdentifierResources"),
 		Properties: &commonpropsgroup.ArmResourceIdentifierResourceProperties{
-			ProvisioningState: to.Ptr(commonpropsgroup.ResourceProvisioningStateSucceeded),
-			SimpleArmID:       to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/myVnet"),
-			ArmIDWithType:     to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/myVnet"),
+			ProvisioningState:     to.Ptr(commonpropsgroup.ResourceProvisioningStateSucceeded),
+			SimpleArmID:           to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/myVnet"),
+			ArmIDWithType:         to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/myVnet"),
 			ArmIDWithTypeAndScope: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/myVnet"),
 			ArmIDWithAllScopes:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/myVm"),
 		},

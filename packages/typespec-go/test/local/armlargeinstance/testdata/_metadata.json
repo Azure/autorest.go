@@ -2,5 +2,5 @@
   "apiVersions": {
     "Microsoft.AzureLargeInstance": "2024-08-01-preview"
   },
-  "emitterVersion": "0.0.0"
+  "emitterVersion": "0.14.3"
 }
