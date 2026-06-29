@@ -374,6 +374,8 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, ty
                     spec_directory = get_spec_directory(package_folder)
                     if spec_directory:
                         result["module_version_changed"][spec_directory] = bumped_module
+    result["succeed_to_regenerate"].sort()
+    result["fail_to_regenerate"].sort()
     result["not_found_api_version"].sort()
     return result
 
