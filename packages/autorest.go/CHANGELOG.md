@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Fixed an issue where two fake server types whose names differed only by a trailing duplicate word (e.g. `AuthorizationServer` and `AuthorizationServerServer`) generated the same `TransportInterceptor` variable name, producing a duplicate declaration in the `fake` package.
+* Generated JSON unmarshalling errors now wrap the underlying error with `%w` instead of `%v`.
 
 ### Other Changes
 
