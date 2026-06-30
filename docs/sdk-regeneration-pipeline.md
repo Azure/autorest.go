@@ -37,7 +37,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 #### 4. Results & PR Creation
 - Generates results report (`regenerate-sdk-result.json`)
 - Creates draft PR in azure-sdk-for-go with all changes, PR title: `[Automation] Regenerate SDK based on typespec-go branch {branch-name}`
-- If `CreateSpecPR` is enabled and module suffixes were restored, creates a draft PR in azure-rest-api-specs to bump the go module suffix in `tspconfig.yaml`
+- If `CreateSpecPR` is enabled and a module version bump was detected, creates a draft PR in azure-rest-api-specs to bump the go module suffix in `tspconfig.yaml`
 
 ### Pipeline Parameters
 

@@ -241,39 +241,20 @@ def get_module_name(package_folder: Path) -> Optional[str]:
     return None
 
 
-def restore_module_name(package_folder: Path, original_module: str) -> Optional[str]:
-    """Regen drops the module suffix; restore the original suffixed path. Return it if restored."""
+def detect_module_version_change(package_folder: Path, original_module: str) -> Optional[str]:
+    """Detect if regen dropped the module version suffix. If so, revert all changes in the
+    package and return the original suffixed module so the spec PR can bump tspconfig."""
     if not original_module:
         return None
     suffix_match = re.search(r"/v\d+$", original_module)
     if not suffix_match:
         return None
-    base_module = original_module[: suffix_match.start()]
-    pattern = re.compile(re.escape(base_module) + r"(?!/v\d+)")
-    changed_files = check_output(
-        ["git", "diff", "--name-only", "--", str(package_folder)], text=True
-    ).splitlines()
-    for rel in changed_files:
-        file_path = Path(rel)
-        if not file_path.is_file():
-            continue
-        try:
-            old_content = check_output(["git", "show", f"HEAD:{rel}"], text=True)
-            new_content = file_path.read_text(encoding="utf-8")
-        except Exception:
-            continue
-        old_lines_set = set(old_content.splitlines())
-        new_lines = new_content.splitlines(keepends=True)
-        changed = False
-        for idx, line in enumerate(new_lines):
-            if not pattern.search(line):
-                continue
-            restored = pattern.sub(original_module, line)
-            if restored.rstrip("\n") in old_lines_set:
-                new_lines[idx] = restored
-                changed = True
-        if changed:
-            file_path.write_text("".join(new_lines), encoding="utf-8")
+    current_module = get_module_name(package_folder)
+    if current_module == original_module:
+        return None
+    # Module suffix was dropped during regen; revert the whole package and bump the spec instead.
+    check_call(["git", "checkout", "--", str(package_folder)])
+    logging.info(f"Reverted {package_folder.name}; module version bump will be handled in spec repo")
     return original_module
 
 
@@ -374,9 +355,9 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, ty
             logging.info(f"Successfully regenerated {package_folder.name}")
             result["succeed_to_regenerate"].append(package_folder.name)
         finally:
-            # Keep the original module name; do not bump the module version
+            # If regen dropped the module version suffix, revert the package and bump the spec instead
             if original_module:
-                bumped_module = restore_module_name(package_folder, original_module)
+                bumped_module = detect_module_version_change(package_folder, original_module)
                 if bumped_module:
                     spec_directory = get_spec_directory(package_folder)
                     if spec_directory:
