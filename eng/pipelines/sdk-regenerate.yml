@@ -18,6 +18,9 @@ parameters:
 - name: UseDevPackage
   default: false
   type: boolean
+- name: CreateSpecPR
+  default: false
+  type: boolean
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
@@ -35,6 +38,11 @@ resources:
       name: Azure/azure-sdk-for-go
       endpoint: azure
       ref: main
+    - repository: azure-rest-api-specs
+      type: github
+      name: Azure/azure-rest-api-specs
+      endpoint: azure
+      ref: main
 
 jobs:
 - job: Generate_SDK
@@ -45,6 +53,8 @@ jobs:
   - checkout: self
     fetchDepth: 1
   - checkout: azure-sdk-for-go
+  - ${{ if eq(parameters.CreateSpecPR, true) }}:
+    - checkout: azure-rest-api-specs
 
   - task: NodeTool@0
     displayName: 'Install Node.js $(NodeVersion)'
@@ -73,9 +83,13 @@ jobs:
     displayName: 'Install tsp-client'
 
   - script: |
-      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName) --use-latest-spec=${{ parameters.UseLatestSpec }} --service-filter="${{ parameters.ServiceFilter }}" --use-dev-package=${{ parameters.UseDevPackage }}
+      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName) --use-latest-spec=${{ parameters.UseLatestSpec }} --service-filter="${{ parameters.ServiceFilter }}" --use-dev-package=${{ parameters.UseDevPackage }} --create-spec-pr=${{ parameters.CreateSpecPR }} --spec-root=$(Build.SourcesDirectory)/azure-rest-api-specs
     displayName: 'Generate SDK'
     workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
+
+  - publish: $(Build.ArtifactStagingDirectory)/regenerate-sdk-result.json
+    artifact: regenerate-sdk-result
+    displayName: 'Publish regenerate SDK result'
 
   - template: /eng/common/pipelines/templates/steps/login-to-github.yml@azure-sdk-for-go
     parameters:
@@ -94,3 +108,18 @@ jobs:
       OpenAsDraft: 'true'
       PushArgs: '--force'
       AuthToken: $(GH_TOKEN)
+
+  - ${{ if parameters.CreateSpecPR }}:
+    - template: /eng/common/pipelines/templates/steps//create-pull-request.yml@azure-sdk-for-go
+      parameters:
+        WorkingDirectory: $(Build.SourcesDirectory)/azure-rest-api-specs
+        ScriptDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go/eng/common/scripts
+        RepoName: azure-rest-api-specs
+        PROwner: Azure
+        BaseBranchName: 'refs/heads/main'
+        PRBranchName: typespec-go-module-suffix-$(Build.SourceBranchName)
+        CommitMsg: 'Bump go module suffix in tspconfig.yaml'
+        PRTitle: '[Automation] Bump go module suffix in tspconfig.yaml'
+        OpenAsDraft: 'true'
+        PushArgs: '--force'
+        AuthToken: $(GH_TOKEN)
