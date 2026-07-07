@@ -1,11 +1,11 @@
 module rawjson/v2
 
-go 1.24.0
+go 1.25.0
 
-require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.21.0
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.22.0
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.2 // indirect
-	golang.org/x/net v0.49.0 // indirect
-	golang.org/x/text v0.33.0 // indirect
+	github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0 // indirect
+	golang.org/x/net v0.56.0 // indirect
+	golang.org/x/text v0.39.0 // indirect
 )
