@@ -41,11 +41,9 @@ func NewLargeHeadersClient(subscriptionID string, credential azcore.TokenCredent
 	return client, nil
 }
 
-// BeginTwo6K - A long-running resource action.
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - resourceGroupName - The name of the resource group. The name is case insensitive.
-//   - largeHeaderName - The name of the LargeHeader
-//   - options - LargeHeadersClientBeginTwo6KOptions contains the optional parameters for the LargeHeadersClient.BeginTwo6K method.
+// - resourceGroupName - The name of the resource group. The name is case insensitive.
+// - largeHeaderName - The name of the LargeHeader
+// - options - LargeHeadersClientBeginTwo6KOptions contains the optional parameters for the LargeHeadersClient.BeginTwo6K method.
 func (client *LargeHeadersClient) BeginTwo6K(ctx context.Context, resourceGroupName string, largeHeaderName string, options *LargeHeadersClientBeginTwo6KOptions) (*runtime.Poller[LargeHeadersClientTwo6KResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.two6K(ctx, resourceGroupName, largeHeaderName, options)
@@ -63,7 +61,7 @@ func (client *LargeHeadersClient) BeginTwo6K(ctx context.Context, resourceGroupN
 	}
 }
 
-// Two6K - A long-running resource action.
+// Two6K -
 // If the operation fails it returns an *azcore.ResponseError type.
 func (client *LargeHeadersClient) two6K(ctx context.Context, resourceGroupName string, largeHeaderName string, options *LargeHeadersClientBeginTwo6KOptions) (*http.Response, error) {
 	var err error

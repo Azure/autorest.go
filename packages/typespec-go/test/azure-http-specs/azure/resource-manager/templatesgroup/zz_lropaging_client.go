@@ -41,7 +41,6 @@ func NewLroPagingClient(subscriptionID string, credential azcore.TokenCredential
 	return client, nil
 }
 
-// BeginPostPagingLro - A long-running resource action.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - productName - The name of the Product
 //   - options - LroPagingClientBeginPostPagingLroOptions contains the optional parameters for the LroPagingClient.BeginPostPagingLro
@@ -81,7 +80,6 @@ func (client *LroPagingClient) BeginPostPagingLro(ctx context.Context, resourceG
 	}
 }
 
-// PostPagingLro - A long-running resource action.
 func (client *LroPagingClient) postPagingLro(ctx context.Context, resourceGroupName string, productName string, options *LroPagingClientBeginPostPagingLroOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LroPagingClient.BeginPostPagingLro"

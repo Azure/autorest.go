@@ -74,6 +74,16 @@ type DurationHeaderClientIso8601Response struct {
 	// placeholder for future response values
 }
 
+// DurationLossyClientIntMillisecondsResponse contains the response from method DurationLossyClient.IntMilliseconds.
+type DurationLossyClientIntMillisecondsResponse struct {
+	// placeholder for future response values
+}
+
+// DurationLossyClientIntSecondsResponse contains the response from method DurationLossyClient.IntSeconds.
+type DurationLossyClientIntSecondsResponse struct {
+	// placeholder for future response values
+}
+
 // DurationPropertyClientDefaultResponse contains the response from method DurationPropertyClient.Default.
 type DurationPropertyClientDefaultResponse struct {
 	DefaultDurationProperty

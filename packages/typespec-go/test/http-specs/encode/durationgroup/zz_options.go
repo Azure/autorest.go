@@ -83,6 +83,17 @@ type DurationHeaderClientIso8601Options struct {
 	// placeholder for future optional parameters
 }
 
+// DurationLossyClientIntMillisecondsOptions contains the optional parameters for the DurationLossyClient.IntMilliseconds
+// method.
+type DurationLossyClientIntMillisecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationLossyClientIntSecondsOptions contains the optional parameters for the DurationLossyClient.IntSeconds method.
+type DurationLossyClientIntSecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationPropertyClientDefaultOptions contains the optional parameters for the DurationPropertyClient.Default method.
 type DurationPropertyClientDefaultOptions struct {
 	// placeholder for future optional parameters

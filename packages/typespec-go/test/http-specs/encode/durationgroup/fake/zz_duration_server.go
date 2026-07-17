@@ -18,6 +18,9 @@ type DurationServer struct {
 	// DurationHeaderServer contains the fakes for client DurationHeaderClient
 	DurationHeaderServer DurationHeaderServer
 
+	// DurationLossyServer contains the fakes for client DurationLossyClient
+	DurationLossyServer DurationLossyServer
+
 	// DurationPropertyServer contains the fakes for client DurationPropertyClient
 	DurationPropertyServer DurationPropertyServer
 
@@ -38,6 +41,7 @@ type DurationServerTransport struct {
 	srv                      *DurationServer
 	trMu                     sync.Mutex
 	trDurationHeaderServer   *DurationHeaderServerTransport
+	trDurationLossyServer    *DurationLossyServerTransport
 	trDurationPropertyServer *DurationPropertyServerTransport
 	trDurationQueryServer    *DurationQueryServerTransport
 }
@@ -63,6 +67,11 @@ func (d *DurationServerTransport) dispatchToClientFake(req *http.Request, client
 			return NewDurationHeaderServerTransport(&d.srv.DurationHeaderServer)
 		})
 		resp, err = d.trDurationHeaderServer.Do(req)
+	case "DurationLossyClient":
+		initServer(&d.trMu, &d.trDurationLossyServer, func() *DurationLossyServerTransport {
+			return NewDurationLossyServerTransport(&d.srv.DurationLossyServer)
+		})
+		resp, err = d.trDurationLossyServer.Do(req)
 	case "DurationPropertyClient":
 		initServer(&d.trMu, &d.trDurationPropertyServer, func() *DurationPropertyServerTransport {
 			return NewDurationPropertyServerTransport(&d.srv.DurationPropertyServer)

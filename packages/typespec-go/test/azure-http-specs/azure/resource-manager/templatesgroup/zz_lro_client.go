@@ -188,12 +188,10 @@ func (client *LroClient) deleteCreateRequest(ctx context.Context, resourceGroupN
 	return req, nil
 }
 
-// BeginExport - A long-running resource action.
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - resourceGroupName - The name of the resource group. The name is case insensitive.
-//   - orderName - The name of the Order
-//   - body - The content of the action request
-//   - options - LroClientBeginExportOptions contains the optional parameters for the LroClient.BeginExport method.
+// - resourceGroupName - The name of the resource group. The name is case insensitive.
+// - orderName - The name of the Order
+// - body - The content of the action request
+// - options - LroClientBeginExportOptions contains the optional parameters for the LroClient.BeginExport method.
 func (client *LroClient) BeginExport(ctx context.Context, resourceGroupName string, orderName string, body ExportRequest, options *LroClientBeginExportOptions) (*runtime.Poller[LroClientExportResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.export(ctx, resourceGroupName, orderName, body, options)
@@ -211,7 +209,7 @@ func (client *LroClient) BeginExport(ctx context.Context, resourceGroupName stri
 	}
 }
 
-// Export - A long-running resource action.
+// Export -
 // If the operation fails it returns an *azcore.ResponseError type.
 func (client *LroClient) export(ctx context.Context, resourceGroupName string, orderName string, body ExportRequest, options *LroClientBeginExportOptions) (*http.Response, error) {
 	var err error

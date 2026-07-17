@@ -47,7 +47,7 @@ func (client *QuerySpecialCharClient) DollarSign(ctx context.Context, filter str
 
 // dollarSignCreateRequest creates the DollarSign request.
 func (client *QuerySpecialCharClient) dollarSignCreateRequest(ctx context.Context, filter string, _ *QuerySpecialCharClientDollarSignOptions) (*policy.Request, error) {
-	urlPath := "/parameters/query/special-char/dollarSign"
+	urlPath := "/parameters/query/special-char/dollar-sign"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

@@ -47,6 +47,14 @@ func (client *DurationClient) NewDurationHeaderClient() *DurationHeaderClient {
 	}
 }
 
+// NewDurationLossyClient creates a new instance of [DurationLossyClient].
+func (client *DurationClient) NewDurationLossyClient() *DurationLossyClient {
+	return &DurationLossyClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
 // NewDurationPropertyClient creates a new instance of [DurationPropertyClient].
 func (client *DurationClient) NewDurationPropertyClient() *DurationPropertyClient {
 	return &DurationPropertyClient{
