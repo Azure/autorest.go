@@ -23,9 +23,10 @@ steps:
       path: ${{ parameters.pnpmStorePath }}
     displayName: Cache pnpm store
 
-  - script: |
-      npm install -g pnpm@10
-    displayName: Install pnpm
+  - pwsh: |
+      $packageJson = Get-Content -Raw "$(Build.SourcesDirectory)/package.json" | ConvertFrom-Json
+      npm install -g $packageJson.packageManager
+    displayName: Install pnpm from package.json
 
   - script: pnpm config set store-dir ${{ parameters.pnpmStorePath }}
     displayName: Setup pnpm cache dir
