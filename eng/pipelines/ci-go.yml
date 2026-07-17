@@ -68,7 +68,6 @@ extends:
                   GoVersion: $(GoVersionPrevious)
 
             steps:
-              - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
               - template: /eng/pipelines/templates/steps/set-env.yaml
               - template: /eng/pipelines/templates/steps/build-test-go.yaml
 

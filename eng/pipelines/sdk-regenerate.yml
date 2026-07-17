@@ -51,10 +51,10 @@ jobs:
     inputs:
       versionSpec: '$(NodeVersion)'
 
+  - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+
   - script: |
-      npm i -g corepack@latest
-      corepack enable
-      corepack prepare pnpm@latest-10 --activate
+      npm install -g pnpm@10
     displayName: Install pnpm
 
   - script: pnpm install

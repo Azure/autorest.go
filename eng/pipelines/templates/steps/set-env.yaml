@@ -5,6 +5,8 @@ parameters:
   pnpmStorePath: $(Pipeline.Workspace)/.pnpm-store
 
 steps:
+  - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+
   - task: NodeTool@0
     displayName: "Install Node ${{ parameters.NodeVersion }}"
     inputs:
@@ -22,9 +24,7 @@ steps:
     displayName: Cache pnpm store
 
   - script: |
-      npm i -g corepack@latest
-      corepack enable
-      corepack prepare pnpm@latest-10 --activate
+      npm install -g pnpm@10
     displayName: Install pnpm
 
   - script: pnpm config set store-dir ${{ parameters.pnpmStorePath }}
